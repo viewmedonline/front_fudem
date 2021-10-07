@@ -1,0 +1,59 @@
+.vm-bg-qflow {
+  background: url("../img/v6.jpg");
+}
+
+.vm-p-esp {
+  padding-top: 24px !important;
+}
+
+.vm-bg-patient {
+  background-color: #00a887 !important;
+  opacity: 0.4;
+  height: 95px;
+}
+
+.vm-avatar-absolute {
+  position: absolute;
+  top: 55px;
+  left: 38%;
+}
+
+.vm-avatar-absolute .material-icons {
+  font-size: 50px !important;
+}
+
+.vm-border-color {
+  border: 4px solid #E37827 !important;
+}
+
+.vm-border-color-2 {
+  border: 2px solid #E37827 !important;
+}
+
+.black--text--title {
+  position: absolute;
+  right: 10px;
+  font-weight: 700;
+  font-size: 15px !important;
+}
+
+.title-history-consulting {
+  padding-top: 25px;
+}
+
+.digital-signature-content > .v-responsive.v-image {
+  margin-left: 32%;
+}
+
+.border-bottom-inf {
+  border-bottom: 1px solid #CCC;
+}
+
+.border-right-inf {
+  border-right: 1px solid #CCC;
+}
+
+.wizConstancia .ve-design {
+  min-height: 300px;
+}
+/*# sourceMappingURL=viewmed.css.map */
