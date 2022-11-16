@@ -291,7 +291,7 @@ export default {
             async function loadFiles(vm) {
               for (let i in result) {
                 if(result[i].file && result[i].file != ""){
-                  let newDate = result[i].dateUpload.split("-")
+                  // let newDate = result[i].dateUpload.split("-")
                   await fileServ.getImage(result[i].file ,sessionStorage.getItem("pussy"))
                   .then( file => {
                     let blob = new Blob([file.data], {type: "application/pdf;base64"});
