@@ -47,7 +47,6 @@
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.consultation">
           <vmTabs v-if="showVmData"></vmTabs>
-          <!-- <router-view></router-view> -->
         </v-flex>
         <v-flex xs12 v-if="dataStore.account">
           <vmAccount></vmAccount>
@@ -64,6 +63,9 @@
         <v-flex xs12 sm9 v-if="dataStore.constancy">
           <vmConstancy></vmConstancy>
         </v-flex>
+        <v-flex xs12 sm9 v-if="dataStore.nurse">
+          <vmNursingSheet></vmNursingSheet>
+        </v-flex>        
       </v-layout>
       
     </v-content>
@@ -238,6 +240,7 @@ const vmImaging = () => import("@/components/imaging_form/imaging_form");
 const vmPatientform = () => import("@/components/patient/patient_form");
 const vmConstancy = () => import("@/components/history_form/history_cons");
 const vmReport = () => import ('@/components/report/report')
+const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
 
 import moment from "moment"
 import { EventBus } from "@/store/eventBus";
@@ -257,7 +260,8 @@ export default {
     dialogSucursalExist: false
   }),
   beforeCreate() {
-    this.$route.query.c = this.$route.query.c.toUpperCase()
+    if(this.$route.query.c)
+      this.$route.query.c = this.$route.query.c.toUpperCase()
   },
   created() {
 
@@ -300,6 +304,7 @@ export default {
       this.dataStore.patient_form = false;
       this.dataStore.reports = false;
       switch (val) {
+       
         case "consultation":
           this.dataStore.patient = true;
           this.dataStore.consultation = true;
@@ -407,7 +412,7 @@ export default {
                 });
               }else{
                 this.$store.commit({
-                  type: "physician",
+                  type: "physician",///aplica para todos los profesionales
                   state: result2
                 });
               }
@@ -517,7 +522,8 @@ export default {
     vmImaging,
     vmPatientform,
     vmConstancy,
-    vmReport
+    vmReport,
+    vmNursingSheet
   },
   props: {
     source: String
