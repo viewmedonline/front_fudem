@@ -174,9 +174,6 @@ export default {
       pat_age: "",
       date: moment().format("DD/MM/YYYY"),
       e6: 1,
-      rules: {
-        required: (v) => !!v || vm.$t("title.field_required"),
-      },
       loading_reference: false,
       loading_reference_preview: false,
       show_editor: false,

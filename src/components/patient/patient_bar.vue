@@ -98,6 +98,14 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
+          <v-list-tile @click="fixedCompst('constancy_disability')">
+            <v-list-tile-content>
+              <v-list-tile-title>Constancia de Incapacidad</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
           <v-textarea
             box
             v-model="historyClinic"
@@ -168,6 +176,7 @@ export default {
       this.dataStore.constancy = false;
       this.dataStore.nurse = false;
       this.dataStore.reference = false;
+      this.dataStore.constancy_disability = false;
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -195,6 +204,10 @@ export default {
         case "reference_sheet":
           this.dataStore.patient = true;
           this.dataStore.reference = true;
+          break;
+        case "constancy_disability":
+          this.dataStore.patient = true;
+          this.dataStore.constancy_disability = true;
           break;
         default:
           this.dataStore.consultation = true;

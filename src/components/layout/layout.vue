@@ -68,7 +68,10 @@
         </v-flex>     
         <v-flex xs12 sm9 v-if="dataStore.reference">
           <vmReferenceSheet></vmReferenceSheet>
-        </v-flex>             
+        </v-flex>   
+        <v-flex xs12 sm9 v-if="dataStore.constancy_disability">
+          <vmConstancyDisability></vmConstancyDisability>
+        </v-flex>                  
       </v-layout>
       
     </v-content>
@@ -245,6 +248,7 @@ const vmConstancy = () => import("@/components/history_form/history_cons");
 const vmReport = () => import ('@/components/report/report')
 const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
 const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sheet")
+const vmConstancyDisability = () => import("@/components/constancy_disability/constancy_disability")
 
 import moment from "moment"
 import { EventBus } from "@/store/eventBus";
@@ -528,7 +532,8 @@ export default {
     vmConstancy,
     vmReport,
     vmNursingSheet,
-    vmReferenceSheet
+    vmReferenceSheet,
+    vmConstancyDisability
   },
   props: {
     source: String
