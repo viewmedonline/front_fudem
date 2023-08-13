@@ -16,6 +16,7 @@ export default new Vuex.Store({
       constancy: false,
       reports: false,
       nurse: false,
+      references: false,
     },
     typeConsulting: null,
     sucursal: null,

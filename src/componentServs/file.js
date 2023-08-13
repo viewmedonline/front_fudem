@@ -35,7 +35,29 @@ function getImage(id, token) {
 		}
 	})
 }
+
+function getPreview(data) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios.post(process.env.VUE_APP_ROOT_API + "/report/preview", data, {
+				responseType: 'blob',
+				headers: {
+					'content-type': 'application/json',
+				}
+			})
+				.then(result => {
+					resolve(result)
+				}).catch(error => {
+					reject(error)
+				})
+		} catch (err) {
+			console.log('err in Get Image: ', err);
+
+		}
+	})
+}
 export {
 	sendFile,
-	getImage
+	getImage,
+	getPreview
 }

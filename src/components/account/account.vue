@@ -220,7 +220,7 @@ export default {
     getUserList() {
       let userAux = {
         body: {
-          role: ["Physician", "optometrist", "ophthalmologist","Nurse"]
+          role: ["Physician", "optometrist", "ophthalmologist","nurse","intern"]
         },
         token: sessionStorage.getItem("pussy")
       };

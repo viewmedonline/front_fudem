@@ -73,12 +73,29 @@
               <v-icon>create</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('nursing_sheet')" v-if="storePhysician.role == 'Nurse'">
+          <v-list-tile
+            @click="fixedCompst('nursing_sheet')"
+            v-if="storePhysician.role == 'nurse'"
+          >
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Enfermeria</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-icon>create</v-icon>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile
+            @click="fixedCompst('reference_sheet')"
+            v-if="
+              storePhysician.role == 'intern' ||
+              storePhysician.role == 'ophthalmologist'
+            "
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>Hoja de Referencia</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
           <v-textarea
@@ -150,6 +167,7 @@ export default {
       this.dataStore.patient_form = false;
       this.dataStore.constancy = false;
       this.dataStore.nurse = false;
+      this.dataStore.reference = false;
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -173,6 +191,10 @@ export default {
         case "nursing_sheet":
           this.dataStore.patient = true;
           this.dataStore.nurse = true;
+          break;
+        case "reference_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.reference = true;
           break;
         default:
           this.dataStore.consultation = true;

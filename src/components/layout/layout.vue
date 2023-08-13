@@ -65,7 +65,10 @@
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.nurse">
           <vmNursingSheet></vmNursingSheet>
-        </v-flex>        
+        </v-flex>     
+        <v-flex xs12 sm9 v-if="dataStore.reference">
+          <vmReferenceSheet></vmReferenceSheet>
+        </v-flex>             
       </v-layout>
       
     </v-content>
@@ -241,6 +244,7 @@ const vmPatientform = () => import("@/components/patient/patient_form");
 const vmConstancy = () => import("@/components/history_form/history_cons");
 const vmReport = () => import ('@/components/report/report')
 const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
+const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sheet")
 
 import moment from "moment"
 import { EventBus } from "@/store/eventBus";
@@ -523,7 +527,8 @@ export default {
     vmPatientform,
     vmConstancy,
     vmReport,
-    vmNursingSheet
+    vmNursingSheet,
+    vmReferenceSheet
   },
   props: {
     source: String
