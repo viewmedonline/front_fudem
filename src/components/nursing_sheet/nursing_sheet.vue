@@ -145,7 +145,7 @@
   <v-container v-else>
     <v-card>
       <v-card-title primary-title class="blue-grey darken-1">
-        <v-btn flat icon @click="show_notes = false"
+        <v-btn flat icon @click="show_notes = false || validateStepper(9999)" v-if="formAddNotes == false"
           ><v-icon>mdi-arrow-left</v-icon></v-btn
         >
         <span class="subheading white--text text-capitalize"
@@ -201,7 +201,7 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-stepper style="box-shadow: none !important">
+              <v-stepper v-stepper v-model="e6"  style="box-shadow: none !important">
                 <v-stepper-step
                   :step="9999"
                   :edit-icon="'add'"
@@ -232,14 +232,14 @@
                       <template v-slot:activator="{ on }">
                         <v-text-field
                           v-model="date2"
-                          label="Picker without buttons"
+                          label="Fecha"
                           prepend-icon="event"
                           readonly
                           v-on="on"
                         ></v-text-field>
                       </template>
                       <v-date-picker
-                        v-model="date2"
+                        v-model="date2_picker"
                         @input="menu = false"
                       ></v-date-picker>
                     </v-menu>
@@ -261,7 +261,7 @@
                       <template v-slot:activator="{ on }">
                         <v-text-field
                           v-model="time"
-                          label="Picker in menu"
+                          label="Hora"
                           prepend-icon="access_time"
                           readonly
                           v-on="on"
@@ -286,7 +286,7 @@
                       :loading="saving_note"
                       >Guardar</v-btn
                     >
-                    <v-btn flat @click="formAddNotes = false">Cancelar</v-btn>
+                    <v-btn flat @click="cancel">Cancelar</v-btn>
                   </v-flex>
                 </v-layout>
               </div>
@@ -392,6 +392,7 @@
 </template>
 <script>
 import moment from "moment";
+moment.locale("es");
 import {
   getSheetList,
   addNotes,
@@ -416,7 +417,8 @@ export default {
     formAddNotes: false,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    date2: new Date().toISOString().substr(0, 10),
+    date2_picker: moment().format("YYYY-MM-DD"),
+    date2: moment().format("DD/MM/YYYY"),
     alert: false,
     menu: false,
     time: moment().format("hh:mm A"),
@@ -437,6 +439,9 @@ export default {
     time_picker(val) {
       this.time = moment(val, "hh:mm").format("hh:mm A");
     },
+    date2_picker(val) {
+      this.date2 = moment(val).format("DD/MM/YYYY");
+    },
   },
   async created() {
     this.patient = this.$store.getters.getPatient;
@@ -448,6 +453,12 @@ export default {
     this.nurseSheetList = await getSheetList(this.patient._id, null);
   },
   methods: {
+    cancel() {
+      this.formAddNotes = false;
+      this.$refs.editor.setContent("");
+      this.time_picker = moment().format("hh:mm");
+      this.date2_picker = moment().format("YYYY-MM-DD");
+    },
     async closeSheet() {
       this.close_sheet = true;
       if (confirm("¿Esta seguro que desea cerrar la hoja de enfermeria?")) {
@@ -488,7 +499,7 @@ export default {
       if (time) {
         return moment(date).format("DD/MM/YYYY hh:mm A");
       } else {
-        return moment(date).format("YYYY-MM-DD");
+        return moment(date).format("DD/MM/YYYY");
       }
     },
     async showNotes(item,pos) {

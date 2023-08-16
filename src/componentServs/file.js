@@ -1,5 +1,20 @@
 import axios from "axios";
- 
+
+function savePdf(data) {
+	return new Promise((resolve, reject) => {
+		axios.post(process.env.VUE_APP_ROOT_API + "/report/save", data, {
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': ""
+			}
+		}).then(result => {
+			resolve(result.data.documents)
+		}).catch(error => {
+			reject(error.response.data.message)
+		})
+	})
+}
+
 function sendFile(arr, name, token) {
 	return new Promise((resolve, reject) => {
 		axios.put(process.env.VUE_APP_ROOT_API  + "/store_file/" + name, arr, {
@@ -59,5 +74,6 @@ function getPreview(data) {
 export {
 	sendFile,
 	getImage,
-	getPreview
+	getPreview,
+	savePdf
 }

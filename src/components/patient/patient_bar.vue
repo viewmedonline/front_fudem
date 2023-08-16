@@ -85,6 +85,19 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-list-tile
+            @click="fixedCompst('surgery_sheet')"
+            v-if="
+              storePhysician.role == 'ophthalmologist'
+            "
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>Hoja de Cirugía</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>           
+          <v-list-tile
             @click="fixedCompst('reference_sheet')"
             v-if="
               storePhysician.role == 'intern' ||
@@ -98,7 +111,13 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('constancy_disability')">
+          <v-list-tile
+            @click="fixedCompst('constancy_disability')"
+            v-if="
+              storePhysician.role == 'intern' ||
+              storePhysician.role == 'ophthalmologist'
+            "
+          >
             <v-list-tile-content>
               <v-list-tile-title>Constancia de Incapacidad</v-list-tile-title>
             </v-list-tile-content>
@@ -106,6 +125,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
+         
           <v-textarea
             box
             v-model="historyClinic"
@@ -177,6 +197,7 @@ export default {
       this.dataStore.nurse = false;
       this.dataStore.reference = false;
       this.dataStore.constancy_disability = false;
+      this.dataStore.surgery_sheet = false;
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -208,6 +229,10 @@ export default {
         case "constancy_disability":
           this.dataStore.patient = true;
           this.dataStore.constancy_disability = true;
+          break;
+        case "surgery_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.surgery_sheet = true;
           break;
         default:
           this.dataStore.consultation = true;
