@@ -19,6 +19,7 @@ export default new Vuex.Store({
       references: false,
       constancy_disability: false,
       surgery_sheet: false,
+      internist_evaluation_sheet: false,
     },
     typeConsulting: null,
     sucursal: null,

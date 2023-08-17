@@ -74,7 +74,10 @@
         </v-flex>  
         <v-flex xs12 sm9 v-if="dataStore.surgery_sheet">
           <vmSurgerySheet></vmSurgerySheet>
-        </v-flex>                
+        </v-flex>       
+        <v-flex xs12 sm9 v-if="dataStore.internist_evaluation_sheet">
+          <VmInternistEvaluationSheet></VmInternistEvaluationSheet>
+        </v-flex>         
       </v-layout>
       
     </v-content>
@@ -253,6 +256,7 @@ const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
 const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sheet")
 const vmConstancyDisability = () => import("@/components/constancy_disability/constancy_disability")
 const vmSurgerySheet = () => import("@/components/surgery_sheet/surgery_sheet")
+const VmInternistEvaluationSheet = () => import("@/components/internist_evaluation_sheet/internist_evaluation_sheet")
 
 import moment from "moment"
 import { EventBus } from "@/store/eventBus";
@@ -538,7 +542,8 @@ export default {
     vmNursingSheet,
     vmReferenceSheet,
     vmConstancyDisability,
-    vmSurgerySheet
+    vmSurgerySheet,
+    VmInternistEvaluationSheet
   },
   props: {
     source: String
