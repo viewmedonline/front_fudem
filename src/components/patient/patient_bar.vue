@@ -79,7 +79,7 @@
           >
             <v-list-tile-content>
               <v-list-tile-title
-                >Hoja de Evaluación Internista</v-list-tile-title
+                >Hoja de Evaluación MI</v-list-tile-title
               >
             </v-list-tile-content>
             <v-list-tile-action>
@@ -116,7 +116,8 @@
             "
           >
             <v-list-tile-content>
-              <v-list-tile-title>Hoja de Referencia</v-list-tile-title>
+              <v-list-tile-title v-if="storePhysician.role == 'intern'">Hoja de Referencia MI</v-list-tile-title>
+              <v-list-tile-title v-else>Hoja de Referencia</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon>mdi-file-document-edit-outline</v-icon>
@@ -125,7 +126,6 @@
           <v-list-tile
             @click="fixedCompst('constancy_disability')"
             v-if="
-              storePhysician.role == 'intern' ||
               storePhysician.role == 'ophthalmologist'
             "
           >

@@ -278,6 +278,24 @@
                         </v-text-field>
                     </v-flex>
                 </v-layout>
+                <!-- <v-layout row wrap>
+                    <v-flex xs12 text-sm-left>
+                        <span class="body-2">Cámara de retina</span>
+                    </v-flex>
+                </v-layout>                
+                <v-layout row wrap>
+                    <v-flex xs2 text-sm-left class="vm-p-esp">
+                          <span >Hallazgo en fotografía</span>
+                      </v-flex>
+                      <v-flex xs2>
+                        <v-select 
+                            :items="['S', 'N']"
+                            label="Seleccione"
+                            :rules="[rules.required]"
+                            v-model="datosPreliminares.photo_retinal"
+                        ></v-select>
+                      </v-flex>
+                  </v-layout>                 -->
             </v-container>
         </v-card-text>
     </v-card>
@@ -289,7 +307,7 @@
 import { EventBus } from "@/store/eventBus";
   export default {
     name: 'preliminary_data',
-    data: () => ({
+    data: (vm) => ({
         items: ['Orto', 'ET', 'XT', 'OTRO'],
         formPreliminaryDataOft: false,
         maxHeigthText: 500,
@@ -337,11 +355,13 @@ import { EventBus } from "@/store/eventBus";
             tonometria: {
                 ojoder: null,
                 ojoizq: null
-            }
+            },
+            // photo_retinal: null,
         },
+        
         listAv:['20/15', '20/20', '20/25', '20/30', '20/40', '20/50', '20/60', '20/70', '20/80', '20/90', '20/100', '20/150', '20/200', '20/400', '20/800', '20/1600', '20/3200', 'Cuenta dedos','Mov. Manos', 'Percepcion a Luz','No Percepcion a Luz','No Colabora','No Aplica'],
         rules: {
-            required: v => !!v || this.$t('title.field_required'),
+            required: v => !!v || vm.$t('title.field_required'),
             length: len => v => (v || '').length <= len || `Invalid character length, required ${len}`
         }
     }),
@@ -418,11 +438,12 @@ import { EventBus } from "@/store/eventBus";
                         this.storeConsultation.autorefraccionA.ojoIzq.cilindro + " / " + 
                         this.storeConsultation.autorefraccionA.ojoIzq.eje
                 }
-
                 if (this.storeConsultation.tonometria) {
                     this.datosPreliminares.tonometria.ojoder = this.storeConsultation.tonometria.ojoDer
                     this.datosPreliminares.tonometria.ojoizq = this.storeConsultation.tonometria.ojoIzq
                 }
+                // this.photo_retinal = this.storeConsultation.objPreliminary.data.retinal_photo
+
             }
         }
     },
