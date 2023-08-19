@@ -61,13 +61,13 @@
                             </v-slide-x-reverse-transition>
                         </v-text-field>
                     </v-flex>
-                    <v-flex xs2>
+                    <!-- <v-flex xs2>
                         <v-checkbox
                             :readonly="validateRead()"
                             label="Lista Precargada"
                             v-model="useListDiagnoses"
                         ></v-checkbox>
-                    </v-flex>
+                    </v-flex> -->
                     <v-flex xs10 class="text-sm-left">
                         <v-chip v-for="chips in chipsDiagnostic" :key="chips.code" label>
                             {{`${chips.code} - ${chips.diagnostic[localeLang]}`}}
@@ -171,7 +171,7 @@ import * as consultationServ from '@/componentServs/consultation'
         rules: {
             required: v => !!v || this.$t('title.field_required')
         },
-        useListDiagnoses: false,
+        useListDiagnoses: true,
         diagnosticoText:null
     }),
     methods: {

@@ -472,10 +472,13 @@ export default {
             break;
           case 3:
             //resolve()
-            this.retinal_photo =
-              this.storeConsultation.objPreliminary.data.retinal_photo == "S"
-                ? true
-                : false;///se obtiene el valor de la foto de retina para mostrar en siguiente paso
+            if (this.storeConsultation.objPreliminary) {
+              this.retinal_photo =
+                this.storeConsultation.objPreliminary.data.retinal_photo == "S"
+                  ? true
+                  : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
+            }
+
             this.$refs.rxFinalContactLensesRef
               .saveRxFinalContactLenses()
               .then((result) => {

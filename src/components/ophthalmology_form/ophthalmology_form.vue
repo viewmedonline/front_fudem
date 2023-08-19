@@ -174,7 +174,7 @@
     >
       Posee una fotografía de retina
       <v-btn color="black" flat @click="alert_photo_retinal = false">
-        Close
+        Cerrar
       </v-btn>
     </v-snackbar>
   </v-container>
@@ -215,6 +215,7 @@ export default {
     insertAntecedent: true,
     dialog: false,
     dialogErr: false,
+    discovery_in_photography: "",
     consultation: {
       record: {},
     },
@@ -272,10 +273,13 @@ export default {
         ) {
           case 0:
             // resolve()
-            this.alert_photo_retinal =
-              this.storeConsultation.objPreliminary.data.retinal_photo == "S"
-                ? true
-                : false;
+            if (this.storeConsultation.objPreliminary) {
+              this.alert_photo_retinal =
+                this.storeConsultation.objPreliminary.data.retinal_photo == "S"
+                  ? true
+                  : false;
+            }
+
             this.$refs.antecedentRef
               .saveAntecedent()
               .then((result) => {
@@ -337,6 +341,7 @@ export default {
               .savePreliminaryData()
               .then((result) => {
                 // console.log("resultado datos preliminares: ", result)
+                this.discovery_in_photography = result.photo_retinal
                 this.consultation.datapreliminar = result;
                 if (this.paso > this.lastValidate) this.lastValidate = 1;
                 resolve();
@@ -624,6 +629,9 @@ export default {
       this.alert = true;
       this.consultation.person = this.$store.getters.getPatient._id;
       this.consultation.sucursalId = this.storeSucursal;
+      this.consultation.discovery_in_photography = this.discovery_in_photography;
+      
+
       let objAux = {
         body: this.consultation,
         token: null,

@@ -278,7 +278,7 @@
                         </v-text-field>
                     </v-flex>
                 </v-layout>
-                <!-- <v-layout row wrap>
+                <v-layout row wrap>
                     <v-flex xs12 text-sm-left>
                         <span class="body-2">Cámara de retina</span>
                     </v-flex>
@@ -295,7 +295,7 @@
                             v-model="datosPreliminares.photo_retinal"
                         ></v-select>
                       </v-flex>
-                  </v-layout>                 -->
+                  </v-layout>                
             </v-container>
         </v-card-text>
     </v-card>
