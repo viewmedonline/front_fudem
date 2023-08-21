@@ -273,15 +273,16 @@
           ></v-progress-linear>
         </v-card-text>
       </v-card>
-    </v-dialog>    
+    </v-dialog>
   </v-container>
 </template>
 <script>
 import moment from "moment";
 import { getLastConsultation } from "../../componentServs/consultation";
 import { getPerson } from "../../componentServs/person";
-import {saveConsultation} from "../../componentServs/consultation";
+import { saveConsultation } from "../../componentServs/consultation";
 import { getImage, savePdf } from "../../componentServs/file";
+import { saveSheetSurgery } from "../../componentServs/surgery_sheet";
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -312,9 +313,11 @@ export default {
     observations: "",
     physician_name: "",
     physician_history_name: "",
+    physician_history_id: "",
+    history_id: "",
     physician_signature: "",
     physician_specialty: "",
-
+    alert: false,
     loading_save_sheet_surgery: false,
     rules: {
       required: (value) => !!value || "Este campo es requerido",
@@ -326,7 +329,7 @@ export default {
       this.alert = true;
       if (this.$refs.form.validate()) {
         // const file = await getPreview();
-        const pdf_id = await savePdf({
+        const pdf_id = await saveSheetSurgery({
           name: "surgery_sheet.html",
           data: {
             num_exp: this.num_exp,
@@ -352,6 +355,9 @@ export default {
             observations: this.observations,
             physician_name: this.physician_name,
             physician_history_name: this.physician_history_name,
+            responsible: this.physician_history_id,
+            history_id: this.history_id,
+            patient: this.$store.getters.getPatient._id,
             physician_signature:
               this.$store.getters.getPhysician.digital_signature,
             physician_specialty: this.physician_specialty,
@@ -360,7 +366,6 @@ export default {
         });
 
         const data_document_consultation = {
-          
           person: this.$store.getters.getPatient._id,
           name: "Hoja de Cirugía",
           control: {
@@ -372,7 +377,7 @@ export default {
         };
         await saveConsultation({
           body: data_document_consultation,
-          token: null
+          token: null,
         });
         this.clear();
       }
@@ -431,6 +436,8 @@ export default {
     const person_data_phy = await getPerson({
       _id: result.responsableConsultation,
     });
+    this.physician_history_id = person_data_phy._id;
+    this.history_id = result._id;
     this.physician_history_name = `${person_data_phy.forename} ${person_data_phy.surname}`;
     if (result && result.diagnostic && result.diagnostic.length > 0) {
       let disct = result.diagnostic;

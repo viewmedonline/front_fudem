@@ -321,6 +321,7 @@
 <script>
 import { getPreview, savePdf } from "../../componentServs/file";
 import {saveConsultation} from "../../componentServs/consultation";
+import {saveSheetEvaluationMI} from "../../componentServs/intern_evaluation";
 import moment from "moment";
 export default {
   name: "internist_evaluation_sheet",
@@ -367,7 +368,7 @@ export default {
       if (this.$refs.form.validate()) {
         const { idQflow, forename, surname, birthdate, gender } =
           this.$store.getters.getPatient;
-        const pdf_id = await savePdf({
+        const pdf_id = await saveSheetEvaluationMI({
           name: "intern_evaluation.html",
           data: {
             date: moment().format("DD/MM/YYYY"),
@@ -403,6 +404,8 @@ export default {
             physician_signature:
               this.$store.getters.getPhysician.digital_signature,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            responsible:this.$store.getters.getPhysician._id,
+            person:this.$store.getters.getPatient._id,
           },
         });
         const data_document_consultation = {
@@ -470,6 +473,8 @@ export default {
             digital_signature:
               this.$store.getters.getPhysician.digital_signature,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            responsible:this.$store.getters.getPhysician._id,
+            person:this.$store.getters.getPatient._id,
           },
         });
         const blob = new Blob([file.data], { type: "application/pdf;base64" });
