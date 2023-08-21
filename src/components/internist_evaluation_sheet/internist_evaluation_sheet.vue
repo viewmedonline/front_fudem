@@ -320,8 +320,8 @@
 </template>
 <script>
 import { getPreview, savePdf } from "../../componentServs/file";
-import {saveConsultation} from "../../componentServs/consultation";
-import {saveSheetEvaluationMI} from "../../componentServs/intern_evaluation";
+import { saveConsultation } from "../../componentServs/consultation";
+import { saveSheetEvaluationMI } from "../../componentServs/intern_evaluation";
 import moment from "moment";
 export default {
   name: "internist_evaluation_sheet",
@@ -404,12 +404,11 @@ export default {
             physician_signature:
               this.$store.getters.getPhysician.digital_signature,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
-            responsible:this.$store.getters.getPhysician._id,
-            person:this.$store.getters.getPatient._id,
+            responsible: this.$store.getters.getPhysician._id,
+            person: this.$store.getters.getPatient._id,
           },
         });
         const data_document_consultation = {
-          
           person: this.$store.getters.getPatient._id,
           name: "Hoja de evaluación médico internista",
           control: {
@@ -421,8 +420,8 @@ export default {
         };
         await saveConsultation({
           body: data_document_consultation,
-          token: null
-        });        
+          token: null,
+        });
       }
       this.alert = false;
       this.loading = false;
@@ -473,8 +472,8 @@ export default {
             digital_signature:
               this.$store.getters.getPhysician.digital_signature,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
-            responsible:this.$store.getters.getPhysician._id,
-            person:this.$store.getters.getPatient._id,
+            responsible: this.$store.getters.getPhysician._id,
+            person: this.$store.getters.getPatient._id,
           },
         });
         const blob = new Blob([file.data], { type: "application/pdf;base64" });
