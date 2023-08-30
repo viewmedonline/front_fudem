@@ -389,32 +389,58 @@ export default {
               state: result[0]._id,
             });
           } else {
-            if(this.$route.query.reload<=2){
-              this.getSucursal()
-              //reload page
-              window.location.reload();              
-            }else{
+            if (this.$route.query.reload <= 2) {
+              if (
+                !this.$route.query.reload ||
+                parseInt(this.$route.query.reload) < 2
+              ) {
+                this.getSucursal();
+                //add reload page params to url
+                let reload = parseInt(
+                  this.$route.query.reload ? this.$route.query.reload : 0
+                );
+                reload++;
+                if (!this.$route.query.reload)
+                  window.location = window.location.href + "&reload=" + reload;
+                else
+                  window.location = window.location.href.replace(
+                    "reload=" + this.$route.query.reload,
+                    "reload=" + reload
+                  );
+                window.location.reload();
+              } else {
+                this.dialogSucursalExist = true;
+              }
+            } else {
               this.dialogSucursalExist = true;
             }
             return;
           }
         })
         .catch((error) => {
-          if(!this.$route.query.reload || parseInt(this.$route.query.reload)<2){
-            this.getSucursal()
+          if (
+            !this.$route.query.reload ||
+            parseInt(this.$route.query.reload) < 2
+          ) {
+            this.getSucursal();
             //add reload page params to url
-            let reload = parseInt(this.$route.query.reload ? this.$route.query.reload : 0);
+            let reload = parseInt(
+              this.$route.query.reload ? this.$route.query.reload : 0
+            );
             reload++;
-            if(!this.$route.query.reload)
-              window.location = window.location.href + "&reload="+reload;
+            if (!this.$route.query.reload)
+              window.location = window.location.href + "&reload=" + reload;
             else
-              window.location = window.location.href.replace("reload="+this.$route.query.reload,"reload="+reload);
+              window.location = window.location.href.replace(
+                "reload=" + this.$route.query.reload,
+                "reload=" + reload
+              );
             window.location.reload();
-          }else{
+          } else {
             this.dialogSucursalExist = true;
           }
           console.log("error: ", error);
-          return
+          return;
         });
     },
     commitCompst() {
