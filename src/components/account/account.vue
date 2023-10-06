@@ -364,7 +364,7 @@ export default {
             "optometrist",
             "ophthalmologist",
             "nurse",
-            "intern",
+            "internist",
           ],
         },
         token: sessionStorage.getItem("pussy"),

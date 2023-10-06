@@ -75,7 +75,7 @@
           </v-list-tile>
           <v-list-tile
             @click="fixedCompst('internist_evaluation_sheet')"
-            v-if="storePhysician.role == 'intern'"
+            v-if="storePhysician.role == 'internist'"
           >
             <v-list-tile-content>
               <v-list-tile-title
@@ -111,12 +111,12 @@
           <v-list-tile
             @click="fixedCompst('reference_sheet')"
             v-if="
-              storePhysician.role == 'intern' ||
+              storePhysician.role == 'internist' ||
               storePhysician.role == 'ophthalmologist'
             "
           >
             <v-list-tile-content>
-              <v-list-tile-title v-if="storePhysician.role == 'intern'">Hoja de Referencia MI</v-list-tile-title>
+              <v-list-tile-title v-if="storePhysician.role == 'internist'">Hoja de Referencia MI</v-list-tile-title>
               <v-list-tile-title v-else>Hoja de Referencia</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>

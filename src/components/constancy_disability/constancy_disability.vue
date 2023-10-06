@@ -145,7 +145,7 @@ export default {
             year: moment().format("YYYY"),
             name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             type:
-              this.$store.getters.getPhysician.role == "intern"
+              this.$store.getters.getPhysician.role == "internist"
                 ? "Médico Internista"
                 : "Oftalmólogo",
             digital_signature:
@@ -181,7 +181,7 @@ export default {
             year: moment().format("YYYY"),
             name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             type:
-              this.$store.getters.getPhysician.role == "intern"
+              this.$store.getters.getPhysician.role == "internist"
                 ? "Médico Internista"
                 : "Oftalmólogo",
             digital_signature:

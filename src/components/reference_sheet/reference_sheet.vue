@@ -207,7 +207,7 @@ export default {
           content: this.$refs.editor_reference.getContent(),
           name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
           type:
-            this.$store.getters.getPhysician.role == "intern"
+            this.$store.getters.getPhysician.role == "internist"
               ? "Médico Internista"
               : "Oftalmólogo",
           digital_signature: this.$store.getters.getPhysician.digital_signature,
@@ -228,7 +228,7 @@ export default {
             content: this.$refs.editor_reference.getContent(),
             name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             type:
-              this.$store.getters.getPhysician.role == "intern"
+              this.$store.getters.getPhysician.role == "internist"
                 ? "Médico Internista"
                 : "Oftalmólogo",
             digital_signature:
