@@ -475,9 +475,13 @@ export default {
     async addNotes() {
       this.saving_note = true;
       try {
+        const time_format = moment(this.time, "hh:mm A").format("HH:mm");
+        const date_format = moment(this.date2, "DD/MM/YYYY").format(
+          "YYYY-MM-DD"
+        );
         let obj_new_note = {
           note: this.$refs.editor.getContent(),
-          date: moment(`${this.date2} ${this.time}`).format("YYYY-MM-DD HH:mm"),
+          date: moment(`${date_format} ${time_format}`).format("YYYY-MM-DD HH:mm"),
           responsible: this.$store.getters.getPhysician._id,
         };
         await addNotes(this.data_sheet._id, obj_new_note);
