@@ -513,7 +513,7 @@ export default {
           date: this.format_date(item.date),
           num_exp: this.patient.idQflow,
           pat_name: `${this.patient.forename} ${this.patient.surname}`,
-          pat_age: item.age,
+          pat_age: moment().diff(this.patient.birthdate, "years"),
           heart_rate: item.heart_rate,
           blood_pressure: item.blood_pressure,
           notes_nurses: item.notes_nurses,
