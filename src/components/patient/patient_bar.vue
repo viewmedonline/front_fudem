@@ -88,7 +88,7 @@
           </v-list-tile>
           <v-list-tile
             @click="fixedCompst('nursing_sheet')"
-            v-if="storePhysician.role == 'nurse'"
+            v-if="storePhysician.role == 'nurse' || storePhysician.role == 'Institution'"
           >
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Enfermeria</v-list-tile-title>

@@ -82,9 +82,30 @@ function closeSheet(id_sheet) {
         }
     })
 }
+
+function updateSheet(data){
+    return new Promise((resolve, reject) => {
+        try {
+            axios.put(`${process.env.VUE_APP_ROOT_API}/nurse_sheet/${data.id}`,
+                data.body,
+                {
+                    headers:
+                    {
+                    }
+                }).then(result => {
+                    resolve(result.data.documents)
+                }).catch(error => {
+                    reject(error.response.data.message)
+                })
+        } catch (error) {
+            console.log('updateSheet: ', error)
+        }
+    })
+}
 export {
     getSheetList,
     addNotes,
     addSheetNurse,
-    closeSheet
+    closeSheet,
+    updateSheet
 }

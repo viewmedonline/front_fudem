@@ -52,16 +52,40 @@
                           :rules="[rules.required]"
                         ></v-text-field>
                       </v-flex>
+                      
                       <v-flex xs4>
+                        <v-menu
+                      v-model="menu_sheet"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
                         <v-text-field
-                          disabled
+                          v-model="date_sheet_input"
+                          label="Fecha"
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="date_sheet_picker"
+                        @input="menu_sheet = false"
+                      ></v-date-picker>
+                    </v-menu>                        
+                        <!-- <v-text-field
                           slot="activator"
                           v-model="dateFormatted"
                           label="Fecha"
                           persistent-hint
                           prepend-icon="event"
                           @blur="date = parseDate(dateFormatted)"
-                        ></v-text-field>
+                        ></v-text-field> -->
                       </v-flex>
                       <v-flex xs6>
                         <v-text-field
@@ -121,6 +145,13 @@
             </v-layout>
           </v-stepper-step>
           <v-stepper-content :step="z" complete :editable="true">
+            <!-- buttom reabrir hoja de enfermeria -->
+            <v-btn
+              v-if="role == 'Institution'"
+              color="primary"
+              @click="reopenSheet(item,z)"
+              :loading="close_sheet"
+              >Reabrir Hoja de Enfermeria</v-btn>
             <iframe color="grey lighten-1" class="mb-5"
             :src="pdf_document" 
             type="application/pdf" 
@@ -398,8 +429,9 @@ import {
   addNotes,
   addSheetNurse,
   closeSheet,
+  updateSheet,
 } from "../../componentServs/nurses_sheet";
-import { getImage } from "../../componentServs/file";
+import { getImage,deleteFile } from "../../componentServs/file";
 
 export default {
   name: "nurse_sheet",
@@ -421,6 +453,9 @@ export default {
     date2: moment().format("DD/MM/YYYY"),
     alert: false,
     menu: false,
+    date_sheet_picker: moment().format("YYYY-MM-DD"),
+    date_sheet_input: moment().format("DD/MM/YYYY"),
+    menu_sheet: false,
     time: moment().format("hh:mm A"),
     time_picker: moment().format("hh:mm"),
     menu2: false,
@@ -433,7 +468,8 @@ export default {
     saving_note: false,
     saving_sheet: false,
     close_sheet: false,
-    pdf_document:null
+    pdf_document:null,
+    role: "",
   }),
   watch: {
     time_picker(val) {
@@ -442,8 +478,13 @@ export default {
     date2_picker(val) {
       this.date2 = moment(val).format("DD/MM/YYYY");
     },
+    date_sheet_picker(val) {
+      this.date_sheet_input = moment(val).format("DD/MM/YYYY");
+    },
   },
   async created() {
+    this.role = this.$store.getters.getPhysician.role;
+    
     this.patient = this.$store.getters.getPatient;
     const { idQflow, forename, surname, birthdate } =
       this.$store.getters.getPatient;
@@ -453,6 +494,14 @@ export default {
     this.nurseSheetList = await getSheetList(this.patient._id, null);
   },
   methods: {
+    async reopenSheet(item, pos) {
+      if (confirm("¿Esta seguro que desea reabrir la hoja de enfermeria?")) {
+        this.validateStepper(pos)
+        await deleteFile(item.pdf);
+        await updateSheet({ body:{pdf: null},id: item._id });
+        this.nurseSheetList = await getSheetList(this.patient._id, null);
+      }
+    },
     cancel() {
       this.formAddNotes = false;
       this.$refs.editor.setContent("");
@@ -552,9 +601,9 @@ export default {
           let obj_sheet = {
             patient: this.patient._id,
             name: "Hoja de Enfermeria",
-            date: this.date,
             responsable: this.$store.getters.getPhysician._id,
             heart_rate: this.heart_rate,
+            date_sheet: moment(this.date_sheet_input, "DD/MM/YYYY"),
             blood_pressure: this.blood_pressure,
           };
           await addSheetNurse(obj_sheet);
@@ -570,6 +619,8 @@ export default {
     clear() {
       this.blood_pressure = "";
       this.heart_rate = "";
+      this.date_sheet_input = moment().format("DD/MM/YYYY");
+      this.date_sheet_picker = moment().format("YYYY-MM-DD");
     },
   },
 };

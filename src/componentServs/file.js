@@ -71,9 +71,29 @@ function getPreview(data) {
 		}
 	})
 }
+
+function deleteFile(id) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios.delete(process.env.VUE_APP_ROOT_API + "/delete_file/" + id, {
+				headers: {
+				}
+			})
+				.then(result => {
+					resolve(result)
+				}).catch(error => {
+					reject(error)
+				})
+		} catch (err) {
+			console.log('err in deleteFile: ', err);
+
+		}
+	})
+}
 export {
 	sendFile,
 	getImage,
 	getPreview,
-	savePdf
+	savePdf,
+	deleteFile
 }

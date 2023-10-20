@@ -316,6 +316,7 @@ export default {
       this.dataStore.patient = false;
       this.dataStore.consultation = false;
       this.dataStore.account = false;
+      this.dataStore.nurse = false;
       this.dataStore.imaging = false;
       this.dataStore.patient_form = false;
       this.dataStore.reports = false;
