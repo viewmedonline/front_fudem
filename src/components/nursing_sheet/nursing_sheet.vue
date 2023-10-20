@@ -147,7 +147,7 @@
           <v-stepper-content :step="z" complete :editable="true">
             <!-- buttom reabrir hoja de enfermeria -->
             <v-btn
-              v-if="role == 'Institution'"
+              v-if="user_admin == 'PRUEBAOFTA'"
               color="primary"
               @click="reopenSheet(item,z)"
               :loading="close_sheet"
@@ -469,7 +469,7 @@ export default {
     saving_sheet: false,
     close_sheet: false,
     pdf_document:null,
-    role: "",
+    user_admin: "",
   }),
   watch: {
     time_picker(val) {
@@ -483,7 +483,7 @@ export default {
     },
   },
   async created() {
-    this.role = this.$store.getters.getPhysician.role;
+    this.user_admin = this.$store.getters.getPhysician.user.idUserFudem;
     
     this.patient = this.$store.getters.getPatient;
     const { idQflow, forename, surname, birthdate } =
