@@ -88,7 +88,7 @@
           </v-list-tile>
           <v-list-tile
             @click="fixedCompst('nursing_sheet')"
-            v-if="storePhysician.role == 'nurse' || storePhysician.role == 'Institution'"
+            v-if="storePhysician.role == 'nurse' || user_admin == 'PRUEBAOFTA'"
           >
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Enfermeria</v-list-tile-title>
@@ -171,6 +171,7 @@ export default {
   data: () => ({
     historyClinic: null,
     saveHistoryDialog: false,
+    user_admin : ""
   }),
   methods: {
     saveHistory() {
@@ -269,6 +270,7 @@ export default {
     },
   },
   created() {
+    this.user_admin = this.$store.getters.getPhysician.user.idUserFudem;
     this.historyClinic = this.storePatient.historyClinic;
   },
   components: {},
