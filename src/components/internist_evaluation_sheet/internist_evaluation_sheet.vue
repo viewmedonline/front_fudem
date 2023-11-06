@@ -28,8 +28,7 @@
                       'Pterigion',
                       'Retinopatia Diabetica',
                       'Trabeculectomia',
-                      'Tumor Benigno de Parpado',
-                      'Tumor Maligno de Parpado',
+                      'Tumor de Parpado',
                       'Vitrectomia',
                     ]"
                     label="Diagnostico Preoperatorio"
@@ -184,6 +183,14 @@
                     label="EGO"
                   ></v-text-field>
                 </v-flex>
+                <v-flex xs2>
+                  <v-text-field
+                    :rules="[rules.required]"
+                    v-model="HbA1C"
+                    class="text-field-width"
+                    label="HbA1C"
+                  ></v-text-field>
+                </v-flex>
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12>
@@ -303,7 +310,7 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Hoja de Referencia Médica</v-toolbar-title>
+          <v-toolbar-title>Hoja de evaluación médico internista</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text style="padding: 0; height: 93vh; background-color: grey">
@@ -343,6 +350,7 @@ export default {
     glucose: "",
     vih: "",
     ego: "",
+    HbA1C: "",
     radiography: "",
     electrocardiogram: "",
     comments: "",
@@ -361,6 +369,9 @@ export default {
       required: (value) => !!value || "Este campo es requerido",
     },
   }),
+  mounted() {
+    console.log(this.$store.getters.getPhysician);
+  },
   methods: {
     async saveEvaluation() {
       this.alert = true;
@@ -368,13 +379,14 @@ export default {
       if (this.$refs.form.validate()) {
         const { idQflow, forename, surname, birthdate, gender } =
           this.$store.getters.getPatient;
+          
         const pdf_id = await saveSheetEvaluationMI({
           name: "intern_evaluation.html",
           data: {
             date: moment().format("DD/MM/YYYY"),
             num_exp: idQflow,
             pat_name: `${forename} ${surname}`,
-            pat_gender: gender == "male" ? "Masculino" : "Femenino",
+            pat_gender: gender,
             pat_age: moment().diff(birthdate, "years"),
             preoperative_diagnosis: this.preoperative_diagnosis,
             history_clinic: this.history_clinic,
@@ -393,6 +405,7 @@ export default {
             glucose: this.glucose,
             vih: this.vih,
             ego: this.ego,
+            hba1c: this.HbA1C,
             radiography: this.radiography,
             electrocardiogram: this.electrocardiogram,
             comments: this.comments,
@@ -442,7 +455,7 @@ export default {
             date: moment().format("DD/MM/YYYY"),
             num_exp: idQflow,
             pat_name: `${forename} ${surname}`,
-            pat_gender: gender == "male" ? "Masculino" : "Femenino",
+            pat_gender: gender,
             pat_age: moment().diff(birthdate, "years"),
             preoperative_diagnosis: this.preoperative_diagnosis,
             history_clinic: this.history_clinic,
@@ -461,6 +474,7 @@ export default {
             glucose: this.glucose,
             vih: this.vih,
             ego: this.ego,
+            hba1c: this.HbA1C,
             radiography: this.radiography,
             electrocardiogram: this.electrocardiogram,
             comments: this.comments,

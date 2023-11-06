@@ -88,7 +88,7 @@
                     complete
                     :edit-icon="'assignment'"
                     :editable="true"
-                    @click="show_reference(z,item)"
+                    @click="show_reference(z, item)"
                   >
                     Hoja de Referencia Medica
                     <v-layout row wrap>
@@ -211,6 +211,10 @@ export default {
               ? "Médico Internista"
               : "Oftalmólogo",
           digital_signature: this.$store.getters.getPhysician.digital_signature,
+          pat_name: this.pat_name,
+          pat_age: this.pat_age,
+          pat_exp: this.num_exp,
+          date: this.date,
         },
       });
       const blob = new Blob([file.data], { type: "application/pdf;base64" });
@@ -235,6 +239,10 @@ export default {
               this.$store.getters.getPhysician.digital_signature,
             patient: this.$store.getters.getPatient._id,
             responsible: this.$store.getters.getPhysician._id,
+            pat_name: this.pat_name,
+            pat_age: this.pat_age,
+            pat_exp: this.num_exp,
+            date: this.date,
           },
         });
         this.loading_reference = false;
@@ -255,7 +263,7 @@ export default {
         console.log(error);
       }
     },
-    async show_reference(pos,item) {
+    async show_reference(pos, item) {
       this.validateStepper(pos);
       const file = await getImage(item.pdf, null);
       const blob = new Blob([file.data], { type: "application/pdf;base64" });

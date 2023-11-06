@@ -32,7 +32,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  label="Diagnostico o Pronostico"
+                  :label="column == '1' ? 'Diagnóstico' : 'Procedimiento'"
                   v-model="diagnosis"
                   :rules="[rules.required]"
                 ></v-text-field>
@@ -84,7 +84,7 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Hoja de Referencia Médica</v-toolbar-title>
+          <v-toolbar-title>Constancia de Incapacidad</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text style="padding: 0; height: 93vh; background-color: grey">

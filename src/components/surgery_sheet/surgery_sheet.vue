@@ -31,7 +31,7 @@
               {{ pat_age }}
             </v-flex>
             <v-flex xs3>
-              {{ pat_gender == "male" ? "Masculino" : "Femenino" }}
+              {{ pat_gender }}
             </v-flex>
             <v-flex xs3 style="margin-left: -8%">
               <b>Diagnostico:</b>
@@ -335,7 +335,7 @@ export default {
             num_exp: this.num_exp,
             pat_name: this.pat_name,
             pat_age: this.pat_age,
-            pat_gender: this.pat_gender == "male" ? "Masculino" : "Femenino",
+            pat_gender: this.pat_gender,
             diagnosis: this.diagnosis,
             surgery: this.surgery,
             resumen_history: this.resumen_history,
@@ -416,13 +416,15 @@ export default {
       " " +
       this.$store.getters.getPhysician.surname;
     this.physician_specialty = this.$store.getters.getPhysician.role;
-    const file = await getImage(
-      this.$store.getters.getPhysician.digital_signature,
-      null
-    );
-    const blob = new Blob([file.data], { type: "image/png;base64" });
-    const link = window.URL.createObjectURL(blob);
-    this.physician_signature = link;
+    if (this.$store.getters.getPhysician.digital_signature) {
+      const file = await getImage(
+        this.$store.getters.getPhysician.digital_signature,
+        null
+      );
+      const blob = new Blob([file.data], { type: "image/png;base64" });
+      const link = window.URL.createObjectURL(blob);
+      this.physician_signature = link;
+    }
 
     const { idQflow, forename, surname, birthdate, gender } =
       this.$store.getters.getPatient;
@@ -431,10 +433,10 @@ export default {
     this.pat_age = moment().diff(birthdate, "years");
     this.pat_gender = gender;
     const result = await getLastConsultation({
-      person: this.$store.getters.getPatient._id,
+      body: { person: this.$store.getters.getPatient._id },
     });
     const person_data_phy = await getPerson({
-      _id: result.responsableConsultation,
+      body:{_id: result.responsableConsultation,}
     });
     this.physician_history_id = person_data_phy._id;
     this.history_id = result._id;
