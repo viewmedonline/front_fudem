@@ -87,20 +87,27 @@
                           @blur="date = parseDate(dateFormatted)"
                         ></v-text-field> -->
                       </v-flex>
-                      <v-flex xs6>
+                      <v-flex xs4>
                         <v-text-field
                           label="FR. Cardiaca"
                           v-model="heart_rate"
                           :rules="[rules.required]"
                         ></v-text-field>
                       </v-flex>
-                      <v-flex xs6>
+                      <v-flex xs4>
                         <v-text-field
                           label="T/A"
                           v-model="blood_pressure"
                           :rules="[rules.required]"
                         ></v-text-field>
                       </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          label="HGT"
+                          v-model="hgt"
+                          :rules="[rules.required]"
+                        ></v-text-field>
+                      </v-flex>                      
                     </v-layout>
                   </v-container>
                 </v-card-text>
@@ -217,18 +224,25 @@
                 prepend-icon="event"
               ></v-text-field>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs4>
               <v-text-field
                 disabled
                 label="FR. Cardiaca"
                 v-model="data_sheet.heart_rate"
               ></v-text-field>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs4>
               <v-text-field
                 disabled
                 label="T/A"
                 v-model="data_sheet.blood_pressure"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs4>
+              <v-text-field
+                disabled
+                label="HGT"
+                v-model="data_sheet.hgt"
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -470,6 +484,7 @@ export default {
     close_sheet: false,
     pdf_document:null,
     user_admin: "",
+    hgt: "",
   }),
   watch: {
     time_picker(val) {
@@ -565,6 +580,7 @@ export default {
           pat_age: moment().diff(this.patient.birthdate, "years"),
           heart_rate: item.heart_rate,
           blood_pressure: item.blood_pressure,
+          hgt: item.hgt,
           notes_nurses: item.notes_nurses,
         };
         this.show_notes = true;
@@ -605,6 +621,7 @@ export default {
             heart_rate: this.heart_rate,
             date_sheet: moment(this.date_sheet_input, "DD/MM/YYYY"),
             blood_pressure: this.blood_pressure,
+            hgt: this.hgt,
           };
           await addSheetNurse(obj_sheet);
 
@@ -619,6 +636,7 @@ export default {
     clear() {
       this.blood_pressure = "";
       this.heart_rate = "";
+      this.hgt = "";
       this.date_sheet_input = moment().format("DD/MM/YYYY");
       this.date_sheet_picker = moment().format("YYYY-MM-DD");
     },
