@@ -474,7 +474,7 @@ export default {
             //resolve()
             if (this.storeConsultation.objPreliminary) {
               this.retinal_photo =
-                this.storeConsultation.objPreliminary.data.retinal_photo == "S"
+                this.storeConsultation.objPreliminary.data.retinal_photo == "Si"
                   ? true
                   : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
             }

@@ -75,7 +75,7 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab-item>
+      <v-tab-item >
         <v-card flat>
           <v-card-text>
             <v-layout row wrap>
@@ -225,11 +225,12 @@ export default {
       users: [],
       userId: null,
       tab: 0,
-      items: ["Firma Digital", "ICD-10"],
+      items: ["Firma Digital"],
       diagnosis: [],
       diagnosisSelected: null,
       diagnosis_txt: "",
       add_diagnosis: false,
+      user_admin:false
     };
   },
   methods: {
@@ -397,6 +398,11 @@ export default {
     }
   },
   created() {
+    this.user_admin = this.$store.getters.getPhysician.user.idUserFudem == 'PRUEBAOFTA' ? true : false;
+    if(this.user_admin){
+      this.items.push("ICD-10")
+    }
+
     this.getUserList();
   },
   mounted() {

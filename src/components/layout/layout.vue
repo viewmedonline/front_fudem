@@ -27,7 +27,7 @@
         <img src="../../assets/img/Logo-Viewmed.svg" aspect-ratio="1">
       </v-toolbar-title> 
       <v-spacer></v-spacer>
-      <div v-if="storePhysician.role == 'Institution'">
+      <div v-if="storePhysician.role == 'Institution' || user_admin">
         <v-menu offset-y>
           <v-btn slot="activator" icon>
             <v-icon>more_vert</v-icon>
@@ -273,14 +273,14 @@ export default {
     dialogToken: false,
     dialogPhy: false,
     dialogSucursal:false,
-    dialogSucursalExist: false
+    dialogSucursalExist: false,
+    user_admin: false
   }),
   beforeCreate() {
     if(this.$route.query.c)
       this.$route.query.c = this.$route.query.c.toUpperCase()
   },
   created() {
-
     this.$store.commit({
       type: "showTypeConsulting",
       state: this.$route.query.c
@@ -433,6 +433,7 @@ export default {
                   state: result2
                 });
               }
+              this.user_admin = this.$store.getters.getPhysician.user.idUserFudem == 'PRUEBAOFTA' ? true : false;
               if(this.$route.query.p && this.$route.query.c != 'R'){
                 // Validacion de Consulta en Progreso
                 this.getConsultationProgress()
