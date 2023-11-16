@@ -300,7 +300,7 @@ import * as consultationServ from '@/componentServs/consultation'
                     // if (this.levelDx == 0) {
                     //     this.listDiagnoses = result.filter(item => {return item.code == 'H00-H59'})
                     // } else this.listDiagnoses = result
-                    this.listDiagnoses = result
+                    this.listDiagnoses = result.filter((x)=> !x.disable)
                 })
                 .catch(error => {
                     console.log("error: ", error)

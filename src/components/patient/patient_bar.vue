@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card style="position: fixed; max-width: 25%; width: 20%">
+    <v-card class="vcard">
       <v-card-title primary-title class="vm-bg-patient"></v-card-title>
       <v-divider light></v-divider>
       <v-card-text>
@@ -9,27 +9,19 @@
         </v-avatar>
         <br />
         <div>
-          <span class="body-2 patient--text"
-            >{{ storePatient.forename }} {{ storePatient.surname }}</span
-          >
+          <span class="body-2 patient--text">{{ storePatient.forename }} {{ storePatient.surname }}</span>
         </div>
         <div>
           <span class="title">{{ storePatient.idQflow }}</span>
         </div>
         <div>
-          <span class="caption"
-            >{{ $t("title.gender") }}:
+          <span class="caption">{{ $t("title.gender") }}:
             <span v-if="storePatient.gender">{{ storePatient.gender }} / </span>
-            <span v-if="storePatient.birthdate"
-              >{{ age(storePatient.birthdate) }} {{ $t("title.years") }}</span
-            ></span
-          >
+            <span v-if="storePatient.birthdate">{{ age(storePatient.birthdate) }} {{ $t("title.years") }}</span></span>
         </div>
         <div v-if="storePatient.birthdate">
-          <span class="caption"
-            >{{ $t("title.birthdate") }}:
-            {{ date(storePatient.birthdate) }}</span
-          >
+          <span class="caption">{{ $t("title.birthdate") }}:
+            {{ date(storePatient.birthdate) }}</span>
         </div>
         <v-list class="pt-1">
           <v-list-tile @click="fixedCompst('patient_form')">
@@ -44,9 +36,7 @@
           </v-list-tile>
           <v-list-tile @click="fixedCompst('consultation')">
             <v-list-tile-content>
-              <v-list-tile-title v-if="$route.query.c == 'H'"
-                >Historial</v-list-tile-title
-              >
+              <v-list-tile-title v-if="$route.query.c == 'H'">Historial</v-list-tile-title>
               <v-list-tile-title v-else>{{
                 $t("title.consultation")
               }}</v-list-tile-title>
@@ -73,23 +63,16 @@
               <v-icon>create</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile
-            @click="fixedCompst('internist_evaluation_sheet')"
-            v-if="storePhysician.role == 'internist'"
-          >
+          <v-list-tile @click="fixedCompst('internist_evaluation_sheet')" v-if="storePhysician.role == 'internist'">
             <v-list-tile-content>
-              <v-list-tile-title
-                >Hoja de Evaluación MI</v-list-tile-title
-              >
+              <v-list-tile-title>Hoja de Evaluación MI</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile
-            @click="fixedCompst('nursing_sheet')"
-            v-if="storePhysician.role == 'nurse' || user_admin == 'PRUEBAOFTA'"
-          >
+          <v-list-tile @click="fixedCompst('nursing_sheet')"
+            v-if="storePhysician.role == 'nurse' || user_admin == 'PRUEBAOFTA'">
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Enfermeria</v-list-tile-title>
             </v-list-tile-content>
@@ -97,10 +80,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile
-            @click="fixedCompst('surgery_sheet')"
-            v-if="storePhysician.role == 'ophthalmologist'"
-          >
+          <v-list-tile @click="fixedCompst('surgery_sheet')" v-if="storePhysician.role == 'ophthalmologist'">
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Cirugía</v-list-tile-title>
             </v-list-tile-content>
@@ -108,13 +88,9 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile
-            @click="fixedCompst('reference_sheet')"
-            v-if="
-              storePhysician.role == 'internist' ||
-              storePhysician.role == 'ophthalmologist'
-            "
-          >
+          <v-list-tile @click="fixedCompst('reference_sheet')" v-if="storePhysician.role == 'internist' ||
+            storePhysician.role == 'ophthalmologist'
+            ">
             <v-list-tile-content>
               <v-list-tile-title v-if="storePhysician.role == 'internist'">Hoja de Referencia MI</v-list-tile-title>
               <v-list-tile-title v-else>Hoja de Referencia</v-list-tile-title>
@@ -123,12 +99,8 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile
-            @click="fixedCompst('constancy_disability')"
-            v-if="
-              storePhysician.role == 'ophthalmologist'
-            "
-          >
+          <v-list-tile @click="fixedCompst('constancy_disability')" v-if="storePhysician.role == 'ophthalmologist'
+            ">
             <v-list-tile-content>
               <v-list-tile-title>Constancia de Incapacidad</v-list-tile-title>
             </v-list-tile-content>
@@ -136,15 +108,8 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-textarea
-            box
-            v-model="historyClinic"
-            :readonly="!storePhysician.user.role ? true : false"
-            name="input-7-4"
-            label="Resumen"
-            @change="saveHistory()"
-            :value="storePatient.historyClinic"
-          ></v-textarea>
+          <v-textarea box v-model="historyClinic" :readonly="!storePhysician.user.role ? true : false" name="input-7-4"
+            label="Resumen" @change="saveHistory()" :value="storePatient.historyClinic"></v-textarea>
         </v-list>
       </v-card-text>
     </v-card>
@@ -152,11 +117,7 @@
       <v-card color="primary" dark>
         <v-card-text>
           Guardando
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -171,7 +132,7 @@ export default {
   data: () => ({
     historyClinic: null,
     saveHistoryDialog: false,
-    user_admin : ""
+    user_admin: ""
   }),
   methods: {
     saveHistory() {
@@ -289,4 +250,19 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.vcard {
+  position: fixed;
+  max-width: 25%;
+  width: 20%;
+}
+
+/* Ajusta el estilo cuando el ancho de la ventana del navegador sea 600px o menos */
+@media screen and (max-height: 830px) {
+  .vcard {
+    position: absolute;
+    max-width: 25%;
+    width: 20%;
+  }
+}
+</style>
