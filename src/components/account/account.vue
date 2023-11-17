@@ -87,7 +87,7 @@
                 <v-btn style="margin-left: 5px" color="primary" @click="saveDiagnosis" large>
                   Guardar Diagnóstico
                 </v-btn>
-                <v-btn :color="diagnosisSelected.disable ? 'green' : 'red'" @click="disabledDiagnoses" large>{{diagnosisSelected.disable ? "Habilitar" : "Deshabilitar"}}</v-btn>
+                <v-btn v-if="diagnosisSelected" :color="diagnosisSelected.disable ? 'green' : 'red'" @click="disabledDiagnoses" large>{{diagnosisSelected.disable ? "Habilitar" : "Deshabilitar"}}</v-btn>
 
                 <v-btn @click="clearDiagnoses" large>Cancelar</v-btn>
               </v-flex>
