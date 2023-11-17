@@ -3,14 +3,20 @@
     <!-- <v-form autocomplete="off"> -->
     <v-card class="mx-auto elevation-0 blue-grey lighten-5">
       <v-card-title class="title font-weight-regular justify-space-between">
-        <div v-if="storeConsultation.objOptometrist && storeConsultation.objOptometrist.data">
+        <div
+          v-if="
+            storeConsultation.objOptometrist &&
+            storeConsultation.objOptometrist.data
+          "
+        >
           {{ physicianEval }}
         </div>
         <div v-else>
-          {{$store.state.physician.forename}} {{$store.state.physician.surname}}
+          {{ $store.state.physician.forename }}
+          {{ $store.state.physician.surname }}
         </div>
         <div>
-          <span>{{ $t('title.step') }}&nbsp;</span>
+          <span>{{ $t("title.step") }}&nbsp;</span>
           <v-avatar
             color="primary lighten-2"
             class="subheading white--text"
@@ -25,46 +31,81 @@
       <v-window v-model="paso">
         <v-window-item :value="0">
           <antecedent class="px-2 py-2" ref="antecedentRef"></antecedent>
-          <general_data_opt class="px-2 py-2" ref="generalDataOptRef"></general_data_opt>
+          <general_data_opt
+            class="px-2 py-2"
+            ref="generalDataOptRef"
+          ></general_data_opt>
         </v-window-item>
         <v-window-item :value="1">
-          <visual_acuity_opt class="px-2 py-2" ref="visualAcuityRef"></visual_acuity_opt>
-          <autorefraction_a class="px-2 py-2" ref="autoRefractionRef"></autorefraction_a>
+          <visual_acuity_opt
+            class="px-2 py-2"
+            ref="visualAcuityRef"
+          ></visual_acuity_opt>
+          <autorefraction_a
+            class="px-2 py-2"
+            ref="autoRefractionRef"
+          ></autorefraction_a>
           <keratometry class="px-2 py-2" ref="keratometryRef"></keratometry>
           <lensometry class="px-2 py-2" ref="lensometryRef"></lensometry>
         </v-window-item>
         <v-window-item :value="2">
-          
           <refraction class="px-2 py-2" ref="refractionRef"></refraction>
-          <rx_final_glasses class="px-2 py-2" ref="rxFinalGlassesRef"></rx_final_glasses>
+          <rx_final_glasses
+            class="px-2 py-2"
+            ref="rxFinalGlassesRef"
+          ></rx_final_glasses>
         </v-window-item>
         <v-window-item :value="3">
-          <rx_final_contact_lenses class="px-2 py-2" ref="rxFinalContactLensesRef"></rx_final_contact_lenses>
-          <rx_final_far_vision class="px-2 py-2" ref="rxFinalFarVisionRef"></rx_final_far_vision>
-          <rx_final_next_vision class="px-2 py-2" ref="rxFinalNextVisionRef"></rx_final_next_vision>
-          <rx_final_intermediate class="px-2 py-2" ref="rxFinalIntermediateVisionRef"></rx_final_intermediate>
+          <rx_final_contact_lenses
+            class="px-2 py-2"
+            ref="rxFinalContactLensesRef"
+          ></rx_final_contact_lenses>
+          <rx_final_far_vision
+            class="px-2 py-2"
+            ref="rxFinalFarVisionRef"
+          ></rx_final_far_vision>
+          <rx_final_next_vision
+            class="px-2 py-2"
+            ref="rxFinalNextVisionRef"
+          ></rx_final_next_vision>
+          <rx_final_intermediate
+            class="px-2 py-2"
+            ref="rxFinalIntermediateVisionRef"
+          ></rx_final_intermediate>
         </v-window-item>
         <v-window-item :value="4">
           <diagnosis class="px-2 py-2" ref="diagnosisRef"></diagnosis>
+          <retinalCamera
+            v-if="retinal_photo"
+            class="px-2 py-2"
+            ref="retinalCameraRef"
+            title="Hallazgo en fotografía"
+          ></retinalCamera>
         </v-window-item>
       </v-window>
 
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn :disabled="paso === 0" flat @click="back()">{{$t('title.back')}}</v-btn>
+        <v-btn :disabled="paso === 0" flat @click="back()">{{
+          $t("title.back")
+        }}</v-btn>
         <v-spacer>
           <v-item-group v-model="paso" class="text-xs-center" mandatory>
             <v-item v-for="n in total" :key="`btn-${n}`">
               <v-btn
                 slot-scope="{ active, toggle }"
-                :color="active ? 'primary' : 'blue-grey lighten-4' "
+                :color="active ? 'primary' : 'blue-grey lighten-4'"
                 :input-value="active"
                 icon
                 @click="toggle, paginationChange(n)"
               >
                 <!-- Si se quieren saltas los pasos en ves de "paginationChange" colocar "paso - 1" -->
-                <v-avatar class="subheading white--text" size="32" v-text="n"></v-avatar>
+                <v-avatar
+                  class="subheading white--text"
+                  size="32"
+                  v-text="n"
+                ></v-avatar>
               </v-btn>
             </v-item>
           </v-item-group>
@@ -75,7 +116,8 @@
           :loading="loading"
           @click="buttonNext"
           :disabled="storePhysician.role != 'optometrist' && paso == total - 1"
-        >{{ paso < total - 1 ? $t('title.next') : $t('title.save')}}</v-btn>
+          >{{ paso < total - 1 ? $t("title.next") : $t("title.save") }}</v-btn
+        >
       </v-card-actions>
     </v-card>
     <!-- </v-form> -->
@@ -84,73 +126,55 @@
     <v-dialog v-model="alert" hide-overlay persistent width="300">
       <v-card :color="alertColor" dark>
         <v-card-text>
-          {{alertMsg}}
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          {{ alertMsg }}
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
 
     <!-- Atention Alert -->
-    <v-dialog
-      v-model="dialog"
-      width="500"
-      persistent
-    >
+    <v-dialog v-model="dialog" width="500" persistent>
       <v-card>
-        <v-card-title
-          class="headline grey lighten-2"
-          primary-title
-        >
-          {{$t('title.attention')}}
+        <v-card-title class="headline grey lighten-2" primary-title>
+          {{ $t("title.attention") }}
         </v-card-title>
 
         <v-card-text>
-          {{$t('content.msg_without_preliminary')}}
+          {{ $t("content.msg_without_preliminary") }}
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-            @click="dialogError('dialog')"
-          >
-            {{$t('title.agree')}}
+          <v-btn color="primary" flat @click="dialogError('dialog')">
+            {{ $t("title.agree") }}
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  
+
     <!-- Dialog Error -->
-    <v-dialog
-      v-model="dialogErr"
-      width="500"
-      persistent
-    >
+    <v-dialog v-model="dialogErr" width="500" persistent>
       <v-card>
-        <v-card-title
-          class="headline grey lighten-2"
-          primary-title
-        >
-          {{$t('title.attention')}}
+        <v-card-title class="headline grey lighten-2" primary-title>
+          {{ $t("title.attention") }}
         </v-card-title>
 
         <v-card-text>
-          {{$t('title.an_error_has_occurred')}}
+          {{ $t("title.an_error_has_occurred") }}
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-            @click="dialogError('dialogErr', true)"
-          >
-            {{$t('title.accepted')}}
+          <v-btn color="primary" flat @click="dialogError('dialogErr', true)">
+            {{ $t("title.accepted") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -182,7 +206,10 @@ const rx_final_next_vision = () =>
 const rx_final_intermediate = () =>
   import("@/components/electronic_record/rx_final_intermediate");
 const diagnosis = () => import("@/components/electronic_record/diagnosis");
-const endConsultation = () => import("@/components/electronic_record/end_consultation");
+const endConsultation = () =>
+  import("@/components/electronic_record/end_consultation");
+const retinalCamera = () =>
+  import("@/components/electronic_record/retinal_camera");
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -197,7 +224,7 @@ export default {
     total: 5, // Define la cantidad de pasos
     lastValidate: 0,
     consultation: {
-      record: {}
+      record: {},
     },
     loading: false,
     alert: false,
@@ -206,38 +233,37 @@ export default {
     insertAntecedent: true,
     dialog: false,
     dialogErr: false,
-    physicianEval: null
+    physicianEval: null,
+    retinal_photo: null,
   }),
   methods: {
-    saveBrandLenses(consulting){
+    saveBrandLenses(consulting) {
       let objAux = {
-        idPerson : consulting.person,
-        body:{
+        idPerson: consulting.person,
+        body: {
           brandLenses: {
-            ojoDer:consulting.rxFinalLentesContacto.ojoDer.brand,
-            ojoIzq:consulting.rxFinalLentesContacto.ojoIzq.brand
-          }
-        }
-      }
+            ojoDer: consulting.rxFinalLentesContacto.ojoDer.brand,
+            ojoIzq: consulting.rxFinalLentesContacto.ojoIzq.brand,
+          },
+        },
+      };
       personServ
-      .updatePerson(objAux)
-      .then(resultUpdPerson => {
-        
-      })
-      .catch(err => {
-        console.log("error: ", err);
-        reject();
-      });
+        .updatePerson(objAux)
+        .then((resultUpdPerson) => {})
+        .catch((err) => {
+          console.log("error: ", err);
+          reject();
+        });
     },
-    dialogError (dialog, reload = false) {
-      this[dialog] = false
-      EventBus.$emit('offValidateClose', true)
+    dialogError(dialog, reload = false) {
+      this[dialog] = false;
+      EventBus.$emit("offValidateClose", true);
       if (reload) location.reload();
-      else window.close()
+      else window.close();
     },
     paginationChange(paso) {
-      window.setTimeout(function() {
-        this.scrollTo(0,0)
+      window.setTimeout(function () {
+        this.scrollTo(0, 0);
       }, 500);
       paso--;
       paso--;
@@ -252,51 +278,52 @@ export default {
         this.paso = paso;
       }
     },
-    back(){
-      this.paso--
-      window.setTimeout(function() {
-        this.scrollTo(0,0)
+    back() {
+      this.paso--;
+      window.setTimeout(function () {
+        this.scrollTo(0, 0);
       }, 500);
     },
     buttonNext() {
       // console.log(this.paso)
       if (this.paso <= this.total) {
-        window.setTimeout(function() {
-          this.scrollTo(0,0)
+        window.setTimeout(function () {
+          this.scrollTo(0, 0);
         }, 500);
 
         // Condicion colocado para no reiniciar el conteo de los pasos
         this.validateNextOrSave()
-          .then(result => {
+          .then((result) => {
             if (result == "ok") this.saveOptometrist();
             else this.paso++;
           })
-          .catch(err => {});
+          .catch((err) => {});
       }
     },
     getAntecedent() {
       if (this.$store.getters.getPatient.record) {
         let objAux = {
           idRecord: this.$store.getters.getPatient.record,
-          token: null
+          token: null,
         };
 
-        recordServ.getAntecedent(objAux)
-          .then(result => {
+        recordServ
+          .getAntecedent(objAux)
+          .then((result) => {
             // console.log("antecedentes guardados: ", result)
             if (result) {
               this.$store.commit({
                 type: "consultation",
-                state: { record: result }
+                state: { record: result },
               });
               setTimeout(() => {
                 this.setAntecedentData();
-              }, 500)
+              }, 500);
             }
           })
-          .catch(err => {
-            this.dialogErr = true
-          })
+          .catch((err) => {
+            this.dialogErr = true;
+          });
       }
     },
     validateNextOrSave() {
@@ -308,33 +335,35 @@ export default {
             //resolve()
             this.$refs.antecedentRef
               .saveAntecedent()
-              .then(result => {
+              .then((result) => {
                 this.consultation.record.antecedent = result;
 
                 this.$refs.generalDataOptRef
                   .saveGeneralDataOpt()
-                  .then(result => {
-                    if (this.consultation.reasonConsultation){
-                      this.consultation.reasonConsultation = result.reasonConsultation
-                    } 
+                  .then((result) => {
+                    if (this.consultation.reasonConsultation) {
+                      this.consultation.reasonConsultation =
+                        result.reasonConsultation;
+                    }
                     if (this.consultation.generalData) {
-                      this.consultation.generalData.typeLense = result.typeLense
+                      this.consultation.generalData.typeLense =
+                        result.typeLense;
                     }
 
                     if (this.paso > this.lastValidate) this.lastValidate = 0;
                     resolve();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$refs.generalDataOptRef
                   .saveGeneralDataOpt()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
               });
@@ -343,72 +372,69 @@ export default {
             //resolve()
             this.$refs.visualAcuityRef
               .saveVisualAcuity()
-              .then(result => {
+              .then((result) => {
                 this.consultation.agudezaVisualOPT = result;
 
                 this.$refs.autoRefractionRef
                   .saveAutoRefractionA()
-                  .then(result => {
+                  .then((result) => {
                     this.consultation.autorefraccionA = result;
                     this.$refs.keratometryRef
                       .saveKeratometry()
-                      .then(result => {
+                      .then((result) => {
                         this.consultation.queratometria = result;
                         this.$refs.lensometryRef
-                        .saveLensometry()
-                        .then(result => {
-                          this.consultation.lensometria = result;
-                          if (this.paso > this.lastValidate)
-                            this.lastValidate = 1;
-                            
-                            resolve();
+                          .saveLensometry()
+                          .then((result) => {
+                            this.consultation.lensometria = result;
+                            if (this.paso > this.lastValidate)
+                              this.lastValidate = 1;
 
-                        })
-                        .catch(err => {
-                          reject();
-                        });
-                        
+                            resolve();
+                          })
+                          .catch((err) => {
+                            reject();
+                          });
                       })
-                      .catch(err => {
+                      .catch((err) => {
                         reject();
                       });
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     this.$refs.lensometryRef
-                    .saveLensometry()
-                    .then(result => {
-                      reject();
-                    })
-                    .catch(err => {
-                      reject();
-                    });
+                      .saveLensometry()
+                      .then((result) => {
+                        reject();
+                      })
+                      .catch((err) => {
+                        reject();
+                      });
                   });
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$refs.autoRefractionRef
                   .saveAutoRefractionA()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
 
                 this.$refs.keratometryRef
                   .saveKeratometry()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
                 this.$refs.lensometryRef
                   .saveLensometry()
-                  .then(result => {
+                  .then((result) => {
                     reject();
-
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
               });
@@ -417,122 +443,127 @@ export default {
             //resolve()
             this.$refs.refractionRef
               .saveRefraction()
-              .then(result => {
+              .then((result) => {
                 this.consultation.refraccion = result;
                 this.$refs.rxFinalGlassesRef
                   .saveRxFinalGlasses()
-                  .then(result => {
+                  .then((result) => {
                     this.consultation.rxFinalGafas = result;
 
-                    if (this.paso > this.lastValidate)
-                      this.lastValidate = 2;
+                    if (this.paso > this.lastValidate) this.lastValidate = 2;
                     resolve();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     // console.log("error: ", err)
                     reject();
                   });
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$refs.rxFinalGlassesRef
                   .saveRxFinalGlasses()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
               });
-              
+
             break;
           case 3:
             //resolve()
+            if (this.storeConsultation.objPreliminary) {
+              this.retinal_photo =
+                this.storeConsultation.objPreliminary.data.retinal_photo == "Si"
+                  ? true
+                  : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
+            }
+
             this.$refs.rxFinalContactLensesRef
               .saveRxFinalContactLenses()
-              .then(result => {
+              .then((result) => {
                 this.consultation.rxFinalLentesContacto = result;
-                
 
                 this.$refs.rxFinalFarVisionRef
                   .saveRxFinalFarVision()
-                  .then(result => {
+                  .then((result) => {
                     this.consultation.rxFinalVisionLejano = result;
 
                     this.$refs.rxFinalNextVisionRef
                       .saveRxFinalNearVision()
-                      .then(result => {
+                      .then((result) => {
                         this.consultation.rxFinalVisionProxima = result;
 
                         this.$refs.rxFinalIntermediateVisionRef
                           .saveRxFinalIntermediateVision()
-                          .then(result => {
+                          .then((result) => {
                             this.consultation.rxFinalVisionIntermedia = result;
 
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 3;
                             resolve();
                           })
-                          .catch(err => {
+                          .catch((err) => {
                             // console.log("error: ", err)
                             reject();
                           });
                       })
-                      .catch(err => {
+                      .catch((err) => {
                         this.$refs.rxFinalIntermediateVisionRef
                           .saveRxFinalIntermediateVision()
-                          .then(result => {
+                          .then((result) => {
                             reject();
                           })
-                          .catch(err => {
+                          .catch((err) => {
                             reject();
                           });
                       });
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     this.$refs.rxFinalNextVisionRef
                       .saveRxFinalNearVision()
-                      .then(result => {
+                      .then((result) => {
                         reject();
                       })
-                      .catch(err => {
+                      .catch((err) => {
                         reject();
                       });
 
                     this.$refs.rxFinalIntermediateVisionRef
                       .saveRxFinalIntermediateVision()
-                      .then(result => {
+                      .then((result) => {
                         reject();
                       })
-                      .catch(err => {
+                      .catch((err) => {
                         reject();
                       });
                   });
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$refs.rxFinalFarVisionRef
                   .saveRxFinalFarVision()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
 
                 this.$refs.rxFinalNextVisionRef
                   .saveRxFinalNearVision()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
 
                 this.$refs.rxFinalIntermediateVisionRef
                   .saveRxFinalIntermediateVision()
-                  .then(result => {
+                  .then((result) => {
                     reject();
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject();
                   });
               });
@@ -540,16 +571,20 @@ export default {
           case 4:
             this.$refs.diagnosisRef
               .saveDiagnosis()
-              .then(result => {
-                
-                this.consultation.observationsOphthalmology = result.observationsOphthalmology
-                this.consultation.diagnosticoObservaciones = result.diagnosticoObservaciones
-                this.consultation.receta = result.receta
-                
+              .then(async (result) => {
+                this.consultation.observationsOphthalmology =
+                  result.observationsOphthalmology;
+                this.consultation.diagnosticoObservaciones =
+                  result.diagnosticoObservaciones;
+                if (this.retinal_photo)
+                  this.consultation.discovery_in_photography =
+                    await this.$refs.retinalCameraRef.saveRetinalCamera();
+                this.consultation.receta = result.receta;
+
                 if (this.paso > this.lastValidate) this.lastValidate = 4;
                 resolve("ok");
               })
-              .catch(err => {
+              .catch((err) => {
                 // console.log("error: ", err)
                 reject();
               });
@@ -561,12 +596,10 @@ export default {
       if (!this.storeConsultation._id) {
         try {
           this.getAntecedent();
+        } catch (error) {
+          this.dialogErr = true;
         }
-        catch(error) {
-          this.dialogErr = true
-        }
-      }
-      else {
+      } else {
         setTimeout(() => {
           try {
             this.insertAntecedent = false;
@@ -574,98 +607,96 @@ export default {
               this.setAntecedentData();
               setTimeout(() => {
                 this.setConsultationData();
-              }, 500)
-            }, 500)
-          }
-          catch(error) {
+              }, 500);
+            }, 500);
+          } catch (error) {
             // console.log("Error en Optometria: ", error)
-            this.dialogErr = true
+            this.dialogErr = true;
           }
         }, 1000);
       }
     },
-    createObjOptometrist (objAux) {
+    createObjOptometrist(objAux) {
       return new Promise((resolve, reject) => {
         // Nuevo objeto para guardar la informacion de preliminares
-        let objOptometristAux = {}
+        let objOptometristAux = {};
 
         // Atributos del esquema de consulta a excluir dentro del objOptometrist
         let exclude = [
-          'objPreliminary',
-          'objOphthalmology',
+          "objPreliminary",
+          "objOphthalmology",
           //'objOptometrist'
-        ]
+        ];
 
         // Funcion async para controlar la ejecucion del ciclo y mantener la integridad de la funcion
-        async function createObjOptometristAsync (body, vm) {
+        async function createObjOptometristAsync(body, vm) {
           for (let i in body) {
-            if (!exclude.includes( i )) {
-              objOptometristAux[i] = body[i]
+            if (!exclude.includes(i)) {
+              objOptometristAux[i] = body[i];
             }
           }
 
           body.objOptometrist = {
-            data: objOptometristAux
-          }
+            data: objOptometristAux,
+          };
 
           if (objOptometristAux.objOptometrist) {
             objOptometristAux.objOptometrist.control.active = true;
-            objOptometristAux.objOptometrist.control.updated_at = moment().toISOString();
-            objOptometristAux.objOptometrist.control.updated_by = vm.$store.getters.getPhysician._id;
+            objOptometristAux.objOptometrist.control.updated_at =
+              moment().toISOString();
+            objOptometristAux.objOptometrist.control.updated_by =
+              vm.$store.getters.getPhysician._id;
 
-            body.objOptometrist.control = objOptometristAux.objOptometrist.control
+            body.objOptometrist.control =
+              objOptometristAux.objOptometrist.control;
           }
-          
-
         }
 
-        createObjOptometristAsync(objAux.body, this)
-          .then(result => {
-            setTimeout(() => {
-              // console.log("termine de crear la parte de consulta: ", JSON.stringify(objAux.body.objPreliminary))
-              resolve()
-            }, 1000)
-          })
-
-      })
+        createObjOptometristAsync(objAux.body, this).then((result) => {
+          setTimeout(() => {
+            // console.log("termine de crear la parte de consulta: ", JSON.stringify(objAux.body.objPreliminary))
+            resolve();
+          }, 1000);
+        });
+      });
     },
     saveStoreConsultation(result) {
       return new Promise((resolve, reject) => {
         consultationServ
           .getConsultation({
             idConsultation: result._id,
-            token: null
+            token: null,
           })
-            .then(result => {
-              this.$store.commit({
-                type: 'consultation',
-                state: result
-              })
-              setTimeout(() => {
-                EventBus.$emit('preliminary', true);
-                EventBus.$emit('ophthalmologist', true);
-                EventBus.$emit('offValidateClose', true)
+          .then((result) => {
+            this.$store.commit({
+              type: "consultation",
+              state: result,
+            });
+            setTimeout(() => {
+              EventBus.$emit("preliminary", true);
+              EventBus.$emit("ophthalmologist", true);
+              EventBus.$emit("offValidateClose", true);
 
-                setTimeout(
-                  () => (
-                    (this.loading = false),
-                    (this.alertMsg = "Guardado"),
-                    (this.alertColor = "success")
-                  ),
-                  1000
-                );
-                setTimeout(() => {
-                  this.alert = false
-                  this.$refs.viewDialog.changeDialog()
-                  this.alertMsg = "Guardando...";
-                  this.alertColor = "primary";
-                }, 2000);
-                
-                resolve()
-              }, 500)
-            })
-            .catch(err => reject())
-      })
+              setTimeout(
+                () => (
+                  (this.loading = false),
+                  (this.alertMsg = "Guardado"),
+                  (this.alertColor = "success")
+                ),
+                1000
+              );
+              setTimeout(() => {
+                this.alert = false;
+                this.$refs.viewDialog.changeDialog();
+                this.alertMsg = "Guardando...";
+                this.alertColor = "primary";
+              }, 2000);
+
+              resolve();
+            }, 500);
+          })
+          .catch((err) => reject());
+      });
     },
     saveOptometrist() {
       //if (this.$refs.formDiagnosisRef.validate()) {
@@ -673,14 +704,18 @@ export default {
       this.loading = true;
       this.alert = true;
       this.consultation.person = this.$store.getters.getPatient._id;
-      this.consultation.sucursalId = this.storeSucursal
+      this.consultation.sucursalId = this.storeSucursal;
       let objAux = {
         body: this.consultation,
-        token: null
+        token: null,
       };
-      objAux.body.responsableConsultation = this.$store.getters.getPhysician._id;
-      if (!this.storeConsultation.typeConsultation && this.$store.getters.getTypeConsulting == 'E') {
-        objAux.body.typeConsultation = this.$store.getters.getTypeConsulting
+      objAux.body.responsableConsultation =
+        this.$store.getters.getPhysician._id;
+      if (
+        !this.storeConsultation.typeConsultation &&
+        this.$store.getters.getTypeConsulting == "E"
+      ) {
+        objAux.body.typeConsultation = this.$store.getters.getTypeConsulting;
       }
       if (this.storeConsultation._id) {
         objAux.idConsultation = this.storeConsultation._id;
@@ -689,59 +724,54 @@ export default {
         objAux.body.control.updated_at = moment().toISOString();
         objAux.body.control.updated_by = this.$store.getters.getPhysician._id;
 
-        
-        this.createObjOptometrist(objAux)
-          .then(result => {
-            consultationServ
-              .updatedConsultation(objAux)
-              .then(result => {
-                this.saveBrandLenses(this.consultation);
-                // console.log("Actualizo preliminares"
-                this.updateOrSaveAntecedents()
-                  .then(resultAntecedents => {
-
-                    this.saveStoreConsultation(result)
-                      .then(result => {})
-                      .catch(err => {})
-
-                  })
-                  .catch(err => {
-                    console.log(
-                      "No se pudo almacenar la informacion de los antecedentes"
-                    );
-                    this.alert = false
-                  });
-              })
-              .catch(err => {
-                console.log("No se registro optometria: ", err);
-                this.alert = false
-              });
-          })
-      } else {
-        this.createObjOptometrist(objAux)
-          .then(result => {
-            consultationServ
-              .saveConsultation(objAux)
-              .then(result => {
-                this.saveBrandLenses(this.consultation);
-                this.updateOrSaveAntecedents()
-                  .then(resultAntecedents => {
-                    this.saveStoreConsultation(result[0])
-                      .then(result => {})
-                      .catch(err => {})
-                  })
-                  .catch(err => {
-                    console.log(
-                      "No se pudo almacenar la informacion de los antecedentes"
-                    );
-                    this.alert = false
-                  });
-              })
-              .catch(err => {
-                console.log("No se registro optometria: ", err)
-                this.alert = false
-              });
+        this.createObjOptometrist(objAux).then((result) => {
+          consultationServ
+            .updatedConsultation(objAux)
+            .then((result) => {
+              this.saveBrandLenses(this.consultation);
+              // console.log("Actualizo preliminares"
+              this.updateOrSaveAntecedents()
+                .then((resultAntecedents) => {
+                  this.saveStoreConsultation(result)
+                    .then((result) => {})
+                    .catch((err) => {});
+                })
+                .catch((err) => {
+                  console.log(
+                    "No se pudo almacenar la informacion de los antecedentes"
+                  );
+                  this.alert = false;
+                });
             })
+            .catch((err) => {
+              console.log("No se registro optometria: ", err);
+              this.alert = false;
+            });
+        });
+      } else {
+        this.createObjOptometrist(objAux).then((result) => {
+          consultationServ
+            .saveConsultation(objAux)
+            .then((result) => {
+              this.saveBrandLenses(this.consultation);
+              this.updateOrSaveAntecedents()
+                .then((resultAntecedents) => {
+                  this.saveStoreConsultation(result[0])
+                    .then((result) => {})
+                    .catch((err) => {});
+                })
+                .catch((err) => {
+                  console.log(
+                    "No se pudo almacenar la informacion de los antecedentes"
+                  );
+                  this.alert = false;
+                });
+            })
+            .catch((err) => {
+              console.log("No se registro optometria: ", err);
+              this.alert = false;
+            });
+        });
       }
       //}
     },
@@ -752,37 +782,37 @@ export default {
       return new Promise((resolve, reject) => {
         let objAux = {
           body: this.consultation.record,
-          token: null
+          token: null,
         };
-        
+
         if (this.insertAntecedent) {
           recordServ
             .saveAntecedent(objAux)
-            .then(result => {
+            .then((result) => {
               // console.log("resultado del insert: ", result)
               objAux.idPerson = this.$store.getters.getPatient._id;
               objAux.body = { record: result._id };
               objAux.body.control = {
-                updated_at: moment().toISOString()
-              }
+                updated_at: moment().toISOString(),
+              };
               personServ
                 .updatePerson(objAux)
-                .then(resultUpdPerson => {
-                  let patient = this.$store.getters.getPatient
-                  patient.record = result._id
+                .then((resultUpdPerson) => {
+                  let patient = this.$store.getters.getPatient;
+                  patient.record = result._id;
 
                   this.$store.commit({
-                    type: 'patient',
-                    state: patient
-                  })
+                    type: "patient",
+                    state: patient,
+                  });
                   resolve();
                 })
-                .catch(err => {
+                .catch((err) => {
                   console.log("error: ", err);
                   reject();
                 });
             })
-            .catch(err => {
+            .catch((err) => {
               console.log("error: ", err);
               reject();
             });
@@ -790,24 +820,24 @@ export default {
           objAux.idRecord = this.$store.getters.getPatient.record;
 
           // Como el registro de la consulta guarda _id debo eliminarlo para no tener conflictos con el mongodb
-          if (objAux.body._id) { 
-            delete objAux.body._id
-            delete objAux.body.control
+          if (objAux.body._id) {
+            delete objAux.body._id;
+            delete objAux.body.control;
           }
 
           recordServ
             .updateAntecedent(objAux)
-            .then(result => {
+            .then((result) => {
               resolve();
             })
-            .catch(err => {
+            .catch((err) => {
               console.log("error: ", err);
               reject();
             });
         }
       });
     },
-    
+
     setConsultationData() {
       this.$refs.generalDataOptRef.setPersonData();
       this.$refs.visualAcuityRef.setVisualAcuity();
@@ -822,50 +852,56 @@ export default {
       this.$refs.rxFinalIntermediateVisionRef.setrxFinalVisionIntermedia();
       this.$refs.diagnosisRef.setDiagnostics();
 
-      this.consultation.objPreliminary = this.storeConsultation.objPreliminary
-      this.consultation.objOptometrist = this.storeConsultation.objOptometrist
-      this.consultation.objOphthalmology = this.storeConsultation.objOphthalmology
-      this.consultation.record = this.storeConsultation.record
-      this.consultation.generalData = this.storeConsultation.generalData
-      this.consultation.reasonConsultation = this.storeConsultation.reasonConsultation
+      this.consultation.objPreliminary = this.storeConsultation.objPreliminary;
+      this.consultation.objOptometrist = this.storeConsultation.objOptometrist;
+      this.consultation.objOphthalmology =
+        this.storeConsultation.objOphthalmology;
+      this.consultation.record = this.storeConsultation.record;
+      this.consultation.generalData = this.storeConsultation.generalData;
+      this.consultation.reasonConsultation =
+        this.storeConsultation.reasonConsultation;
 
       // console.log("entre: ", this.consultation)
-    }
+    },
   },
   created() {
-    if(this.storeConsultation.objOptometrist && this.storeConsultation.objOptometrist.data){
+    if (
+      this.storeConsultation.objOptometrist &&
+      this.storeConsultation.objOptometrist.data
+    ) {
       let objAux = new Object();
       objAux = {
-            body:{
-                _id: this.storeConsultation.objOptometrist.data.responsableConsultation
-            }
-        
-        };
-        
+        body: {
+          _id: this.storeConsultation.objOptometrist.data
+            .responsableConsultation,
+        },
+      };
+
       personServ
-      .getPerson(objAux)
-      .then(result => {
-        this.physicianEval = result.forename+" "+result.surname
-      })
-      .catch(error => {
-        this.closeSession(error);
-      });
+        .getPerson(objAux)
+        .then((result) => {
+          this.physicianEval = result.forename + " " + result.surname;
+        })
+        .catch((error) => {
+          this.closeSession(error);
+        });
     }
-    
+
     if (
-      this.typeConsultation == 'N' && 
-      this.storePhysician.role.toLowerCase() == 'optometrist'
+      this.typeConsultation == "N" &&
+      this.storePhysician.role.toLowerCase() == "optometrist"
     ) {
       if (!this.storeConsultation.objPreliminary) {
-        this.dialog = true
-      } else if (Object.keys(this.storeConsultation.objPreliminary).length < 2) {
-        this.dialog = true
+        this.dialog = true;
+      } else if (
+        Object.keys(this.storeConsultation.objPreliminary).length < 2
+      ) {
+        this.dialog = true;
       } else this.validateOptometrist();
-      
     } else this.validateOptometrist();
   },
-  mounted () {
-    EventBus.$on('optometrist', value => {
+  mounted() {
+    EventBus.$on("optometrist", (value) => {
       this.validateOptometrist();
     });
   },
@@ -883,7 +919,8 @@ export default {
     rx_final_next_vision,
     rx_final_intermediate,
     diagnosis,
-    endConsultation
+    endConsultation,
+    retinalCamera,
   },
   computed: {
     currentTitle() {
@@ -944,17 +981,16 @@ export default {
     storeConsultation() {
       return this.$store.getters.getConsultation;
     },
-    storePhysician () {
-	      return this.$store.getters.getPhysician  
-		},
-    typeConsultation () {
-      return this.$store.getters.getTypeConsulting  
+    storePhysician() {
+      return this.$store.getters.getPhysician;
     },
-    storeSucursal () {
-      return this.$store.getters.getSucursal  
-    }
-  }
+    typeConsultation() {
+      return this.$store.getters.getTypeConsulting;
+    },
+    storeSucursal() {
+      return this.$store.getters.getSucursal;
+    },
+  },
 };
 </script>
-<style>
-</style>
+<style></style>

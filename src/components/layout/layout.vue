@@ -44,7 +44,7 @@
         <img src="../../assets/img/Logo-Viewmed.svg" aspect-ratio="1" />
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="storePhysician.role == 'Institution'">
+      <div v-if="storePhysician.role == 'Institution' || user_admin">
         <v-menu offset-y>
           <v-btn slot="activator" icon>
             <v-icon>more_vert</v-icon>
@@ -90,7 +90,19 @@
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.nurse">
           <vmNursingSheet></vmNursingSheet>
-        </v-flex>
+        </v-flex>     
+        <v-flex xs12 sm9 v-if="dataStore.reference">
+          <vmReferenceSheet></vmReferenceSheet>
+        </v-flex>   
+        <v-flex xs12 sm9 v-if="dataStore.constancy_disability">
+          <vmConstancyDisability></vmConstancyDisability>
+        </v-flex>  
+        <v-flex xs12 sm9 v-if="dataStore.surgery_sheet">
+          <vmSurgerySheet></vmSurgerySheet>
+        </v-flex>       
+        <v-flex xs12 sm9 v-if="dataStore.internist_evaluation_sheet">
+          <VmInternistEvaluationSheet></VmInternistEvaluationSheet>
+        </v-flex>         
       </v-layout>
     </v-content>
 
@@ -210,8 +222,12 @@ const vmAccount = () => import("@/components/account/account");
 const vmImaging = () => import("@/components/imaging_form/imaging_form");
 const vmPatientform = () => import("@/components/patient/patient_form");
 const vmConstancy = () => import("@/components/history_form/history_cons");
-const vmReport = () => import("@/components/report/report");
-const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet");
+const vmReport = () => import ('@/components/report/report')
+const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
+const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sheet")
+const vmConstancyDisability = () => import("@/components/constancy_disability/constancy_disability")
+const vmSurgerySheet = () => import("@/components/surgery_sheet/surgery_sheet")
+const VmInternistEvaluationSheet = () => import("@/components/internist_evaluation_sheet/internist_evaluation_sheet")
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -231,6 +247,9 @@ export default {
     dialogSucursal: false,
     dialogSucursalExist: false,
     listSucursal: null,
+    dialogSucursal:false,
+    dialogSucursalExist: false,
+    user_admin: false
   }),
   beforeCreate() {
     if (this.$route.query.c)
@@ -345,6 +364,7 @@ export default {
       this.dataStore.patient = false;
       this.dataStore.consultation = false;
       this.dataStore.account = false;
+      this.dataStore.nurse = false;
       this.dataStore.imaging = false;
       this.dataStore.patient_form = false;
       this.dataStore.reports = false;
@@ -509,7 +529,8 @@ export default {
                   state: result2,
                 });
               }
-              if (this.$route.query.p && this.$route.query.c != "R") {
+              this.user_admin = this.$store.getters.getPhysician.user.idUserFudem == 'PRUEBAOFTA' ? true : false;
+              if(this.$route.query.p && this.$route.query.c != 'R'){
                 // Validacion de Consulta en Progreso
                 this.getConsultationProgress()
                   .then((result) => {
@@ -619,6 +640,10 @@ export default {
     vmConstancy,
     vmReport,
     vmNursingSheet,
+    vmReferenceSheet,
+    vmConstancyDisability,
+    vmSurgerySheet,
+    VmInternistEvaluationSheet
   },
   props: {
     source: String,

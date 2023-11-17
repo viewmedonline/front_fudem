@@ -531,7 +531,18 @@
                         </span>
                                     <span class="body-1">{{myProp.objPreliminary.data.tonometria.ojoIzq || ' - '}}</span>
                                 </v-flex>
+                               
                             </v-layout>
+                            <v-divider light></v-divider>
+                                <v-layout row wrap class="pt-1">
+                                <v-flex xs12>
+                                    <span class="primary--text">Fotografía de retina</span>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <span class="body-1">{{ myProp.objPreliminary.data.retinal_photo || '-'}}</span>
+                                </v-flex>
+                                
+                                </v-layout>                             
                             <v-divider light></v-divider>
                             <v-layout row wrap class="pt-1">
                                 <v-flex xs12>
@@ -733,6 +744,17 @@
                                         <span class="body-1">{{myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq.autoTonometria || ' - '}}</span>
                                     </v-flex>
                                 </v-layout>
+                                <v-divider light></v-divider>
+
+                                <v-layout row wrap class="pt-1">
+                                <v-flex xs12>
+                                    <span class="primary--text">Hallazgo en fotografía optometrista</span>
+                                </v-flex>
+                                <v-flex xs6>
+                                    <span class="body-1">{{ myProp.objOptometrist.data.discovery_in_photography || '-'}}</span>
+                                </v-flex>
+                                
+                                </v-layout>  
                                 <v-divider light></v-divider>
                                 <v-layout row wrap class="pt-1">
                                     <v-flex xs12>
@@ -1739,6 +1761,16 @@
                                         <span class="body-1">{{myProp.objOphthalmology.data.datapreliminar.tonometria.ojoizq || ' - '}}</span>
                                     </v-flex>
                                 </v-layout>
+                                <v-divider light></v-divider>
+                                <v-layout row wrap class="pt-1">
+                                <v-flex xs12>
+                                    <span class="primary--text">Hallazgo en fotografía oftalmólogo</span>
+                                </v-flex>
+                                <v-flex xs6>
+                                    <span class="body-1">{{ myProp.objOphthalmology.data.discovery_in_photography || '-'}}</span>
+                                </v-flex>                                
+                                
+                                </v-layout>                                  
 
                                 <v-divider light></v-divider>
                                 <v-layout row wrap class="pt-1"
@@ -2043,6 +2075,7 @@
             ]
         },
         mounted() {
+            console.log(this.myProp);
             if (this.myProp.objOptometrist.data && this.myProp.objOptometrist.data.responsableConsultation) {
                 this.getDigital('Optometrist', this.myProp.objOptometrist.data.responsableConsultation)
             }
@@ -2219,7 +2252,7 @@
         },
         watch: {
             myProp: function (val) {
-
+                
             }
         },
         filters: {

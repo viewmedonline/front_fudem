@@ -1,5 +1,20 @@
 import axios from "axios";
- 
+
+function savePdf(data) {
+	return new Promise((resolve, reject) => {
+		axios.post(process.env.VUE_APP_ROOT_API + "/report/save", data, {
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': ""
+			}
+		}).then(result => {
+			resolve(result.data.documents)
+		}).catch(error => {
+			reject(error.response.data.message)
+		})
+	})
+}
+
 function sendFile(arr, name, token) {
 	return new Promise((resolve, reject) => {
 		axios.put(process.env.VUE_APP_ROOT_API  + "/store_file/" + name, arr, {
@@ -35,7 +50,50 @@ function getImage(id, token) {
 		}
 	})
 }
+
+function getPreview(data) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios.post(process.env.VUE_APP_ROOT_API + "/report/preview", data, {
+				responseType: 'blob',
+				headers: {
+					'content-type': 'application/json',
+				}
+			})
+				.then(result => {
+					resolve(result)
+				}).catch(error => {
+					reject(error)
+				})
+		} catch (err) {
+			console.log('err in Get Image: ', err);
+
+		}
+	})
+}
+
+function deleteFile(id) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios.delete(process.env.VUE_APP_ROOT_API + "/delete_file/" + id, {
+				headers: {
+				}
+			})
+				.then(result => {
+					resolve(result)
+				}).catch(error => {
+					reject(error)
+				})
+		} catch (err) {
+			console.log('err in deleteFile: ', err);
+
+		}
+	})
+}
 export {
 	sendFile,
-	getImage
+	getImage,
+	getPreview,
+	savePdf,
+	deleteFile
 }

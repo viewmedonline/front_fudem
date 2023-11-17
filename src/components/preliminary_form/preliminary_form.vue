@@ -34,6 +34,7 @@
           <keratometry class="px-2 py-2" ref="keratometryRef"></keratometry>
           <lensometry class="px-2 py-2" ref="lensometryRef"></lensometry>
           <tonometry class="px-2 py-2" ref="tonometryRef"></tonometry>
+          <retinalCamera class="px-2 py-2" ref="retinalCameraRef" title="Fotografía de Retina"></retinalCamera>
           <v-container>
             <v-form autocomplete="off" ref="formPreliminarRef" v-model="formPreliminar" lazy-validation>
               <v-layout row wrap>
@@ -170,6 +171,7 @@ const autorefraction_a = () =>
 const keratometry = () => import("@/components/electronic_record/keratometry");
 const lensometry = () => import("@/components/electronic_record/lensometry");
 const tonometry = () => import("@/components/electronic_record/tonometry");
+const retinalCamera = () => import("@/components/electronic_record/retinal_camera");
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -409,7 +411,9 @@ export default {
                     // Nivel 2
                     this.$refs.tonometryRef
                       .saveTonometry()
-                      .then(result => {
+                      .then(async result => {
+                        //TODO Retinal Camera
+                        this.consultation.retinal_photo = await this.$refs.retinalCameraRef.saveRetinalCamera()
                         // console.log("result tonometry: ", result)
                         this.consultation.tonometria = result;
                         if (this.paso > this.lastValidate)
@@ -794,7 +798,8 @@ export default {
     autorefraction_a,
     keratometry,
     lensometry,
-    tonometry
+    tonometry,
+    retinalCamera
   },
   computed: {
     storePhysician () {

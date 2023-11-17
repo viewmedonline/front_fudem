@@ -70,29 +70,29 @@ function getDiagnoses(obj) {
 		}
 	});
 }
-// function InsertWaitingRooms(obj) {
-// 	return new Promise((resolve, reject) => {
-// 		try {
-// 			let port = ":3000"
-// 			if (process.env.ROOT_API.includes("viewmedonline"))
-// 				port = ":3070"
-// 			axios
-// 				.post(process.env.ROOT_API + "/waitingroom", obj.body, {
-// 					headers: {
-// 						'Authorization': obj.token
-// 					}
-// 				})
-// 				.then(result => {
-// 					resolve(result.data.documents);
-// 				})
-// 				.catch(error => {
-// 					reject(error.response);
-// 				});
-// 		} catch (err) {
-// 			console.log("err in saveWaitingRooms: ", err);
-// 		}
-// 	});
-// }
+//insert diagnoses
+function insertDiagnoses(obj) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios
+				.post(process.env.VUE_APP_ROOT_API + "/diagnoses", obj, {
+					headers: {
+						'Authorization': ""
+					}
+				})
+				.then(result => {
+					resolve(result.data.documents);
+				})
+				.catch(error => {
+					console.log(error);
+					reject(error.response);
+				});
+		} catch (err) {
+			console.log("err in insertDiagnoses: ", err);
+		}
+	});
+}
 export {
-	getDiagnoses
+	getDiagnoses,
+	insertDiagnoses
 }
