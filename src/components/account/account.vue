@@ -65,7 +65,7 @@
                   @change="changeDiagnosis()"
                 ></v-select> -->
                 <v-autocomplete :disabled="add_diagnosis" v-model="diagnosisSelected" :items="diagnosis" label="Diagnosticos Existentes"
-                  persistent-hint prepend-icon="" return-object @change="changeDiagnosis()">
+                  persistent-hint prepend-icon="" return-object @change="changeDiagnosis()" item-text="diagnostic.es">
                   <template v-slot:selection="data">
                     <span>{{ data.item.diagnostic.es }}</span>
                   </template>
