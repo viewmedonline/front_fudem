@@ -34,7 +34,7 @@
           <keratometry class="px-2 py-2" ref="keratometryRef"></keratometry>
           <lensometry class="px-2 py-2" ref="lensometryRef"></lensometry>
           <tonometry class="px-2 py-2" ref="tonometryRef"></tonometry>
-          <retinalCamera class="px-2 py-2" ref="retinalCameraRef" title="Fotografía de Retina"></retinalCamera>
+          <retinalCamera class="px-2 py-2" ref="retinalCameraRef" title="Fotografía de Retina" :disabled_options="false"></retinalCamera>
           <v-container>
             <v-form autocomplete="off" ref="formPreliminarRef" v-model="formPreliminar" lazy-validation>
               <v-layout row wrap>
@@ -413,7 +413,9 @@ export default {
                       .saveTonometry()
                       .then(async result => {
                         //TODO Retinal Camera
-                        this.consultation.retinal_photo = await this.$refs.retinalCameraRef.saveRetinalCamera()
+                        const retinalCamera = await this.$refs.retinalCameraRef.saveRetinalCamera()
+                        this.consultation.retinal_photo = retinalCamera.photo_retinal
+                        this.consultation.retinal_findings = retinalCamera.findings_photo
                         // console.log("result tonometry: ", result)
                         this.consultation.tonometria = result;
                         if (this.paso > this.lastValidate)

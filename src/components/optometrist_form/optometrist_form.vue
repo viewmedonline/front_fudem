@@ -76,10 +76,9 @@
         <v-window-item :value="4">
           <diagnosis class="px-2 py-2" ref="diagnosisRef"></diagnosis>
           <retinalCamera
-            v-if="retinal_photo"
             class="px-2 py-2"
             ref="retinalCameraRef"
-            title="Hallazgo en fotografía"
+            :disabled_options="true"
           ></retinalCamera>
         </v-window-item>
       </v-window>
@@ -472,13 +471,7 @@ export default {
             break;
           case 3:
             //resolve()
-            if (this.storeConsultation.objPreliminary) {
-              this.retinal_photo =
-                this.storeConsultation.objPreliminary.data.retinal_photo == "Si"
-                  ? true
-                  : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
-            }
-
+            
             this.$refs.rxFinalContactLensesRef
               .saveRxFinalContactLenses()
               .then((result) => {
@@ -576,9 +569,6 @@ export default {
                   result.observationsOphthalmology;
                 this.consultation.diagnosticoObservaciones =
                   result.diagnosticoObservaciones;
-                if (this.retinal_photo)
-                  this.consultation.discovery_in_photography =
-                    await this.$refs.retinalCameraRef.saveRetinalCamera();
                 this.consultation.receta = result.receta;
 
                 if (this.paso > this.lastValidate) this.lastValidate = 4;
@@ -851,6 +841,7 @@ export default {
       this.$refs.rxFinalNextVisionRef.setrxFinalVisionProxima();
       this.$refs.rxFinalIntermediateVisionRef.setrxFinalVisionIntermedia();
       this.$refs.diagnosisRef.setDiagnostics();
+      this.$refs.retinalCameraRef.setDataRetinalCamera();
 
       this.consultation.objPreliminary = this.storeConsultation.objPreliminary;
       this.consultation.objOptometrist = this.storeConsultation.objOptometrist;

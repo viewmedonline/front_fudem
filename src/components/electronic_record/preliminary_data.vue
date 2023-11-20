@@ -199,13 +199,14 @@
                                 <span class="body-2">Cámara de retina</span>
                             </v-flex>
                         </v-layout>
-                        <v-layout row wrap v-if="retinal_photo">
-                            <v-flex xs2 text-sm-left class="vm-p-esp">
-                                <span>Hallazgo en fotografía</span>
+                        <v-layout row wrap >
+                            <v-flex xs2 text-sm-left>
+                                <span>Fotografía de retina: <span style="font-weight: bold;">{{ retinal_photo }}</span></span>
+
                             </v-flex>
-                            <v-flex xs2>
-                                <v-select :items="['Positivo', 'Negativo']" label="Seleccione" :rules="[rules.required]"
-                                    v-model="datosPreliminares.photo_retinal"></v-select>
+                            <v-flex xs2 v-if="retinal_photo =='Si'">
+                                <span>Hallazgo en fotografía: <span style="font-weight: bold;">{{ findings_photo }}</span></span>
+
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -267,10 +268,10 @@ export default {
             tonometria: {
                 ojoder: null,
                 ojoizq: null
-            },
-            // photo_retinal: null,
+            }
         },
-        retinal_photo: false,
+        retinal_photo: null,
+        findings_photo: null,
         listAv: ['20/15', '20/20', '20/25', '20/30', '20/40', '20/50', '20/60', '20/70', '20/80', '20/90', '20/100', '20/150', '20/200', '20/400', '20/800', '20/1600', '20/3200', 'Cuenta dedos', 'Mov. Manos', 'Percepcion a Luz', 'No Percepcion a Luz', 'No Colabora', 'No Aplica'],
         rules: {
             required: v => !!v || vm.$t('title.field_required'),
@@ -354,7 +355,8 @@ export default {
                     this.datosPreliminares.tonometria.ojoder = this.storeConsultation.tonometria.ojoDer
                     this.datosPreliminares.tonometria.ojoizq = this.storeConsultation.tonometria.ojoIzq
                 }
-                // this.photo_retinal = this.storeConsultation.objPreliminary.data.retinal_photo
+                this.retinal_photo = this.storeConsultation.objPreliminary.data.retinal_photo
+                this.findings_photo = this.storeConsultation.objPreliminary.data.retinal_findings
 
             }
         }
@@ -364,12 +366,12 @@ export default {
             this.$forceUpdate()
             this.setDataConsultation()
         });
-        if (this.storeConsultation.objPreliminary) {
-            this.retinal_photo =
-                this.storeConsultation.objPreliminary.data.retinal_photo == "Si"
-                    ? true
-                    : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
-        }
+        // if (this.storeConsultation.objPreliminary) {
+        //     this.retinal_photo =
+        //         this.storeConsultation.objPreliminary.data.retinal_photo == "Si"
+        //             ? true
+        //             : false; ///se obtiene el valor de la foto de retina para mostrar en siguiente paso
+        // }
     },
     computed: {
         storeConsultation() {
