@@ -187,15 +187,13 @@
                         }}
                       </td>
                       <td class="text-xs-center">
-                        {{ props.item.objPreliminary.data.retinal_photo }}
+                        {{ props.item.objPreliminary ? props.item.objPreliminary.data.retinal_photo || '-' : '-' }}
                       </td>
                       <td class="text-xs-center">
                         {{
-                          props.item.objOphthalmology.data
-                            .discovery_in_photography
-                            ? props.item.objOphthalmology.data
-                                .discovery_in_photography
-                            : "N/A"
+                          props.item.objPreliminary
+                            ? props.item.objPreliminary.data.retinal_findings || "-"
+                            : "-"
                         }}
                       </td>
                       <td class="text-xs-center"></td>
@@ -394,14 +392,13 @@
                         }}
                       </td>
                       <td class="text-xs-center">
-                        {{ props.item.objPreliminary.data.retinal_photo }}
+                        {{ props.item.objPreliminary ? props.item.objPreliminary.data.retinal_photo || '-': '-'}}
                       </td>
                       <td class="text-xs-center">
                         {{
-                          props.item.objOptometrist.data.retinal_photo
-                            ? props.item.objOptometrist.data.retinal_photo
-                                .discovery_in_photography
-                            : "N/A"
+                          props.item.objPreliminary
+                            ? props.item.objPreliminary.data.retinal_findings || '-'
+                            : "-"
                         }}
                       </td>
                     </template>
@@ -553,13 +550,11 @@
             }}
           </td>
           <td class="text-xs-center" align="center">
-            {{ consultas.objPreliminary.data.retinal_photo }}
+            {{ consultas.objPreliminary ? consultas.objPreliminary.data.retinal_photo || '-' : '-' }}
           </td>
           <td class="text-xs-center" align="center">
             {{
-              consultas.objOphthalmology.data.discovery_in_photography
-                ? consultas.objOphthalmology.data.discovery_in_photography
-                : "N/A"
+              consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
             }}
           </td>
           <td class="text-xs-center" align="center"></td>
@@ -761,14 +756,11 @@
             {{ langTypeConsulting(consultas.typeConsultation) }}
           </td>
           <td class="text-xs-center">
-            {{ consultas.objPreliminary.data.retinal_photo }}
+            {{ consultas.objPreliminary ? consultas.objPreliminary.data.retinal_photo || '-' : '-'}}
           </td>
           <td class="text-xs-center">
             {{
-              consultas.objOptometrist.data.retinal_photo
-                ? consultas.objOptometrist.data.retinal_photo
-                    .discovery_in_photography
-                : "N/A"
+              consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
             }}
           </td>
           <td class="text-xs-center"></td>
@@ -1755,6 +1747,7 @@ export default {
             "objOphthalmology.data": 1,
             control: 1,
             "objPreliminary.data.retinal_photo": 1,
+            "objPreliminary.data.retinal_findings": 1,
             "objPreliminary.data.typeConsultation": 1,
           };
         } else {
@@ -1793,6 +1786,7 @@ export default {
             control: 1,
             typeConsultation: 1,
             "objPreliminary.data.retinal_photo": 1,
+            "objPreliminary.data.retinal_findings": 1,
           };
         }
         let objAuxSucursaParent = {
@@ -1831,7 +1825,7 @@ export default {
             consultationServ
               .getListConsultationReport(objAux)
               .then((result) => {
-                console.log("result: ", result);
+                // console.log("result: ", result);
                 if (specialty == "ophthalmology") {
                   this.reportOphthalmology = true;
                   this.resultOphthalmology = result;

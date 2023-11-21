@@ -13,7 +13,7 @@
                             <v-flex xs2>
                                 <!-- <v-select :items="items" label="Seleccione" :rules="[rules.required]"
                                     v-model="photo_retinal"></v-select> -->
-                                <v-radio-group v-model="photo_retinal" row :rules="disabled_options ? [rules.required] : []"
+                                <v-radio-group v-model="photo_retinal" row :rules="!disabled_options ? [rules.required] : []"
                                     :disabled="disabled_options">
                                     <v-radio label="Si" value="Si"></v-radio>
                                     <v-radio label="No" value="No"></v-radio>
@@ -32,11 +32,11 @@
                     <v-container fluid grid-list-md px-0 py-0>
 
                         <v-layout row wrap>
-                            <v-flex xs2>
+                            <v-flex xs12>
                                 <!-- <v-select :items="items" label="Seleccione" :rules="[rules.required]"
                                     v-model="photo_retinal"></v-select> -->
                                 <v-radio-group v-model="findings_photo" row
-                                    :rules="disabled_options ? [rules.required] : []" :disabled="disabled_options">
+                                    :rules="!disabled_options ? [rules.required] : []" :disabled="disabled_options">
                                     <v-radio label="Positivo" value="Positivo"></v-radio>
                                     <v-radio label="Negativo" value="Negativo"></v-radio>
                                 </v-radio-group>
