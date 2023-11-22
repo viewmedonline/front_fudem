@@ -734,7 +734,69 @@
           <td class="text-xs-center" align="center">
             {{ consultas.person.housinglocation }}
           </td>
-          <div
+          <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[0].eyeRight, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[0].eyeLeft, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[1].eyeRight, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[1].eyeLeft, 1) }}
+              </strong>
+            </td>   
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[2].eyeRight, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[2].eyeLeft, 1) }}
+              </strong>
+            </td>    
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[3].eyeRight, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[3].eyeLeft, 1) }}
+              </strong>
+            </td>       
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[4].eyeRight, 1) }}
+              </strong>
+            </td>
+            <td class="text-xs-center" align="center" width="2%">
+              <strong>
+                {{ setDiagnosis(consultas.objOptometrist.data
+              .diagnosticoObservaciones.diagnostico[4].eyeLeft, 1) }}
+              </strong>
+            </td>                                  
+            
+
+          <!-- <div
             v-for="(diagnos, j) in consultas.objOptometrist.data
               .diagnosticoObservaciones.diagnostico"
             v-if="j < 5"
@@ -750,7 +812,7 @@
                 {{ setDiagnosis(diagnos.eyeLeft, 1) }}
               </strong>
             </td>
-          </div>
+          </div> -->
 
           <td class="text-xs-center">
             {{ langTypeConsulting(consultas.typeConsultation) }}
