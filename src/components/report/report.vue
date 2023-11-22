@@ -660,35 +660,35 @@
           <td class="text-xs-center" align="center" width="5%">
             <strong>Area</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
-            <strong>OD-E</strong>
-          </td>
-          <td class="text-xs-center" align="center" width="4%">
-            <strong>OI-E</strong>
-          </td>
-          <td class="text-xs-center" align="center" width="4%">
-            <strong>OD-M</strong>
-          </td>
-          <td class="text-xs-center" align="center" width="4%">
-            <strong>OI-M</strong>
-          </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OD-H</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OI-H</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
+            <strong>OD-M</strong>
+          </td>
+          <td class="text-xs-center" align="center" width="3%">
+            <strong>OI-M</strong>
+          </td>
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OD-A</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OI-A</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OD-P</strong>
           </td>
-          <td class="text-xs-center" align="center" width="4%">
+          <td class="text-xs-center" align="center" width="3%">
             <strong>OI-P</strong>
+          </td>
+          <td class="text-xs-center" align="center" width="3%">
+            <strong>OD-E</strong>
+          </td>
+          <td class="text-xs-center" align="center" width="3%">
+            <strong>OI-E</strong>
           </td>
           <td class="text-xs-center" align="center" width="30%">
             <strong>TIPO CONSULTA</strong>
@@ -1065,7 +1065,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 5,
+                  cellWidth: 15,
                 },
               },
               {
@@ -1073,7 +1073,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 12,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1081,7 +1081,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 8,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1089,7 +1089,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 20,
                 },
               },
               {
@@ -1097,7 +1097,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 15,
+                  cellWidth: 40,
                 },
               },
               {
@@ -1105,7 +1105,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 6,
+                  cellWidth: 15,
                 },
               },
               {
@@ -1113,7 +1113,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 6,
+                  cellWidth: 15,
                 },
               },
               {
@@ -1121,7 +1121,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 20,
                 },
               },
               {
@@ -1129,7 +1129,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 20,
+                  cellWidth: 40,
                 },
               },
               {
@@ -1137,7 +1137,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1145,7 +1145,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 12,
+                  cellWidth: 25,
                 },
               },
             ],
@@ -1183,10 +1183,10 @@ export default {
       var doc = new jsPDF({
         orientation: "l",
         unit: "mm",
-        format: "a4",
+        format: "legal",
       });
 
-      doc.setFontSize(12);
+      doc.setFontSize(9);
       doc.text("FUDEM - CENSO DE PACIENTES EN CLINICA DE OFTALMOLOGÍA", 15, 10);
       doc.text("OPTÓMETRA:", 15, 15);
       doc.text(this.model.forename + " " + this.model.surname, 50, 15);
@@ -1225,7 +1225,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 3,
+                  cellWidth: 10,
                 },
               },
               {
@@ -1233,7 +1233,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 12,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1241,7 +1241,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 8,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1249,7 +1249,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 30,
                 },
               },
               {
@@ -1257,7 +1257,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 15,
+                  cellWidth: 35,
                 },
               },
               {
@@ -1265,7 +1265,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 6,
+                  cellWidth: 12,
                 },
               },
               {
@@ -1273,39 +1273,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 6,
-                },
-              },
-              {
-                content: "OD-E",
-                styles: {
-                  halign: "center",
-                  valign: "middle",
-                  cellWidth: 10,
-                },
-              },
-              {
-                content: "OI-E",
-                styles: {
-                  halign: "center",
-                  valign: "middle",
-                  cellWidth: 10,
-                },
-              },
-              {
-                content: "OD-M",
-                styles: {
-                  halign: "center",
-                  valign: "middle",
-                  cellWidth: 10,
-                },
-              },
-              {
-                content: "OI-M",
-                styles: {
-                  halign: "center",
-                  valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 12,
                 },
               },
               {
@@ -1313,7 +1281,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
                 },
               },
               {
@@ -1321,7 +1289,23 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
+                },
+              },
+              {
+                content: "OD-M",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 14,
+                },
+              },
+              {
+                content: "OI-M",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 14,
                 },
               },
               {
@@ -1329,7 +1313,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
                 },
               },
               {
@@ -1337,7 +1321,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
                 },
               },
               {
@@ -1345,7 +1329,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
                 },
               },
               {
@@ -1353,7 +1337,23 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 10,
+                  cellWidth: 14,
+                },
+              },
+              {
+                content: "OD-E",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 14,
+                },
+              },
+              {
+                content: "OI-E",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 14,
                 },
               },
               {
@@ -1361,7 +1361,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 12,
+                  cellWidth: 20,
                 },
               },
               {
@@ -1369,7 +1369,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 8,
+                  cellWidth: 20,
                 },
               },
             ],
@@ -1472,7 +1472,7 @@ export default {
             {
               content:
                 this.resultOphthalmology[i].person.forename +
-                "" +
+                " " +
                 this.resultOphthalmology[i].person.surname,
               styles: {
                 halign: "center",
@@ -1582,7 +1582,7 @@ export default {
             {
               content:
                 this.resultOptometrist[i].person.forename +
-                "" +
+                " " +
                 this.resultOptometrist[i].person.surname,
               styles: {
                 halign: "center",
@@ -1968,6 +1968,7 @@ export default {
     this.getDiagnoses();
     this.getSucursal();
     this.getDoctor();
+   
   },
   computed: {
     pagesOpt() {
