@@ -544,8 +544,11 @@
                                 </v-flex>
                                 <v-flex xs3>
                                     <span style="font-weight: bold;">Hallazgo en fotografía: <span class="body-1">{{ myProp.objPreliminary.data.retinal_findings || '-'}}</span></span>
-                                    
                                 </v-flex>
+                                <v-flex xs6>
+                                    <span style="font-weight: bold;">Observaciones en fotografía: <span class="body-1">{{ myProp.objPreliminary.data.retinal_observations || '-'}}</span></span>
+                                </v-flex>
+                                
                                 
                                 </v-layout>                             
                             <v-divider light></v-divider>

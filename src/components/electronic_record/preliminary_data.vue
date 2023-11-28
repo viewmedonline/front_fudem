@@ -199,14 +199,20 @@
                                 <span class="body-2">Cámara de retina</span>
                             </v-flex>
                         </v-layout>
-                        <v-layout row wrap >
+                        <v-layout row wrap>
                             <v-flex xs2 text-sm-left>
-                                <span>Fotografía de retina: <span style="font-weight: bold;">{{ retinal_photo }}</span></span>
+                                <span>Fotografía de retina: <span style="font-weight: bold;">{{ retinal_photo
+                                }}</span></span>
 
                             </v-flex>
-                            <v-flex xs2 v-if="retinal_photo =='Si'">
-                                <span>Hallazgo en fotografía: <span style="font-weight: bold;">{{ findings_photo }}</span></span>
+                            <v-flex xs3 v-if="retinal_photo == 'Si'">
+                                <span>Hallazgo en fotografía: <span style="font-weight: bold;">{{ findings_photo
+                                }}</span></span>
 
+                            </v-flex>
+                            <v-flex xs7 v-if="retinal_photo == 'Si'">
+                                <span>Observaciones en fotografía: <span style="font-weight: bold;">{{ retinal_observations
+                                }}</span></span>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -272,6 +278,7 @@ export default {
         },
         retinal_photo: null,
         findings_photo: null,
+        retinal_observations: null,
         listAv: ['20/15', '20/20', '20/25', '20/30', '20/40', '20/50', '20/60', '20/70', '20/80', '20/90', '20/100', '20/150', '20/200', '20/400', '20/800', '20/1600', '20/3200', 'Cuenta dedos', 'Mov. Manos', 'Percepcion a Luz', 'No Percepcion a Luz', 'No Colabora', 'No Aplica'],
         rules: {
             required: v => !!v || vm.$t('title.field_required'),
@@ -357,6 +364,7 @@ export default {
                 }
                 this.retinal_photo = this.storeConsultation.objPreliminary.data.retinal_photo
                 this.findings_photo = this.storeConsultation.objPreliminary.data.retinal_findings
+                this.retinal_observations = this.storeConsultation.objPreliminary.data.retinal_observations
 
             }
         }

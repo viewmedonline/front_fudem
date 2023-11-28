@@ -501,9 +501,9 @@
           <td class="text-xs-center" align="center" width="25%">
             <strong>HALLAZGO FOTOGRAFÍA</strong>
           </td>
-          <td class="text-xs-center" align="center" width="25%">
+          <!-- <td class="text-xs-center" align="center" width="25%">
             <strong>REFERIR A</strong>
-          </td>
+          </td> -->
           <td class="text-xs-center" align="center" width="10%">
             <strong>NO. RECETAS</strong>
           </td>
@@ -557,7 +557,7 @@
               consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
             }}
           </td>
-          <td class="text-xs-center" align="center"></td>
+          <!-- <td class="text-xs-center" align="center"></td> -->
           <td class="text-xs-center" align="center">
             {{
               consultas.objOphthalmology.data.observaciones.medicamentos.length
@@ -699,9 +699,9 @@
           <td class="text-xs-center" align="center" width="30%">
             <strong>HALLAZGO FOTOGRAFÍA</strong>
           </td>
-          <td class="text-xs-center" align="center" width="10%">
+          <!-- <td class="text-xs-center" align="center" width="10%">
             <strong>REFERIR A</strong>
-          </td>
+          </td> -->
           <td class="text-xs-center" align="center" width="10%">
             <strong>DIO RECETA</strong>
           </td>
@@ -825,7 +825,7 @@
               consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
             }}
           </td>
-          <td class="text-xs-center"></td>
+          <!-- <td class="text-xs-center"></td> -->
           <td class="text-xs-center">
             {{
               consultas.objOptometrist.data.receta
@@ -982,11 +982,11 @@ export default {
           align: "center",
           sortable: false,
         },
-        {
-          text: "REFERIR A",
-          align: "center",
-          sortable: false,
-        },
+        // {
+        //   text: "REFERIR A",
+        //   align: "center",
+        //   sortable: false,
+        // },
       ],
       headersOptometrist: [
         {
@@ -1049,11 +1049,11 @@ export default {
           align: "center",
           sortable: false,
         },
-        {
-          text: "REFERIR A",
-          align: "center",
-          sortable: false,
-        },
+        // {
+        //   text: "REFERIR A",
+        //   align: "center",
+        //   sortable: false,
+        // },
       ],
       resultOphthalmology: [],
       reportOphthalmology: false,
@@ -1105,7 +1105,7 @@ export default {
       var doc = new jsPDF({
         orientation: "l",
         unit: "mm",
-        format: "a4",
+        format: "legal",
       });
 
       doc.setFontSize(12);
@@ -1151,7 +1151,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 20,
+                  cellWidth: 25,
                 },
               },
               {
@@ -1192,6 +1192,22 @@ export default {
                   halign: "center",
                   valign: "middle",
                   cellWidth: 40,
+                },
+              },
+              {
+                content: "Foto Retina",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 25,
+                },
+              },
+              {
+                content: "Hallazgo Foto",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 25,
                 },
               },
               {
@@ -1280,6 +1296,8 @@ export default {
               },
               { styles: { fillColor: [255, 255, 255] } },
               { styles: { fillColor: [255, 255, 255] } },
+              { styles: { fillColor: [255, 255, 255] } },
+              { styles: { fillColor: [255, 255, 255] } },
             ],
             [
               {
@@ -1303,7 +1321,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 25,
+                  cellWidth: 21,
                 },
               },
               {
@@ -1311,7 +1329,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 30,
+                  cellWidth: 22,
                 },
               },
               {
@@ -1343,7 +1361,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1351,7 +1369,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1359,7 +1377,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1367,7 +1385,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1375,7 +1393,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1383,7 +1401,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1391,7 +1409,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1399,7 +1417,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1407,7 +1425,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
                 },
               },
               {
@@ -1415,7 +1433,23 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 14,
+                  cellWidth: 7
+                },
+              },
+              {
+                content: "FOTO RETINA",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 20,
+                },
+              },
+              {
+                content: "HALLAZGO FOTO",
+                styles: {
+                  halign: "center",
+                  valign: "middle",
+                  cellWidth: 23,
                 },
               },
               {
@@ -1423,7 +1457,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 20,
+                  cellWidth: 22,
                 },
               },
               {
@@ -1580,6 +1614,39 @@ export default {
               },
             },
             {
+              content: this.resultOphthalmology[i].objPreliminary
+                ? this.resultOphthalmology[i].objPreliminary.data.retinal_photo ||
+                  "-"
+                : "-",
+              styles: {
+                halign: "center",
+                valign: "middle",
+                cellWidth: 10,
+              },
+            },
+            {
+              content: this.resultOphthalmology[i].objPreliminary
+                ? this.resultOphthalmology[i].objPreliminary.data.retinal_findings ||
+                  "-"
+                : "-",
+              styles: {
+                halign: "center",
+                valign: "middle",
+                cellWidth: 10,
+              },
+            },
+            // {
+            //   content: this.resultOphthalmology[i].objOphthalmology.data
+            //     .referTo
+            //     ? this.resultOphthalmology[i].objOphthalmology.data.referTo
+            //     : "-",
+            //   styles: {
+            //     halign: "center",
+            //     valign: "middle",
+            //     cellWidth: 10,
+            //   },
+            // },
+            {
               content:
                 this.resultOphthalmology[i].objOphthalmology.data.observaciones
                   .medicamentos.length,
@@ -1687,6 +1754,30 @@ export default {
                 },
               });
             }
+          });
+
+          itemReport.push({
+            content: this.resultOptometrist[i].objPreliminary
+              ? this.resultOptometrist[i].objPreliminary.data.retinal_photo ||
+                "-"
+              : "-",
+            styles: {
+              halign: "center",
+              valign: "middle",
+              cellWidth: 10,
+            },
+          });
+
+          itemReport.push({
+            content: this.resultOptometrist[i].objPreliminary
+              ? this.resultOptometrist[i].objPreliminary.data.retinal_findings ||
+                "-"
+              : "-",
+            styles: {
+              halign: "center",
+              valign: "middle",
+              cellWidth: 10,
+            },
           });
 
           itemReport.push({
