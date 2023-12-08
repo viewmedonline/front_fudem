@@ -282,6 +282,7 @@ export default {
   },
   methods: {
     async getSucursal() {
+      console.log("getSucursal");
       sucursalServ.listSucursalFudem().then(async (response) => {
         this.listSucursal = response;
         for (let i in this.listSucursal) {
@@ -403,13 +404,14 @@ export default {
       sucursalServ
         .getSucursal(objAux)
         .then((result) => {
-          if (result) {
+          console.log(result);
+          if (result.length > 0) {
             this.$store.commit({
               type: "showSucursal",
               state: result[0]._id,
             });
           } else {
-            if (this.$route.query.reload <= 2) {
+            if (this.$route.query.reload <= 2 || !this.$route.query.reload) {
               if (
                 !this.$route.query.reload ||
                 parseInt(this.$route.query.reload) < 2
