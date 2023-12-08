@@ -377,7 +377,6 @@ export default {
       sucursalServ
         .getSucursal(objAux)
         .then(async (result) => {
-          console.log(result);
           if (result.length > 0) {
             this.$store.commit({
               type: "showSucursal",
