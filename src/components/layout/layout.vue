@@ -1,34 +1,19 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      :mini-variant="drawer"
-      class="primary"
-      dark
-      clipped
-      fixed
-      app
-    >
+    <v-navigation-drawer :mini-variant="drawer" class="primary" dark clipped fixed app>
       <v-list dense>
-        <v-list-tile
-          @click="fixedCompst('consultation')"
-          v-if="$route.query.p && $route.query.c != 'R'"
-        >
+        <v-list-tile @click="fixedCompst('consultation')" v-if="$route.query.p && $route.query.c != 'R'">
           <v-list-tile-action>
             <v-icon>folder_shared</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-if="$route.query.c == 'H'"
-              >Historial</v-list-tile-title
-            >
+            <v-list-tile-title v-if="$route.query.c == 'H'">Historial</v-list-tile-title>
             <v-list-tile-title v-else>{{
               $t("title.consultation")
             }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile
-          @click="fixedCompst('reports')"
-          v-if="$route.query.c == 'R'"
-        >
+        <v-list-tile @click="fixedCompst('reports')" v-if="$route.query.c == 'R'">
           <v-list-tile-action>
             <v-icon>format_list_bulleted</v-icon>
           </v-list-tile-action>
@@ -59,15 +44,10 @@
     </v-toolbar>
     <v-content class="vm-bg-qflow">
       <v-layout fill-height row>
-        <v-flex
-          xs12
-          sm3
-          v-if="
-            dataStore.patient &&
-            Object.keys(storePatient).length > 0 &&
-            !dataStore.reports
-          "
-        >
+        <v-flex xs12 sm3 v-if="dataStore.patient &&
+          Object.keys(storePatient).length > 0 &&
+          !dataStore.reports
+          ">
           <vmPatient v-if="showVmData"></vmPatient>
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.consultation">
@@ -90,19 +70,19 @@
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.nurse">
           <vmNursingSheet></vmNursingSheet>
-        </v-flex>     
+        </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.reference">
           <vmReferenceSheet></vmReferenceSheet>
-        </v-flex>   
+        </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.constancy_disability">
           <vmConstancyDisability></vmConstancyDisability>
-        </v-flex>  
+        </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.surgery_sheet">
           <vmSurgerySheet></vmSurgerySheet>
-        </v-flex>       
+        </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.internist_evaluation_sheet">
           <VmInternistEvaluationSheet></VmInternistEvaluationSheet>
-        </v-flex>         
+        </v-flex>
       </v-layout>
     </v-content>
 
@@ -202,11 +182,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-            @click="dialogError('dialogSucursalExist')"
-          >
+          <v-btn color="primary" flat @click="dialogError('dialogSucursalExist')">
             {{ $t("title.agree") }}
           </v-btn>
         </v-card-actions>
@@ -222,7 +198,7 @@ const vmAccount = () => import("@/components/account/account");
 const vmImaging = () => import("@/components/imaging_form/imaging_form");
 const vmPatientform = () => import("@/components/patient/patient_form");
 const vmConstancy = () => import("@/components/history_form/history_cons");
-const vmReport = () => import ('@/components/report/report')
+const vmReport = () => import('@/components/report/report')
 const vmNursingSheet = () => import("@/components/nursing_sheet/nursing_sheet")
 const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sheet")
 const vmConstancyDisability = () => import("@/components/constancy_disability/constancy_disability")
@@ -247,7 +223,7 @@ export default {
     dialogSucursal: false,
     dialogSucursalExist: false,
     listSucursal: null,
-    dialogSucursal:false,
+    dialogSucursal: false,
     dialogSucursalExist: false,
     user_admin: false
   }),
@@ -282,13 +258,12 @@ export default {
   },
   methods: {
     async getSucursal() {
-      console.log("getSucursal");
-      sucursalServ.listSucursalFudem().then(async (response) => {
+      await sucursalServ.listSucursalFudem().then(async (response) => {
         this.listSucursal = response;
-        for (let i in this.listSucursal) {
+        for (const item of this.listSucursal) {
           let objAux = {
             body: {
-              UnitId: this.listSucursal[i].UnitId,
+              UnitId:item.UnitId,
             },
             token: sessionStorage.getItem("pussy"),
           };
@@ -297,14 +272,12 @@ export default {
             .getSucursal(objAux)
             .then(async (result) => {
               if (result.length > 0) {
-                console.log("Actualizar Sucursal: ", result[0]._id);
                 return await this.updateSucursal(
-                  this.listSucursal[i],
+                  item,
                   result[0]._id
                 );
               } else {
-                console.log("Crear Sucursal: ", this.listSucursal[i]);
-                return await this.CreateSucursal(this.listSucursal[i]);
+                return await this.CreateSucursal(item);
               }
             })
             .then(async (sucursal) => {
@@ -403,7 +376,7 @@ export default {
       };
       sucursalServ
         .getSucursal(objAux)
-        .then((result) => {
+        .then(async (result) => {
           console.log(result);
           if (result.length > 0) {
             this.$store.commit({
@@ -416,7 +389,7 @@ export default {
                 !this.$route.query.reload ||
                 parseInt(this.$route.query.reload) < 2
               ) {
-                this.getSucursal();
+                await this.getSucursal();
                 //add reload page params to url
                 let reload = parseInt(
                   this.$route.query.reload ? this.$route.query.reload : 0
@@ -439,12 +412,12 @@ export default {
             return;
           }
         })
-        .catch((error) => {
+        .catch(async (error) => {
           if (
             !this.$route.query.reload ||
             parseInt(this.$route.query.reload) < 2
           ) {
-            this.getSucursal();
+            await this.getSucursal();
             //add reload page params to url
             let reload = parseInt(
               this.$route.query.reload ? this.$route.query.reload : 0
@@ -532,7 +505,7 @@ export default {
                 });
               }
               this.user_admin = this.$store.getters.getPhysician.user.idUserFudem == 'PRUEBAOFTA' ? true : false;
-              if(this.$route.query.p && this.$route.query.c != 'R'){
+              if (this.$route.query.p && this.$route.query.c != 'R') {
                 // Validacion de Consulta en Progreso
                 this.getConsultationProgress()
                   .then((result) => {
