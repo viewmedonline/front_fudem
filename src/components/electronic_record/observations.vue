@@ -147,7 +147,7 @@
                             @blur="date = parseDate(dateFormatted)"
                             readonly
                         ></v-text-field>
-                        <v-date-picker 
+                        <v-date-picker locale="es-es" 
                             ref="date" 
                             v-model="date" 
                             no-title scrollable

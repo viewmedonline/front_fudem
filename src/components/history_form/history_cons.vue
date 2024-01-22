@@ -79,7 +79,7 @@
                             prepend-icon="event"
                             @blur="date = parseDate(dateFormatted)"
                           ></v-text-field>
-                          <v-date-picker
+                          <v-date-picker locale="es-es"
                             v-model="date"
                             no-title
                             @input="menu1 = false"

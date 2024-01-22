@@ -95,7 +95,7 @@
                               @blur="date = parseDate(dateFormatted)"
                               readonly
                             ></v-text-field>
-                            <v-date-picker ref="date" v-model="date" no-title scrollable>
+                            <v-date-picker locale="es-es" ref="date" v-model="date" no-title scrollable>
                               <v-spacer></v-spacer>
                               <v-btn flat color="primary" @click="menu = false">{{$t("title.cancel")}}</v-btn>
                               <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">OK</v-btn>

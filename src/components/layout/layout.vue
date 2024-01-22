@@ -83,6 +83,18 @@
         <v-flex xs12 sm9 v-if="dataStore.internist_evaluation_sheet">
           <VmInternistEvaluationSheet></VmInternistEvaluationSheet>
         </v-flex>
+        <v-flex xs12 sm9 v-if="dataStore.pediatrics_sheet">
+          <vmPediatricsSheet></vmPediatricsSheet>
+        </v-flex>   
+        <v-flex xs12 sm9 v-if="dataStore.nutritionist_sheet">
+          <vmNutritionistSheet></vmNutritionistSheet>
+        </v-flex>  
+        <v-flex xs12 sm9 v-if="dataStore.anesthesiology_sheet">
+          <vmAnesthesiologytSheet></vmAnesthesiologytSheet>
+        </v-flex>  
+        <v-flex xs12 sm9 v-if="dataStore.permanence_sheet">
+          <vmPermanencetSheet></vmPermanencetSheet>
+        </v-flex> 
       </v-layout>
     </v-content>
 
@@ -204,6 +216,11 @@ const vmReferenceSheet = () => import("@/components/reference_sheet/reference_sh
 const vmConstancyDisability = () => import("@/components/constancy_disability/constancy_disability")
 const vmSurgerySheet = () => import("@/components/surgery_sheet/surgery_sheet")
 const VmInternistEvaluationSheet = () => import("@/components/internist_evaluation_sheet/internist_evaluation_sheet")
+const vmPediatricsSheet = () => import("@/components/pediatrics_sheet/pediatrics_sheet")
+const vmNutritionistSheet = () => import("@/components/nutritionist_sheet/nutritionist_sheet")
+const vmAnesthesiologytSheet = () => import("@/components/anesthesiology_sheet/anesthesiology_sheet")
+const vmPermanencetSheet = () => import("@/components/permanence_sheet/permanence_sheet")
+
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -617,7 +634,11 @@ export default {
     vmReferenceSheet,
     vmConstancyDisability,
     vmSurgerySheet,
-    VmInternistEvaluationSheet
+    VmInternistEvaluationSheet,
+    vmPediatricsSheet,
+    vmNutritionistSheet,
+    vmAnesthesiologytSheet,
+    vmPermanencetSheet,
   },
   props: {
     source: String,

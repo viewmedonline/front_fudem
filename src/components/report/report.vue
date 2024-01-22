@@ -32,7 +32,7 @@
                     full-width
                     width="290px"
                   >
-                    <v-date-picker v-model="dateFrom" scrollable>
+                    <v-date-picker locale="es-es" v-model="dateFrom" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="modalFrom = false"
                         >Cancel</v-btn
@@ -63,7 +63,7 @@
                     full-width
                     width="290px"
                   >
-                    <v-date-picker v-model="dateTo" scrollable>
+                    <v-date-picker locale="es-es" v-model="dateTo" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="modalTo = false"
                         >Cancel</v-btn
@@ -243,7 +243,7 @@
                     full-width
                     width="290px"
                   >
-                    <v-date-picker v-model="dateFrom2" scrollable>
+                    <v-date-picker locale="es-es" v-model="dateFrom2" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="modalFrom2 = false"
                         >Cancel</v-btn
@@ -274,7 +274,7 @@
                     full-width
                     width="290px"
                   >
-                    <v-date-picker v-model="dateTo2" scrollable>
+                    <v-date-picker locale="es-es" v-model="dateTo2" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="modalTo2 = false"
                         >Cancel</v-btn
