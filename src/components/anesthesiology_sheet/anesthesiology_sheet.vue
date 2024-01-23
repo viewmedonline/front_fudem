@@ -6,7 +6,7 @@
           ><v-icon>mdi-arrow-left</v-icon></v-btn
         > -->
         <span class="subheading white--text text-capitalize"
-          >Formulario de Anestesiología</span
+          >Reporte de Anestesiología</span
         >
       </v-card-title>
       <v-card-text>
@@ -142,18 +142,7 @@
                   </v-card-title>
                   <v-card-text>
                     <v-layout row wrap>
-                      <v-flex xs2>
-                        <v-layout row wrap>
-                          <v-flex xs12>Hora</v-flex>
-                          <v-flex xs12>TA</v-flex>
-                          <v-flex xs12>FC</v-flex>
-                          <v-flex xs12>Fr</v-flex>
-                          <v-flex xs12>T°</v-flex>
-                          <v-flex xs12>PSO2</v-flex>
-
-                        </v-layout>
-                      </v-flex>
-                      <v-flex xs10>10 </v-flex>
+                    hora
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -182,6 +171,10 @@ export default {
     date_picker: null,
     menu_time: false,
     time: "",
+    taListValue:["","","","","","","","","","","",""],
+    headers: ["HORA", "15'", "30'", "45'", "60'", "15'", "30'", "45'", "60'", "TA:", "FC:", "Fr:", "T°:", "PSO2:", "PCO2:"],
+      rows: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+      cols: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]    
   }),
   methods: {
     clear() {
