@@ -142,7 +142,148 @@
                   </v-card-title>
                   <v-card-text>
                     <v-layout row wrap>
-                    hora
+                      <v-flex xs8 offset-xs2>
+                        <table style="width: 100%">
+                          <tr>
+                            <td>Hora</td>
+                            <td>15'</td>
+                            <td>30'</td>
+                            <td>45'</td>
+                            <td>60'</td>
+                            <td>15'</td>
+                            <td>30'</td>
+                            <td>45'</td>
+                            <td>60'</td>
+                            <td>15'</td>
+                            <td>30'</td>
+                            <td>45'</td>
+                            <td>60'</td>
+                          </tr>
+                          <tr>
+                            <td>TA</td>
+                            <td v-for="taItem,key in taPositionList" :key="key"><v-text-field outline v-model="taPositionList[key]" /></td>
+                          </tr>
+                          <tr>
+                            <td>FC</td>
+                            <td v-for="faItem,key in faPositionList" :key="key"><v-text-field outline v-model="faPositionList[key]" /></td>
+                          </tr>    
+                          <tr>
+                            <td>FR</td>
+                            <td v-for="frItem,key in frPositionList" :key="key"><v-text-field outline v-model="frPositionList[key]" /></td>
+                          </tr>   
+                          <tr>
+                            <td>T°</td>
+                            <td v-for="tempItem,key in tempPositionList" :key="key"><v-text-field outline v-model="tempPositionList[key]" /></td>
+                          </tr>  
+                          <tr>
+                            <td>PSO2</td>
+                            <td v-for="posItem,key in pso2PositionList" :key="key"><v-text-field outline v-model="pso2PositionList[key]" /></td>
+                          </tr>   
+                          <tr>
+                            <td>PCO2</td>
+                            <td v-for="pcoItem,key in pco2PositionList" :key="key"><v-text-field outline v-model="pco2PositionList[key]" /></td>
+                          </tr>                                                                      
+                        </table>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12>
+                <v-card>
+                  <v-card-title primary-title class="blue-grey darken-1">
+                    <span class="subheading white--text text-capitalize"
+                      >Medicamentos y Soluciones Administradas</span
+                    >
+                  </v-card-title>
+                  <v-card-text>
+                    <v-layout row wrap>
+                      <v-flex xs5>
+                        <v-text-field
+                          v-model="medicine"
+                          label="Medicamentos Administrados"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs5>
+                        <v-text-field v-model="dose" label="Dosis">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs2>
+                        <v-btn large color="primary" @click="addItemMedicine()">
+                          Agregar
+                        </v-btn>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-data-table
+                          :headers="headersMedicines"
+                          :items="itemsMedicines"
+                          class="elevation-1"
+                        >
+                          <template v-slot:items="props">
+                            <td>{{ props.item.medicine }}</td>
+                            <td>
+                              {{ props.item.dose }}
+                            </td>
+                            <td>
+                              <v-icon
+                                small
+                                @click="deleteItemMedicine(props.item)"
+                              >
+                                delete
+                              </v-icon>
+                            </td>
+                          </template>
+                        </v-data-table>
+                      </v-flex>
+                      <!-- Soluciones administradas -->
+                      <v-flex xs5>
+                        <v-text-field
+                          v-model="solution"
+                          label="Soluciones Administradas"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs5>
+                        <v-text-field v-model="dose_solution" label="Dosis">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs2>
+                        <v-btn large color="primary" @click="addItemSolution()">
+                          Agregar
+                        </v-btn>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-data-table
+                          :headers="headersSolutions"
+                          :items="itemsSolutions"
+                          class="elevation-1"
+                        >
+                          <template v-slot:items="props">
+                            <td>{{ props.item.solution }}</td>
+                            <td>
+                              {{ props.item.dose }}
+                            </td>
+                            <td>
+                              <v-icon
+                                small
+                                @click="deleteItemSolution(props.item)"
+                              >
+                                delete
+                              </v-icon>
+                            </td>
+                          </template>
+                        </v-data-table>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-btn
+                          large
+                          color="primary"
+                          @click="saveAnesthesiologySheet()"
+                        >
+                          Guardar
+                        </v-btn>
+                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -154,6 +295,12 @@
     </v-card>
   </v-container>
 </template>
+<style>
+  td {
+    text-align: center;
+    width: 7%;
+  }
+</style>
 <script>
 import moment from "moment";
 
@@ -171,10 +318,46 @@ export default {
     date_picker: null,
     menu_time: false,
     time: "",
-    taListValue:["","","","","","","","","","","",""],
-    headers: ["HORA", "15'", "30'", "45'", "60'", "15'", "30'", "45'", "60'", "TA:", "FC:", "Fr:", "T°:", "PSO2:", "PCO2:"],
-      rows: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-      cols: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]    
+    medicine: "",
+    dose: "",
+    solution: "",
+    dose_solution: "",
+    itemsSolutions: [],
+    itemsMedicines: [],
+    taPositionList:Array(12),
+    faPositionList:Array(12),
+    frPositionList:Array(12),
+    tempPositionList:Array(12),
+    pso2PositionList:Array(12),
+    pco2PositionList:Array(12),
+    headersMedicines: [
+      {
+        text: "Medicamento Administrado",
+        align: "center",
+        sortable: false,
+        value: "medicine",
+      },
+      {
+        text: "Dosis",
+        align: "center",
+        value: "dose",
+      },
+      { text: "Acción", align: "center", value: "name", sortable: false },
+    ],
+    headersSolutions: [
+      {
+        text: "Soluciones Administradas",
+        align: "center",
+        sortable: false,
+        value: "medicine",
+      },
+      {
+        text: "Dosis",
+        align: "center",
+        value: "dose",
+      },
+      { text: "Acción", align: "center", value: "name", sortable: false },
+    ],
   }),
   methods: {
     clear() {
@@ -188,8 +371,35 @@ export default {
       }
       this.loading = false;
     },
+    addItemMedicine() {
+      this.itemsMedicines.push({
+        medicine: this.medicine,
+        dose: this.dose,
+      });
+      this.medicine = "";
+      this.dose = "";
+    },
+    deleteItemMedicine(item) {
+      const index = this.itemsMedicines.indexOf(item);
+      this.itemsMedicines.splice(index, 1);
+    },
+    addItemSolution() {
+      this.itemsSolutions.push({
+        solution: this.solution,
+        dose: this.dose_solution,
+      });
+      this.solution = "";
+      this.dose_solution = "";
+    },
+    deleteItemSolution(item) {
+      const index = this.itemsSolutions.indexOf(item);
+      this.itemsSolutions.splice(index, 1);
+    },
   },
   watch: {
+    taPositionList(val){
+      console.log(val);
+    },
     menu_time(val) {
       if (!val) {
         this.time = moment(this.time, "HH:mm").format("hh:mm A");
