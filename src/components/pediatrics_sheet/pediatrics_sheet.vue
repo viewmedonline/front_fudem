@@ -278,6 +278,7 @@
 </template>
 <script>
 import moment from "moment";
+import {saveSheetPediatrics} from '../../componentServs/pediatrics'
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -317,14 +318,52 @@ export default {
     },
   }),
   methods: {
-    savePediatricsSheet() {
+    async savePediatricsSheet() {
       this.loading = true;
-      console.log(this.diagnosisPre);
       if (this.$refs.form.validate()) {
+        const objRequest = {
+          name: "pediatrics_evaluation.html",
+          data: {
+            num_exp: this.num_exp,
+            pat_name: this.pat_name,
+            pat_age: this.pat_age,
+            pat_gender: this.pat_gender,
+            date: moment().format("YYYY-MM-DD"),
+            patient: this.$store.getters.getPatient._id,
+            responsible: this.$store.getters.getPhysician._id,
+            diagnosisPre: this.diagnosisPre,
+            stateDiagnosis: this.status,
+            clinicObservation: this.clinicObservation,
+            recordNP: this.recordNP,
+            recordP: this.recordP,
+            vaccination: this.vaccination,
+            physicalExam: this.physicalState,
+            ht: this.ht,
+            hb: this.hb,
+            platelets: this.platelets,
+            tp: this.tp,
+            tpt: this.tpt,
+            inr: this.inr,
+            glucose: this.glucose,
+            vih: this.vih,
+            ego: this.ego,
+            radiography: this.rxTorax,
+            electrocardiogram: this.electroCardio,
+            comments: this.comments,
+            surgical_risk: this.surgicalRisk,
+            functional_capacity: this.functionalCapacity,
+            clinical_predictors: this.clinicalPredictors,
+            clasification_asa: this.clasificationAsa,
+            plan: this.plan,
+            diagnosis: this.diagnosis,
+            phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            digital_signature: this.$store.getters.getPhysician.digital_signature,
+          }
+        };
+        await saveSheetPediatrics(objRequest)
         this.clear();
       }
       this.loading = false;
-      
     },
     clear() {
       this.$refs.form.reset();
