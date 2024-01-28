@@ -335,7 +335,7 @@ export default {
             "optometrist",
             "ophthalmologist",
             "nurse",
-            "pediatrics",
+            "pediatrist",
             "nutritionist",
             "internist",
           ],

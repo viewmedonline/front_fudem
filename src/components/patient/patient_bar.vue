@@ -108,7 +108,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('pediatrics_sheet')" v-if="storePhysician.role == 'pediatrics'
+          <v-list-tile @click="fixedCompst('pediatrics_sheet')" v-if="storePhysician.role == 'pediatrist'
             ">
             <v-list-tile-content>
               <v-list-tile-title>Evaluación por Pediatria</v-list-tile-title>

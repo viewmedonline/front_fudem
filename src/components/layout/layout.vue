@@ -359,6 +359,10 @@ export default {
       this.dataStore.imaging = false;
       this.dataStore.patient_form = false;
       this.dataStore.reports = false;
+      this.dataStore.pediatrics_sheet = false;
+      this.dataStore.nutritionist_sheet = false;
+      this.dataStore.anesthesiology_sheet = false;
+      this.dataStore.permanence_sheet = false;      
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
