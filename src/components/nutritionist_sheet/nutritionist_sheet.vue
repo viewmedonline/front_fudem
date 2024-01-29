@@ -206,7 +206,7 @@
                         <v-select
                           v-model="activity"
                           class="text-field-width"
-                          :items="['Desayuno']"
+                          :items="['Desayuno','Almuerzo','Cena']"
                           label="Actividad"
                         ></v-select>
                       </v-flex>
@@ -297,9 +297,9 @@
                           <template v-slot:items="props">
                             <td>{{ props.item.activity }}</td>
                             <td>
-                              Hora Inicio: {{ props.item.scheduled.from }}
-                              <span v-if="props.item.scheduled.to"
-                                >Hora Final: {{ props.item.scheduled.to }}</span
+                              Hora Inicio: {{ props.item.horary.from }}
+                              <span v-if="props.item.horary.to"
+                                >Hora Final: {{ props.item.horary.to }}</span
                               >
                             </td>
                             <td>
@@ -333,7 +333,7 @@
                         <v-select
                           v-model="consumption"
                           class="text-field-width"
-                          :items="['Tabaco']"
+                          :items="['Tabaco','Agua','Actividad Fisica']"
                           label="Consumo"
                         ></v-select>
                       </v-flex>
@@ -500,8 +500,8 @@
                       <v-flex xs3>
                         <v-text-field
                           :rules="[rules.required]"
-                          v-model="chooh"
-                          label="CHOOH (%)"
+                          v-model="cooh"
+                          label="COOH (%)"
                         >
                         </v-text-field>
                       </v-flex>
@@ -543,6 +543,7 @@
 </template>
 <script>
 import moment from "moment";
+import {saveSheetNutritionist} from '../../componentServs/nutritionist'
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -560,6 +561,48 @@ export default {
     consumption: "",
     quatityAndFrecuency: "",
     activity: "",
+    diagnosisReference:"",
+    colitis:"",
+    gastritis:"",
+    constipation:"",
+    diarrhea:"",
+    diabetes:"",
+    hta:"",
+    other:"",
+    previousSurgeries:"",
+    currentMedication:"",
+    medicationSince:"",
+    glycemia:"",
+    hemoglobin:"",
+    triglycerides:"",
+    cholesterol:"",
+    creatine:"",
+    uricAcid:"",
+    albumin:"",
+    hematocytes:"",
+    hgli:"",
+    hdl:"",
+    sodium:"",
+    ld:"",
+    calcium:"",
+    magnesium:"",
+    activity:"",
+    foodConsumed:"",
+    unpleasantFood:"",
+    allergicFood:"",
+    intolerantFood:"",
+    weight:"",
+    size:"",
+    goalWeight:"",
+    idealWeight:"",
+    imc:"",
+    nutritionalStatus:"",
+    waistCircumference:"",
+    cho:"",
+    chon:"",
+    cooh:"",
+    prescribedDiet:"",
+    comments:"",
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
@@ -568,7 +611,7 @@ export default {
     weight:"",
     imc:"",
     nutritionalStatus:"",
-    nutritionalStatusList: ['Bajo de peso', 'Peso ideal', 'Sobrepeso','Obesidad'],
+    nutritionalStatusList: ['Desnutricion I', 'Peso Normal', 'Sobrepeso','Obesidad Grado I','Obesidad Grado II','Obesidad Grado III'],
     itemsActivity: [],
     itemsConsumption: [],
     headersActivity: [
@@ -578,7 +621,7 @@ export default {
         sortable: false,
         value: "activity",
       },
-      { text: "Horario", align: "center", value: "scheduled" },
+      { text: "Horario", align: "center", value: "horary" },
       { text: "Alimentos Consumidos", align: "center", value: "foot" },
       { text: "Acción", align: "center", value: "name", sortable: false },
     ],
@@ -609,7 +652,7 @@ export default {
     addItemActivity() {
       this.itemsActivity.push({
         activity: this.activity,
-        scheduled: {
+        horary: {
           from: this.timeFrom,
           to: this.timeTo,
         },
@@ -639,10 +682,66 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
-    saveNutritionistSheet() {
+    async saveNutritionistSheet() {
       this.loading = true;
-      console.log(this.diagnosisPre);
       if (this.$refs.form.validate()) {
+        const objRequest = {
+          name: "nutritionist_sheet.html",
+          data: {
+            num_exp: this.num_exp,
+            pat_name: this.pat_name,
+            pat_age: this.pat_age,
+            pat_gender: this.pat_gender,
+            date: moment().format("YYYY-MM-DD"),
+            patient: this.$store.getters.getPatient._id,
+            responsible: this.$store.getters.getPhysician._id,
+            diagnosisRefer: this.diagnosisReference,
+            colitis: this.colitis,
+            gastritis: this.gastritis,
+            constipation: this.constipation,
+            diarrhea: this.diarrhea,
+            diabetes: this.diabetes,
+            hta: this.hta,
+            otherRecords: this.other,
+            previousSurgery: this.previousSurgeries,
+            currentMedication: this.currentMedication,
+            currentMedicationFrom: this.medicationSince,
+            glycemia: this.glycemia,
+            hemoglobin: this.hemoglobin,
+            triglycerides: this.triglycerides,
+            cholesterol: this.cholesterol,
+            creatinine: this.creatine,
+            uricAcid: this.uricAcid,
+            albumin: this.albumin,
+            hematocrit: this.hematocytes,
+            glycosylatedh: this.hgli,
+            hdl: this.hdl,
+            sodium: this.sodium,
+            ld: this.ld,
+            calcium: this.calcium,
+            magnesium: this.magnesium,
+            unpleasantFoods: this.unpleasantFood,
+            allergicFoods: this.allergicFood,
+            intolerableFoods: this.intolerantFood,
+            weight: this.weight,
+            idealWeight: this.idealWeight,
+            goalWeight: this.goalWeight,
+            size: this.size,
+            imc: this.imc,
+            nutritionalStatus: this.nutritionalStatus,
+            WaistCircumference: this.waistCircumference,
+            cho: this.cho,
+            chon: this.chon,
+            cooh: this.cooh,
+            prescribedDiet: this.prescribedDiet,
+            comments: this.comments,
+            lifestyle: this.itemsActivity,
+            consumptionFrequency: this.itemsConsumption,            
+            phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            digital_signature: this.$store.getters.getPhysician.digital_signature,
+          }
+        };  
+        await saveSheetNutritionist(objRequest)      
         this.clear();
       }
       this.loading = false;
@@ -651,12 +750,17 @@ export default {
   watch: {
     imc(val){
       let valueResponse = ""
-      if(val < 18.5) valueResponse = this.nutritionalStatusList[0]
-      if(val >= 18.5 && val <= 24.9) valueResponse = this.nutritionalStatusList[1]
+      if(val < 18) valueResponse = this.nutritionalStatusList[0]
+      if(val >= 19 && val <= 24.9) valueResponse = this.nutritionalStatusList[1]
       if(val >= 25 && val <= 29.9) valueResponse = this.nutritionalStatusList[2]
-      if(val >=  30) valueResponse = this.nutritionalStatusList[3]
+      if(val >=  30  && val <= 34.9) valueResponse = this.nutritionalStatusList[3]
+      if(val >=  35  && val <= 39.9) valueResponse = this.nutritionalStatusList[4]
+      if(val >=  40 ) valueResponse = this.nutritionalStatusList[5]
 
       this.nutritionalStatus = valueResponse
+
+      const idealWeightVar = this.pat_gender == "Masculino"  ? ((this.size-100)+3)*2.205 : -((this.size-100)-3)*2.205
+      this.idealWeight = idealWeightVar.toFixed(1)
     },
     menuDateFrom(val) {
       if (!val) {
@@ -666,6 +770,14 @@ export default {
           this.timeFrom = moment(this.timeFrom, "hh:mm A").format("HH:mm");
       }
     },
+    menuDateTo(val) {
+      if (!val) {
+        this.timeTo = moment(this.timeTo, "HH:mm").format("hh:mm A");
+      } else {
+        if (this.timeTo)
+          this.timeTo = moment(this.timeTo, "hh:mm A").format("HH:mm");
+      }
+    },    
   },
   async mounted() {
     const { idQflow, forename, surname, birthdate, gender } =
