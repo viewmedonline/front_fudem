@@ -20,39 +20,18 @@
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field v-model="companion" label="Acompañante" :rules="[rules.required]"/>
+                <v-text-field
+                  v-model="companion"
+                  label="Acompañante"
+                  :rules="[rules.required]"
+                />
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="surgery" label="Cirugía" :rules="[rules.required]"/>
-              </v-flex>
-              <v-flex xs6>
-                <v-menu
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  lazy
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      class="text-field-width"
-                      v-model="date"
-                      :rules="[rules.required]"
-                      label="Fecha de Cirugía"
-                      prepend-icon="event"
-                      readonly
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    locale="es-es"
-                    v-model="date_picker"
-                    @input="menu = false"
-                  ></v-date-picker>
-                </v-menu>
+                <v-text-field
+                  v-model="surgery"
+                  label="Cirugía"
+                  :rules="[rules.required]"
+                />
               </v-flex>
               <v-flex xs6>
                 <v-menu
@@ -88,6 +67,40 @@
                   ></v-time-picker>
                 </v-menu>
               </v-flex>
+              <v-flex xs6>
+                <v-menu
+                  ref="menu_time2"
+                  v-model="menu_time2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time2"
+                  lazy
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="time2"
+                      label="Hasta"
+                      prepend-icon="access_time"
+                      :rules="[rules.required]"
+                      value="12hr"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu_time2"
+                    v-model="time2"
+                    full-width
+                    value="12hr"
+                    @click:minute="$refs.menu_time2.save(time2)"
+                  ></v-time-picker>
+                </v-menu>
+              </v-flex>
               <v-flex>
                 <v-btn
                   :loading="loading"
@@ -95,7 +108,7 @@
                   color="primary"
                   @click="savePermanenceSheet()"
                 >
-                  Guardar
+                  Generar
                 </v-btn></v-flex
               >
             </v-layout>
@@ -103,22 +116,48 @@
         </v-form>
       </v-card-text>
     </v-card>
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Hoja de evaluación médico internista</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card-text style="padding: 0; height: 93vh; background-color: grey">
+          <iframe
+            :src="pdf_document"
+            type="application/pdf"
+            frameborder="0"
+            style="width: 100%; height: 100%"
+          ></iframe>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
 import moment from "moment";
-
+import { getPreview } from "../../componentServs/file";
 export default {
   name: "permanence_sheet",
   data: () => ({
     companion: "",
     surgery: "",
-    menu: false,
-    date: "",
-    date_picker: null,
     menu_time: false,
     time: "",
+    menu_time2: false,
+    time2: "",
     form_permanence: false,
+    pdf_document:"",
+    dialog:false,
+    loading:false,
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
@@ -127,9 +166,28 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
-    savePermanenceSheet() {
+    async savePermanenceSheet() {
       this.loading = true;
       if (this.$refs.form.validate()) {
+        const { forename, surname} =
+          this.$store.getters.getPatient;
+        const file = await getPreview({
+          name: "permanency_sheet.html",
+          data: {
+            name: this.companion,
+            patient_name: `${forename} ${surname}`,
+            surgery: this.surgery,
+            from: this.time,
+            to: this.time2,
+            day_month: "ventiocho",
+            month: "enero",
+            year: "dos mil veinticuatro",
+          },
+        });
+        const blob = new Blob([file.data], { type: "application/pdf;base64" });
+        const link = window.URL.createObjectURL(blob);
+        this.pdf_document = link;
+        this.dialog = true;
         this.clear();
       }
       this.loading = false;
@@ -143,8 +201,12 @@ export default {
         if (this.time) this.time = moment(this.time, "hh:mm A").format("HH:mm");
       }
     },
-    date_picker(val) {
-      this.date = moment(val).format("DD/MM/YYYY");
+    menu_time2(val) {
+      if (!val) {
+        this.time2 = moment(this.time2, "HH:mm").format("hh:mm A");
+      } else {
+        if (this.time2) this.time2 = moment(this.time2, "hh:mm A").format("HH:mm");
+      }
     },
   },
 };
