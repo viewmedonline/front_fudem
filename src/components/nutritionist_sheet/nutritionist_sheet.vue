@@ -206,8 +206,9 @@
                         <v-select
                           v-model="activity"
                           class="text-field-width"
-                          :items="['Desayuno','Almuerzo','Cena']"
+                          :items="activityList"
                           label="Actividad"
+
                         ></v-select>
                       </v-flex>
                       <v-flex xs3>
@@ -333,7 +334,7 @@
                         <v-select
                           v-model="consumption"
                           class="text-field-width"
-                          :items="['Tabaco','Agua','Actividad Fisica']"
+                          :items="consumedList"
                           label="Consumo"
                         ></v-select>
                       </v-flex>
@@ -450,7 +451,7 @@
                       </v-flex>
                       <v-flex xs4>
                         <v-text-field
-                          disabled
+                          readonly
                           v-model="idealWeight"
                           label="Peso ideal (lb)"
                         >
@@ -459,7 +460,7 @@
                       <v-flex xs4>
                         <v-text-field
                           v-model="imc"
-                          disabled
+                          readonly
                           label="IMC (kg/m2)"
                         >
                         </v-text-field>
@@ -468,7 +469,7 @@
                         <v-select
                           v-model="nutritionalStatus"
                           class="'text-field-width'"
-                          disabled
+                          readonly
                           :items="nutritionalStatusList"
                           label="Estado de nutrición"
                         ></v-select>
@@ -544,6 +545,7 @@
 <script>
 import moment from "moment";
 import {saveSheetNutritionist} from '../../componentServs/nutritionist'
+import { getActivity, getComsumed } from "../../componentServs/master";
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -610,6 +612,8 @@ export default {
     size:"",
     weight:"",
     imc:"",
+    activityList:[],
+    consumedList:[],
     nutritionalStatus:"",
     nutritionalStatusList: ['Desnutricion I', 'Peso Normal', 'Sobrepeso','Obesidad Grado I','Obesidad Grado II','Obesidad Grado III'],
     itemsActivity: [],
@@ -780,6 +784,9 @@ export default {
     },    
   },
   async mounted() {
+    this.consumedList = await getComsumed()
+    this.activityList = await getActivity()
+
     const { idQflow, forename, surname, birthdate, gender } =
       this.$store.getters.getPatient;
     this.num_exp = idQflow;
