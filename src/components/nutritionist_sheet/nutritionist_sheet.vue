@@ -208,7 +208,7 @@
                           class="text-field-width"
                           :items="activityList"
                           label="Actividad"
-
+                          autocomplete
                         ></v-select>
                       </v-flex>
                       <v-flex xs3>
@@ -333,6 +333,7 @@
                       <v-flex xs6>
                         <v-select
                           v-model="consumption"
+                          autocomplete
                           class="text-field-width"
                           :items="consumedList"
                           label="Consumo"
