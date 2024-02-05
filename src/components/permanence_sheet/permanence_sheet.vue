@@ -127,7 +127,7 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Hoja de evaluación médico internista</v-toolbar-title>
+          <v-toolbar-title>Hoja de permanencia</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text style="padding: 0; height: 93vh; background-color: grey">
@@ -144,7 +144,10 @@
 </template>
 <script>
 import moment from "moment";
+import writtenNumber from "written-number";
 import { getPreview } from "../../componentServs/file";
+writtenNumber.defaults.lang = "es";
+moment.locale("es");
 export default {
   name: "permanence_sheet",
   data: () => ({
@@ -155,9 +158,9 @@ export default {
     menu_time2: false,
     time2: "",
     form_permanence: false,
-    pdf_document:"",
-    dialog:false,
-    loading:false,
+    pdf_document: "",
+    dialog: false,
+    loading: false,
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
@@ -169,8 +172,12 @@ export default {
     async savePermanenceSheet() {
       this.loading = true;
       if (this.$refs.form.validate()) {
-        const { forename, surname} =
-          this.$store.getters.getPatient;
+        const { forename, surname } = this.$store.getters.getPatient;
+        let fecha = moment();
+
+        let dia = writtenNumber(fecha.date());
+        let mes = fecha.format("MMMM");
+        let año = writtenNumber(fecha.year());
         const file = await getPreview({
           name: "permanency_sheet.html",
           data: {
@@ -179,9 +186,9 @@ export default {
             surgery: this.surgery,
             from: this.time,
             to: this.time2,
-            day_month: "ventiocho",
-            month: "enero",
-            year: "dos mil veinticuatro",
+            day_month: dia,
+            month: mes,
+            year: año,
           },
         });
         const blob = new Blob([file.data], { type: "application/pdf;base64" });
@@ -205,7 +212,8 @@ export default {
       if (!val) {
         this.time2 = moment(this.time2, "HH:mm").format("hh:mm A");
       } else {
-        if (this.time2) this.time2 = moment(this.time2, "hh:mm A").format("HH:mm");
+        if (this.time2)
+          this.time2 = moment(this.time2, "hh:mm A").format("HH:mm");
       }
     },
   },

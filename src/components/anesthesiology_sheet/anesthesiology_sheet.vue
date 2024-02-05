@@ -388,7 +388,7 @@
           Reporte de Anestesiología
           <v-layout row wrap>
             <v-flex>
-              <small>{{ format_date(item.date) }}</small>
+              <small>{{ item.date }}</small>
             </v-flex>
             <v-flex style="margin-left: 150px" v-if="item.pdf != null">
               <v-icon x-large style="margin-top: -30px; color: #d50f0f"
@@ -591,9 +591,13 @@ export default {
       this.pdf_document = link;
     },
     async getListReport() {
-      this.listAnesthesiology = await getListAnesthesiology(
+      this.listAnesthesiology = (await getListAnesthesiology(
         this.$store.getters.getPatient._id
-      );
+      )).map(x =>{
+        x.date = moment(x.date).utc().format("DD/MM/YYYY")
+        return x
+      })
+      
     },
   },
   watch: {
