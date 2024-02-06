@@ -620,7 +620,7 @@ export default {
     this.num_exp = idQflow;
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
-    this.pat_gender = gender == "Male" ? "Masculino" : "Femenino";
+    this.pat_gender = (gender == "Male" || gender.toLowerCase() == "masculino") ? "Masculino" : "Femenino";
   },
 };
 </script>
