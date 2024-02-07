@@ -764,7 +764,7 @@ export default {
 
       this.nutritionalStatus = valueResponse
 
-      const idealWeightVar = this.pat_gender == "Masculino"  ? ((this.size-100)+3)*2.205 : -((this.size-100)-3)*2.205
+      const idealWeightVar = this.pat_gender == "Masculino"  ? ((this.size-100)+3)*2.205 : ((this.size-100)-3)*2.205
       this.idealWeight = idealWeightVar.toFixed(1)
     },
     menuDateFrom(val) {
@@ -793,7 +793,7 @@ export default {
     this.num_exp = idQflow;
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
-    this.pat_gender = gender == "Male" ? "Masculino" : "Femenino";
+    this.pat_gender = (gender == "Male" || gender.toLowerCase() == "masculino") ? "Masculino" : "Femenino";
   },
 };
 </script>

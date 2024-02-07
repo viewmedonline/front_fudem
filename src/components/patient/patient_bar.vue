@@ -108,8 +108,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('pediatrics_sheet')" v-if="storePhysician.role == 'pediatrist'
-            ">
+          <v-list-tile @click="fixedCompst('pediatrics_sheet')" >
             <v-list-tile-content>
               <v-list-tile-title>Evaluación por Pediatria</v-list-tile-title>
             </v-list-tile-content>
@@ -117,8 +116,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('nutritionist_sheet')" v-if="storePhysician.role == 'nutritionist'
-            ">
+          <v-list-tile @click="fixedCompst('nutritionist_sheet')" >
             <v-list-tile-content>
               <v-list-tile-title>Control Nutricional</v-list-tile-title>
             </v-list-tile-content>
@@ -126,8 +124,7 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('anesthesiology_sheet')" v-if="storePhysician.role == 'nurse' || storePhysician.role == 'ophthalmologist'
-            ">
+          <v-list-tile @click="fixedCompst('anesthesiology_sheet')" >
             <v-list-tile-content>
               <v-list-tile-title>Reporte de Anestesiologia</v-list-tile-title>
             </v-list-tile-content>
