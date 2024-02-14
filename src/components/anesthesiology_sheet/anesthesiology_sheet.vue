@@ -163,9 +163,9 @@
                             >Signos vitales</span
                           >
                         </v-card-title>
-                        <v-card-text>
+                        <v-card-text style="padding: 10px">
                           <v-layout row wrap>
-                            <v-flex xs8 offset-xs2>
+                            <v-flex xs12>
                               <table style="width: 100%">
                                 <tr>
                                   <td>Hora</td>
@@ -189,6 +189,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="taPositionList[key]"
                                     />
@@ -201,6 +203,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="fcPositionList[key]"
                                     />
@@ -213,6 +217,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="frPositionList[key]"
                                     />
@@ -225,6 +231,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="tempPositionList[key]"
                                     />
@@ -237,6 +245,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="pso2PositionList[key]"
                                     />
@@ -249,6 +259,8 @@
                                     :key="key"
                                   >
                                     <v-text-field
+                                      class="input-vital-signs"
+                                      single-line
                                       outline
                                       v-model="pco2PositionList[key]"
                                     />
@@ -425,6 +437,15 @@ td {
   text-align: center;
   width: 7%;
 }
+.input-vital-signs .v-input__slot {
+  font-weight: bold;
+  font-size: 12px;
+}
+.input-vital-signs,
+.input-vital-signs * {
+  padding: 0px !important;
+  text-align: center !important;
+}
 </style>
 <script>
 import moment from "moment";
@@ -591,13 +612,12 @@ export default {
       this.pdf_document = link;
     },
     async getListReport() {
-      this.listAnesthesiology = (await getListAnesthesiology(
-        this.$store.getters.getPatient._id
-      )).map(x =>{
-        x.date = moment(x.date).utc().format("DD/MM/YYYY")
-        return x
-      })
-      
+      this.listAnesthesiology = (
+        await getListAnesthesiology(this.$store.getters.getPatient._id)
+      ).map((x) => {
+        x.date = moment(x.date).utc().format("DD/MM/YYYY");
+        return x;
+      });
     },
   },
   watch: {
@@ -620,7 +640,10 @@ export default {
     this.num_exp = idQflow;
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
-    this.pat_gender = (gender == "Male" || gender.toLowerCase() == "masculino") ? "Masculino" : "Femenino";
+    this.pat_gender =
+      gender == "Male" || gender.toLowerCase() == "masculino"
+        ? "Masculino"
+        : "Femenino";
   },
 };
 </script>
