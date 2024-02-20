@@ -105,13 +105,64 @@
                     >
                   </v-card-title>
                   <v-card-text>
-                    <v-flex xs12>
-                      <v-textarea
-                        outline
-                        v-model="physicalState"
-                        label="Estado Físico"
-                      ></v-textarea>
-                    </v-flex>
+                    <v-layout row wrap>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="blood_pressure"
+                          class="text-field-width"
+                          label="PA"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="heart_rate"
+                          class="text-field-width"
+                          label="FC"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="respiratory_rate"
+                          class="text-field-width"
+                          label="FR"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="oxygen_saturation"
+                          class="text-field-width"
+                          label="SATO2"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="temp"
+                          class="text-field-width"
+                          label="T°"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="weight"
+                          class="text-field-width"
+                          label="Peso"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-text-field
+                          v-model="size"
+                          class="text-field-width"
+                          label="Talla"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-textarea
+                          outline
+                          v-model="physicalState"
+                          label="Estado Físico"
+                        ></v-textarea>
+                      </v-flex>
+                    </v-layout>
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -265,7 +316,7 @@
                 :loading="loading"
                 large
                 color="primary"
-                @click="savePediatricsSheet()"
+                @click="preview()"
               >
                 Guardar
               </v-btn>
@@ -278,7 +329,8 @@
 </template>
 <script>
 import moment from "moment";
-import {saveSheetPediatrics} from '../../componentServs/pediatrics'
+import { saveSheetPediatrics } from "../../componentServs/pediatrics";
+import { getPreview } from "../../componentServs/file";
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -294,6 +346,13 @@ export default {
     recordNP: "",
     recordP: "",
     vaccination: "",
+    blood_pressure: "",
+    heart_rate: "",
+    respiratory_rate: "",
+    oxygen_saturation: "",
+    temp: "",
+    weight: "",
+    size: "",
     physicalState: "",
     ht: "",
     hb: "",
@@ -318,6 +377,57 @@ export default {
     },
   }),
   methods: {
+    async preview() {
+      const file = await getPreview({
+        name: "pediatrics_evaluation.html",
+        data: {
+          num_exp: this.num_exp,
+          pat_name: this.pat_name,
+          pat_age: this.pat_age,
+          pat_gender: this.pat_gender,
+          date: moment().format("YYYY-MM-DD"),
+          patient: this.$store.getters.getPatient._id,
+          responsible: this.$store.getters.getPhysician._id,
+          diagnosisPre: this.diagnosisPre,
+          stateDiagnosis: this.status,
+          clinicObservation: this.clinicObservation,
+          recordNP: this.recordNP,
+          recordP: this.recordP,
+          vaccination: this.vaccination,
+          blood_pressure: this.blood_pressure,
+          heart_rate: this.heart_rate,
+          respiratory_rate: this.respiratory_rate,
+          oxygen_saturation: this.oxygen_saturation,
+          temp: this.temp,
+          weight: this.weight,
+          size: this.size,
+          physicalExam: this.physicalState,
+          ht: this.ht,
+          hb: this.hb,
+          platelets: this.platelets,
+          tp: this.tp,
+          tpt: this.tpt,
+          inr: this.inr,
+          glucose: this.glucose,
+          vih: this.vih,
+          ego: this.ego,
+          radiography: this.rxTorax,
+          electrocardiogram: this.electroCardio,
+          comments: this.comments,
+          surgical_risk: this.surgicalRisk,
+          functional_capacity: this.functionalCapacity,
+          clinical_predictors: this.clinicalPredictors,
+          clasification_asa: this.clasificationAsa,
+          plan: this.plan,
+          diagnosis: this.diagnosis,
+          phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+          digital_signature: this.$store.getters.getPhysician.digital_signature,
+        },
+      });
+      const blob = new Blob([file.data], { type: "application/pdf;base64" });
+      const link = window.URL.createObjectURL(blob);
+      window.open(link, "_blank");
+    },
     async savePediatricsSheet() {
       this.loading = true;
       if (this.$refs.form.validate()) {
@@ -337,6 +447,13 @@ export default {
             recordNP: this.recordNP,
             recordP: this.recordP,
             vaccination: this.vaccination,
+            blood_pressure: this.blood_pressure,
+            heart_rate: this.heart_rate,
+            respiratory_rate: this.respiratory_rate,
+            oxygen_saturation: this.oxygen_saturation,
+            temp: this.temp,
+            weight: this.weight,
+            size: this.size,
             physicalExam: this.physicalState,
             ht: this.ht,
             hb: this.hb,
@@ -357,10 +474,11 @@ export default {
             plan: this.plan,
             diagnosis: this.diagnosis,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
-            digital_signature: this.$store.getters.getPhysician.digital_signature,
-          }
+            digital_signature:
+              this.$store.getters.getPhysician.digital_signature,
+          },
         };
-        await saveSheetPediatrics(objRequest)
+        await saveSheetPediatrics(objRequest);
         this.clear();
       }
       this.loading = false;
@@ -376,7 +494,10 @@ export default {
     this.num_exp = idQflow;
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
-    this.pat_gender = (gender == "Male" || gender.toLowerCase() == "masculino") ? "Masculino" : "Femenino";
+    this.pat_gender =
+      gender == "Male" || gender.toLowerCase() == "masculino"
+        ? "Masculino"
+        : "Femenino";
   },
 };
 </script>
