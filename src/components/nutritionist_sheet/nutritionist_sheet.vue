@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title primary-title class="blue-grey darken-1">
         <span class="subheading white--text text-capitalize"
-          >Evaluación Pediátrica</span
+          >Control Nutricional</span
         >
       </v-card-title>
       <v-card-text>
@@ -47,6 +47,13 @@
                   outline
                   v-model="diagnosisReference"
                   label="Diagnósticos de Referencia"
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea
+                  outline
+                  v-model="clinicHistory"
+                  label="Historia Clinica"
                 ></v-textarea>
               </v-flex>
               <v-flex xs12>
@@ -197,7 +204,7 @@
                 <v-card>
                   <v-card-title primary-title class="blue-grey darken-1">
                     <span class="subheading white--text text-capitalize"
-                      >Estilo de vida</span
+                      >Recordatorio de 24 horas</span
                     >
                   </v-card-title>
                   <v-card-text>
@@ -336,7 +343,7 @@
                           autocomplete
                           class="text-field-width"
                           :items="consumedList"
-                          label="Consumo"
+                          label="Estilo de vida y hábitos de recreación"
                         ></v-select>
                       </v-flex>
                       <v-flex xs6>
@@ -444,7 +451,6 @@
                       </v-flex>
                       <v-flex xs4>
                         <v-text-field
-                          :rules="[rules.required]"
                           v-model="goalWeight"
                           label="Peso meta (lb)"
                         >
@@ -470,11 +476,123 @@
                         <v-select
                           v-model="nutritionalStatus"
                           class="'text-field-width'"
-                          readonly
                           :items="nutritionalStatusList"
                           label="Estado de nutrición"
                         ></v-select>
                       </v-flex>
+                      <v-flex xs12 style="text-align: left">
+                        <h4>Distribución de la composición corporal</h4>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field v-model="weight" label="Peso (lbs)">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          v-model="bodyFat"
+                          label="% Grasa corporal"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          v-model="bodyWater"
+                          label="% Agua corporal"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field v-model="muscleMass" label="Masa músculo">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          v-model="physicalAssessment"
+                          label="Valoración fisica"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field v-model="dciBmr" label="DCI / BMR">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          v-model="metabolicAge"
+                          label="Edad metabólica"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field v-model="boneMass" label="Masa Ósea">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4>
+                        <v-text-field
+                          v-model="viseralFat"
+                          label="Grasa visceral"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <img
+                          src="../../assets/img/img-form-1.jpg"
+                          width="100%"
+                        />
+                      </v-flex>
+                      <v-flex xs12>
+                        <img
+                          src="../../assets/img/img-form-2.png"
+                          width="100%"
+                        />
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field
+                          v-model="diagnosesImg1"
+                          label="Diagnostico"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <img
+                          src="../../assets/img/img-form-3.png"
+                          width="100%"
+                        />
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field
+                          v-model="diagnosesImg2"
+                          label="Diagnostico"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <img
+                          src="../../assets/img/img-form-4.png"
+                          width="100%"
+                        />
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field
+                          v-model="diagnosesImg3"
+                          label="Diagnostico"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <img
+                          src="../../assets/img/img-form-5.png"
+                          width="100%"
+                        />
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field
+                          v-model="diagnosesImg4"
+                          label="Diagnostico"
+                        >
+                        </v-text-field>
+                      </v-flex>
+                      <!--  -->
                       <v-flex xs3>
                         <v-text-field
                           :rules="[rules.required]"
@@ -532,6 +650,15 @@
                           Guardar
                         </v-btn></v-flex
                       >
+                      <!-- <v-flex>
+                        <v-btn
+                          large
+                          color="primary"
+                          @click="preview()"
+                        >
+                          preview
+                        </v-btn></v-flex
+                      > -->
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -545,8 +672,9 @@
 </template>
 <script>
 import moment from "moment";
-import {saveSheetNutritionist} from '../../componentServs/nutritionist'
+import { saveSheetNutritionist } from "../../componentServs/nutritionist";
 import { getActivity, getComsumed } from "../../componentServs/master";
+import { getPreview } from "../../componentServs/file";
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -564,61 +692,81 @@ export default {
     consumption: "",
     quatityAndFrecuency: "",
     activity: "",
-    diagnosisReference:"",
-    colitis:"",
-    gastritis:"",
-    constipation:"",
-    diarrhea:"",
-    diabetes:"",
-    hta:"",
-    other:"",
-    previousSurgeries:"",
-    currentMedication:"",
-    medicationSince:"",
-    glycemia:"",
-    hemoglobin:"",
-    triglycerides:"",
-    cholesterol:"",
-    creatine:"",
-    uricAcid:"",
-    albumin:"",
-    hematocytes:"",
-    hgli:"",
-    hdl:"",
-    sodium:"",
-    ld:"",
-    calcium:"",
-    magnesium:"",
-    activity:"",
-    foodConsumed:"",
-    unpleasantFood:"",
-    allergicFood:"",
-    intolerantFood:"",
-    weight:"",
-    size:"",
-    goalWeight:"",
-    idealWeight:"",
-    imc:"",
-    nutritionalStatus:"",
-    waistCircumference:"",
-    cho:"",
-    chon:"",
-    cooh:"",
-    prescribedDiet:"",
-    comments:"",
+    diagnosisReference: "",
+    colitis: "",
+    gastritis: "",
+    constipation: "",
+    diarrhea: "",
+    diabetes: "",
+    hta: "",
+    other: "",
+    previousSurgeries: "",
+    currentMedication: "",
+    medicationSince: "",
+    glycemia: "",
+    hemoglobin: "",
+    triglycerides: "",
+    cholesterol: "",
+    creatine: "",
+    uricAcid: "",
+    albumin: "",
+    hematocytes: "",
+    hgli: "",
+    hdl: "",
+    sodium: "",
+    ld: "",
+    calcium: "",
+    magnesium: "",
+    activity: "",
+    foodConsumed: "",
+    unpleasantFood: "",
+    allergicFood: "",
+    intolerantFood: "",
+    weight: "",
+    size: "",
+    goalWeight: "",
+    idealWeight: "",
+    imc: "",
+    nutritionalStatus: "",
+    waistCircumference: "",
+    cho: "",
+    chon: "",
+    cooh: "",
+    prescribedDiet: "",
+    comments: "",
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
     loading: false,
-    size:"",
-    weight:"",
-    imc:"",
-    activityList:[],
-    consumedList:[],
-    nutritionalStatus:"",
-    nutritionalStatusList: ['Desnutricion I', 'Peso Normal', 'Sobrepeso','Obesidad Grado I','Obesidad Grado II','Obesidad Grado III'],
+    size: "",
+    weight: "",
+    imc: "",
+    activityList: [],
+    consumedList: [],
+    nutritionalStatus: "",
+    nutritionalStatusList: [
+      "Desnutricion I",
+      "Peso Normal",
+      "Sobrepeso",
+      "Obesidad Grado I",
+      "Obesidad Grado II",
+      "Obesidad Grado III",
+    ],
     itemsActivity: [],
     itemsConsumption: [],
+    clinicHistory: "",
+    bodyFat: "",
+    bodyWater: "",
+    muscleMass: "",
+    physicalAssessment: "",
+    dciBmr: "",
+    metabolicAge: "",
+    boneMass: "",
+    viseralFat: "",
+    diagnosesImg1: "",
+    diagnosesImg2: "",
+    diagnosesImg3: "",
+    diagnosesImg4: "",
     headersActivity: [
       {
         text: "Actividad",
@@ -646,12 +794,87 @@ export default {
     ],
   }),
   methods: {
+    async preview(){
+      const file = await getPreview({
+        name: "nutritionist_sheet.html",
+          data: {
+            num_exp: this.num_exp,
+            pat_name: this.pat_name,
+            pat_age: this.pat_age,
+            pat_gender: this.pat_gender,
+            date: moment().format("YYYY-MM-DD"),
+            patient: this.$store.getters.getPatient._id,
+            responsible: this.$store.getters.getPhysician._id,
+            diagnosisRefer: this.diagnosisReference,
+            colitis: this.colitis,
+            gastritis: this.gastritis,
+            constipation: this.constipation,
+            diarrhea: this.diarrhea,
+            diabetes: this.diabetes,
+            hta: this.hta,
+            otherRecords: this.other,
+            previousSurgery: this.previousSurgeries,
+            currentMedication: this.currentMedication,
+            currentMedicationFrom: this.medicationSince,
+            glycemia: this.glycemia,
+            hemoglobin: this.hemoglobin,
+            triglycerides: this.triglycerides,
+            cholesterol: this.cholesterol,
+            creatinine: this.creatine,
+            uricAcid: this.uricAcid,
+            albumin: this.albumin,
+            hematocrit: this.hematocytes,
+            glycosylatedh: this.hgli,
+            hdl: this.hdl,
+            sodium: this.sodium,
+            ld: this.ld,
+            calcium: this.calcium,
+            magnesium: this.magnesium,
+            unpleasantFoods: this.unpleasantFood,
+            allergicFoods: this.allergicFood,
+            intolerableFoods: this.intolerantFood,
+            weight: this.weight,
+            idealWeight: this.idealWeight,
+            goalWeight: this.goalWeight,
+            size: this.size,
+            imc: this.imc,
+            nutritionalStatus: this.nutritionalStatus,
+            WaistCircumference: this.waistCircumference,
+            cho: this.cho,
+            chon: this.chon,
+            cooh: this.cooh,
+            prescribedDiet: this.prescribedDiet,
+            comments: this.comments,
+            lifestyle: this.itemsActivity,
+            consumptionFrequency: this.itemsConsumption,
+            phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            digital_signature:
+              this.$store.getters.getPhysician.digital_signature,
+            clinicHistory: this.clinicHistory,
+            bodyFat: this.bodyFat,
+            bodyWater: this.bodyWater,
+            muscleMass: this.muscleMass,
+            physicalAssessment: this.physicalAssessment,
+            dciBmr: this.dciBmr,
+            metabolicAge: this.metabolicAge,
+            boneMass: this.boneMass,
+            viseralFat: this.viseralFat,
+            diagnosesImg1: this.diagnosesImg1,
+            diagnosesImg2: this.diagnosesImg2,
+            diagnosesImg3: this.diagnosesImg3,
+            diagnosesImg4: this.diagnosesImg4,
+          },
+        });
+        const blob = new Blob([file.data], { type: "application/pdf;base64" });
+        const link = window.URL.createObjectURL(blob);
+        window.open(link, "_blank");
+    },
     IMC() {
       if (this.size > 0 && this.weight > 0) {
         let alturaMts = this.size / 100;
-        let pesoKg = this.weight * 0.453592
+        let pesoKg = this.weight * 0.453592;
         let imc = pesoKg / (alturaMts * alturaMts);
-        this.imc = imc.toFixed(1)
+        this.imc = imc.toFixed(1);
       }
     },
     addItemActivity() {
@@ -741,31 +964,52 @@ export default {
             prescribedDiet: this.prescribedDiet,
             comments: this.comments,
             lifestyle: this.itemsActivity,
-            consumptionFrequency: this.itemsConsumption,            
+            consumptionFrequency: this.itemsConsumption,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
-            digital_signature: this.$store.getters.getPhysician.digital_signature,
-          }
-        };  
-        await saveSheetNutritionist(objRequest)      
+            digital_signature:
+              this.$store.getters.getPhysician.digital_signature,
+            clinicHistory: this.clinicHistory,
+            bodyFat: this.bodyFat,
+            bodyWater: this.bodyWater,
+            muscleMass: this.muscleMass,
+            physicalAssessment: this.physicalAssessment,
+            dciBmr: this.dciBmr,
+            metabolicAge: this.metabolicAge,
+            boneMass: this.boneMass,
+            viseralFat: this.viseralFat,
+            diagnosesImg1: this.diagnosesImg1,
+            diagnosesImg2: this.diagnosesImg2,
+            diagnosesImg3: this.diagnosesImg3,
+            diagnosesImg4: this.diagnosesImg4,
+          },
+        };
+        await saveSheetNutritionist(objRequest);
         this.clear();
       }
       this.loading = false;
     },
   },
   watch: {
-    imc(val){
-      let valueResponse = ""
-      if(val < 18) valueResponse = this.nutritionalStatusList[0]
-      if(val >= 19 && val <= 24.9) valueResponse = this.nutritionalStatusList[1]
-      if(val >= 25 && val <= 29.9) valueResponse = this.nutritionalStatusList[2]
-      if(val >=  30  && val <= 34.9) valueResponse = this.nutritionalStatusList[3]
-      if(val >=  35  && val <= 39.9) valueResponse = this.nutritionalStatusList[4]
-      if(val >=  40 ) valueResponse = this.nutritionalStatusList[5]
+    imc(val) {
+      let valueResponse = "";
+      if (val < 18) valueResponse = this.nutritionalStatusList[0];
+      if (val >= 19 && val <= 24.9)
+        valueResponse = this.nutritionalStatusList[1];
+      if (val >= 25 && val <= 29.9)
+        valueResponse = this.nutritionalStatusList[2];
+      if (val >= 30 && val <= 34.9)
+        valueResponse = this.nutritionalStatusList[3];
+      if (val >= 35 && val <= 39.9)
+        valueResponse = this.nutritionalStatusList[4];
+      if (val >= 40) valueResponse = this.nutritionalStatusList[5];
 
-      this.nutritionalStatus = valueResponse
+      this.nutritionalStatus = valueResponse;
 
-      const idealWeightVar = this.pat_gender == "Masculino"  ? ((this.size-100)+3)*2.205 : ((this.size-100)-3)*2.205
-      this.idealWeight = idealWeightVar.toFixed(1)
+      const idealWeightVar =
+        this.pat_gender == "Masculino"
+          ? (this.size - 100 + 3) * 2.205
+          : (this.size - 100 - 3) * 2.205;
+      this.idealWeight = idealWeightVar.toFixed(1);
     },
     menuDateFrom(val) {
       if (!val) {
@@ -782,18 +1026,21 @@ export default {
         if (this.timeTo)
           this.timeTo = moment(this.timeTo, "hh:mm A").format("HH:mm");
       }
-    },    
+    },
   },
   async mounted() {
-    this.consumedList = await getComsumed()
-    this.activityList = await getActivity()
+    this.consumedList = await getComsumed();
+    this.activityList = await getActivity();
 
     const { idQflow, forename, surname, birthdate, gender } =
       this.$store.getters.getPatient;
     this.num_exp = idQflow;
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
-    this.pat_gender = (gender == "Male" || gender.toLowerCase() == "masculino") ? "Masculino" : "Femenino";
+    this.pat_gender =
+      gender == "Male" || gender.toLowerCase() == "masculino"
+        ? "Masculino"
+        : "Femenino";
   },
 };
 </script>
