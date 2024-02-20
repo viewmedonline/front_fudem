@@ -316,7 +316,7 @@
                 :loading="loading"
                 large
                 color="primary"
-                @click="preview()"
+                @click="savePediatricsSheet()"
               >
                 Guardar
               </v-btn>
