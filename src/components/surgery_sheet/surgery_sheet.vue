@@ -133,7 +133,7 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker
+                      <v-date-picker locale="es-es"
                         v-model="date_picker"
                         @input="menu = false"
                       ></v-date-picker>

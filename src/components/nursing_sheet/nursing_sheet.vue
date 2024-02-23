@@ -73,7 +73,7 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker
+                      <v-date-picker locale="es-es"
                         v-model="date_sheet_picker"
                         @input="menu_sheet = false"
                       ></v-date-picker>
@@ -283,7 +283,7 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker
+                      <v-date-picker locale="es-es"
                         v-model="date2_picker"
                         @input="menu = false"
                       ></v-date-picker>

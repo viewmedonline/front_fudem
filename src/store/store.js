@@ -20,6 +20,10 @@ export default new Vuex.Store({
       constancy_disability: false,
       surgery_sheet: false,
       internist_evaluation_sheet: false,
+      pediatrics_sheet:false,
+      nutritionist_sheet:false,
+      anesthesiology_sheet:false,
+      permanence_sheet: false
     },
     typeConsulting: null,
     sucursal: null,

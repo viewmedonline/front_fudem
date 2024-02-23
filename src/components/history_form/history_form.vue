@@ -40,7 +40,7 @@
                             prepend-icon="event"
                             @blur="date = parseDate(dateFormatted)"
                           ></v-text-field>
-                          <v-date-picker v-model="date" no-title @input="menu1 = false">
+                          <v-date-picker locale="es-es" v-model="date" no-title @input="menu1 = false">
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{$t("title.cancel")}}</v-btn>
                             <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>

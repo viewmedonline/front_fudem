@@ -108,6 +108,43 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
+          <v-list-tile @click="fixedCompst('pediatrics_sheet')" v-if="storePhysician.role == 'pediatrist'
+            ">
+            <v-list-tile-content>
+              <v-list-tile-title>Evaluación por Pediatria</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="fixedCompst('nutritionist_sheet')" v-if="storePhysician.role == 'nutritionist'
+            ">
+            <v-list-tile-content>
+              <v-list-tile-title>Control Nutricional</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="fixedCompst('anesthesiology_sheet')" v-if="storePhysician.role == 'nurse' || storePhysician.role == 'ophthalmologist'
+            ">
+            <v-list-tile-content>
+              <v-list-tile-title>Reporte de Anestesiologia</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="fixedCompst('permanence_sheet')" v-if="storePhysician.role == 'nurse' || storePhysician.role == 'ophthalmologist'
+            ">
+            <v-list-tile-content>
+              <v-list-tile-title>Hoja de Permanencia</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+
           <v-textarea box v-model="historyClinic" :readonly="!storePhysician.user.role ? true : false" name="input-7-4"
             label="Resumen" @change="saveHistory()" :value="storePatient.historyClinic"></v-textarea>
         </v-list>
@@ -171,6 +208,11 @@ export default {
       this.dataStore.constancy_disability = false;
       this.dataStore.surgery_sheet = false;
       this.dataStore.internist_evaluation_sheet = false;
+      this.dataStore.pediatrics_sheet = false;
+      this.dataStore.nutritionist_sheet = false;
+      this.dataStore.anesthesiology_sheet = false;
+      this.dataStore.permanence_sheet = false;
+
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -211,6 +253,23 @@ export default {
           this.dataStore.patient = true;
           this.dataStore.internist_evaluation_sheet = true;
           break;
+        case "pediatrics_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.pediatrics_sheet = true;
+          break;
+        case "nutritionist_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.nutritionist_sheet = true;
+          break;
+        case "anesthesiology_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.anesthesiology_sheet = true;
+          break;
+        case "permanence_sheet":
+          this.dataStore.patient = true;
+          this.dataStore.permanence_sheet = true;
+          break;
+
         default:
           this.dataStore.consultation = true;
       }
