@@ -265,7 +265,6 @@ export default {
         this.scrollTo(0, 0);
       }, 500);
       paso--;
-      paso--;
       if (paso == this.paso + 1) {
         // Si el paso seleccionado es el siguiente en la lista
         this.buttonNext();
