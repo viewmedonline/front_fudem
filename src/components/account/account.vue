@@ -14,7 +14,12 @@
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs4 offset-xs4>
-                <v-avatar :tile="false" class="vm-border-color" size="90px" color="white">
+                <v-avatar
+                  :tile="false"
+                  class="vm-border-color"
+                  size="90px"
+                  color="white"
+                >
                   <v-icon>gesture</v-icon>
                 </v-avatar>
               </v-flex>
@@ -28,20 +33,41 @@
                   <v-card-title>
                     {{ $t("title.doctors") }}
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="search" :label="$t('title.search')" single-line
-                      hide-details :maxlength="30"></v-text-field>
+                    <v-text-field
+                      v-model="search"
+                      append-icon="search"
+                      :label="$t('title.search')"
+                      single-line
+                      hide-details
+                      :maxlength="30"
+                    ></v-text-field>
                   </v-card-title>
-                  <v-data-table style="width: 100%" :headers="headers" :items="users" :search="search">
+                  <v-data-table
+                    style="width: 100%"
+                    :headers="headers"
+                    :items="users"
+                    :search="search"
+                  >
                     <template slot="items" slot-scope="props">
                       <td class="text-xs-center">{{ props.item.name }}</td>
                       <td class="text-xs-center">{{ props.item.specialty }}</td>
                       <td class="justify-center text-xs-center">
-                        <v-icon small class="mr-2" @click="editItem(props.item.id)">edit</v-icon>
+                        <v-icon
+                          small
+                          class="mr-2"
+                          @click="editItem(props.item.id)"
+                          >edit</v-icon
+                        >
                       </td>
                     </template>
-                    <v-alert slot="no-results" :value="true" color="error" icon="warning">{{ $t("title.your_search") }}
-                      "{{ search }}"
-                      {{ $t("title.no_results") }}.</v-alert>
+                    <v-alert
+                      slot="no-results"
+                      :value="true"
+                      color="error"
+                      icon="warning"
+                      >{{ $t("title.your_search") }} "{{ search }}"
+                      {{ $t("title.no_results") }}.</v-alert
+                    >
                   </v-data-table>
                 </v-card>
               </v-flex>
@@ -64,34 +90,166 @@
                   v-model="diagnosisSelected"
                   @change="changeDiagnosis()"
                 ></v-select> -->
-                <v-autocomplete :disabled="add_diagnosis" v-model="diagnosisSelected" :items="diagnosis" label="Diagnosticos Existentes"
-                  persistent-hint prepend-icon="" return-object @change="changeDiagnosis()" item-text="diagnostic.es">
+                <v-autocomplete
+                  :disabled="add_diagnosis"
+                  v-model="diagnosisSelected"
+                  :items="diagnosis"
+                  label="Diagnosticos Existentes"
+                  persistent-hint
+                  prepend-icon=""
+                  return-object
+                  @change="changeDiagnosis()"
+                  item-text="diagnostic.es"
+                >
                   <template v-slot:selection="data">
                     <span>{{ data.item.diagnostic.es }}</span>
                   </template>
                   <template v-slot:item="data">
-                    <v-list-tile-content :style="data.item.disable ? 'color: red; font-weight:bold' : null" v-text="data.item.diagnostic.es"></v-list-tile-content>
+                    <v-list-tile-content
+                      :style="
+                        data.item.disable
+                          ? 'color: red; font-weight:bold'
+                          : null
+                      "
+                      v-text="data.item.diagnostic.es"
+                    ></v-list-tile-content>
                   </template>
                 </v-autocomplete>
               </v-flex>
               <v-flex xs4 v-if="diagnosisSelected || add_diagnosis">
-                <v-text-field style="margin-left: 5px" label="Diagnostico" v-model="diagnosis_txt"
-                  :disabled="!diagnosisSelected && !add_diagnosis"></v-text-field>
+                <v-text-field
+                  style="margin-left: 5px"
+                  label="Diagnostico"
+                  v-model="diagnosis_txt"
+                  :disabled="!diagnosisSelected && !add_diagnosis"
+                ></v-text-field>
               </v-flex>
               <v-flex xs4 v-if="!add_diagnosis">
-                <v-btn style="margin-left: 5px" color="primary" @click="new_diagnosis" large>
+                <v-btn
+                  style="margin-left: 5px"
+                  color="primary"
+                  @click="new_diagnosis"
+                  large
+                >
                   Añadir Diagnóstico
                 </v-btn>
               </v-flex>
               <v-flex xs4 v-else>
-                <v-btn style="margin-left: 5px" color="primary" @click="saveDiagnosis" large>
+                <v-btn
+                  style="margin-left: 5px"
+                  color="primary"
+                  @click="saveDiagnosis"
+                  large
+                >
                   Guardar Diagnóstico
                 </v-btn>
-                <v-btn v-if="diagnosisSelected" :color="diagnosisSelected.disable ? 'green' : 'red'" @click="disabledDiagnoses" large>{{diagnosisSelected.disable ? "Habilitar" : "Deshabilitar"}}</v-btn>
+                <v-btn
+                  v-if="diagnosisSelected"
+                  :color="diagnosisSelected.disable ? 'green' : 'red'"
+                  @click="disabledDiagnoses"
+                  large
+                  >{{
+                    diagnosisSelected.disable ? "Habilitar" : "Deshabilitar"
+                  }}</v-btn
+                >
 
                 <v-btn @click="clearDiagnoses" large>Cancelar</v-btn>
               </v-flex>
-
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs6>
+                <v-text-field
+                  v-model="dateFromFormat"
+                  label="Desde"
+                  prepend-icon="event"
+                  readonly
+                  @click="modalFrom = true"
+                ></v-text-field>
+                <v-dialog
+                  ref="dialogFrom"
+                  v-model="modalFrom"
+                  :return-value.sync="dateFrom"
+                  persistent
+                  lazy
+                  full-width
+                  width="290px"
+                >
+                  <v-date-picker locale="es-es" v-model="dateFrom" scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="modalFrom = false"
+                      >Cancel</v-btn
+                    >
+                    <v-btn
+                      flat
+                      color="primary"
+                      @click="$refs.dialogFrom.save(dateFrom)"
+                      >OK</v-btn
+                    >
+                  </v-date-picker>
+                </v-dialog>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                  v-model="dateToFormat"
+                  label="Hasta"
+                  prepend-icon="event"
+                  readonly
+                  @click="modalTo = true"
+                ></v-text-field>
+                <v-dialog
+                  ref="dialogTo"
+                  v-model="modalTo"
+                  :return-value.sync="dateTo"
+                  persistent
+                  lazy
+                  full-width
+                  width="290px"
+                >
+                  <v-date-picker locale="es-es" v-model="dateTo" scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="modalTo = false"
+                      >Cancel</v-btn
+                    >
+                    <v-btn
+                      flat
+                      color="primary"
+                      @click="$refs.dialogTo.save(dateTo)"
+                      >OK</v-btn
+                    >
+                  </v-date-picker>
+                </v-dialog>
+              </v-flex>
+              <v-flex xs3>
+                <v-btn
+                  style="width: 90%"
+                  large
+                  color="primary"
+                  @click="generateReport(1)"
+                  ><v-icon>mdi-download</v-icon>Consultas Oftalmologicas</v-btn
+                >
+              </v-flex>
+              <v-flex xs3>
+                <v-btn style="width: 90%" large color="primary"  @click="generateReport(2)"
+                  ><v-icon>mdi-download</v-icon>Consultas Medico
+                  Internista</v-btn
+                >
+              </v-flex>
+              <v-flex xs3>
+                <v-btn style="width: 90%" large color="primary"  @click="generateReport(3)"
+                  ><v-icon>mdi-download</v-icon>Consultas Pediatricas</v-btn
+                >
+              </v-flex>
+              <v-flex xs3>
+                <v-btn style="width: 90%" color="primary"  @click="generateReport(4)" large
+                  ><v-icon>mdi-download</v-icon>Consultas Nutricionista</v-btn
+                >
+              </v-flex>
             </v-layout>
           </v-card-text>
         </v-card>
@@ -109,8 +267,12 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12>
-                <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"
-                  @vdropzone-removed-file="removeFile"></vue-dropzone>
+                <vue-dropzone
+                  ref="myVueDropzone"
+                  id="dropzone"
+                  :options="dropzoneOptions"
+                  @vdropzone-removed-file="removeFile"
+                ></vue-dropzone>
               </v-flex>
             </v-layout>
           </v-container>
@@ -130,7 +292,11 @@
       <v-card color="primary" dark>
         <v-card-text>
           {{ $t("title.saving") }}
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -143,6 +309,8 @@ import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as personServ from "@/componentServs/person";
 import { getDiagnoses, insertDiagnoses } from "@/componentServs/diagnoses";
 import * as fileServ from "@/componentServs/file";
+import {getReport,} from '@/componentServs/report'
+import moment from "moment";
 export default {
   name: "account",
   components: {
@@ -193,15 +361,48 @@ export default {
       diagnosisSelected: null,
       diagnosis_txt: "",
       add_diagnosis: false,
-      user_admin: false
+      user_admin: false,
+      date: null,
+      dateFrom: null,
+      dateFromFormat: null,
+      dateTo: null,
+      dateToFormat: null,
+      modalTo: false,
+      modalFrom: false,
     };
   },
+  watch: {
+    dateFrom(val) {
+      this.dateFromFormat = moment(val, "YYYY-MM-DD").format("DD-MM-YYYY");
+    },
+    dateTo(val) {
+      this.dateToFormat = moment(val, "YYYY-MM-DD").format("DD-MM-YYYY");
+    },
+  },
   methods: {
+    async generateReport(report) {
+      switch (report) {
+        case 1:
+          await getReport(this.dateFromFormat,this.dateToFormat,"ophthalmologist","Reporte Oftalmologico")
+          break;
+        case 2:
+          await getReport(this.dateFromFormat,this.dateToFormat,"internist","Reporte Internista")
+          break;
+        case 3:
+          await getReport(this.dateFromFormat,this.dateToFormat,"pediatrist","Reporte Pediatria")
+          break;
+        case 4:
+          await getReport(this.dateFromFormat,this.dateToFormat,"nutritionist","Reporte Nutricionista")
+          break;
+      }
+    },
     async disabledDiagnoses() {
-      let objAux = this.diagnosisSelected
-      objAux.disable = this.diagnosisSelected.disable ? !this.diagnosisSelected.disable : true
-      await insertDiagnoses(objAux)
-      this.clearDiagnoses()
+      let objAux = this.diagnosisSelected;
+      objAux.disable = this.diagnosisSelected.disable
+        ? !this.diagnosisSelected.disable
+        : true;
+      await insertDiagnoses(objAux);
+      this.clearDiagnoses();
       this.getListDiagnoses();
     },
     async saveDiagnosis() {
@@ -210,7 +411,7 @@ export default {
       if (this.diagnosisSelected) {
         this.diagnosisSelected.diagnostic.es = this.diagnosis_txt;
         this.diagnosisSelected.diagnostic.en = this.diagnosis_txt;
-        objAux = this.diagnosisSelected
+        objAux = this.diagnosisSelected;
       } else {
         objAux = {
           diagnostic: {
@@ -219,9 +420,9 @@ export default {
           },
         };
       }
-      await insertDiagnoses(objAux)
+      await insertDiagnoses(objAux);
 
-      this.clearDiagnoses()
+      this.clearDiagnoses();
       this.getListDiagnoses();
     },
     clearDiagnoses() {
@@ -367,12 +568,16 @@ export default {
       getDiagnoses({}).then((result) => {
         this.diagnosis = result;
       });
-    }
+    },
   },
   created() {
-    this.user_admin = this.$store.getters.getPhysician.user.idUserFudem == 'PRUEBAOFTA' ? true : false;
+    this.user_admin =
+      this.$store.getters.getPhysician.user.idUserFudem == "PRUEBAOFTA"
+        ? true
+        : false;
     if (this.user_admin) {
-      this.items.push("ICD-10")
+      this.items.push("ICD-10");
+      this.items.push("Reportes de Consultas");
     }
 
     this.getUserList();
