@@ -774,7 +774,7 @@ export default {
           token: null,
         };
 
-        if (this.insertAntecedent) {
+        if (!this.$store.getters.getPatient.record) {
           recordServ
             .saveAntecedent(objAux)
             .then((result) => {
