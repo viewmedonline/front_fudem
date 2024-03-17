@@ -511,7 +511,6 @@ export default {
     this.pat_age = moment().diff(birthdate, "years");
     this.nurseSheetList = await getSheetList(this.patient._id, null);
     if(!this.$store.getters.getPhysician.digital_signature){
-      alert("No posee firma el usuario")
       this.signatureExist = false
     }else{
       this.signatureExist = true
