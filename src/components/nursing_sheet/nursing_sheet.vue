@@ -12,12 +12,13 @@
           :step="9999"
           :edit-icon="'add'"
           complete
-          :editable="true"
+          :editable="signatureExist"
           @click="validateStepper(9999)"
         >
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">Crear Hoja de Enfermeria</h3>
+              <h5 v-if="!signatureExist" style="color: red;">Debe tener un firma cargada para poder continuar con el proceso</h5>
             </div>
           </v-card-title>
         </v-stepper-step>
@@ -131,7 +132,7 @@
             </v-flex>
           </v-layout>
         </v-stepper-content>
-        <div v-for="(item, z) in nurseSheetList" :key="item._id">
+        <div v-for="(item, z) in nurseSheetList" :key="item._id" v-if="signatureExist">
           <v-stepper-step
             :step="z"
             complete
@@ -485,6 +486,8 @@ export default {
     pdf_document:null,
     user_admin: "",
     hgt: "",
+    signatureExist:false
+    
   }),
   watch: {
     time_picker(val) {
@@ -507,6 +510,12 @@ export default {
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
     this.nurseSheetList = await getSheetList(this.patient._id, null);
+    if(!this.$store.getters.getPhysician.digital_signature){
+      alert("No posee firma el usuario")
+      this.signatureExist = false
+    }else{
+      this.signatureExist = true
+    }
   },
   methods: {
     async reopenSheet(item, pos) {
