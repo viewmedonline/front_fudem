@@ -225,28 +225,58 @@
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs4>
                 <v-btn
                   style="width: 90%"
                   large
                   color="primary"
                   @click="generateReport(1)"
+                  ><v-icon>mdi-download</v-icon>Consultas Preliminares</v-btn
+                >
+              </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  large
+                  color="primary"
+                  @click="generateReport(2)"
+                  ><v-icon>mdi-download</v-icon>Consultas Optometría</v-btn
+                >
+              </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  large
+                  color="primary"
+                  @click="generateReport(3)"
                   ><v-icon>mdi-download</v-icon>Consultas Oftalmologicas</v-btn
                 >
               </v-flex>
-              <v-flex xs3>
-                <v-btn style="width: 90%" large color="primary"  @click="generateReport(2)"
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  large
+                  color="primary"
+                  @click="generateReport(4)"
                   ><v-icon>mdi-download</v-icon>Consultas Medico
                   Internista</v-btn
                 >
               </v-flex>
-              <v-flex xs3>
-                <v-btn style="width: 90%" large color="primary"  @click="generateReport(3)"
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  large
+                  color="primary"
+                  @click="generateReport(5)"
                   ><v-icon>mdi-download</v-icon>Consultas Pediatricas</v-btn
                 >
               </v-flex>
-              <v-flex xs3>
-                <v-btn style="width: 90%" color="primary"  @click="generateReport(4)" large
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  color="primary"
+                  @click="generateReport(6)"
+                  large
                   ><v-icon>mdi-download</v-icon>Consultas Nutricionista</v-btn
                 >
               </v-flex>
@@ -300,6 +330,18 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="loadingModal" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Generando Reporte...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-content>
 </template>
 
@@ -309,7 +351,7 @@ import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as personServ from "@/componentServs/person";
 import { getDiagnoses, insertDiagnoses } from "@/componentServs/diagnoses";
 import * as fileServ from "@/componentServs/file";
-import {getReport,} from '@/componentServs/report'
+import { getReport } from "@/componentServs/report";
 import moment from "moment";
 export default {
   name: "account",
@@ -369,6 +411,7 @@ export default {
       dateToFormat: null,
       modalTo: false,
       modalFrom: false,
+      loadingModal: false,
     };
   },
   watch: {
@@ -381,20 +424,58 @@ export default {
   },
   methods: {
     async generateReport(report) {
+      this.loadingModal = true;
       switch (report) {
         case 1:
-          await getReport(this.dateFromFormat,this.dateToFormat,"ophthalmologist","Reporte Oftalmologico")
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "preliminary",
+            "Reporte Preliminares"
+          );
           break;
         case 2:
-          await getReport(this.dateFromFormat,this.dateToFormat,"internist","Reporte Internista")
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "optometry",
+            "Reporte Optometria"
+          );
           break;
         case 3:
-          await getReport(this.dateFromFormat,this.dateToFormat,"pediatrist","Reporte Pediatria")
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "ophthalmology",
+            "Reporte Oftalmología"
+          );
           break;
         case 4:
-          await getReport(this.dateFromFormat,this.dateToFormat,"nutritionist","Reporte Nutricionista")
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "internist",
+            "Reporte Internista"
+          );
+          break;
+        case 5:
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "pediatrist",
+            "Reporte Pediatria"
+          );
+          break;
+        case 6:
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "nutritionist",
+            "Reporte Nutricionista"
+          );
           break;
       }
+      this.loadingModal = false;
     },
     async disabledDiagnoses() {
       let objAux = this.diagnosisSelected;

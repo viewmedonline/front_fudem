@@ -17,6 +17,7 @@ function getReport(dateFrom,dateTo,report,filename) {
             document.body.appendChild(link);
             link.click();
             link.parentNode.removeChild(link);
+            resolve(true)
         }).catch(error => {
             reject(error.response.data.message)
         })
