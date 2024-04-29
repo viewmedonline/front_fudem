@@ -1,15 +1,15 @@
 <template>
   <v-container>
     <v-card class="vcard">
-      <v-card-title primary-title class="vm-bg-patient"></v-card-title>
+      <!-- <v-card-title primary-title class="vm-bg-patient"></v-card-title> -->
       <v-divider light></v-divider>
       <v-card-text>
-        <v-avatar color="patient" size="75px" class="vm-avatar-absolute">
+        <!-- <v-avatar color="patient" size="75px" class="vm-avatar-absolute">
           <v-icon dark>person</v-icon>
         </v-avatar>
-        <br />
-        <div>
-          <span class="body-2 patient--text">{{ storePatient.forename }} {{ storePatient.surname }}</span>
+        <br /> -->
+        <div style="margin-bottom: 5px;">
+          <span style="font-size: 18px !important" class="body-2 patient--text">{{ storePatient.forename }} {{ storePatient.surname }}</span>
         </div>
         <div>
           <span class="title">{{ storePatient.idQflow }}</span>
@@ -319,9 +319,13 @@ export default {
 /* Ajusta el estilo cuando el ancho de la ventana del navegador sea 600px o menos */
 @media screen and (max-height: 830px) {
   .vcard {
-    position: absolute;
+    position: fixed;
     max-width: 25%;
     width: 20%;
   }
+}
+::v-deep .v-list__tile {
+    height: 35px !important;
+    font-size: 14px;
 }
 </style>
