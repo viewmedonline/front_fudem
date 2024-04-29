@@ -1759,8 +1759,8 @@
                                         <span class="body-1">{{myProp.objOphthalmology.data.datapreliminar.tonometria.ojoizq || ' - '}}</span>
                                     </v-flex>
                                 </v-layout>
-                                <v-divider light></v-divider>
-                                <v-layout row wrap class="pt-1"
+                                <!-- <v-divider light></v-divider> -->
+                                <!-- <v-layout row wrap class="pt-1"
                                           v-if="myProp.objOphthalmology.data && myProp.objOphthalmology.data.process.lenght > 0">
                                     <v-flex xs12>
                                         <span class="primary--text">Procedimiento de diagnóstico</span>
@@ -1788,8 +1788,8 @@
                                         </v-layout>
                                     </v-flex>
 
-                                </v-layout>
-                                <v-divider light></v-divider>
+                                </v-layout> -->
+                                <!-- <v-divider light></v-divider>
                                 <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
                                     <v-flex xs12>
                                         <span class="primary--text">PROCEDIMIENTOS TERAPEUTICOS</span>
@@ -1811,7 +1811,7 @@
                                             </v-flex>
                                         </v-layout>
                                     </v-flex>
-                                </v-layout>
+                                </v-layout> -->
                                 <v-divider light></v-divider>
                                 <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
                                     <v-flex xs12>
@@ -1827,7 +1827,7 @@
                                     </v-flex>
                                 </v-layout>
                                 <v-divider light></v-divider>
-                                <v-layout row wrap v-if="myProp.objOphthalmology.data">
+                                <!-- <v-layout row wrap v-if="myProp.objOphthalmology.data">
                                     <v-flex xs12
                                             v-if="myProp.objOphthalmology.data.treatmentplan && myProp.objOphthalmology.data.treatmentplan.tratamiento.length > 0">
                                         <span class="primary--text">Plan De Tratamiento</span>
@@ -1860,7 +1860,7 @@
                                                     </span>
                                         <span class="body-1">{{myProp.objOphthalmology.data.treatmentplan.otros || ' - '}}</span>
                                     </v-flex>
-                                </v-layout>
+                                </v-layout> -->
                                 <v-divider light></v-divider>
                                 <v-layout row wrap v-if="myProp.objOphthalmology.data">
 
