@@ -55,6 +55,20 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
+      <v-tab
+        ripple
+        @click="changeTabs('internist')"
+        v-if="validateTabs('internist')"
+      >
+        Hoja de Evaluación MI
+      </v-tab>
+      <v-tab-item>
+        <v-card class="blue-grey lighten-5">
+          <v-card-text>
+            <vmInternist class="px-0 py-0"></vmInternist>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
       <!-- Historia -->
       <v-tab
@@ -99,6 +113,7 @@ const vmOphthalmology = () =>
 const vmHistory = () => import("@/components/history_form/history_form");
 const vmConstans = () => import("@/components/history_form/history_cons");
 const vmImaging = () => import("@/components/imaging_form/imaging_form");
+const vmInternist = () => import("@/components/internist_evaluation_sheet/internist_evaluation_sheet");
 export default {
   name: "tabsComponent",
   data: () => ({
@@ -143,6 +158,22 @@ export default {
                 break;
             }
             break;
+          case "internist":
+            switch (tab) {
+                case "history":
+                  return true;
+                  break;
+                case "imaging":
+                  return true;
+                  break;
+                case "internist":
+                  return true
+                  break
+                default:
+                  return false;
+                  break;
+              }
+              break;
           case "intern":
             switch (tab) {
               case "history":
@@ -265,6 +296,7 @@ export default {
     vmHistory,
     vmImaging,
     vmConstans,
+    vmInternist
   },
   computed: {
     storePhysician() {

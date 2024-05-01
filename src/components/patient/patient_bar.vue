@@ -34,7 +34,7 @@
               <v-icon>assignment_ind</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('consultation')">
+          <v-list-tile @click="fixedCompst('consultation')" v-if="storePhysician.role != 'internist'">
             <v-list-tile-content>
               <v-list-tile-title v-if="$route.query.c == 'H'">Historial</v-list-tile-title>
               <v-list-tile-title v-else>{{
@@ -63,7 +63,7 @@
               <v-icon>create</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('internist_evaluation_sheet')" v-if="storePhysician.role == 'internist'">
+          <v-list-tile @click="fixedCompst('consultation')" v-if="storePhysician.role == 'internist'">
             <v-list-tile-content>
               <v-list-tile-title>Hoja de Evaluación MI</v-list-tile-title>
             </v-list-tile-content>

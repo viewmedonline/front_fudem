@@ -16,9 +16,19 @@
           >
             <v-layout row wrap>
               <v-layout row wrap>
+                <v-flex xs6>
+                  <v-radio-group
+                    v-model="appointmentType"
+                    row
+                  >
+                  <span style="margin-right: 10px;">Tipo de cita:</span>
+                    <v-radio label="Primera Vez" value="Primera Vez"></v-radio>
+                    <v-radio label="Control" value="Control"></v-radio>
+                  </v-radio-group>
+                </v-flex>
+                <v-flex xs6></v-flex>
                 <v-flex xs4>
                   <v-select
-                    :rules="[rules.required]"
                     v-model="preoperative_diagnosis"
                     class="text-field-width"
                     :items="[
@@ -34,9 +44,9 @@
                     label="Diagnostico Preoperatorio"
                   ></v-select>
                 </v-flex>
+                <v-flex xs8></v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :rules="[rules.required]"
                     v-model="history_clinic"
                     class="text-field-width"
                     label="Historia Clínica"
@@ -44,7 +54,6 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :rules="[rules.required]"
                     v-model="personal_record"
                     class="text-field-width"
                     label="Antecedentes Personales"
@@ -61,7 +70,6 @@
               <v-layout row wrap>
                 <v-flex xs3>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="blood_pressure"
                     class="text-field-width"
                     label="PA"
@@ -69,7 +77,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="heart_rate"
                     class="text-field-width"
                     label="FC"
@@ -77,7 +84,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="respiratory_rate"
                     class="text-field-width"
                     label="FR"
@@ -85,7 +91,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="oxygen_saturation"
                     class="text-field-width"
                     label="SATO2"
@@ -93,7 +98,6 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :rules="[rules.required]"
                     v-model="physical_state"
                     class="text-field-width"
                     label="Estado Físico"
@@ -111,7 +115,6 @@
               <v-layout row wrap>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="ht"
                     class="text-field-width"
                     label="HT"
@@ -119,7 +122,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="hb"
                     class="text-field-width"
                     label="HB"
@@ -127,7 +129,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="platelets"
                     class="text-field-width"
                     label="Plaquetas"
@@ -135,7 +136,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="tp"
                     class="text-field-width"
                     label="TP"
@@ -143,7 +143,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="tpt"
                     class="text-field-width"
                     label="TPT"
@@ -153,7 +152,6 @@
               <v-layout row wrap>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="inr"
                     class="text-field-width"
                     label="INR"
@@ -161,7 +159,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="glucose"
                     class="text-field-width"
                     label="Glucosa"
@@ -169,7 +166,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="vih"
                     class="text-field-width"
                     label="Elisa/VIH"
@@ -177,7 +173,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="ego"
                     class="text-field-width"
                     label="EGO"
@@ -185,7 +180,6 @@
                 </v-flex>
                 <v-flex xs2>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="HbA1C"
                     class="text-field-width"
                     label="HbA1C"
@@ -195,7 +189,6 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="radiography"
                     class="text-field-width"
                     label="Radiografía de Torax"
@@ -203,7 +196,6 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-text-field
-                    :rules="[rules.required]"
                     v-model="electrocardiogram"
                     class="text-field-width"
                     label="Electrocardiograma"
@@ -211,7 +203,6 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :rules="[rules.required]"
                     v-model="comments"
                     class="text-field-width"
                     label="Comentarios"
@@ -220,7 +211,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-select
-                    :rules="[rules.required]"
                     v-model="surgical_risk"
                     class="text-field-width"
                     :items="['Bajo', 'Intermedio', 'Alto']"
@@ -229,7 +219,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-select
-                    :rules="[rules.required]"
                     v-model="functional_capacity"
                     class="text-field-width"
                     :items="['1-4 METS', '4-10 METS']"
@@ -238,7 +227,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-select
-                    :rules="[rules.required]"
                     v-model="clinical_predictors"
                     class="text-field-width"
                     :items="['Menores', 'Intermedios', 'Mayores']"
@@ -247,7 +235,6 @@
                 </v-flex>
                 <v-flex xs3>
                   <v-select
-                    :rules="[rules.required]"
                     v-model="clasification_asa"
                     class="text-field-width"
                     :items="['I', 'II', 'III', 'IV', 'V']"
@@ -256,7 +243,6 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :rules="[rules.required]"
                     v-model="plan"
                     class="text-field-width"
                     label="Plan"
@@ -310,7 +296,9 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Hoja de evaluación médico internista</v-toolbar-title>
+          <v-toolbar-title
+            >Hoja de evaluación médico internista</v-toolbar-title
+          >
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text style="padding: 0; height: 93vh; background-color: grey">
@@ -365,6 +353,7 @@ export default {
     dialog: false,
     pdf_document: "",
     form_evaluation_intern: false,
+    appointmentType:"Primera Vez",
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
@@ -379,7 +368,7 @@ export default {
       if (this.$refs.form.validate()) {
         const { idQflow, forename, surname, birthdate, gender } =
           this.$store.getters.getPatient;
-          
+
         const pdf_id = await saveSheetEvaluationMI({
           name: "intern_evaluation.html",
           data: {
@@ -419,6 +408,7 @@ export default {
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             responsible: this.$store.getters.getPhysician._id,
             person: this.$store.getters.getPatient._id,
+            appointmentType:this.appointmentType
           },
         });
         const data_document_consultation = {
@@ -488,6 +478,7 @@ export default {
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             responsible: this.$store.getters.getPhysician._id,
             person: this.$store.getters.getPatient._id,
+            appointmentType:this.appointmentType
           },
         });
         const blob = new Blob([file.data], { type: "application/pdf;base64" });
