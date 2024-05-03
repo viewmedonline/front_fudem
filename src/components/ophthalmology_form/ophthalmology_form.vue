@@ -284,6 +284,10 @@ export default {
                           .savePreliminaryData()
                           .then((result) => {
                             // console.log("resultado datos preliminares: ", result)
+                            this.consultation.objPreliminary.data.retinal_photo = result.retinal_photo
+                            this.consultation.objPreliminary.data.retinal_findings = result.retinal_findings
+                            this.consultation.objPreliminary.data.retinal_observations = result.retinal_observations
+                            this.consultation.objPreliminary.data.retinal_notes = result.retinal_notes
                             this.consultation.datapreliminar = result;
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 0;
@@ -567,6 +571,8 @@ export default {
       this.alert = true;
       this.consultation.person = this.$store.getters.getPatient._id;
       this.consultation.sucursalId = this.storeSucursal;
+
+      console.log(this.consultation);
 
       let objAux = {
         body: this.consultation,

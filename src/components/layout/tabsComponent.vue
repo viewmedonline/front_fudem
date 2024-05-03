@@ -62,7 +62,7 @@
       >
         Hoja de Evaluación MI
       </v-tab>
-      <v-tab-item>
+      <v-tab-item v-if="validateTabs('internist')">
         <v-card class="blue-grey lighten-5">
           <v-card-text>
             <vmInternist class="px-0 py-0"></vmInternist>
@@ -78,7 +78,7 @@
       >
         Historial
       </v-tab>
-      <v-tab-item>
+      <v-tab-item v-if="validateTabs('history')">
         <v-card class="blue-grey lighten-5">
           <v-card-text>
             <vmHistory class="px-0 py-0"></vmHistory>
@@ -93,7 +93,7 @@
       >
         Imagenología
       </v-tab>
-      <v-tab-item>
+      <v-tab-item  v-if="validateTabs('imaging')">
         <v-card class="blue-grey lighten-5">
           <v-card-text>
             <vmImaging class="px-0 py-0"></vmImaging>
@@ -169,9 +169,6 @@ export default {
                 case "internist":
                   return true
                   break
-                default:
-                  return false;
-                  break;
               }
               break;
           case "intern":
