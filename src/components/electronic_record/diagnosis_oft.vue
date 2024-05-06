@@ -16,7 +16,7 @@
         <v-card-text>
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
-              <v-flex xs8 v-if="useListDiagnoses">
+              <v-flex xs6 v-if="useListDiagnoses">
                 <v-autocomplete
                   v-model="diagnostico"
                   :items="listDiagnoses"
@@ -34,11 +34,21 @@
                 >
                 </v-autocomplete>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs3>
                 <v-select
                   v-model="eyeDiagnoses"
                   :items="['OJO DERECHO', 'OJO IZQUIERDO', 'AMBOS OJOS']"
-                  label="Ojo"
+                  label="Post operatorio"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                >
+                </v-select>
+              </v-flex>
+              <v-flex xs3>
+                <v-select
+                  v-model="dayPostOperatory"
+                  :items="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
+                  label="Dia post operatorio"
                   :rules="[]"
                   :readonly="validateRead()"
                 >
@@ -50,7 +60,7 @@
                       dark
                       small
                       icon
-                      :disabled="!diagnostico || !eyeDiagnoses"
+                      :disabled="Object.keys(diagnostico).length == 0 || !eyeDiagnoses"
                       color="grey white--text"
                       @click="appendListDiagnosis()"
                     >
@@ -58,11 +68,6 @@
                     </v-btn>
                   </v-slide-x-reverse-transition>
                 </v-select>
-                <!-- <v-checkbox
-                            :readonly="validateRead()"
-                            label="Lista Precargada"
-                            v-model="useListDiagnoses"
-                        ></v-checkbox> -->
               </v-flex>
               <v-flex xs10 class="text-sm-left">
                 <v-chip
@@ -161,6 +166,7 @@ export default {
     diagnosisAssigned: [],
     selectedDiagnoses: false,
     eyeDiagnoses:null,
+    dayPostOperatory:null,
     headers: [
       {
         text: "Diagnostico",
@@ -293,7 +299,7 @@ export default {
           this.$refs.formDiagnosisOftRef.validate() &&
           this.diagnosisAssigned.length > 0
         ) {
-          resolve(this.diagnosisAssigned);
+          resolve({diagnostic:this.diagnosisAssigned,daysPostOperatory:this.dayPostOperatory});
         } else {
           reject(false);
         }
@@ -302,6 +308,7 @@ export default {
     setDataConsultation() {
       if (this.storeConsultation.diagnostic) {
         this.diagnosisAssigned = this.storeConsultation.diagnostic;
+        this.dayPostOperatory = this.storeConsultation.daysPostOperatory
       }
     },
   },

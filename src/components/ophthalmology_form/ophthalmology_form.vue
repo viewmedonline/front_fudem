@@ -341,8 +341,8 @@ export default {
               .saveDiagnosisOft()
               .then((result) => {
                 // console.log("resultado diagnosticos: ", result)
-                this.consultation.diagnostic = result;
-                this.$refs.observationsRef
+                this.consultation.diagnostic = result.diagnostic;
+                this.consultation.daysPostOperatory = result.daysPostOperatory;                this.$refs.observationsRef
                   .saveObservations()
                   .then((result) => {
                     // console.log("resultado observaciones y medicamentos: ", result)
