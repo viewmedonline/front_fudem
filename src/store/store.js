@@ -23,7 +23,8 @@ export default new Vuex.Store({
       pediatrics_sheet:false,
       nutritionist_sheet:false,
       anesthesiology_sheet:false,
-      permanence_sheet: false
+      permanence_sheet: false,
+      psychologist_sheet: false,
     },
     typeConsulting: null,
     sucursal: null,

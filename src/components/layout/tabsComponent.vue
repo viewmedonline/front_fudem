@@ -279,6 +279,10 @@ export default {
               return true;
             }
             break;
+          default:
+            if(tab == "history" || tab == "imaging" ) return true
+            else return false
+            break;
         }
       }
     },

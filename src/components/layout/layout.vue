@@ -95,6 +95,9 @@
         <v-flex xs12 sm9 v-if="dataStore.permanence_sheet">
           <vmPermanencetSheet></vmPermanencetSheet>
         </v-flex> 
+        <v-flex xs12 sm9 v-if="dataStore.psychologist_sheet">
+          <vmPsychologistSheet></vmPsychologistSheet>
+        </v-flex>
       </v-layout>
     </v-content>
 
@@ -220,6 +223,7 @@ const vmPediatricsSheet = () => import("@/components/pediatrics_sheet/pediatrics
 const vmNutritionistSheet = () => import("@/components/nutritionist_sheet/nutritionist_sheet")
 const vmAnesthesiologytSheet = () => import("@/components/anesthesiology_sheet/anesthesiology_sheet")
 const vmPermanencetSheet = () => import("@/components/permanence_sheet/permanence_sheet")
+const vmPsychologistSheet = () => import("@/components/psychologist_sheet/psychologist_sheet")
 
 
 import moment from "moment";
@@ -362,7 +366,8 @@ export default {
       this.dataStore.pediatrics_sheet = false;
       this.dataStore.nutritionist_sheet = false;
       this.dataStore.anesthesiology_sheet = false;
-      this.dataStore.permanence_sheet = false;      
+      this.dataStore.permanence_sheet = false;    
+      this.dataStore.psychologist_sheet = false;  
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -643,6 +648,7 @@ export default {
     vmNutritionistSheet,
     vmAnesthesiologytSheet,
     vmPermanencetSheet,
+    vmPsychologistSheet
   },
   props: {
     source: String,
