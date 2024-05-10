@@ -332,6 +332,7 @@ import {
   closedPsiProcess,
 } from "../../componentServs/psyProcess";
 import { getImage } from "../../componentServs/file";
+import { getDiagnosesMaster } from "@/componentServs/diagnoses";
 
 moment.locale("es");
 
@@ -374,14 +375,7 @@ export default {
       "Trastorno de la alimentación",
       "Trastorno del sueño  ",
     ],
-    diagnosisList: [
-      "Depresión",
-      "Ansiedad",
-      "Trastorno de la conducta",
-      "Trastorno de la personalidad",
-      "Trastorno de la alimentación",
-      "Trastorno del sueño  ",
-    ],
+    diagnosisList: [],
     headers: [
       {
         text: "Diagnosticos",
@@ -401,7 +395,11 @@ export default {
     }
     this.findRowOpen();
   },
-  mounted() {},
+  async mounted() {
+    this.diagnosisList = (await getDiagnosesMaster("dsm-v")).map(
+      (item) => item.diagnostic
+    );
+  },
   methods: {
     async closed() {
       this.loadingDescription = true;
@@ -456,7 +454,6 @@ export default {
       this.findRowOpen();
     },
     async openDescription(item, pos) {
-
       if (!item.pdf) {
         this.selectionRow = item;
         this.show_description = true;

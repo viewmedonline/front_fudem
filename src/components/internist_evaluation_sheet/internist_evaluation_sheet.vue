@@ -17,11 +17,8 @@
             <v-layout row wrap>
               <v-layout row wrap>
                 <v-flex xs6>
-                  <v-radio-group
-                    v-model="appointmentType"
-                    row
-                  >
-                  <span style="margin-right: 10px;">Tipo de cita:</span>
+                  <v-radio-group v-model="appointmentType" row>
+                    <span style="margin-right: 10px">Tipo de cita:</span>
                     <v-radio label="Primera Vez" value="Primera Vez"></v-radio>
                     <v-radio label="Control" value="Control"></v-radio>
                   </v-radio-group>
@@ -31,16 +28,7 @@
                   <v-select
                     v-model="preoperative_diagnosis"
                     class="text-field-width"
-                    :items="[
-                      'Cataratas',
-                      'Estrabismo',
-                      'Ninguno',
-                      'Pterigion',
-                      'Retinopatia Diabetica',
-                      'Trabeculectomia',
-                      'Tumor de Parpado',
-                      'Vitrectomia',
-                    ]"
+                    :items="preoperative"
                     label="Diagnostico Preoperatorio"
                   ></v-select>
                 </v-flex>
@@ -317,6 +305,7 @@
 import { getPreview, savePdf } from "../../componentServs/file";
 import { saveConsultation } from "../../componentServs/consultation";
 import { saveSheetEvaluationMI } from "../../componentServs/intern_evaluation";
+import { getDiagnosesMaster } from "@/componentServs/diagnoses";
 import moment from "moment";
 export default {
   name: "internist_evaluation_sheet",
@@ -329,6 +318,7 @@ export default {
     respiratory_rate: "",
     oxygen_saturation: "",
     physical_state: "",
+    preoperative: [],
     ht: "",
     hb: "",
     platelets: "",
@@ -353,13 +343,13 @@ export default {
     dialog: false,
     pdf_document: "",
     form_evaluation_intern: false,
-    appointmentType:"Primera Vez",
+    appointmentType: "Primera Vez",
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
   }),
-  mounted() {
-    console.log(this.$store.getters.getPhysician);
+  async mounted() {
+    this.preoperative = (await getDiagnosesMaster("preoperative")).map((e) => e.diagnostic)
   },
   methods: {
     async saveEvaluation() {
@@ -408,7 +398,7 @@ export default {
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             responsible: this.$store.getters.getPhysician._id,
             person: this.$store.getters.getPatient._id,
-            appointmentType:this.appointmentType
+            appointmentType: this.appointmentType,
           },
         });
         const data_document_consultation = {
@@ -478,7 +468,7 @@ export default {
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             responsible: this.$store.getters.getPhysician._id,
             person: this.$store.getters.getPatient._id,
-            appointmentType:this.appointmentType
+            appointmentType: this.appointmentType,
           },
         });
         const blob = new Blob([file.data], { type: "application/pdf;base64" });
