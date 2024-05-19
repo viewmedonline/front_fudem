@@ -96,6 +96,28 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-list-tile
+            @click="fixedCompst('clinical_interview_1')"
+            v-if="storePhysician.role == 'psychologist'"
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>Entrevista clínica niñez y adolescencia</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile
+            @click="fixedCompst('clinical_interview_2')"
+            v-if="storePhysician.role == 'psychologist'"
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>Entrevista clínica adultos</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>mdi-file-document-edit-outline</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile
             @click="fixedCompst('nursing_sheet')"
             v-if="storePhysician.role == 'nurse' || user_admin == 'PRUEBAOFTA'"
           >
@@ -275,6 +297,8 @@ export default {
       this.dataStore.anesthesiology_sheet = false;
       this.dataStore.permanence_sheet = false;
       this.dataStore.psychologist_sheet = false;
+      this.dataStore.clinical_interview_1 = false;
+      this.dataStore.clinical_interview_2 = false;
 
       switch (val) {
         case "consultation":
@@ -335,6 +359,14 @@ export default {
         case "psychologist_sheet":
           this.dataStore.patient = true;
           this.dataStore.psychologist_sheet = true;
+          break;
+        case "clinical_interview_1":
+          this.dataStore.patient = true;
+          this.dataStore.clinical_interview_1 = true;
+          break;
+        case "clinical_interview_2":
+          this.dataStore.patient = true;
+          this.dataStore.clinical_interview_2 = true;
           break;
         default:
           this.dataStore.consultation = true;

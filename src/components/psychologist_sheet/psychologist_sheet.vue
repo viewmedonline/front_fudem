@@ -424,6 +424,7 @@ export default {
           diagnostic: this.selectionRow.diagnostic,
           type: "Psicologo",
           digital_signature: this.$store.getters.getPhysician.digital_signature,
+          responsableConsultation: this.$store.getters.getPhysician._id,
         },
       });
 
@@ -481,6 +482,10 @@ export default {
       const objData = {
         ...this.psychologistForm1,
         diagnostic: this.diagnosesSelectList,
+        type: "Psicologo",
+        digital_signature: this.$store.getters.getPhysician.digital_signature,
+        responsableConsultation: this.$store.getters.getPhysician._id,
+        person: this.$store.getters.getPatient._id,
       };
       objData.dateStart = moment(objData.dateStart, "DD/MM/YYYY").format(
         "YYYY-MM-DD"

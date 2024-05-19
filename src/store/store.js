@@ -25,6 +25,8 @@ export default new Vuex.Store({
       anesthesiology_sheet:false,
       permanence_sheet: false,
       psychologist_sheet: false,
+      clinical_interview_1: false,
+      clinical_interview_2: false,
     },
     typeConsulting: null,
     sucursal: null,

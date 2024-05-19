@@ -5,7 +5,7 @@ function savePsiProcess(data) {
     let url = `${process.env.VUE_APP_ROOT_API}/psi_process`;
     try {
       axios
-        .post(url, data,{
+        .post(url, data, {
           headers: {},
         })
         .then((result) => {
@@ -25,7 +25,7 @@ function closedPsiProcess(data) {
     let url = `${process.env.VUE_APP_ROOT_API}/psi_process/closed`;
     try {
       axios
-        .post(url, data,{
+        .post(url, data, {
           headers: {},
         })
         .then((result) => {
@@ -45,7 +45,7 @@ function getPsyProcess(data) {
     let url = `${process.env.VUE_APP_ROOT_API}/psi_process`;
     try {
       axios
-        .get(url,{
+        .get(url, {
           headers: {},
         })
         .then((result) => {
@@ -65,9 +65,13 @@ function updatePsiProcess(data) {
     let url = `${process.env.VUE_APP_ROOT_API}/psi_process/${data._id}`;
     try {
       axios
-        .put(url, {data:data.data},{
-          headers: {},
-        })
+        .put(
+          url,
+          { data: data.data },
+          {
+            headers: {},
+          }
+        )
         .then((result) => {
           resolve(result.data.documents);
         })
@@ -80,7 +84,53 @@ function updatePsiProcess(data) {
   });
 }
 
+function saveInterviewChildren(data) {
+  return new Promise((resolve, reject) => {
+    let url = `${process.env.VUE_APP_ROOT_API}/interview/children`;
+    try {
+      axios
+        .post(url, data, {
+          headers: {},
+        })
+        .then((result) => {
+          resolve(result.data.documents);
+        })
+        .catch((error) => {
+          reject(error.response.data.message);
+        });
+    } catch (error) {
+      console.log("saveInterviewChildren: ", error);
+    }
+  });
+}
+
+function saveInterviewAdults(data) {
+  return new Promise((resolve, reject) => {
+    let url = `${process.env.VUE_APP_ROOT_API}/interview/adults`;
+    try {
+      axios
+        .post(url, data, {
+          headers: {},
+        })
+        .then((result) => {
+          resolve(result.data.documents);
+        })
+        .catch((error) => {
+          reject(error.response.data.message);
+        });
+    } catch (error) {
+      console.log("saveInterviewAdults: ", error);
 
 
+    }
+  });
+}
 
-export {savePsiProcess,getPsyProcess,updatePsiProcess,closedPsiProcess};
+export {
+  savePsiProcess,
+  getPsyProcess,
+  updatePsiProcess,
+  closedPsiProcess,
+  saveInterviewChildren,
+  saveInterviewAdults,
+};
