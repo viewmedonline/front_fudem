@@ -78,7 +78,7 @@
           <retinalCamera
             class="px-2 py-2"
             ref="retinalCameraRef"
-            :disabled_options="true"
+            :disabled_options="false"
           ></retinalCamera>
         </v-window-item>
       </v-window>
@@ -264,7 +264,6 @@ export default {
       window.setTimeout(function () {
         this.scrollTo(0, 0);
       }, 500);
-      paso--;
       paso--;
       if (paso == this.paso + 1) {
         // Si el paso seleccionado es el siguiente en la lista
@@ -570,6 +569,11 @@ export default {
                 this.consultation.diagnosticoObservaciones =
                   result.diagnosticoObservaciones;
                 this.consultation.receta = result.receta;
+                const retinalCamera = await this.$refs.retinalCameraRef.saveRetinalCamera()
+                this.consultation.objPreliminary.data.retinal_photo = retinalCamera.photo_retinal
+                this.consultation.objPreliminary.data.retinal_findings = retinalCamera.findings_photo
+                this.consultation.objPreliminary.data.retinal_observations = retinalCamera.observations_photo
+                this.consultation.objPreliminary.data.retinal_notes = retinalCamera.retinal_notes
 
                 if (this.paso > this.lastValidate) this.lastValidate = 4;
                 resolve("ok");
@@ -775,7 +779,7 @@ export default {
           token: null,
         };
 
-        if (this.insertAntecedent) {
+        if (!this.$store.getters.getPatient.record) {
           recordServ
             .saveAntecedent(objAux)
             .then((result) => {

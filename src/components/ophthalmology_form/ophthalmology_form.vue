@@ -39,28 +39,16 @@
             class="px-2 py-2"
             ref="clinicHistoryRef"
           ></clinic_history>
-        </v-window-item>
-        <v-window-item :value="1">
           <preliminary_data
             class="px-2 py-2"
             ref="preliminaryDataRef"
           ></preliminary_data>
         </v-window-item>
-        <v-window-item :value="2">
+        <v-window-item :value="1">
           <diagnosis_oft
             class="px-2 py-2"
             ref="diagnosisOftRef"
           ></diagnosis_oft>
-          <proceduresOft
-            class="px-2 py-2"
-            ref="proceduresOftRef"
-          ></proceduresOft>
-          <treatment_plan
-            class="px-2 py-2"
-            ref="treatmentPlanRef"
-          ></treatment_plan>
-        </v-window-item>
-        <v-window-item :value="3">
           <observations class="px-2 py-2" ref="observationsRef"></observations>
         </v-window-item>
       </v-window>
@@ -187,13 +175,10 @@ const clinic_history = () =>
   import("@/components/electronic_record/clinic_history");
 const preliminary_data = () =>
   import("@/components/electronic_record/preliminary_data");
-const treatment_plan = () =>
-  import("@/components/electronic_record/treatment_plan");
 const diagnosis_oft = () =>
   import("@/components/electronic_record/diagnosis_oft");
 const observations = () =>
   import("@/components/electronic_record/observations");
-const proceduresOft = () => import("@/components/electronic_record/procedures");
 const endConsultation = () =>
   import("@/components/electronic_record/end_consultation");
 
@@ -206,7 +191,7 @@ export default {
   name: "preliminary_form",
   data: () => ({
     paso: 0,
-    total: 4, // Define la cantidad de pasos
+    total: 2, // Define la cantidad de pasos
     lastValidate: 0,
     loading: false,
     alert: false,
@@ -295,9 +280,26 @@ export default {
                       .then((result) => {
                         // console.log("resultado historia clinica: ", result)
                         this.consultation.historyClinic = result;
-                        if (this.paso > this.lastValidate)
-                          this.lastValidate = 0;
-                        resolve();
+                        this.$refs.preliminaryDataRef
+                          .savePreliminaryData()
+                          .then((result) => {
+                            // console.log("resultado datos preliminares: ", result)
+                            this.consultation.objPreliminary.data.retinal_photo = result.retinal_photo
+                            this.consultation.objPreliminary.data.retinal_findings = result.retinal_findings
+                            this.consultation.objPreliminary.data.retinal_observations = result.retinal_observations
+                            this.consultation.objPreliminary.data.retinal_notes = result.retinal_notes
+                            this.consultation.datapreliminar = result;
+                            if (this.paso > this.lastValidate)
+                              this.lastValidate = 0;
+                            resolve();
+                          })
+                          .catch((err) => {
+                            // console.log("error: ", err)
+                            reject();
+                          });
+                        // if (this.paso > this.lastValidate)
+                        //   this.lastValidate = 0;
+                        // resolve();
                       })
                       .catch((err) => {
                         reject();
@@ -335,86 +337,30 @@ export default {
             break;
           case 1:
             // resolve()
-
-            this.$refs.preliminaryDataRef
-              .savePreliminaryData()
-              .then((result) => {
-                // console.log("resultado datos preliminares: ", result)
-                this.consultation.datapreliminar = result;
-                if (this.paso > this.lastValidate) this.lastValidate = 1;
-                resolve();
-              })
-              .catch((err) => {
-                // console.log("error: ", err)
-                reject();
-              });
-            break;
-          case 2:
-            // resolve()
             this.$refs.diagnosisOftRef
               .saveDiagnosisOft()
               .then((result) => {
                 // console.log("resultado diagnosticos: ", result)
-                this.consultation.diagnostic = result;
-                this.$refs.proceduresOftRef
-                  .saveProcedures()
+                this.consultation.diagnostic = result.diagnostic;
+                this.consultation.daysPostOperatory = result.daysPostOperatory;                this.$refs.observationsRef
+                  .saveObservations()
                   .then((result) => {
-                    this.consultation.process = result.proccess;
-                    this.consultation.processTherapeutic =
-                      result.processTherapeutic;
-
-                    this.$refs.treatmentPlanRef
-                      .saveTreatmentPlan()
-                      .then((result) => {
-                        // console.log("resultado tratamiento: ", result)
-                        this.consultation.treatmentplan = result;
-                        if (this.paso > this.lastValidate)
-                          this.lastValidate = 2;
-                        resolve();
-                      })
-                      .catch((err) => {
-                        // console.log("error: ", err)
-                        reject();
-                      });
+                    // console.log("resultado observaciones y medicamentos: ", result)
+                    this.consultation.observaciones = result;
+                    this.consultation.next_appointment =
+                      result.next_appointment;
+                    if (this.paso > this.lastValidate) this.lastValidate = 1;
+                    resolve("ok");
                   })
                   .catch((err) => {
                     // console.log("error: ", err)
-                    this.$refs.treatmentPlanRef
-                      .saveTreatmentPlan()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    reject();
                   });
               })
               .catch((err) => {
-                this.$refs.treatmentPlanRef
-                  .saveTreatmentPlan()
-                  .then((result) => {
-                    reject();
-                  })
-                  .catch((err) => {
-                    reject();
-                  });
+                console.log(err);
               });
 
-            break;
-          case 3:
-            this.$refs.observationsRef
-              .saveObservations()
-              .then((result) => {
-                // console.log("resultado observaciones y medicamentos: ", result)
-                this.consultation.observaciones = result;
-                this.consultation.next_appointment = result.next_appointment;
-                if (this.paso > this.lastValidate) this.lastValidate = 3;
-                resolve("ok");
-              })
-              .catch((err) => {
-                // console.log("error: ", err)
-                reject();
-              });
             break;
         }
       });
@@ -476,8 +422,6 @@ export default {
       this.$refs.clinicHistoryRef.setDataConsultation();
       this.$refs.preliminaryDataRef.setDataConsultation();
       this.$refs.diagnosisOftRef.setDataConsultation();
-      this.$refs.proceduresOftRef.setConsultationData();
-      this.$refs.treatmentPlanRef.setDataConsultation();
       this.$refs.observationsRef.setDataConsultation();
       this.consultation.objPreliminary = this.storeConsultation.objPreliminary;
       this.consultation.objOptometrist = this.storeConsultation.objOptometrist;
@@ -628,6 +572,8 @@ export default {
       this.consultation.person = this.$store.getters.getPatient._id;
       this.consultation.sucursalId = this.storeSucursal;
 
+      console.log(this.consultation);
+
       let objAux = {
         body: this.consultation,
         token: null,
@@ -740,10 +686,8 @@ export default {
     general_data_oft,
     clinic_history,
     preliminary_data,
-    treatment_plan,
     diagnosis_oft,
     observations,
-    proceduresOft,
     endConsultation,
   },
   computed: {

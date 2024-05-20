@@ -23,11 +23,15 @@ export default new Vuex.Store({
       pediatrics_sheet:false,
       nutritionist_sheet:false,
       anesthesiology_sheet:false,
-      permanence_sheet: false
+      permanence_sheet: false,
+      psychologist_sheet: false,
+      clinical_interview_1: false,
+      clinical_interview_2: false,
     },
     typeConsulting: null,
     sucursal: null,
     tabsActive: null,
+    showImaging:true
   },
   mutations: {
     consultation(state, payload) {
@@ -52,6 +56,9 @@ export default new Vuex.Store({
       state.tabsActive = payload.state;
       EventBus.$emit("changeTabReload", true);
     },
+    setShowImaging(state,payload){
+      state.showImaging = payload.state
+    }
   },
   actions: {},
   getters: {
@@ -62,5 +69,6 @@ export default new Vuex.Store({
     getTypeConsulting: (state) => state.typeConsulting,
     getTabsValidate: (state) => state.tabsActive,
     getSucursal: (state) => state.sucursal,
+    getShowImaging: (state) =>  state.showImaging
   },
 });

@@ -65,12 +65,12 @@
             </v-flex>
           </v-layout>
         </v-stepper-content>
-        <div v-for="(history, z) in historyConsulting" :key="history._id"> 
-          <v-stepper-step :step="z" complete :edit-icon="'assignment'" :editable=true @click="show_report(history._id,z)" >
+        <div v-for="(history, z) in historyConsulting" :key="z"> 
+          <v-stepper-step :step="z" complete :edit-icon="'assignment'" :editable=true @click="history.file ? show_document(history.file,z+999999) : show_report(history._id,z)" >
             {{history.name}}
             <small>{{history.date}}</small>
           </v-stepper-step>
-          <v-stepper-content :step="z" complete :editable=true v-if="!history.file">
+          <v-stepper-content :step="z" complete :editable=true >
             <v-layout row wrap>
                 <v-flex xs12 class="text-xs-right">
                     <v-btn @click="Print(z)" fab dark small color="primary">
@@ -78,10 +78,18 @@
                     </v-btn>
                 </v-flex>
             </v-layout>
-            <history_consultation_inf class="px-2 py-2" :myProp="history.consultation" ref="history_consultation_inf_ref" :id="z"></history_consultation_inf>
+            <iframe color="grey lighten-1" class="mb-5" v-if="history.file"
+            :src="pdf_document" 
+            type="application/pdf" 
+            width="90%" 
+            height="100%" 
+            frameborder="0" 
+            style="height: 75vh"
+            ></iframe>
+            <history_consultation_inf v-else class="px-2 py-2" :myProp="history.consultation" ref="history_consultation_inf_ref" :id="z"></history_consultation_inf>
           </v-stepper-content>
         </div>
-        <div v-for="(file, z) in filesConsulting" :key="file._id">
+        <!-- <div v-for="(file, z) in filesConsulting" :key="file._id">
           <v-stepper-step :step="z+999999" complete :edit-icon="'attachment'" :editable=true  @click="show_document(file.file,z+999999)" >
             {{file.name}}
             <small>{{file.date}}</small>
@@ -103,7 +111,7 @@
             style="height: 75vh"
             ></iframe>
           </v-stepper-content>
-        </div>
+        </div> -->
       </v-stepper>
     </v-form>
     <v-dialog
@@ -296,7 +304,7 @@ export default {
                   .then( file => {
                     let blob = new Blob([file.data], {type: "application/pdf;base64"});
                     let link = window.URL.createObjectURL(blob);
-                    vm.filesConsulting.push({
+                    vm.historyConsulting.push({
                         "name": result[i].name,
                         "date": moment(result[i].dateUpload, 'YYYY-MM-DD').locale(vm.$i18n.locale).format("L"),
                         "dateOrder":result[i].dateUpload,
@@ -305,14 +313,6 @@ export default {
                         "consultation": null
                     })
 
-                    vm.filesConsulting.sort(function(a, b){
-                      let keyA = new Date(a.dateOrder),
-                      keyB = new Date(b.dateOrder);
-                      // Compare the 2 dates
-                      if(keyA > keyB) return -1;
-                      if(keyA < keyB) return 1;
-                      return 0;
-                    }); 
                   })
                 } 
                 if(!result[i].file) {
@@ -324,8 +324,16 @@ export default {
                     "consultation": result[i]
                   })
                 } 
-              }
 
+              }
+              this.historyConsulting.sort(function(a, b){
+                      let keyA = new Date(a.dateOrder),
+                      keyB = new Date(b.dateOrder);
+                      // Compare the 2 dates
+                      if(keyA > keyB) return -1;
+                      if(keyA < keyB) return 1;
+                      return 0;
+                    }); 
               
               return
             }

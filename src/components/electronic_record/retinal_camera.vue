@@ -19,6 +19,10 @@
                                     <v-radio label="No" value="No"></v-radio>
                                 </v-radio-group>
                             </v-flex>
+                            <v-flex xs8>
+                                <v-textarea outline label="Notas" v-model="retinal_notes" 
+                                    ></v-textarea>
+                            </v-flex>                            
                         </v-layout>
                     </v-container>
                 </v-card-text>
@@ -61,6 +65,7 @@ export default {
             formRetinalCamera: false,
             photo_retinal: null,
             findings_photo: null,
+            retinal_notes:null,
             observations_photo: null,
             rules: {
                 required: v => !!v || this.$t('title.field_required')
@@ -75,6 +80,7 @@ export default {
                         photo_retinal: this.photo_retinal,
                         findings_photo: this.findings_photo,
                         observations_photo: this.observations_photo,
+                        retinal_notes: this.retinal_notes
                     })
                 } else {
                     reject(false)
@@ -86,6 +92,7 @@ export default {
                 this.photo_retinal = this.storeConsultation.objPreliminary.data.retinal_photo
                 this.findings_photo = this.storeConsultation.objPreliminary.data.retinal_findings
                 this.observations_photo = this.storeConsultation.objPreliminary.data.retinal_observations
+                this.retinal_notes = this.storeConsultation.objPreliminary.data.retinal_notes
             }
 
         },

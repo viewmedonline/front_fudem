@@ -47,16 +47,7 @@
                   :rules="[rules.required]"
                   v-model="diagnosisPre"
                   class="text-field-width"
-                  :items="[
-                    'Ninguno',
-                    'Cataratas',
-                    'Estrabismo',
-                    'Pterigion',
-                    'Retinopatia Diabetica',
-                    'Trabeculectomia',
-                    'Tumor de Parpado',
-                    'Vitrectomia',
-                  ]"
+                  :items="preoperative"
                   label="Diagnóstico preoperatorio"
                 ></v-select>
               </v-flex>
@@ -331,6 +322,8 @@
 import moment from "moment";
 import { saveSheetPediatrics } from "../../componentServs/pediatrics";
 import { getPreview } from "../../componentServs/file";
+import { getDiagnosesMaster } from "@/componentServs/diagnoses";
+
 export default {
   name: "surgery_sheet",
   data: () => ({
@@ -343,6 +336,7 @@ export default {
     diagnosisPre: "",
     status: "",
     clinicObservation: "",
+    preoperative:[],
     recordNP: "",
     recordP: "",
     vaccination: "",
@@ -498,6 +492,7 @@ export default {
       gender == "Male" || gender.toLowerCase() == "masculino"
         ? "Masculino"
         : "Femenino";
+    this.preoperative = (await getDiagnosesMaster("preoperative")).map((e) => e.diagnostic)
   },
 };
 </script>

@@ -417,6 +417,7 @@ export default {
                         this.consultation.retinal_photo = retinalCamera.photo_retinal
                         this.consultation.retinal_findings = retinalCamera.findings_photo
                         this.consultation.retinal_observations = retinalCamera.observations_photo
+                        this.consultation.retinal_notes = retinalCamera.retinal_notes
                         // console.log("result tonometry: ", result)
                         this.consultation.tonometria = result;
                         if (this.paso > this.lastValidate)
