@@ -271,6 +271,33 @@
                   ><v-icon>mdi-download</v-icon>Consultas Nutricionista</v-btn
                 >
               </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  color="primary"
+                  @click="generateReport(7)"
+                  large
+                  ><v-icon>mdi-download</v-icon>Seguimiento Psicoterapéutico</v-btn
+                >
+              </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  color="primary"
+                  @click="generateReport(8)"
+                  large
+                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica Niños</v-btn
+                >
+              </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  style="width: 90%"
+                  color="primary"
+                  @click="generateReport(9)"
+                  large
+                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica Adultos</v-btn
+                >
+              </v-flex>
             </v-layout>
           </v-card-text>
         </v-card>
@@ -527,6 +554,30 @@ export default {
             this.dateToFormat,
             "nutritionist",
             "Reporte Nutricionista"
+          );
+          break;
+        case 7:
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "psychologist1",
+            "Reporte Psicoterapéutico"
+          );
+          break;
+        case 8:
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "psychologist2",
+            "Reporte Psicologica Niños"
+          );
+          break;
+        case 9:
+          await getReport(
+            this.dateFromFormat,
+            this.dateToFormat,
+            "psychologist3",
+            "Reporte Psicologica Adultos"
           );
           break;
       }
