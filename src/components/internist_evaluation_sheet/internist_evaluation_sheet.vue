@@ -393,7 +393,7 @@ export default {
             clinical_predictors: this.clinical_predictors,
             clasification_asa: this.clasification_asa,
             plan: this.plan,
-            physician_signature:
+            digital_signature:
               this.$store.getters.getPhysician.digital_signature,
             phy_name: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             responsible: this.$store.getters.getPhysician._id,
