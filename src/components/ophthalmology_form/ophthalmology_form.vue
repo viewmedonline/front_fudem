@@ -283,7 +283,12 @@ export default {
                         this.$refs.preliminaryDataRef
                           .savePreliminaryData()
                           .then((result) => {
-                            // console.log("resultado datos preliminares: ", result)
+                            if(!this.consultation.objPreliminary){
+                              this.consultation.objPreliminary = {
+                                data:{}
+                                }
+                            }
+                            
                             this.consultation.objPreliminary.data.retinal_photo = result.retinal_photo
                             this.consultation.objPreliminary.data.retinal_findings = result.retinal_findings
                             this.consultation.objPreliminary.data.retinal_observations = result.retinal_observations
@@ -294,7 +299,7 @@ export default {
                             resolve();
                           })
                           .catch((err) => {
-                            // console.log("error: ", err)
+                            console.log("error: ", err)
                             reject();
                           });
                         // if (this.paso > this.lastValidate)
@@ -571,8 +576,6 @@ export default {
       this.alert = true;
       this.consultation.person = this.$store.getters.getPatient._id;
       this.consultation.sucursalId = this.storeSucursal;
-
-      console.log(this.consultation);
 
       let objAux = {
         body: this.consultation,
