@@ -81,7 +81,7 @@
       <v-tab-item v-if="validateTabs('history')">
         <v-card class="blue-grey lighten-5">
           <v-card-text>
-            <vmHistory class="px-0 py-0"></vmHistory>
+            <vmHistory ref="history" class="px-0 py-0"></vmHistory>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -121,6 +121,10 @@ export default {
   }),
   methods: {
     changeTabs(tabs) {
+      if(tabs == "history"){
+        this.$refs.history.listConsulting()
+
+      }
       this.$store.commit({
         type: "tabsActive",
         state: tabs,
@@ -132,6 +136,7 @@ export default {
       });
     },
     validateTabs(tab) {
+
       if (this.storePhysician.role) {
         switch (this.storePhysician.role.toLowerCase()) {
           case "admision":

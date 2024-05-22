@@ -2,9 +2,9 @@
   <v-container>
     <v-card>
       <v-card-title primary-title class="blue-grey darken-1">
-        <span class="subheading white--text text-capitalize"
-          >Hoja de Evaluación Médico Internista</span
-        >
+        <span class="subheading white--text text-capitalize">{{
+          step == 0 ? "Tipo de cita" : "Hoja de Evaluación Médico Internista"
+        }}</span>
       </v-card-title>
       <v-card-text>
         <v-container fluid grid-list-md px-0 py-0>
@@ -15,251 +15,305 @@
             lazy-validation
           >
             <v-layout row wrap>
-              <v-layout row wrap>
-                <v-flex xs6>
-                  <v-radio-group v-model="appointmentType" row>
-                    <span style="margin-right: 10px">Tipo de cita:</span>
-                    <v-radio label="Primera Vez" value="Primera Vez"></v-radio>
-                    <v-radio label="Control" value="Control"></v-radio>
-                  </v-radio-group>
-                </v-flex>
-                <v-flex xs6></v-flex>
-                <v-flex xs4>
-                  <v-select
-                    v-model="preoperative_diagnosis"
-                    class="text-field-width"
-                    :items="preoperative"
-                    label="Diagnostico Preoperatorio"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs8></v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    v-model="history_clinic"
-                    class="text-field-width"
-                    label="Historia Clínica"
-                  ></v-textarea>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    v-model="personal_record"
-                    class="text-field-width"
-                    label="Antecedentes Personales"
-                  ></v-textarea>
-                </v-flex>
-              </v-layout>
-              <v-flex xs12>
-                <v-card-title primary-title class="blue-grey darken-1">
-                  <span class="subheading white--text text-capitalize"
-                    >Examen Físico</span
-                  >
-                </v-card-title>
-              </v-flex>
-              <v-layout row wrap>
-                <v-flex xs3>
-                  <v-text-field
-                    v-model="blood_pressure"
-                    class="text-field-width"
-                    label="PA"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs3>
-                  <v-text-field
-                    v-model="heart_rate"
-                    class="text-field-width"
-                    label="FC"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs3>
-                  <v-text-field
-                    v-model="respiratory_rate"
-                    class="text-field-width"
-                    label="FR"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs3>
-                  <v-text-field
-                    v-model="oxygen_saturation"
-                    class="text-field-width"
-                    label="SATO2"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    v-model="physical_state"
-                    class="text-field-width"
-                    label="Estado Físico"
-                  >
-                  </v-textarea>
-                </v-flex>
-              </v-layout>
-              <v-flex xs12>
-                <v-card-title primary-title class="blue-grey darken-1">
-                  <span class="subheading white--text text-capitalize"
-                    >Exámenes de Laboratorio</span
-                  >
-                </v-card-title>
-              </v-flex>
-              <v-layout row wrap>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="ht"
-                    class="text-field-width"
-                    label="HT"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="hb"
-                    class="text-field-width"
-                    label="HB"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="platelets"
-                    class="text-field-width"
-                    label="Plaquetas"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="tp"
-                    class="text-field-width"
-                    label="TP"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="tpt"
-                    class="text-field-width"
-                    label="TPT"
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="inr"
-                    class="text-field-width"
-                    label="INR"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="glucose"
-                    class="text-field-width"
-                    label="Glucosa"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="vih"
-                    class="text-field-width"
-                    label="Elisa/VIH"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="ego"
-                    class="text-field-width"
-                    label="EGO"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs2>
-                  <v-text-field
-                    v-model="HbA1C"
-                    class="text-field-width"
-                    label="HbA1C"
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-text-field
-                    v-model="radiography"
-                    class="text-field-width"
-                    label="Radiografía de Torax"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field
-                    v-model="electrocardiogram"
-                    class="text-field-width"
-                    label="Electrocardiograma"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    v-model="comments"
-                    class="text-field-width"
-                    label="Comentarios"
-                  >
-                  </v-textarea>
-                </v-flex>
-                <v-flex xs3>
-                  <v-select
-                    v-model="surgical_risk"
-                    class="text-field-width"
-                    :items="['Bajo', 'Intermedio', 'Alto']"
-                    label="Riesgo Quirúrgico"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs3>
-                  <v-select
-                    v-model="functional_capacity"
-                    class="text-field-width"
-                    :items="['1-4 METS', '4-10 METS']"
-                    label="Capacidad Funcional"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs3>
-                  <v-select
-                    v-model="clinical_predictors"
-                    class="text-field-width"
-                    :items="['Menores', 'Intermedios', 'Mayores']"
-                    label="Predictores Clinicos"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs3>
-                  <v-select
-                    v-model="clasification_asa"
-                    class="text-field-width"
-                    :items="['I', 'II', 'III', 'IV', 'V']"
-                    label="Clasificacion ASA"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    v-model="plan"
-                    class="text-field-width"
-                    label="Plan"
-                  >
-                  </v-textarea>
-                </v-flex>
-              </v-layout>
-              <v-flex xs12 style="text-align: start">
-                <v-btn
-                  :loading="loading_preview"
-                  large
-                  color="primary"
-                  @click="previewEvaluation()"
-                >
-                  Vista Previa
-                </v-btn>
-                <v-btn
-                  :loading="loading"
-                  large
-                  color="primary"
-                  @click="saveEvaluation()"
-                >
-                  Guardar
-                </v-btn>
-              </v-flex>
+              <v-window v-model="step" style="width: 100%">
+                <v-window-item :value="0">
+                  <v-layout>
+                    <v-flex xs4 offset-xs4>
+                      <center>
+                        <v-radio-group v-model="appointmentType" row>
+                          <v-radio
+                            label="Primera Vez"
+                            value="Primera Vez"
+                          ></v-radio>
+                          <v-radio label="Control" value="Control"></v-radio>
+                        </v-radio-group>
+                      </center>
+                    </v-flex>
+                  </v-layout>
+                </v-window-item>
+                <v-window-item :value="1">
+                  <v-layout row wrap>
+                    <v-flex xs4>
+                      <v-select
+                        v-model="preoperative_diagnosis"
+                        class="text-field-width"
+                        :items="preoperative"
+                        label="Diagnostico Preoperatorio"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs8></v-flex>
+                    <v-flex xs12>
+                      <v-textarea
+                        v-model="history_clinic"
+                        class="text-field-width"
+                        label="Historia Clínica"
+                      ></v-textarea>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-textarea
+                        v-model="personal_record"
+                        class="text-field-width"
+                        label="Antecedentes Personales"
+                      ></v-textarea>
+                    </v-flex>
+                  </v-layout>
+                  <v-flex xs12>
+                    <v-card-title primary-title class="blue-grey darken-1">
+                      <span class="subheading white--text text-capitalize"
+                        >Examen Físico</span
+                      >
+                    </v-card-title>
+                  </v-flex>
+                  <v-layout row wrap>
+                    <v-flex xs3>
+                      <v-text-field
+                        v-model="blood_pressure"
+                        class="text-field-width"
+                        label="PA"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-text-field
+                        v-model="heart_rate"
+                        class="text-field-width"
+                        label="FC"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-text-field
+                        v-model="respiratory_rate"
+                        class="text-field-width"
+                        label="FR"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-text-field
+                        v-model="oxygen_saturation"
+                        class="text-field-width"
+                        label="SATO2"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-textarea
+                        v-model="physical_state"
+                        class="text-field-width"
+                        label="Estado Físico"
+                      >
+                      </v-textarea>
+                    </v-flex>
+                  </v-layout>
+                  <v-flex xs12>
+                    <v-card-title primary-title class="blue-grey darken-1">
+                      <span class="subheading white--text text-capitalize"
+                        >Exámenes de Laboratorio</span
+                      >
+                    </v-card-title>
+                  </v-flex>
+                  <v-layout row wrap>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="ht"
+                        class="text-field-width"
+                        label="HT"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="hb"
+                        class="text-field-width"
+                        label="HB"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="platelets"
+                        class="text-field-width"
+                        label="Plaquetas"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="tp"
+                        class="text-field-width"
+                        label="TP"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="tpt"
+                        class="text-field-width"
+                        label="TPT"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row wrap>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="inr"
+                        class="text-field-width"
+                        label="INR"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="glucose"
+                        class="text-field-width"
+                        label="Glucosa"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="vih"
+                        class="text-field-width"
+                        label="Elisa/VIH"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="ego"
+                        class="text-field-width"
+                        label="EGO"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        v-model="HbA1C"
+                        class="text-field-width"
+                        label="HbA1C"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row wrap>
+                    <v-flex xs12>
+                      <v-text-field
+                        v-model="radiography"
+                        class="text-field-width"
+                        label="Radiografía de Torax"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field
+                        v-model="electrocardiogram"
+                        class="text-field-width"
+                        label="Electrocardiograma"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-textarea
+                        v-model="comments"
+                        class="text-field-width"
+                        label="Comentarios"
+                      >
+                      </v-textarea>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-select
+                        v-model="surgical_risk"
+                        class="text-field-width"
+                        :items="['Bajo', 'Intermedio', 'Alto']"
+                        label="Riesgo Quirúrgico"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-select
+                        v-model="functional_capacity"
+                        class="text-field-width"
+                        :items="['1-4 METS', '4-10 METS']"
+                        label="Capacidad Funcional"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-select
+                        v-model="clinical_predictors"
+                        class="text-field-width"
+                        :items="['Menores', 'Intermedios', 'Mayores']"
+                        label="Predictores Clinicos"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs3>
+                      <v-select
+                        v-model="clasification_asa"
+                        class="text-field-width"
+                        :items="['I', 'II', 'III', 'IV', 'V']"
+                        label="Clasificacion ASA"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-textarea
+                        v-model="plan"
+                        class="text-field-width"
+                        label="Plan"
+                      >
+                      </v-textarea>
+                    </v-flex>
+                  </v-layout>
+                  <!-- <v-flex xs12 style="text-align: start">
+                    <v-btn
+                      :loading="loading_preview"
+                      large
+                      color="primary"
+                      @click="previewEvaluation()"
+                    >
+                      Vista Previa
+                    </v-btn>
+                    <v-btn
+                      :loading="loading"
+                      large
+                      color="primary"
+                      @click="saveEvaluation()"
+                    >
+                      Guardar
+                    </v-btn>
+                  </v-flex> -->
+                </v-window-item>
+              </v-window>
             </v-layout>
           </v-form>
         </v-container>
       </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" :disabled="step === 0" large @click="back()">{{
+          $t("title.back")
+        }}</v-btn>
+        <v-spacer>
+          <v-item-group v-model="step" class="text-xs-center" mandatory>
+            <v-item v-for="n in 2" :key="`btn-${n}`">
+              <v-btn
+                slot-scope="{ active, toggle }"
+                :color="active ? 'primary' : 'blue-grey lighten-4'"
+                :input-value="active"
+                icon
+                @click="toggle, paginationChange(n)"
+              >
+                <!-- Si se quieren saltas los steps en ves de "paginationChange" colocar "step - 1" -->
+                <v-avatar
+                  class="subheading white--text"
+                  size="32"
+                  v-text="n"
+                ></v-avatar>
+              </v-btn>
+            </v-item>
+          </v-item-group>
+        </v-spacer>
+        <v-btn
+          :loading="loading_preview"
+          large
+          depressed
+          v-if="step == 1"
+          color="primary"
+          @click="previewEvaluation()"
+        >
+          Vista Previa
+        </v-btn>
+        <v-btn
+          color="primary"
+          :loading="loading"
+          depressed
+          large
+          @click="buttonNext"
+          >{{ step < total - 1 ? $t("title.next") : $t("title.save") }}</v-btn
+        >
+      </v-card-actions>
     </v-card>
     <v-dialog v-model="alert" hide-overlay persistent width="300">
       <v-card color="primary" dark>
@@ -344,18 +398,36 @@ export default {
     pdf_document: "",
     form_evaluation_intern: false,
     appointmentType: "Primera Vez",
+    step: 0,
+    total: 2,
     rules: {
       required: (value) => !!value || "Este campo es requerido",
     },
   }),
   async mounted() {
-    this.preoperative = (await getDiagnosesMaster("preoperative")).map((e) => e.diagnostic)
+    this.preoperative = (await getDiagnosesMaster("preoperative")).map(
+      (e) => e.diagnostic
+    );
   },
   methods: {
+    buttonNext() {
+      // console.log(this.total)
+      // console.log(this.step)
+
+      if (this.step == this.total - 1) {
+        // console.log("termine de crear la parte de consulta: ", JSON.stringify(this.consultation))
+        this.saveEvaluation();
+      } else {
+        this.step++;
+      }
+    },
+    back() {
+      this.step--;
+    },
     async saveEvaluation() {
-      this.alert = true;
-      this.loading = true;
       if (this.$refs.form.validate()) {
+        this.alert = true;
+        this.loading = true;
         const { idQflow, forename, surname, birthdate, gender } =
           this.$store.getters.getPatient;
 
@@ -415,13 +487,18 @@ export default {
           body: data_document_consultation,
           token: null,
         });
+        this.alert = false;
+        this.loading = false;
+        this.clear();
       }
-      this.alert = false;
-      this.loading = false;
-      this.clear();
     },
     clear() {
       this.$refs.form.reset();
+      this.$nextTick(() => {
+        this.step = 0;
+        this.appointmentType = "Primera Vez";
+      });
+      
     },
     async previewEvaluation() {
       this.alert = true;
@@ -485,5 +562,10 @@ export default {
 <style>
 .container.grid-list-md .layout:not(:only-child) {
   margin: auto 11px;
+}
+.center-div {
+  display: flex; /* Habilita flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
 }
 </style>
