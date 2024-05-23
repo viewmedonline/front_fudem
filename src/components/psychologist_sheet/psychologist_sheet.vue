@@ -367,14 +367,7 @@ export default {
       diagnostic: null,
     },
     diagnosesSelectList: [],
-    diagnosticImpressionList: [
-      "Depresión",
-      "Ansiedad",
-      "Trastorno de la conducta",
-      "Trastorno de la personalidad",
-      "Trastorno de la alimentación",
-      "Trastorno del sueño  ",
-    ],
+    diagnosticImpressionList: [],
     diagnosisList: [],
     headers: [
       {
@@ -397,6 +390,10 @@ export default {
   },
   async mounted() {
     this.diagnosisList = (await getDiagnosesMaster("dsm-v")).map(
+      (item) => item.diagnostic
+    );
+
+    this.diagnosticImpressionList = (await getDiagnosesMaster("impression-diagnostic")).map(
       (item) => item.diagnostic
     );
   },

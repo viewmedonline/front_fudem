@@ -462,6 +462,7 @@ export default {
         { id: 1, name: "Diagnostico CIE-10" },
         { id: 2, name: "Diagnostico DSM-V" },
         { id: 3, name: "Diagnostico preoperatorio (MI,PED)" },
+        { id: 4, name: "Impresion diagnostica(Psicologia)"}
       ],
       masterList:[],
       catalogue: null,
@@ -495,8 +496,15 @@ export default {
   },
   methods: {
     async selectCatalogue() {
+      let caseEval = {
+          2: "dsm-v",
+          3: "preoperative",
+          4: "impression-diagnostic"
+        }
+
+        let type = caseEval[this.catalogue]
       if(this.catalogue !=1)
-      this.masterList = await getDiagnosesMaster(this.catalogue == 2 ? "dsm-v" : "preoperative")
+      this.masterList = await getDiagnosesMaster(type)
     },
     async cancelEditDiagnoses() {
       this.showSaveOrUpdateDiagnoses = false;
@@ -625,13 +633,20 @@ export default {
         }
         await insertDiagnoses(objAux);
       }else{
+        let caseEval = {
+          2: "dsm-v",
+          3: "preoperative",
+          4: "impression-diagnostic"
+        }
+
+        let type = caseEval[this.catalogue]
         if (this.diagnosisMasterSelected) {
           this.diagnosisMasterSelected.diagnostic = this.diagnosis_txt;
           objAux = this.diagnosisMasterSelected;
         } else {
           objAux = {
             diagnostic: this.diagnosis_txt,
-            type: this.catalogue == 2 ? "dsm-v" : "preoperative",
+            type: type,
           };
         }
         await insertDiagnosesMaster(objAux);
