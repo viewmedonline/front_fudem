@@ -753,6 +753,7 @@ export default {
             "pediatrist",
             "nutritionist",
             "internist",
+            "psychologist",
           ],
         },
         token: sessionStorage.getItem("pussy"),
