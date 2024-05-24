@@ -93,7 +93,7 @@
       >
         Imagenología
       </v-tab>
-      <v-tab-item  v-if="validateTabs('imaging')">
+      <v-tab-item v-if="validateTabs('imaging')">
         <v-card class="blue-grey lighten-5">
           <v-card-text>
             <vmImaging class="px-0 py-0"></vmImaging>
@@ -113,7 +113,8 @@ const vmOphthalmology = () =>
 const vmHistory = () => import("@/components/history_form/history_form");
 const vmConstans = () => import("@/components/history_form/history_cons");
 const vmImaging = () => import("@/components/imaging_form/imaging_form");
-const vmInternist = () => import("@/components/internist_evaluation_sheet/internist_evaluation_sheet");
+const vmInternist = () =>
+  import("@/components/internist_evaluation_sheet/internist_evaluation_sheet");
 export default {
   name: "tabsComponent",
   data: () => ({
@@ -121,22 +122,15 @@ export default {
   }),
   methods: {
     changeTabs(tabs) {
-      if(tabs == "history"){
-        this.$refs.history.listConsulting()
-
+      if (tabs == "history") {
+        this.$refs.history.listConsulting();
       }
       this.$store.commit({
         type: "tabsActive",
         state: tabs,
       });
-
-      this.$store.commit({
-        type: "setShowImaging",
-        state: tabs == "imaging" ? false : true,
-      });
     },
     validateTabs(tab) {
-
       if (this.storePhysician.role) {
         switch (this.storePhysician.role.toLowerCase()) {
           case "admision":
@@ -165,17 +159,21 @@ export default {
             break;
           case "internist":
             switch (tab) {
-                case "history":
-                  return true;
-                  break;
-                case "imaging":
-                  return true;
-                  break;
-                case "internist":
-                  return true
-                  break
-              }
-              break;
+              case "history":
+                return true;
+                break;
+              case "imaging":
+                return true;
+                break;
+              case "internist":
+                return true;
+                break;
+            }
+            this.$store.commit({
+              type: "setShowImaging",
+              state: false,
+            });
+            break;
           case "intern":
             switch (tab) {
               case "history":
@@ -193,6 +191,10 @@ export default {
             }
             break;
           case "optometrist":
+          this.$store.commit({
+              type: "setShowImaging",
+              state: false,
+            });
             switch (tab) {
               case "preliminary":
                 if (this.getRoute.c == "E") {
@@ -232,6 +234,10 @@ export default {
             }
             break;
           case "ophthalmologist":
+          this.$store.commit({
+              type: "setShowImaging",
+              state: false,
+            });
             switch (tab) {
               case "preliminary":
                 if (this.getRoute.c == "E") {
@@ -285,15 +291,24 @@ export default {
             }
             break;
           default:
-            if(tab == "history" || tab == "imaging" ) return true
-            else return false
-            break;
+            switch (tab) {
+              case "history":
+                return true;
+                break;
+            }
+            this.$store.commit({
+              type: "setShowImaging",
+              state: true,
+            });
         }
       }
     },
   },
   created() {
     // if (this.getRoute.c.toUpperCase() == 'H') this.changeTabs('history')
+  },
+  mounted() {
+    this.validateTabs("imaging");
   },
   components: {
     vmPreliminar,
@@ -302,7 +317,7 @@ export default {
     vmHistory,
     vmImaging,
     vmConstans,
-    vmInternist
+    vmInternist,
   },
   computed: {
     storePhysician() {

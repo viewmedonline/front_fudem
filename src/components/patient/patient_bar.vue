@@ -42,7 +42,10 @@
               <v-icon>assignment_ind</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="fixedCompst('consultation')">
+          <v-list-tile
+            @click="fixedCompst('consultation')"
+            v-if="storePhysician.role != 'internist'"
+          >
             <v-list-tile-content>
               <v-list-tile-title v-if="$route.query.c == 'H'"
                 >Historial</v-list-tile-title
@@ -74,7 +77,7 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-list-tile
-            @click="fixedCompst('internist_evaluation_sheet')"
+            @click="fixedCompst('consultation')"
             v-if="storePhysician.role == 'internist'"
           >
             <v-list-tile-content>
@@ -89,7 +92,9 @@
             v-if="storePhysician.role == 'psychologist'"
           >
             <v-list-tile-content>
-              <v-list-tile-title>Seguimiento Psicoterapéutico</v-list-tile-title>
+              <v-list-tile-title
+                >Seguimiento Psicoterapéutico</v-list-tile-title
+              >
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon>mdi-file-document-edit-outline</v-icon>
@@ -100,7 +105,9 @@
             v-if="storePhysician.role == 'psychologist'"
           >
             <v-list-tile-content>
-              <v-list-tile-title>Entrevista clínica niñez y adolescencia</v-list-tile-title>
+              <v-list-tile-title
+                >Entrevista clínica niñez y adolescencia</v-list-tile-title
+              >
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon>mdi-file-document-edit-outline</v-icon>
@@ -299,6 +306,12 @@ export default {
       this.dataStore.psychologist_sheet = false;
       this.dataStore.clinical_interview_1 = false;
       this.dataStore.clinical_interview_2 = false;
+
+      if (val != "consultation")
+        this.$store.commit({
+          type: "setShowImaging",
+          state: true,
+        });
 
       switch (val) {
         case "consultation":
