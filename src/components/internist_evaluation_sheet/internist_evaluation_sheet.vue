@@ -475,7 +475,7 @@ export default {
         });
         const data_document_consultation = {
           person: this.$store.getters.getPatient._id,
-          name: "Hoja de evaluación médico internista",
+          name: "Hoja de evaluación médico internista - "+this.appointmentType,
           control: {
             active: false,
           },
