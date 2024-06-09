@@ -1095,6 +1095,24 @@ export default {
   },
 
   methods: {
+    filterDuplicate(diagnostics) {
+      const uniqueDiagnostics = [];
+      const seenCodes = new Set();
+      const seenDiagnostics = new Set();
+
+      for (const diagnostic of diagnostics) {
+        const code = diagnostic.code;
+        const diagnosticText = diagnostic.diagnostic;
+
+        if (!seenCodes.has(code) && !seenDiagnostics.has(diagnosticText)) {
+          uniqueDiagnostics.push(diagnostic);
+          seenCodes.add(code);
+          seenDiagnostics.add(diagnosticText);
+        }
+      }
+
+      return uniqueDiagnostics;
+    },    
     sucursalName(sucursalId) {
       let sucursalFilter = this.sucursalList.filter(
         (sucursal) => sucursal._id == sucursalId
@@ -1852,6 +1870,7 @@ export default {
     },
     generarReport(specialty) {
       if (this.$refs[specialty].validate()) {
+        this.loader = true
         let diagnostic = "";
         this.reportOphthalmology = false;
         this.resultOphthalmology = [];
@@ -1988,14 +2007,18 @@ export default {
                   this.resultOptometrist = result;
                   this.paginationOpt.totalItems = result.length;
                 }
+                this.loader = false
               })
               .catch((error) => {
                 console.log("error: ", error);
+                this.loader = false
               });
           })
           .catch((error) => {
             console.log("error: ", error);
+            this.loader = false
           });
+          
       }
     },
     getPatient: (item) => `${item.forename} (${item.idQflow})`,
@@ -2099,6 +2122,8 @@ export default {
       return value.length;
     },
     diagnosesConsulting(list) {
+      
+      list =  this.filterDuplicate(list)
       if (list.length > 0) {
         if (list.length > 1) {
           let arrayDiagnostic = [];
