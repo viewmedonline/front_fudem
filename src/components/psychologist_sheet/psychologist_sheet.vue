@@ -58,7 +58,7 @@
                           ></v-radio>
                         </v-radio-group>
                       </v-flex>
-                      <v-flex xs6>
+                      <v-flex xs12>
                         <v-menu
                           ref="menu1"
                           v-model="menu1"
@@ -90,7 +90,7 @@
                           ></v-date-picker>
                         </v-menu>
                       </v-flex>
-                      <v-flex xs6>
+                      <!-- <v-flex xs6>
                         <v-menu
                           ref="menu2"
                           v-model="menu2"
@@ -121,7 +121,7 @@
                             locale="es"
                           ></v-date-picker>
                         </v-menu>
-                      </v-flex>
+                      </v-flex> -->
                       <v-flex xs12 class="title-div">
                         2. Descripción del problema
                       </v-flex>
@@ -414,7 +414,7 @@ export default {
           dateStart: moment(this.selectionRow.dateStart)
             .utc()
             .format("DD/MM/YYYY"),
-          dateEnd: moment(this.selectionRow.dateEnd).utc().format("DD/MM/YYYY"),
+          dateEnd: moment().utc().format("DD/MM/YYYY"),
           name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
           problemSummary: this.selectionRow.problemSummary,
           diagnosticImpression: this.selectionRow.diagnosticImpression,
@@ -427,7 +427,7 @@ export default {
 
       await updatePsiProcess({
         _id: this.selectionRow._id,
-        data: { pdf: file },
+        data: { pdf: file,dateEnd: moment().utc().format("DD/MM/YYYY")},
       });
       this.loadingDescription = false;
       this.showFormDescription = false;
@@ -487,9 +487,9 @@ export default {
       objData.dateStart = moment(objData.dateStart, "DD/MM/YYYY").format(
         "YYYY-MM-DD"
       );
-      objData.dateEnd = moment(objData.dateEnd, "DD/MM/YYYY").format(
-        "YYYY-MM-DD"
-      );
+      // objData.dateEnd = moment(objData.dateEnd, "DD/MM/YYYY").format(
+      //   "YYYY-MM-DD"
+      // );
       await savePsiProcess(objData);
       this.clear();
       this.findRowOpen();
