@@ -853,6 +853,7 @@ import * as consultationServ from "@/componentServs/consultation";
 import * as fileServ from "@/componentServs/file";
 import * as diagnosesServ from "@/componentServs/diagnoses";
 import * as sucursalServ from "@/componentServs/sucursal";
+import {filterDuplicate} from '@/utils/utils'
 import moment from "moment";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -1094,25 +1095,7 @@ export default {
     };
   },
 
-  methods: {
-    filterDuplicate(diagnostics) {
-      const uniqueDiagnostics = [];
-      const seenCodes = new Set();
-      const seenDiagnostics = new Set();
-
-      for (const diagnostic of diagnostics) {
-        const code = diagnostic.code;
-        const diagnosticText = diagnostic.diagnostic;
-
-        if (!seenCodes.has(code) && !seenDiagnostics.has(diagnosticText)) {
-          uniqueDiagnostics.push(diagnostic);
-          seenCodes.add(code);
-          seenDiagnostics.add(diagnosticText);
-        }
-      }
-
-      return uniqueDiagnostics;
-    },    
+  methods: { 
     sucursalName(sucursalId) {
       let sucursalFilter = this.sucursalList.filter(
         (sucursal) => sucursal._id == sucursalId
@@ -2123,7 +2106,7 @@ export default {
     },
     diagnosesConsulting(list) {
       
-      list =  this.filterDuplicate(list)
+      list =  filterDuplicate(list)
       if (list.length > 0) {
         if (list.length > 1) {
           let arrayDiagnostic = [];

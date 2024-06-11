@@ -140,6 +140,7 @@
 import { EventBus } from "@/store/eventBus";
 import * as diagnosesServ from '@/componentServs/diagnoses'
 import * as consultationServ from '@/componentServs/consultation'
+import {filterDuplicate} from '@/utils/utils'
   export default {
     name: 'diagnosis_oft',
     data: () => ({
@@ -219,6 +220,7 @@ import * as consultationServ from '@/componentServs/consultation'
                     this.levelDx = 0
                     this.codeDx = null
                     this.getDiagnoses()
+                    this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned)
                 }
             }else{
                 

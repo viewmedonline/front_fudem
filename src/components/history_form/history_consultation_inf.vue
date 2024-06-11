@@ -2878,6 +2878,7 @@
 import moment from "moment";
 import * as fileServ from "@/componentServs/file";
 import * as personServ from "@/componentServs/person";
+import {filterDuplicate} from '@/utils/utils'
 
 export default {
   name: "history_consultation_inf",
@@ -2964,24 +2965,7 @@ export default {
     }
   },
   methods: {
-    filterDuplicate(diagnostics) {
-      const uniqueDiagnostics = [];
-      const seenCodes = new Set();
-      const seenDiagnostics = new Set();
-
-      for (const diagnostic of diagnostics) {
-        const code = diagnostic.code;
-        const diagnosticText = diagnostic.diagnostic;
-
-        if (!seenCodes.has(code) && !seenDiagnostics.has(diagnosticText)) {
-          uniqueDiagnostics.push(diagnostic);
-          seenCodes.add(code);
-          seenDiagnostics.add(diagnosticText);
-        }
-      }
-
-      return uniqueDiagnostics;
-    },
+    filterDuplicate,
     showSurgeries() {
       if (this.myProp.objPreliminary.data) {
         if (this.myProp.objPreliminary.data.record.cirugias) {
