@@ -911,6 +911,19 @@ export default {
           text: this.$t("antecedent.emmetropia"),
           value: "emmetropia",
         },
+        //Ambliopia,Anisometropia,Estrabismo
+        {
+          text: this.$t("antecedent.amblyopia"),
+          value: "amblyopia",
+        },
+        {
+          text: this.$t("antecedent.anisometropia"),
+          value: "anisometropia",
+        },
+        {
+          text: 'Estrabismo',
+          value: "squint",
+        },
         {
           text: this.$t("title.all"),
           value: "Todos",
@@ -1974,7 +1987,7 @@ export default {
             }
 
             objAux.body["sucursalId"] = {
-              $in: this.arraySucursal,
+              $in: [this.sucursal],
             };
 
             consultationServ
