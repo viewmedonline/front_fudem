@@ -2491,8 +2491,9 @@
 
                   <v-flex
                     xs12
-                    v-for="(proced, v) in myProp.objOphthalmology.data
-                      .diagnostic"
+                    v-for="(proced, v) in filterDuplicate(
+                      myProp.objOphthalmology.data.diagnostic
+                    )"
                     :key="v"
                   >
                     <v-layout>
@@ -2770,6 +2771,7 @@
 import moment from "moment";
 import * as fileServ from "@/componentServs/file";
 import * as personServ from "@/componentServs/person";
+import {filterDuplicate} from '@/utils/utils'
 
 export default {
   name: "history_consultation_inf",
@@ -2856,6 +2858,7 @@ export default {
     }
   },
   methods: {
+    filterDuplicate,
     showSurgeries() {
       if (this.myProp.objPreliminary.data) {
         if (this.myProp.objPreliminary.data.record.cirugias) {

@@ -151,6 +151,7 @@
 import { EventBus } from "@/store/eventBus";
 import * as diagnosesServ from "@/componentServs/diagnoses";
 import * as consultationServ from "@/componentServs/consultation";
+import {filterDuplicate} from '@/utils/utils'
 export default {
   name: "diagnosis_oft",
   data: () => ({
@@ -234,6 +235,7 @@ export default {
           this.codeDx = null;
           this.eyeDiagnoses = null
           this.getDiagnoses();
+          this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned)
         } else {
           alert("Debe Indicar el Diagnostigo");
           return;

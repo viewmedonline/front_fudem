@@ -853,6 +853,7 @@ import * as consultationServ from "@/componentServs/consultation";
 import * as fileServ from "@/componentServs/file";
 import * as diagnosesServ from "@/componentServs/diagnoses";
 import * as sucursalServ from "@/componentServs/sucursal";
+import {filterDuplicate} from '@/utils/utils'
 import moment from "moment";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -909,6 +910,19 @@ export default {
         {
           text: this.$t("antecedent.emmetropia"),
           value: "emmetropia",
+        },
+        //Ambliopia,Anisometropia,Estrabismo
+        {
+          text: this.$t("antecedent.amblyopia"),
+          value: "amblyopia",
+        },
+        {
+          text: this.$t("antecedent.anisometropia"),
+          value: "anisometropia",
+        },
+        {
+          text: 'Estrabismo',
+          value: "squint",
         },
         {
           text: this.$t("title.all"),
@@ -1094,7 +1108,7 @@ export default {
     };
   },
 
-  methods: {
+  methods: { 
     sucursalName(sucursalId) {
       let sucursalFilter = this.sucursalList.filter(
         (sucursal) => sucursal._id == sucursalId
@@ -1852,6 +1866,7 @@ export default {
     },
     generarReport(specialty) {
       if (this.$refs[specialty].validate()) {
+        this.loader = true
         let diagnostic = "";
         this.reportOphthalmology = false;
         this.resultOphthalmology = [];
@@ -1972,7 +1987,7 @@ export default {
             }
 
             objAux.body["sucursalId"] = {
-              $in: this.arraySucursal,
+              $in: [this.sucursal],
             };
 
             consultationServ
@@ -1988,14 +2003,18 @@ export default {
                   this.resultOptometrist = result;
                   this.paginationOpt.totalItems = result.length;
                 }
+                this.loader = false
               })
               .catch((error) => {
                 console.log("error: ", error);
+                this.loader = false
               });
           })
           .catch((error) => {
             console.log("error: ", error);
+            this.loader = false
           });
+          
       }
     },
     getPatient: (item) => `${item.forename} (${item.idQflow})`,
@@ -2099,6 +2118,8 @@ export default {
       return value.length;
     },
     diagnosesConsulting(list) {
+      
+      list =  filterDuplicate(list)
       if (list.length > 0) {
         if (list.length > 1) {
           let arrayDiagnostic = [];
