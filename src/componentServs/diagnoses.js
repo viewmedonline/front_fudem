@@ -1,54 +1,5 @@
 import axios from "axios";
 
-// function deleteConsultation(obj) {
-// 	return new Promise((resolve, reject) => {
-// 		try {
-// 			let port = ":3000"
-// 			if (process.env.ROOT_API.includes("viewmedonline"))
-// 				port = ":3072"
-// 			axios
-// 				.delete(process.env.ROOT_API + "/consultations/" + obj.id, {
-// 					data: obj.body,
-// 					headers: {
-// 						'Authorization': obj.token
-// 					}
-// 				})
-// 				.then(result => {
-// 					resolve(result.data.documents);
-// 				})
-// 				.catch(error => {
-// 					console.log(error);
-// 					reject(error.response);
-// 				});
-// 		} catch (err) {
-// 			console.log("err in updateConsultation: ", err);
-// 		}
-// 	});
-// }
- 
-// function contacts_confirmed(objAux) {
-// 	return new Promise((resolve, reject) => {
-// 		try {
-// 			let port = ":3000"
-// 			if (process.env.ROOT_API.includes("viewmedonline"))
-// 				port = ":3096"
-// 			axios.get(process.env.ROOT_API + "/contacts/" + objAux.user1 + "/" + objAux.user2,
-// 				{
-// 					headers:
-// 					{
-// 						'Authorization': objAux.token
-// 					}
-// 				}).then(result => {
-// 					resolve(result.data.documents)
-// 				}).catch(error => {
-// 					reject(error.response.data.message)
-// 				})
-// 		} catch (error) {
-// 			console.log('contacts_confirmed: ', error)
-// 		}
-// 	})
-// }
-
 function getDiagnoses(obj) {
 	return new Promise((resolve, reject) => {
 		try {
@@ -92,7 +43,51 @@ function insertDiagnoses(obj) {
 		}
 	});
 }
+
+//diagnosis master
+function getDiagnosesMaster(type) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios
+				.get(process.env.VUE_APP_ROOT_API + "/diagnoses/master/"+type, {
+				})
+				.then(result => {
+					resolve(result.data.documents);
+				})
+				.catch(error => {
+					console.log(error);
+					reject(error.response);
+				});
+		} catch (err) {
+			console.log("err in getDiagnosesMaster: ", err);
+		}
+	});
+}
+//insert diagnoses
+function insertDiagnosesMaster(obj) {
+	return new Promise((resolve, reject) => {
+		try {
+			axios
+				.post(process.env.VUE_APP_ROOT_API + "/diagnoses/master", obj, {
+					headers: {
+						'Authorization': ""
+					}
+				})
+				.then(result => {
+					resolve(result.data.documents);
+				})
+				.catch(error => {
+					console.log(error);
+					reject(error.response);
+				});
+		} catch (err) {
+			console.log("err in insertDiagnosesMaster: ", err);
+		}
+	});
+}
 export {
 	getDiagnoses,
-	insertDiagnoses
+	insertDiagnoses,
+	getDiagnosesMaster,
+	insertDiagnosesMaster
 }

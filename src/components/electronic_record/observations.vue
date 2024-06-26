@@ -5,7 +5,7 @@
         <v-card-title primary-title class="blue-grey darken-1">
           <span
             class="subheading white--text text-capitalize"
-          >{{$t('title.observations')}} {{$t('title.and').toLowerCase()}} {{$t('title.medications')}}</span>
+          >Plan De Manejo</span>
         </v-card-title>
         <v-divider light class="vm-border-color-2"></v-divider>
         <v-card-text>
@@ -14,7 +14,7 @@
                     <v-flex xs12>
                         <v-textarea
                             name="input-7-1"
-                            :label="$t('title.observations')"
+                            label="Plan De Manejo"
                             v-model="observations"
                             outline
                             :counter="maxHeigthText"

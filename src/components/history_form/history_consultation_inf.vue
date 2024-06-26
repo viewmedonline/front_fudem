@@ -777,11 +777,19 @@
                     }}</span></span
                   >
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs3>
                   <span style="font-weight: bold"
                     >Observaciones en fotografía:
                     <span class="body-1">{{
                       myProp.objPreliminary.data.retinal_observations || "-"
+                    }}</span></span
+                  >
+                </v-flex>
+                <v-flex xs3>
+                  <span style="font-weight: bold"
+                    >Notas:
+                    <span class="body-1">{{
+                      myProp.objPreliminary.data.retinal_notes || "-"
                     }}</span></span
                   >
                 </v-flex>
@@ -2463,93 +2471,11 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout
-                  row
-                  wrap
-                  class="pt-1"
-                  v-if="
-                    myProp.objOphthalmology.data &&
-                    myProp.objOphthalmology.data.process.lenght > 0
-                  "
-                >
+                <v-layout row wrap class="pt-1">
                   <v-flex xs12>
                     <span class="primary--text"
-                      >Procedimiento de diagnóstico</span
-                    >
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-for="(proced, v) in myProp.objOphthalmology.data.process"
-                    :key="v"
-                  >
-                    <v-layout>
-                      <v-flex xs5>
-                        <span class="body-1 font-weight-medium">
-                          Procedimiento:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          myProp.objOphthalmology.data.process[v].process
-                        }}</span>
-                      </v-flex>
-                      <v-flex xs5>
-                        <span class="body-1 font-weight-medium">
-                          Ojo:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          myProp.objOphthalmology.data.process[v].eye
-                        }}</span>
-                      </v-flex>
-                      <v-flex
-                        xs2
-                        v-if="myProp.objOphthalmology.data.process[v].other"
-                      >
-                        <span class="body-1 font-weight-medium">
-                          Otro:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          myProp.objOphthalmology.data.process[v].other
-                        }}</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-layout>
-                <v-divider light></v-divider>
-                <v-layout
-                  row
-                  wrap
-                  class="pt-1"
-                  v-if="myProp.objOphthalmology.data"
-                >
-                  <v-flex xs12>
-                    <span class="primary--text"
-                      >PROCEDIMIENTOS TERAPEUTICOS</span
-                    >
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-for="(proced, v) in myProp.objOphthalmology.data
-                      .processTherapeutic"
-                    :key="v"
-                  >
-                    <v-layout>
-                      <v-flex xs6>
-                        <span class="body-1 font-weight-medium">
-                          Procedimiento:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          myProp.objOphthalmology.data.processTherapeutic[v]
-                            .process
-                        }}</span>
-                      </v-flex>
-                      <v-flex xs6>
-                        <span class="body-1 font-weight-medium">
-                          Ojo:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          myProp.objOphthalmology.data.processTherapeutic[v].eye
-                        }}</span>
-                      </v-flex>
-                    </v-layout>
+                      >Dia Post Operatorio:</span 
+                    > {{myProp.daysPostOperatory}}
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
@@ -2562,6 +2488,7 @@
                   <v-flex xs12>
                     <span class="primary--text">Diagnóstico Oftalmología</span>
                   </v-flex>
+
                   <v-flex
                     xs12
                     v-for="(proced, v) in filterDuplicate(
@@ -2585,74 +2512,40 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap v-if="myProp.objOphthalmology.data">
-                  <v-flex
-                    xs12
-                    v-if="
-                      myProp.objOphthalmology.data.treatmentplan &&
-                      myProp.objOphthalmology.data.treatmentplan.tratamiento
-                        .length > 0
-                    "
-                  >
-                    <span class="primary--text">Plan De Tratamiento</span>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-for="(tratamientos, x) in myProp.objOphthalmology.data
-                      .treatmentplan.tratamiento"
-                    :key="x"
-                    v-if="x >= 7"
-                  >
-                    <span class="body-1 font-weight-light font-italic">
-                      {{
-                        langTreatament(
-                          myProp.objOphthalmology.data.treatmentplan
-                            .tratamiento[x].name
-                        )
-                      }}:&nbsp;
-                    </span>
-                    <span class="body-1">{{
-                      boolean(
-                        myProp.objOphthalmology.data.treatmentplan.tratamiento[
-                          x
-                        ].value
-                      )
-                    }}</span>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-if="myProp.objOphthalmology.data.treatmentplan.laser"
-                  >
-                    <span class="body-1 font-weight-medium">
-                      Láser:&nbsp;
-                    </span>
-                    <span class="body-1">{{
-                      myProp.objOphthalmology.data.treatmentplan.laser || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-if="myProp.objOphthalmology.data.treatmentplan.lentes"
-                  >
-                    <span class="body-1 font-weight-medium">
-                      Lentes:&nbsp;
-                    </span>
-                    <span class="body-1">{{
-                      myProp.objOphthalmology.data.treatmentplan.lentes || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    v-if="myProp.objOphthalmology.data.treatmentplan.otros"
-                  >
-                    <span class="body-1 font-weight-medium">
-                      Otros:&nbsp;
-                    </span>
-                    <span class="body-1">{{
-                      myProp.objOphthalmology.data.treatmentplan.otros || " - "
-                    }}</span>
-                  </v-flex>
-                </v-layout>
+                <!-- <v-layout row wrap v-if="myProp.objOphthalmology.data">
+                                    <v-flex xs12
+                                            v-if="myProp.objOphthalmology.data.treatmentplan && myProp.objOphthalmology.data.treatmentplan.tratamiento.length > 0">
+                                        <span class="primary--text">Plan De Tratamiento</span>
+                                    </v-flex>
+                                    <v-flex xs12
+                                            v-for="(tratamientos, x) in myProp.objOphthalmology.data.treatmentplan.tratamiento"
+                                            :key="x" v-if="x >= 7">
+
+                            <span class="body-1 font-weight-light font-italic">
+                                                        {{langTreatament(myProp.objOphthalmology.data.treatmentplan.tratamiento[x].name)}}:&nbsp;
+                                                    </span>
+                                        <span class="body-1">{{boolean(myProp.objOphthalmology.data.treatmentplan.tratamiento[x].value)}}</span>
+
+                                    </v-flex>
+                                    <v-flex xs12 v-if="myProp.objOphthalmology.data.treatmentplan.laser">
+                            <span class="body-1 font-weight-medium">
+                                                        Láser:&nbsp;
+                                                    </span>
+                                        <span class="body-1">{{myProp.objOphthalmology.data.treatmentplan.laser || ' - '}}</span>
+                                    </v-flex>
+                                    <v-flex xs12 v-if="myProp.objOphthalmology.data.treatmentplan.lentes">
+                            <span class="body-1 font-weight-medium">
+                                                        Lentes:&nbsp;
+                                                    </span>
+                                        <span class="body-1">{{myProp.objOphthalmology.data.treatmentplan.lentes || ' - '}}</span>
+                                    </v-flex>
+                                    <v-flex xs12 v-if="myProp.objOphthalmology.data.treatmentplan.otros">
+                            <span class="body-1 font-weight-medium">
+                                                        Otros:&nbsp;
+                                                    </span>
+                                        <span class="body-1">{{myProp.objOphthalmology.data.treatmentplan.otros || ' - '}}</span>
+                                    </v-flex>
+                                </v-layout> -->
                 <v-divider light></v-divider>
                 <v-layout row wrap v-if="myProp.objOphthalmology.data">
                   <v-flex

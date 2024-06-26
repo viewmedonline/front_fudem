@@ -168,13 +168,6 @@
             frameborder="0" 
             style="height: 75vh"
             ></iframe>            
-            <!-- <v-layout row wrap>
-              <v-flex xs12 class="text-xs-right">
-                <v-btn @click="Print(z)" fab dark small color="primary">
-                  <v-icon>print</v-icon>
-                </v-btn>
-              </v-flex>
-            </v-layout> -->
           </v-stepper-content>
         </div>
       </v-stepper>

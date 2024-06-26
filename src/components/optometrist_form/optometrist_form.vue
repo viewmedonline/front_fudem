@@ -78,7 +78,7 @@
           <retinalCamera
             class="px-2 py-2"
             ref="retinalCameraRef"
-            :disabled_options="true"
+            :disabled_options="false"
           ></retinalCamera>
         </v-window-item>
       </v-window>
@@ -569,6 +569,11 @@ export default {
                 this.consultation.diagnosticoObservaciones =
                   result.diagnosticoObservaciones;
                 this.consultation.receta = result.receta;
+                const retinalCamera = await this.$refs.retinalCameraRef.saveRetinalCamera()
+                this.consultation.objPreliminary.data.retinal_photo = retinalCamera.photo_retinal
+                this.consultation.objPreliminary.data.retinal_findings = retinalCamera.findings_photo
+                this.consultation.objPreliminary.data.retinal_observations = retinalCamera.observations_photo
+                this.consultation.objPreliminary.data.retinal_notes = retinalCamera.retinal_notes
 
                 if (this.paso > this.lastValidate) this.lastValidate = 4;
                 resolve("ok");
