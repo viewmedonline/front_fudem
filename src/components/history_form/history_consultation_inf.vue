@@ -2471,14 +2471,14 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1">
+                <!-- <v-layout row wrap class="pt-1">
                   <v-flex xs12>
                     <span class="primary--text"
                       >Dia Post Operatorio:</span 
                     > {{myProp.daysPostOperatory}}
                   </v-flex>
                 </v-layout>
-                <v-divider light></v-divider>
+                <v-divider light></v-divider> -->
                 <v-layout
                   row
                   wrap

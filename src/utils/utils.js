@@ -1,5 +1,4 @@
 const filterDuplicate = (diagnostics)=> {
-    console.log("diagnostics: ", diagnostics);
     const uniqueDiagnostics = [];
     const seenCodes = new Set();
     const seenDiagnostics = new Set();

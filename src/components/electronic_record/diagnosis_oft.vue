@@ -16,6 +16,9 @@
         <v-card-text>
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
+              <v-flex xs12>
+                <v-checkbox v-model="postOperatoryActive" label="Post Operatorio"> </v-checkbox>
+              </v-flex>
               <v-flex xs6 v-if="useListDiagnoses">
                 <v-autocomplete
                   v-model="diagnostico"
@@ -42,25 +45,18 @@
                   :rules="[]"
                   :readonly="validateRead()"
                 >
-                </v-select>
-              </v-flex>
-              <v-flex xs3>
-                <v-select
-                  v-model="dayPostOperatory"
-                  :items="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"
-                  label="Dia post operatorio"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                >
-                  <v-slide-x-reverse-transition
+                <v-slide-x-reverse-transition
                     slot="append-outer"
                     mode="out-in"
+                    v-if="!postOperatoryActive"
                   >
                     <v-btn
                       dark
                       small
                       icon
-                      :disabled="Object.keys(diagnostico).length == 0 || !eyeDiagnoses"
+                      :disabled="
+                        Object.keys(diagnostico).length == 0 || !eyeDiagnoses
+                      "
                       color="grey white--text"
                       @click="appendListDiagnosis()"
                     >
@@ -69,6 +65,35 @@
                   </v-slide-x-reverse-transition>
                 </v-select>
               </v-flex>
+              <v-flex xs3 v-if="postOperatoryActive">
+                <v-select
+                  v-model="dayPostOperatory"
+                  :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
+                  label="Dia post operatorio"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                >
+                  <v-slide-x-reverse-transition
+                    slot="append-outer"
+                    mode="out-in"
+                    v-if="postOperatoryActive"
+                  >
+                    <v-btn
+                      dark
+                      small
+                      icon
+                      :disabled="
+                        Object.keys(diagnostico).length == 0 || !eyeDiagnoses
+                      "
+                      color="grey white--text"
+                      @click="appendListDiagnosis()"
+                    >
+                      <v-icon>add</v-icon>
+                    </v-btn>
+                  </v-slide-x-reverse-transition>
+                </v-select>
+              </v-flex>
+              
               <v-flex xs10 class="text-sm-left">
                 <v-chip
                   v-for="chips in chipsDiagnostic"
@@ -151,7 +176,7 @@
 import { EventBus } from "@/store/eventBus";
 import * as diagnosesServ from "@/componentServs/diagnoses";
 import * as consultationServ from "@/componentServs/consultation";
-import {filterDuplicate} from '@/utils/utils'
+import { filterDuplicate } from "@/utils/utils";
 export default {
   name: "diagnosis_oft",
   data: () => ({
@@ -166,8 +191,8 @@ export default {
     discardDx: [],
     diagnosisAssigned: [],
     selectedDiagnoses: false,
-    eyeDiagnoses:null,
-    dayPostOperatory:null,
+    eyeDiagnoses: null,
+    dayPostOperatory: null,
     headers: [
       {
         text: "Diagnostico",
@@ -187,6 +212,7 @@ export default {
     },
     useListDiagnoses: true,
     diagnosticoText: null,
+    postOperatoryActive:false
   }),
   methods: {
     validateRead() {
@@ -224,22 +250,28 @@ export default {
         this.diagnosisAssigned.splice(index, 1);
     },
     appendListDiagnosis() {
-        if (Object.keys(this.diagnostico).length > 0) {
-          this.diagnostico.diagnostic.es = this.diagnostico.diagnostic.es+" - "+ this.eyeDiagnoses
-          this.diagnosisAssigned.push(this.diagnostico);
-          this.diagnostico = {};
-          this.chipsDiagnostic = [];
-          this.includeDx = [];
-          this.discardDx = [];
-          this.levelDx = 0;
-          this.codeDx = null;
-          this.eyeDiagnoses = null
-          this.getDiagnoses();
-          this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned)
-        } else {
-          alert("Debe Indicar el Diagnostigo");
-          return;
+      if (Object.keys(this.diagnostico).length > 0) {
+        this.diagnostico.diagnostic.es =
+          this.diagnostico.diagnostic.es + " - " + this.eyeDiagnoses;
+        if(this.postOperatoryActive){
+          this.diagnostico.diagnostic.es+=` - ${this.dayPostOperatory} dias Post Operatorio`
         }
+        this.diagnosisAssigned.push(this.diagnostico);
+        this.diagnostico = {};
+        this.chipsDiagnostic = [];
+        this.includeDx = [];
+        this.discardDx = [];
+        this.levelDx = 0;
+        this.codeDx = null;
+        this.eyeDiagnoses = null;
+        this.dayPostOperatory = null
+        this.postOperatoryActive = false
+        this.getDiagnoses();
+        this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned);
+      } else {
+        alert("Debe Indicar el Diagnostigo");
+        return;
+      }
     },
     selectDx(val) {
       this.diagnostico = val;
@@ -301,7 +333,10 @@ export default {
           this.$refs.formDiagnosisOftRef.validate() &&
           this.diagnosisAssigned.length > 0
         ) {
-          resolve({diagnostic:this.diagnosisAssigned,daysPostOperatory:this.dayPostOperatory});
+          resolve({
+            diagnostic: this.diagnosisAssigned,
+            //daysPostOperatory: this.dayPostOperatory,
+          });
         } else {
           reject(false);
         }
@@ -310,7 +345,7 @@ export default {
     setDataConsultation() {
       if (this.storeConsultation.diagnostic) {
         this.diagnosisAssigned = this.storeConsultation.diagnostic;
-        this.dayPostOperatory = this.storeConsultation.daysPostOperatory
+        //this.dayPostOperatory = this.storeConsultation.daysPostOperatory;
       }
     },
   },

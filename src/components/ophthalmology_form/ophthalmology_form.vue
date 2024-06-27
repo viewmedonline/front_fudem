@@ -283,23 +283,27 @@ export default {
                         this.$refs.preliminaryDataRef
                           .savePreliminaryData()
                           .then((result) => {
-                            if(!this.consultation.objPreliminary){
+                            if (!this.consultation.objPreliminary) {
                               this.consultation.objPreliminary = {
-                                data:{}
-                                }
+                                data: {},
+                              };
                             }
-                            
-                            this.consultation.objPreliminary.data.retinal_photo = result.retinal_photo
-                            this.consultation.objPreliminary.data.retinal_findings = result.retinal_findings
-                            this.consultation.objPreliminary.data.retinal_observations = result.retinal_observations
-                            this.consultation.objPreliminary.data.retinal_notes = result.retinal_notes
+
+                            this.consultation.objPreliminary.data.retinal_photo =
+                              result.retinal_photo;
+                            this.consultation.objPreliminary.data.retinal_findings =
+                              result.retinal_findings;
+                            this.consultation.objPreliminary.data.retinal_observations =
+                              result.retinal_observations;
+                            this.consultation.objPreliminary.data.retinal_notes =
+                              result.retinal_notes;
                             this.consultation.datapreliminar = result;
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 0;
                             resolve();
                           })
                           .catch((err) => {
-                            console.log("error: ", err)
+                            console.log("error: ", err);
                             reject();
                           });
                         // if (this.paso > this.lastValidate)
@@ -347,7 +351,8 @@ export default {
               .then((result) => {
                 // console.log("resultado diagnosticos: ", result)
                 this.consultation.diagnostic = result.diagnostic;
-                this.consultation.daysPostOperatory = result.daysPostOperatory;                this.$refs.observationsRef
+                //this.consultation.daysPostOperatory = result.daysPostOperatory;
+                this.$refs.observationsRef
                   .saveObservations()
                   .then((result) => {
                     // console.log("resultado observaciones y medicamentos: ", result)
