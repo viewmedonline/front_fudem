@@ -38,7 +38,7 @@
                 <v-select
                   v-model="eyeDiagnoses"
                   :items="['OJO DERECHO', 'OJO IZQUIERDO', 'AMBOS OJOS']"
-                  label="Post operatorio"
+                  label="Ojo"
                   :rules="[]"
                   :readonly="validateRead()"
                 >
