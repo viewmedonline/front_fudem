@@ -71,13 +71,21 @@
             <small>{{history.date}}</small>
           </v-stepper-step>
           <v-stepper-content :step="z" complete :editable=true >
-            <v-layout row wrap>
+            <v-layout row wrap v-if="storePhysician.role == 'Institution' && history.file">
+                <v-flex xs12 class="text-xs-right">
+                    <v-btn @click="deleteDialog(history.id)" fab dark small color="primary">
+                      <v-icon>delete_forever</v-icon>
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+            <v-layout row wrap v-if="!history.file">
                 <v-flex xs12 class="text-xs-right">
                     <v-btn @click="Print(z)" fab dark small color="primary">
                       <v-icon>print</v-icon>
                     </v-btn>
                 </v-flex>
             </v-layout>
+            
             <iframe color="grey lighten-1" class="mb-5" v-if="history.file"
             :src="pdf_document" 
             type="application/pdf" 
