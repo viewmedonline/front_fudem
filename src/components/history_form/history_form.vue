@@ -429,6 +429,7 @@ export default {
       this.showPdf = true
       this.showReport = false
       this.showNew =  false
+      this.e6 = pos
       this.validateStepper(pos)
     },
     show_report(document, pos)
@@ -437,6 +438,7 @@ export default {
       this.showPdf = false
       this.showReport = true
       this.showNew =  false
+      this.e6 = pos
       this.validateStepper(pos)
     },
     formatDate (date) {
