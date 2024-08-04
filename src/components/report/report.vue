@@ -187,12 +187,18 @@
                         }}
                       </td>
                       <td class="text-xs-center">
-                        {{ props.item.objPreliminary ? props.item.objPreliminary.data.retinal_photo || '-' : '-' }}
+                        {{
+                          props.item.objPreliminary
+                            ? props.item.objPreliminary.data.retinal_photo ||
+                              "-"
+                            : "-"
+                        }}
                       </td>
                       <td class="text-xs-center">
                         {{
                           props.item.objPreliminary
-                            ? props.item.objPreliminary.data.retinal_findings || "-"
+                            ? props.item.objPreliminary.data.retinal_findings ||
+                              "-"
                             : "-"
                         }}
                       </td>
@@ -243,7 +249,11 @@
                     full-width
                     width="290px"
                   >
-                    <v-date-picker locale="es-es" v-model="dateFrom2" scrollable>
+                    <v-date-picker
+                      locale="es-es"
+                      v-model="dateFrom2"
+                      scrollable
+                    >
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="modalFrom2 = false"
                         >Cancel</v-btn
@@ -392,12 +402,18 @@
                         }}
                       </td>
                       <td class="text-xs-center">
-                        {{ props.item.objPreliminary ? props.item.objPreliminary.data.retinal_photo || '-': '-'}}
+                        {{
+                          props.item.objPreliminary
+                            ? props.item.objPreliminary.data.retinal_photo ||
+                              "-"
+                            : "-"
+                        }}
                       </td>
                       <td class="text-xs-center">
                         {{
                           props.item.objPreliminary
-                            ? props.item.objPreliminary.data.retinal_findings || '-'
+                            ? props.item.objPreliminary.data.retinal_findings ||
+                              "-"
                             : "-"
                         }}
                       </td>
@@ -453,7 +469,9 @@
               </tr>
               <tr>
                 <td align="left" colspan="2"><strong>FECHA:</strong></td>
-                <td align="left" colspan="13">{{ dateFrom }} AL {{ dateTo }}</td>
+                <td align="left" colspan="13">
+                  {{ dateFrom }} AL {{ dateTo }}
+                </td>
               </tr>
               <tr>
                 <td align="left" colspan="2"><strong>SUCURSAL:</strong></td>
@@ -507,9 +525,6 @@
           <td class="text-xs-center" align="center" width="10%">
             <strong>NO. RECETAS</strong>
           </td>
-          <td class="text-xs-center" align="center" width="10%">
-            <strong>NO. PROCEDIMIENTOS</strong>
-          </td>
         </tr>
         <tr v-for="(consultas, j) in resultOphthalmology" :key="j">
           <td class="text-xs-center" align="center">
@@ -550,11 +565,17 @@
             }}
           </td>
           <td class="text-xs-center" align="center">
-            {{ consultas.objPreliminary ? consultas.objPreliminary.data.retinal_photo || '-' : '-' }}
+            {{
+              consultas.objPreliminary
+                ? consultas.objPreliminary.data.retinal_photo || "-"
+                : "-"
+            }}
           </td>
           <td class="text-xs-center" align="center">
             {{
-              consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
+              consultas.objPreliminary
+                ? consultas.objPreliminary.data.retinal_findings || "-"
+                : "-"
             }}
           </td>
           <!-- <td class="text-xs-center" align="center"></td> -->
@@ -562,9 +583,6 @@
             {{
               consultas.objOphthalmology.data.observaciones.medicamentos.length
             }}
-          </td>
-          <td class="text-xs-center" align="center">
-            {{ consultas.objOphthalmology.data.process.length }}
           </td>
         </tr>
       </table>
@@ -735,66 +753,115 @@
             {{ consultas.person.housinglocation }}
           </td>
           <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[0].eyeRight, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[0].eyeLeft, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[1].eyeRight, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[1].eyeLeft, 1) }}
-              </strong>
-            </td>   
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[2].eyeRight, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[2].eyeLeft, 1) }}
-              </strong>
-            </td>    
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[3].eyeRight, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[3].eyeLeft, 1) }}
-              </strong>
-            </td>       
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[4].eyeRight, 1) }}
-              </strong>
-            </td>
-            <td class="text-xs-center" align="center" width="2%">
-              <strong>
-                {{ setDiagnosis(consultas.objOptometrist.data
-              .diagnosticoObservaciones.diagnostico[4].eyeLeft, 1) }}
-              </strong>
-            </td>                                  
-            
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[0].eyeRight,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[0].eyeLeft,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[1].eyeRight,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[1].eyeLeft,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[2].eyeRight,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[2].eyeLeft,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[3].eyeRight,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[3].eyeLeft,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[4].eyeRight,
+                  1
+                )
+              }}
+            </strong>
+          </td>
+          <td class="text-xs-center" align="center" width="2%">
+            <strong>
+              {{
+                setDiagnosis(
+                  consultas.objOptometrist.data.diagnosticoObservaciones
+                    .diagnostico[4].eyeLeft,
+                  1
+                )
+              }}
+            </strong>
+          </td>
 
           <!-- <div
             v-for="(diagnos, j) in consultas.objOptometrist.data
@@ -818,11 +885,17 @@
             {{ langTypeConsulting(consultas.typeConsultation) }}
           </td>
           <td class="text-xs-center">
-            {{ consultas.objPreliminary ? consultas.objPreliminary.data.retinal_photo || '-' : '-'}}
+            {{
+              consultas.objPreliminary
+                ? consultas.objPreliminary.data.retinal_photo || "-"
+                : "-"
+            }}
           </td>
           <td class="text-xs-center">
             {{
-              consultas.objPreliminary ? consultas.objPreliminary.data.retinal_findings || '-' : '-'
+              consultas.objPreliminary
+                ? consultas.objPreliminary.data.retinal_findings || "-"
+                : "-"
             }}
           </td>
           <!-- <td class="text-xs-center"></td> -->
@@ -853,7 +926,7 @@ import * as consultationServ from "@/componentServs/consultation";
 import * as fileServ from "@/componentServs/file";
 import * as diagnosesServ from "@/componentServs/diagnoses";
 import * as sucursalServ from "@/componentServs/sucursal";
-import {filterDuplicate} from '@/utils/utils'
+import { filterDuplicate } from "@/utils/utils";
 import moment from "moment";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -921,7 +994,7 @@ export default {
           value: "anisometropia",
         },
         {
-          text: 'Estrabismo',
+          text: "Estrabismo",
           value: "squint",
         },
         {
@@ -1108,7 +1181,7 @@ export default {
     };
   },
 
-  methods: { 
+  methods: {
     sucursalName(sucursalId) {
       let sucursalFilter = this.sucursalList.filter(
         (sucursal) => sucursal._id == sucursalId
@@ -1375,7 +1448,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1383,7 +1456,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1391,7 +1464,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1399,7 +1472,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1407,7 +1480,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1415,7 +1488,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1423,7 +1496,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1431,7 +1504,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1439,7 +1512,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1447,7 +1520,7 @@ export default {
                 styles: {
                   halign: "center",
                   valign: "middle",
-                  cellWidth: 7
+                  cellWidth: 7,
                 },
               },
               {
@@ -1629,8 +1702,8 @@ export default {
             },
             {
               content: this.resultOphthalmology[i].objPreliminary
-                ? this.resultOphthalmology[i].objPreliminary.data.retinal_photo ||
-                  "-"
+                ? this.resultOphthalmology[i].objPreliminary.data
+                    .retinal_photo || "-"
                 : "-",
               styles: {
                 halign: "center",
@@ -1640,8 +1713,8 @@ export default {
             },
             {
               content: this.resultOphthalmology[i].objPreliminary
-                ? this.resultOphthalmology[i].objPreliminary.data.retinal_findings ||
-                  "-"
+                ? this.resultOphthalmology[i].objPreliminary.data
+                    .retinal_findings || "-"
                 : "-",
               styles: {
                 halign: "center",
@@ -1784,8 +1857,8 @@ export default {
 
           itemReport.push({
             content: this.resultOptometrist[i].objPreliminary
-              ? this.resultOptometrist[i].objPreliminary.data.retinal_findings ||
-                "-"
+              ? this.resultOptometrist[i].objPreliminary.data
+                  .retinal_findings || "-"
               : "-",
             styles: {
               halign: "center",
@@ -1866,7 +1939,7 @@ export default {
     },
     generarReport(specialty) {
       if (this.$refs[specialty].validate()) {
-        this.loader = true
+        this.loader = true;
         let diagnostic = "";
         this.reportOphthalmology = false;
         this.resultOphthalmology = [];
@@ -2003,18 +2076,17 @@ export default {
                   this.resultOptometrist = result;
                   this.paginationOpt.totalItems = result.length;
                 }
-                this.loader = false
+                this.loader = false;
               })
               .catch((error) => {
                 console.log("error: ", error);
-                this.loader = false
+                this.loader = false;
               });
           })
           .catch((error) => {
             console.log("error: ", error);
-            this.loader = false
+            this.loader = false;
           });
-          
       }
     },
     getPatient: (item) => `${item.forename} (${item.idQflow})`,
@@ -2118,8 +2190,7 @@ export default {
       return value.length;
     },
     diagnosesConsulting(list) {
-      
-      list =  filterDuplicate(list)
+      list = filterDuplicate(list);
       if (list.length > 0) {
         if (list.length > 1) {
           let arrayDiagnostic = [];
@@ -2142,7 +2213,6 @@ export default {
     this.getDiagnoses();
     this.getSucursal();
     this.getDoctor();
-   
   },
   computed: {
     pagesOpt() {
