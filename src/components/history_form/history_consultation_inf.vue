@@ -186,132 +186,6 @@
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
-              <v-layout row wrap v-if="showSurgeries()">
-                <v-flex
-                  xs12
-                  v-if="
-                    myProp.objPreliminary &&
-                    myProp.objPreliminary.data &&
-                    myProp.objPreliminary.data.record.cirugias.cirugias.length >
-                      0
-                  "
-                >
-                  <span class="primary--text">{{
-                    $t("title.previous_surgeries")
-                  }}</span>
-                </v-flex>
-                <v-flex
-                  xs6
-                  v-if="
-                    myProp.objPreliminary.data.record.cirugias.cirugias.length >
-                    0
-                  "
-                >
-                  <v-flex xs12>
-                    <span class="primary--text">{{
-                      $t("title.right_eye")
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs12>
-                    <v-layout row wrap>
-                      <v-flex
-                        xs6
-                        v-for="(cirugias, j) in myProp.objPreliminary.data
-                          .record.cirugias.cirugias"
-                      >
-                        <span class="body-1 font-weight-light font-italic">
-                          {{ capilatize(cirugias.name) }}:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          boolean(cirugias.eyeRight)
-                        }}</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-flex>
-                <v-flex
-                  xs6
-                  v-if="
-                    myProp.objPreliminary &&
-                    myProp.objPreliminary.data &&
-                    myProp.objPreliminary.data.record.cirugias.cirugias.length >
-                      0
-                  "
-                >
-                  <v-flex xs12>
-                    <span class="primary--text">{{
-                      $t("title.left_eye")
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs12>
-                    <v-layout row wrap>
-                      <v-flex
-                        xs6
-                        v-for="(cirugias, j) in myProp.objPreliminary.data
-                          .record.cirugias.cirugias"
-                      >
-                        <span class="body-1 font-weight-light font-italic">
-                          {{
-                            capilatize(
-                              myProp.objPreliminary.data.record.cirugias
-                                .cirugias[j].name
-                            )
-                          }}:&nbsp;
-                        </span>
-                        <span class="body-1">{{
-                          boolean(
-                            myProp.objPreliminary.data.record.cirugias.cirugias[
-                              j
-                            ].eyeLeft
-                          )
-                        }}</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-flex>
-                <v-flex
-                  xs12
-                  v-if="myProp.objPreliminary && myProp.objPreliminary.data"
-                >
-                  <v-layout row wrap>
-                    <v-flex xs6>
-                      <span class="body-1 font-weight-light font-italic">
-                        {{ $t("title.others") }}:&nbsp;
-                      </span>
-                      <span class="body-1">{{
-                        myProp.objPreliminary.data.record.cirugias
-                          .othersEyeRight
-                      }}</span>
-                    </v-flex>
-                    <v-flex xs6>
-                      <span class="body-1 font-weight-light font-italic">
-                        {{ $t("title.others") }}:&nbsp;
-                      </span>
-                      <span class="body-1">{{
-                        myProp.objPreliminary.data.record.cirugias.othersEyeLeft
-                      }}</span>
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap v-else>
-                <v-flex xs12>
-                  <span class="primary--text">{{
-                    $t("title.previous_surgeries")
-                  }}</span>
-                </v-flex>
-                <v-flex xs12>
-                  <div class="text-xs-center">
-                    <v-card color="green accent-2">
-                      <v-card-text>
-                        Ha ocurrido un error al almacenar las
-                        {{ $t("title.previous_surgeries") }} en esta consulta.
-                      </v-card-text>
-                    </v-card>
-                  </div>
-                </v-flex>
-              </v-layout>
-              <v-divider light></v-divider>
               <v-layout
                 row
                 wrap
@@ -339,11 +213,7 @@
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
-              <v-layout
-                row
-                wrap
-                v-if="myProp.objPreliminary.data.record.otrosDatos"
-              >
+              <v-layout row wrap v-if="myProp.record.otrosDatos">
                 <v-flex xs12>
                   <span class="primary--text">
                     {{ $t("title.other_data") }}</span
@@ -355,45 +225,26 @@
                   </span>
                   <span
                     class="body-1"
-                    v-if="
-                      Array.isArray(
-                        myProp.objPreliminary.data.record.otrosDatos.alergias
-                      )
-                    "
+                    v-if="Array.isArray(myProp.record.otrosDatos.alergias)"
                   >
-                    {{
-                      myProp.objPreliminary.data.record.otrosDatos.alergias[0]
-                    }}
+                    {{ myProp.record.otrosDatos.alergias[0] }}
                   </span>
                   <span class="body-1" v-else>
-                    {{ myProp.objPreliminary.data.record.otrosDatos.alergias }}
+                    {{ myProp.record.otrosDatos.alergias }}
                   </span>
                 </v-flex>
-                <v-flex
-                  xs12
-                  v-if="myProp.objPreliminary.data.record.otrosDatos"
-                >
+                <v-flex xs12 v-if="myProp.record.otrosDatos">
                   <span class="body-1 font-weight-light font-italic">
                     {{ $t("antecedent.use_of_medications") }}:&nbsp;
                   </span>
                   <span
                     class="body-1"
-                    v-if="
-                      Array.isArray(
-                        myProp.objPreliminary.data.record.otrosDatos
-                          .medicamentos
-                      )
-                    "
+                    v-if="Array.isArray(myProp.record.otrosDatos.medicamentos)"
                   >
-                    {{
-                      myProp.objPreliminary.data.record.otrosDatos
-                        .medicamentos[0]
-                    }}
+                    {{ myProp.record.otrosDatos.medicamentos[0] }}
                   </span>
                   <span class="body-1" v-else>
-                    {{
-                      myProp.objPreliminary.data.record.otrosDatos.medicamentos
-                    }}
+                    {{ myProp.record.otrosDatos.medicamentos }}
                   </span>
                 </v-flex>
               </v-layout>
@@ -961,6 +812,100 @@
                       <v-card-text>
                         Informe al personal de Tecnología de FUDEM para
                         solventar los antecedentes en esta consulta.
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </v-flex>
+              </v-layout>
+              <v-divider light></v-divider>
+              <v-layout row wrap v-if="showSurgeries()">
+                <v-flex xs12 v-if="myProp.record.cirugias.cirugias.length > 0">
+                  <span class="primary--text">{{
+                    $t("title.previous_surgeries")
+                  }}</span>
+                </v-flex>
+                <v-flex xs6 v-if="myProp.record.cirugias.cirugias.length > 0">
+                  <v-flex xs12>
+                    <span class="primary--text">{{
+                      $t("title.right_eye")
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-layout row wrap>
+                      <v-flex
+                        xs6
+                        v-for="(cirugias, j) in myProp.record.cirugias.cirugias"
+                      >
+                        <span class="body-1 font-weight-light font-italic">
+                          {{ capilatize(cirugias.name) }}:&nbsp;
+                        </span>
+                        <span class="body-1">{{
+                          boolean(cirugias.eyeRight)
+                        }}</span>
+                      </v-flex>
+                    </v-layout>
+                  </v-flex>
+                </v-flex>
+                <v-flex xs6 v-if="myProp.record.cirugias.cirugias.length > 0">
+                  <v-flex xs12>
+                    <span class="primary--text">{{
+                      $t("title.left_eye")
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-layout row wrap>
+                      <v-flex
+                        xs6
+                        v-for="(cirugias, j) in myProp.record.cirugias.cirugias"
+                      >
+                        <span class="body-1 font-weight-light font-italic">
+                          {{
+                            capilatize(myProp.record.cirugias.cirugias[j].name)
+                          }}:&nbsp;
+                        </span>
+                        <span class="body-1">{{
+                          boolean(myProp.record.cirugias.cirugias[j].eyeLeft)
+                        }}</span>
+                      </v-flex>
+                    </v-layout>
+                  </v-flex>
+                </v-flex>
+                <v-flex
+                  xs12
+                  v-if="myProp.objPreliminary && myProp.objPreliminary.data"
+                >
+                  <v-layout row wrap>
+                    <v-flex xs6>
+                      <span class="body-1 font-weight-light font-italic">
+                        {{ $t("title.others") }}:&nbsp;
+                      </span>
+                      <span class="body-1">{{
+                        myProp.record.cirugias.othersEyeRight
+                      }}</span>
+                    </v-flex>
+                    <v-flex xs6>
+                      <span class="body-1 font-weight-light font-italic">
+                        {{ $t("title.others") }}:&nbsp;
+                      </span>
+                      <span class="body-1">{{
+                        myProp.record.cirugias.othersEyeLeft
+                      }}</span>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap v-else>
+                <v-flex xs12>
+                  <span class="primary--text">{{
+                    $t("title.previous_surgeries")
+                  }}</span>
+                </v-flex>
+                <v-flex xs12>
+                  <div class="text-xs-center">
+                    <v-card color="green accent-2">
+                      <v-card-text>
+                        Ha ocurrido un error al almacenar las
+                        {{ $t("title.previous_surgeries") }} en esta consulta.
                       </v-card-text>
                     </v-card>
                   </div>
@@ -2771,7 +2716,7 @@
 import moment from "moment";
 import * as fileServ from "@/componentServs/file";
 import * as personServ from "@/componentServs/person";
-import {filterDuplicate} from '@/utils/utils'
+import { filterDuplicate } from "@/utils/utils";
 
 export default {
   name: "history_consultation_inf",
@@ -2861,7 +2806,7 @@ export default {
     filterDuplicate,
     showSurgeries() {
       if (this.myProp.objPreliminary.data) {
-        if (this.myProp.objPreliminary.data.record.cirugias) {
+        if (this.myProp.record.cirugias) {
           return true;
         }
       }
@@ -2921,11 +2866,8 @@ export default {
       }
 
       if (this.myProp.objPreliminary.data) {
-        if (
-          this.myProp.objPreliminary.data.record.antecedent.antecedentes
-            .length > 0
-        ) {
-          return this.myProp.objPreliminary.data.record.antecedent;
+        if (this.myProp.record.antecedent.antecedentes.length > 0) {
+          return this.myProp.record.antecedent;
         }
       }
 
