@@ -1305,14 +1305,6 @@ export default {
                   cellWidth: 25,
                 },
               },
-              {
-                content: "NO. Procedimientos",
-                styles: {
-                  halign: "center",
-                  valign: "middle",
-                  cellWidth: 25,
-                },
-              },
             ],
           ],
           body: report,
@@ -1743,16 +1735,16 @@ export default {
                 cellWidth: 10,
               },
             },
-            {
-              content:
-                this.resultOphthalmology[i].objOphthalmology.data.process
-                  .length,
-              styles: {
-                halign: "center",
-                valign: "middle",
-                cellWidth: 12,
-              },
-            },
+            // {
+            //   content:
+            //     this.resultOphthalmology[i].objOphthalmology.data.process
+            //       .length,
+            //   styles: {
+            //     halign: "center",
+            //     valign: "middle",
+            //     cellWidth: 12,
+            //   },
+            // },
           ];
 
           auxReport.push(itemReport);
