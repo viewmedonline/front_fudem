@@ -72,23 +72,26 @@
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs3 offset-xs2>
+              <v-flex xs2 offset-xs1>
                 <span class="body-2">{{ $t("title.sc") }}:</span>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
                 <span class="body-2">{{ $t("title.cc") }}:</span>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
+                <span class="body-2">Optotipo:</span>
+              </v-flex>
+              <v-flex xs2>
                 <span class="body-2"
                   >{{ $t("title.autorefraction").toUpperCase() }}:</span
                 >
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs1 offset-xs1 text-sm-left class="vm-p-esp">
+              <v-flex xs1 text-sm-left class="vm-p-esp">
                 {{ $t("title.re") }}:
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
                 <v-select
                   v-model="datosPreliminares.agudezavisual.ojoDer.sc"
                   :items="listAv"
@@ -96,14 +99,21 @@
                   :readonly="validateRead()"
                 ></v-select>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
                 <v-select
                   v-model="datosPreliminares.agudezavisual.ojoDer.cc"
                   :items="listAv"
                   :readonly="validateRead()"
                 ></v-select>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
+                <v-select
+                  v-model="datosPreliminares.agudezavisual.ojoDer.optotipo"
+                  :items="listOptotipo"
+                  :readonly="validateRead()"
+                ></v-select>
+              </v-flex>
+              <v-flex xs2>
                 <v-text-field
                   readonly
                   v-model="
@@ -114,10 +124,10 @@
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs1 offset-xs1 text-sm-left class="vm-p-esp">
+              <v-flex xs1 text-sm-left class="vm-p-esp">
                 {{ $t("title.le") }}:
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
                 <v-select
                   v-model="datosPreliminares.agudezavisual.ojoIzq.sc"
                   :items="listAv"
@@ -126,7 +136,7 @@
                 >
                 </v-select>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
                 <v-select
                   v-model="datosPreliminares.agudezavisual.ojoIzq.cc"
                   :items="listAv"
@@ -134,7 +144,14 @@
                 >
                 </v-select>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs2>
+                <v-select
+                  v-model="datosPreliminares.agudezavisual.ojoIzq.optotipo"
+                  :items="listOptotipo"
+                  :readonly="validateRead()"
+                ></v-select>
+              </v-flex>
+              <v-flex xs2>
                 <v-text-field
                   readonly
                   v-model="
@@ -142,6 +159,18 @@
                   "
                 >
                 </v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex offset-xs3 xs6>
+                <v-textarea
+                  outline
+                  name="input-7-1"
+                  v-model="datosPreliminares.agudezavisual.observation"
+                  :label="$t('title.observations')"
+                  :hint="$t('title.general_observation')"
+                  :readonly="validateRead()"
+                ></v-textarea>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -361,12 +390,15 @@ export default {
           sc: null,
           cc: null,
           autocorreccion: null,
+          optotipo: null,
         },
         ojoIzq: {
           sc: null,
           cc: null,
           autocorreccion: null,
+          optotipo: null,
         },
+        observation: null,
       },
       examenexterno: {
         ojoder: null,
@@ -420,7 +452,10 @@ export default {
       "No Percepcion a Luz",
       "No Colabora",
       "No Aplica",
+      "Fija y sigue movimientos",
+      "Protesis",
     ],
+    listOptotipo: ["Números", "Letras", "E direccional", "Figuras"],
     rules: {
       required: (v) => !!v || vm.$t("title.field_required"),
       length: (len) => (v) =>
@@ -480,6 +515,8 @@ export default {
     setDataConsultation() {
       this.$refs.retinalCameraRef.setDataRetinalCamera();
       if (this.storeConsultation.datapreliminar) {
+        console.log(this.storeConsultation.datapreliminar);
+
         this.datosPreliminares = this.storeConsultation.datapreliminar;
       } else if (this.storeConsultation.agudezaVisual) {
         // Ojo Derecho
@@ -487,6 +524,10 @@ export default {
           this.storeConsultation.agudezaVisual.ojoDer.sinCorreccion;
         this.datosPreliminares.agudezavisual.ojoDer.cc =
           this.storeConsultation.agudezaVisual.ojoDer.correccion;
+        this.datosPreliminares.agudezavisual.ojoDer.optotipo =
+          this.storeConsultation.agudezaVisual.ojoDer.optotipo;
+        this.datosPreliminares.agudezavisual.observation =
+          this.storeConsultation.agudezaVisual.observation;
         if (
           this.storeConsultation.autorefraccionA.ojoDer.esfera &&
           this.storeConsultation.autorefraccionA.ojoDer.cilindro &&
@@ -505,6 +546,8 @@ export default {
           this.storeConsultation.agudezaVisual.ojoIzq.sinCorreccion;
         this.datosPreliminares.agudezavisual.ojoIzq.cc =
           this.storeConsultation.agudezaVisual.ojoIzq.correccion;
+        this.datosPreliminares.agudezavisual.ojoIzq.optotipo =
+          this.storeConsultation.agudezaVisual.ojoIzq.optotipo;
         if (
           this.storeConsultation.autorefraccionA.ojoIzq.esfera &&
           this.storeConsultation.autorefraccionA.ojoIzq.cilindro &&
