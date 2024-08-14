@@ -316,7 +316,7 @@
                   }}</span>
                 </v-flex>
               </v-layout>
-              <v-divider light></v-divider>
+              <!-- <v-divider light></v-divider>
               <v-layout
                 row
                 wrap
@@ -584,7 +584,7 @@
                     " - "
                   }}</span>
                 </v-flex>
-              </v-layout>
+              </v-layout> -->
               <v-divider light></v-divider>
               <v-layout row wrap class="pt-1">
                 <v-flex xs12>
@@ -1001,6 +1001,15 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
                         .autoTonometria || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs12>
+                    <span class="body-1 font-weight-light font-italic">
+                      {{ $t("title.observations") }}:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objPreliminary.data.agudezaVisualOPT.observation ||
+                      " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
@@ -2208,17 +2217,22 @@
                     >
                   </v-flex>
                   <v-flex xs3> </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
                       {{ $t("title.no_correction") }}:&nbsp;
                     </span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
                       {{ $t("title.with_correction") }}:&nbsp;
                     </span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
+                    <span class="body-1 font-weight-light font-italic">
+                      Optotipo
+                    </span>
+                  </v-flex>
+                  <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
                       Autorefracción:&nbsp;
                     </span>
@@ -2228,19 +2242,25 @@
                       {{ $t("title.right_eye") }}
                     </span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoDer.sc || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoDer.cc || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOphthalmology.data.datapreliminar.agudezavisual
+                        .ojoDer.optotipo || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoDer.autocorreccion || " - "
@@ -2251,25 +2271,38 @@
                       {{ $t("title.left_eye") }}
                     </span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoIzq.sc || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoIzq.cc || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOphthalmology.data.datapreliminar.agudezavisual
+                        .ojoIzq.optotipo || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOphthalmology.data.datapreliminar.agudezavisual
                         .ojoIzq.autocorreccion || " - "
                     }}</span>
                   </v-flex>
+                  <v-flex xs12>
+                    <span class="body-1">{{
+                      myProp.objOphthalmology.data.datapreliminar.agudezavisual
+                        .observation || " - "
+                    }}</span>
+                  </v-flex>
                 </v-layout>
+
                 <v-divider light></v-divider>
                 <v-layout
                   row
