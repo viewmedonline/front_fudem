@@ -528,18 +528,18 @@ export default {
           this.storeConsultation.agudezaVisual.ojoDer.optotipo;
         this.datosPreliminares.agudezavisual.observation =
           this.storeConsultation.agudezaVisual.observation;
-        if (
-          this.storeConsultation.autorefraccionA.ojoDer.esfera &&
-          this.storeConsultation.autorefraccionA.ojoDer.cilindro &&
-          this.storeConsultation.autorefraccionA.ojoDer.eje
-        ) {
-          this.datosPreliminares.agudezavisual.ojoDer.autocorreccion =
-            this.storeConsultation.autorefraccionA.ojoDer.esfera +
-            " / " +
-            this.storeConsultation.autorefraccionA.ojoDer.cilindro +
-            " / " +
-            this.storeConsultation.autorefraccionA.ojoDer.eje;
-        }
+        // if (
+        //   this.storeConsultation.autorefraccionA.ojoDer.esfera &&
+        //   this.storeConsultation.autorefraccionA.ojoDer.cilindro &&
+        //   this.storeConsultation.autorefraccionA.ojoDer.eje
+        // ) {
+        //   this.datosPreliminares.agudezavisual.ojoDer.autocorreccion =
+        //     this.storeConsultation.autorefraccionA.ojoDer.esfera +
+        //     " / " +
+        //     this.storeConsultation.autorefraccionA.ojoDer.cilindro +
+        //     " / " +
+        //     this.storeConsultation.autorefraccionA.ojoDer.eje;
+        // }
 
         // Ojo Izquierdo
         this.datosPreliminares.agudezavisual.ojoIzq.sc =
@@ -548,18 +548,18 @@ export default {
           this.storeConsultation.agudezaVisual.ojoIzq.correccion;
         this.datosPreliminares.agudezavisual.ojoIzq.optotipo =
           this.storeConsultation.agudezaVisual.ojoIzq.optotipo;
-        if (
-          this.storeConsultation.autorefraccionA.ojoIzq.esfera &&
-          this.storeConsultation.autorefraccionA.ojoIzq.cilindro &&
-          this.storeConsultation.autorefraccionA.ojoIzq.eje
-        ) {
-          this.datosPreliminares.agudezavisual.ojoIzq.autocorreccion =
-            this.storeConsultation.autorefraccionA.ojoIzq.esfera +
-            " / " +
-            this.storeConsultation.autorefraccionA.ojoIzq.cilindro +
-            " / " +
-            this.storeConsultation.autorefraccionA.ojoIzq.eje;
-        }
+        // if (
+        //   this.storeConsultation.autorefraccionA.ojoIzq.esfera &&
+        //   this.storeConsultation.autorefraccionA.ojoIzq.cilindro &&
+        //   this.storeConsultation.autorefraccionA.ojoIzq.eje
+        // ) {
+        //   this.datosPreliminares.agudezavisual.ojoIzq.autocorreccion =
+        //     this.storeConsultation.autorefraccionA.ojoIzq.esfera +
+        //     " / " +
+        //     this.storeConsultation.autorefraccionA.ojoIzq.cilindro +
+        //     " / " +
+        //     this.storeConsultation.autorefraccionA.ojoIzq.eje;
+        // }
         if (this.storeConsultation.tonometria) {
           this.datosPreliminares.tonometria.ojoder =
             this.storeConsultation.tonometria.ojoDer;

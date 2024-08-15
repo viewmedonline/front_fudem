@@ -31,14 +31,14 @@
             class="px-2 py-2"
             ref="visualAcuityRef"
           ></visual_acuity>
-          <autorefraction_a
+          <!-- <autorefraction_a
             class="px-2 py-2"
             ref="autoRefractionRef"
-          ></autorefraction_a>
+          ></autorefraction_a> -->
         </v-window-item>
         <v-window-item :value="2">
-          <keratometry class="px-2 py-2" ref="keratometryRef"></keratometry>
-          <lensometry class="px-2 py-2" ref="lensometryRef"></lensometry>
+          <!-- <keratometry class="px-2 py-2" ref="keratometryRef"></keratometry>
+          <lensometry class="px-2 py-2" ref="lensometryRef"></lensometry> -->
           <tonometry class="px-2 py-2" ref="tonometryRef"></tonometry>
           <retinalCamera
             class="px-2 py-2"
@@ -177,10 +177,10 @@ const previous_surgeries = () =>
 const other_data = () => import("@/components/electronic_record/other_data");
 const visual_acuity = () =>
   import("@/components/electronic_record/visual_acuity");
-const autorefraction_a = () =>
-  import("@/components/electronic_record/autorefraction_a");
-const keratometry = () => import("@/components/electronic_record/keratometry");
-const lensometry = () => import("@/components/electronic_record/lensometry");
+// const autorefraction_a = () =>
+//   import("@/components/electronic_record/autorefraction_a");
+// const keratometry = () => import("@/components/electronic_record/keratometry");
+// const lensometry = () => import("@/components/electronic_record/lensometry");
 const tonometry = () => import("@/components/electronic_record/tonometry");
 const retinalCamera = () =>
   import("@/components/electronic_record/retinal_camera");
@@ -331,123 +331,57 @@ export default {
                     // console.log("result visualAcuity: ", result)
                     this.consultation.agudezaVisual = result;
                     // Nivel 2
-                    this.$refs.autoRefractionRef
-                      .saveAutoRefractionA()
-                      .then((result) => {
-                        // console.log("result autoRefraction: ", result)
-                        this.consultation.autorefraccionA = result;
-                        // Nivel 3
-                        if (this.paso > this.lastValidate)
-                          this.lastValidate = 1;
-                        resolve();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    if (this.paso > this.lastValidate) this.lastValidate = 1;
+                    resolve();
+                    // this.$refs.autoRefractionRef
+                    //   .saveAutoRefractionA()
+                    //   .then((result) => {
+                    //     // console.log("result autoRefraction: ", result)
+                    //     this.consultation.autorefraccionA = result;
+                    //     // Nivel 3
+                    //     if (this.paso > this.lastValidate)
+                    //       this.lastValidate = 1;
+                    //     resolve();
+                    //   })
+                    //   .catch((err) => {
+                    //     reject();
+                    //   });
                   })
                   .catch((err) => {
-                    this.$refs.autoRefractionRef
-                      .saveAutoRefractionA()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    reject();
                   });
               })
               .catch((err) => {
                 this.$refs.visualAcuityRef
                   .saveVisualAcuity()
                   .then((result) => {
-                    this.$refs.autoRefractionRef
-                      .saveAutoRefractionA()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    reject();
                   })
                   .catch((err) => {
-                    this.$refs.autoRefractionRef
-                      .saveAutoRefractionA()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    reject();
                   });
               });
             break;
           case 2:
-            // resolve()
-
-            this.$refs.keratometryRef
-              .saveKeratometry()
-              .then((result) => {
-                // console.log("result queratometria: ", result)
-                this.consultation.queratometria = result;
-                // Nivel 1
-                this.$refs.lensometryRef
-                  .saveLensometry()
-                  .then((result) => {
-                    // console.log("result lensometry: ", result)
-                    this.consultation.lensometria = result;
-                    // Nivel 2
-                    this.$refs.tonometryRef
-                      .saveTonometry()
-                      .then(async (result) => {
-                        //TODO Retinal Camera
-                        const retinalCamera =
-                          await this.$refs.retinalCameraRef.saveRetinalCamera();
-                        this.consultation.retinal_photo =
-                          retinalCamera.photo_retinal;
-                        this.consultation.retinal_findings =
-                          retinalCamera.findings_photo;
-                        this.consultation.retinal_observations =
-                          retinalCamera.observations_photo;
-                        this.consultation.retinal_notes =
-                          retinalCamera.retinal_notes;
-                        // console.log("result tonometry: ", result)
-                        this.consultation.tonometria = result;
-                        if (this.paso > this.lastValidate)
-                          this.lastValidate = 2;
-                        resolve("ok");
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
-                  })
-                  .catch((err) => {
-                    this.$refs.tonometryRef
-                      .saveTonometry()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
-                  });
+            this.$refs.tonometryRef
+              .saveTonometry()
+              .then(async (result) => {
+                //TODO Retinal Camera
+                const retinalCamera =
+                  await this.$refs.retinalCameraRef.saveRetinalCamera();
+                this.consultation.retinal_photo = retinalCamera.photo_retinal;
+                this.consultation.retinal_findings =
+                  retinalCamera.findings_photo;
+                this.consultation.retinal_observations =
+                  retinalCamera.observations_photo;
+                this.consultation.retinal_notes = retinalCamera.retinal_notes;
+                // console.log("result tonometry: ", result)
+                this.consultation.tonometria = result;
+                if (this.paso > this.lastValidate) this.lastValidate = 2;
+                resolve("ok");
               })
               .catch((err) => {
-                this.$refs.lensometryRef
-                  .saveLensometry()
-                  .then((result) => {
-                    reject();
-                  })
-                  .catch((err) => {
-                    reject();
-                  });
-                this.$refs.tonometryRef
-                  .saveTonometry()
-                  .then((result) => {
-                    reject();
-                  })
-                  .catch((err) => {
-                    reject();
-                  });
+                reject();
               });
             break;
         }
@@ -748,9 +682,9 @@ export default {
     },
     setConsultationData() {
       this.$refs.visualAcuityRef.setVisualAcuity();
-      this.$refs.autoRefractionRef.setAutoRefractionA();
-      this.$refs.keratometryRef.setKeratometry();
-      this.$refs.lensometryRef.setLensometry();
+      // this.$refs.autoRefractionRef.setAutoRefractionA();
+      // this.$refs.keratometryRef.setKeratometry();
+      // this.$refs.lensometryRef.setLensometry();
       this.$refs.tonometryRef.setTonometry();
       this.responsable = this.storeConsultation.responsablePreliminar;
       this.consultation.objPreliminary = this.storeConsultation.objPreliminary;
@@ -783,9 +717,9 @@ export default {
     previous_surgeries,
     other_data,
     visual_acuity,
-    autorefraction_a,
-    keratometry,
-    lensometry,
+    // autorefraction_a,
+    // keratometry,
+    // lensometry,
     tonometry,
     retinalCamera,
   },
