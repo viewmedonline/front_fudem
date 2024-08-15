@@ -273,6 +273,7 @@ import * as personServ from "@/componentServs/person";
 import * as userServ from "@/componentServs/user";
 import * as consultationServ from "@/componentServs/consultation";
 import * as sucursalServ from "@/componentServs/sucursal";
+import { getLastConsultation } from "../../componentServs/consultation";
 
 export default {
   name: "layout",
@@ -317,6 +318,15 @@ export default {
         return;
       }
     }
+    setTimeout(async () => {
+      const result = await getLastConsultation({
+        body: { person: this.$store.getters.getPatient._id },
+      });
+      this.$store.commit({
+        type: "setLastConsultation",
+        state: result,
+      });
+    }, 500);
   },
   methods: {
     async getSucursal() {

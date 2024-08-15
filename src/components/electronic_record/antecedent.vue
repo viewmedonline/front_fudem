@@ -149,6 +149,7 @@
 
 <script>
 import { EventBus } from "@/store/eventBus";
+
 export default {
   name: "antecedent",
   data() {
@@ -274,8 +275,11 @@ export default {
         _this.otros = _this.storeConsultation.record.antecedent.otros;
         _this.medicamentosAntecedent =
           _this.storeConsultation.record.antecedent.medicamentosAntecedent;
-        _this.hemoglutest =
-          _this.storeConsultation.objPreliminary.data.record.antecedent.hemoglutest;
+        _this.hemoglutest = _this.storeConsultation.objPreliminary
+          ? _this.storeConsultation.objPreliminary.data.record.antecedent
+              .hemoglutest
+          : _this.$store.getters.getLastConsultation.objPreliminary.data.record
+              .antecedent.hemoglutest;
       }
 
       function antecedentSpecialty(objName) {
@@ -312,7 +316,6 @@ export default {
       }
     },
   },
-  create() {},
   mounted() {
     EventBus.$on("changeTabReload", (value) => {
       this.$forceUpdate();
