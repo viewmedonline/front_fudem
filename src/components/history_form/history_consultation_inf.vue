@@ -590,7 +590,7 @@
                 <v-flex xs12>
                   <span class="primary--text">Tonometria</span>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs4>
                   <span class="body-1 font-weight-medium">
                     {{ $t("title.right_eye") }}:&nbsp;
                   </span>
@@ -600,13 +600,23 @@
                     " - "
                   }}</span>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs4>
                   <span class="body-1 font-weight-medium">
                     {{ $t("title.left_eye") }}:&nbsp;
                   </span>
                   <span class="body-1">{{
                     (myProp.objPreliminary.data.tonometria &&
                       myProp.objPreliminary.data.tonometria.ojoIzq) ||
+                    " - "
+                  }}</span>
+                </v-flex>
+                <v-flex xs4 v-if="myProp.objPreliminary.data.reason">
+                  <span class="body-1 font-weight-medium">
+                    No colabora:&nbsp
+                  </span>
+                  <span class="body-1">{{
+                    (myProp.objPreliminary.data &&
+                      myProp.objPreliminary.data.reason) ||
                     " - "
                   }}</span>
                 </v-flex>
@@ -1012,7 +1022,9 @@
                       {{ $t("title.observations") }}:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objPreliminary.data.agudezaVisualOPT.observation ||
+                      (myProp.objPreliminary.data.agudezaVisualOPT &&
+                        myProp.objPreliminary.data.agudezaVisualOPT
+                          .observation) ||
                       " - "
                     }}</span>
                   </v-flex>
