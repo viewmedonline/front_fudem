@@ -595,7 +595,9 @@
                     {{ $t("title.right_eye") }}:&nbsp;
                   </span>
                   <span class="body-1">{{
-                    myProp.objPreliminary.data.tonometria.ojoDer || " - "
+                    (myProp.objPreliminary.data.tonometria &&
+                      myProp.objPreliminary.data.tonometria.ojoDer) ||
+                    " - "
                   }}</span>
                 </v-flex>
                 <v-flex xs6>
@@ -603,7 +605,9 @@
                     {{ $t("title.left_eye") }}:&nbsp;
                   </span>
                   <span class="body-1">{{
-                    myProp.objPreliminary.data.tonometria.ojoIzq || " - "
+                    (myProp.objPreliminary.data.tonometria &&
+                      myProp.objPreliminary.data.tonometria.ojoIzq) ||
+                    " - "
                   }}</span>
                 </v-flex>
               </v-layout>
