@@ -44,7 +44,8 @@
             class="px-2 py-2"
             ref="retinalCameraRef"
             title="Fotografía de Retina"
-            :disabled_options="false"
+            :preliminary="true"
+            :optometrist="false"
           ></retinalCamera>
           <v-container>
             <v-form

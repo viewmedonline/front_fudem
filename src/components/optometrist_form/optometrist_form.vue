@@ -78,7 +78,8 @@
           <retinalCamera
             class="px-2 py-2"
             ref="retinalCameraRef"
-            :disabled_options="false"
+            :premilinary="false"
+            :optometrist="true"
           ></retinalCamera>
         </v-window-item>
       </v-window>
