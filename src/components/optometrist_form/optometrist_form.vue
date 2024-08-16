@@ -344,10 +344,6 @@ export default {
                       this.consultation.reasonConsultation =
                         result.reasonConsultation;
                     }
-                    if (this.consultation.generalData) {
-                      this.consultation.generalData.typeLense =
-                        result.typeLense;
-                    }
 
                     if (this.paso > this.lastValidate) this.lastValidate = 0;
                     resolve();
@@ -385,7 +381,11 @@ export default {
                         this.$refs.lensometryRef
                           .saveLensometry()
                           .then((result) => {
-                            this.consultation.lensometria = result;
+                            this.consultation.lensometria = result.lensometria;
+                            if (this.consultation.generalData) {
+                              this.consultation.generalData.typeLense =
+                                result.typeLense;
+                            }
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 1;
 
