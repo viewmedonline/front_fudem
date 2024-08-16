@@ -36,13 +36,13 @@
                 <span class="body-2">{{ $t("title.cc") }}</span>
               </v-flex>
               <v-flex xs2>
-                <span class="body-2">Optotipo</span>
-              </v-flex>
-              <v-flex xs2>
                 <span class="body-2">{{ $t("title.ph") }}</span>
               </v-flex>
               <v-flex xs2>
                 <span class="body-2">{{ $t("title.auto_tonometry") }}</span>
+              </v-flex>
+              <v-flex xs2>
+                <span class="body-2">Optotipo</span>
               </v-flex>
             </v-layout>
 
@@ -67,13 +67,6 @@
               </v-flex>
               <v-flex xs2>
                 <v-select
-                  v-model="agudezaVisualOPT.ojoDer.optotipo"
-                  :items="listOptotipo"
-                  :readonly="validateRead()"
-                ></v-select>
-              </v-flex>
-              <v-flex xs2>
-                <v-select
                   v-model="agudezaVisualOPT.ojoDer.ph"
                   :items="listAv"
                   :readonly="validateRead()"
@@ -86,6 +79,13 @@
                   :readonly="validateRead()"
                 >
                 </v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-select
+                  v-model="agudezaVisualOPT.ojoDer.optotipo"
+                  :items="listOptotipo"
+                  :readonly="validateRead()"
+                ></v-select>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -109,13 +109,6 @@
               </v-flex>
               <v-flex xs2>
                 <v-select
-                  v-model="agudezaVisualOPT.ojoIzq.optotipo"
-                  :items="listOptotipo"
-                  :readonly="validateRead()"
-                ></v-select>
-              </v-flex>
-              <v-flex xs2>
-                <v-select
                   v-model="agudezaVisualOPT.ojoIzq.ph"
                   :items="listAv"
                   :readonly="validateRead()"
@@ -128,6 +121,13 @@
                   :readonly="validateRead()"
                 >
                 </v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-select
+                  v-model="agudezaVisualOPT.ojoIzq.optotipo"
+                  :items="listOptotipo"
+                  :readonly="validateRead()"
+                ></v-select>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
