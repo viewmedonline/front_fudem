@@ -344,10 +344,10 @@ export default {
                       this.consultation.reasonConsultation =
                         result.reasonConsultation;
                     }
-                    if (this.consultation.generalData) {
-                      this.consultation.generalData.typeLense =
-                        result.typeLense;
-                    }
+                    // if (this.consultation.generalData) {
+                    //   this.consultation.generalData.typeLense =
+                    //     result.typeLense;
+                    // }
 
                     if (this.paso > this.lastValidate) this.lastValidate = 0;
                     resolve();
