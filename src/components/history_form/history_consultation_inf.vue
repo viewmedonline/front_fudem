@@ -1322,7 +1322,7 @@
                       $t("title.refraction")
                     }}</span>
                   </v-flex>
-                  <v-flex xs3> </v-flex>
+                  <v-flex xs2> </v-flex>
                   <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
                       {{ $t("title.sphere") }}:&nbsp;
@@ -1343,7 +1343,12 @@
                       {{ $t("title.av") }}:&nbsp;
                     </span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
+                    <span class="body-1 font-weight-light font-italic">
+                      Adición
+                    </span>
+                  </v-flex>
+                  <v-flex xs2>
                     <span class="body-1 font-weight-medium">
                       {{ $t("title.right_eye") }}
                     </span>
@@ -1370,7 +1375,12 @@
                       myProp.objOptometrist.data.refraccion.ojoDer.av || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs3>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.refraccion.ojoDer.add || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
                     <span class="body-1 font-weight-medium">
                       {{ $t("title.left_eye") }}
                     </span>
@@ -1397,6 +1407,11 @@
                       myProp.objOptometrist.data.refraccion.ojoIzq.av || " - "
                     }}</span>
                   </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.refraccion.ojoIzq.add || " - "
+                    }}</span>
+                  </v-flex>
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium">
                       {{ $t("title.cycle") }}:
@@ -1419,6 +1434,27 @@
                     </span>
                     <span class="body-1">{{
                       boolean(myProp.objOptometrist.data.refraccion.dinm)
+                    }}</span>
+                  </v-flex>
+
+                  <v-flex xs4 class="text-xs-center">
+                    <span class="body-1 font-weight-medium"> PPC: </span>
+                    <span class="body-1">{{
+                      boolean(myProp.objOptometrist.data.refraccion.ppc)
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4 class="text-xs-center">
+                    <span class="body-1 font-weight-medium"> CT: </span>
+                    <span class="body-1">{{
+                      boolean(myProp.objOptometrist.data.refraccion.ct)
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4 class="text-xs-center">
+                    <span class="body-1 font-weight-medium">
+                      Reflejos pupilares:
+                    </span>
+                    <span class="body-1">{{
+                      boolean(myProp.objOptometrist.data.refraccion.rp)
                     }}</span>
                   </v-flex>
                 </v-layout>
