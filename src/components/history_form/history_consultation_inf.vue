@@ -93,6 +93,17 @@
                   >
                   <span class="body-1">{{ storePatient.nationality }}</span>
                 </v-flex>
+                <v-flex xs4>
+                  <span class="body-1 font-weight-light font-italic">
+                    Ocupacion:
+                  </span>
+                  <span class="body-1">{{
+                    myProp.objOptometrist.data &&
+                    myProp.objOptometrist.data.rxFinalGafas
+                      ? myProp.objOptometrist.data.rxFinalGafas.ocupation
+                      : " - "
+                  }}</span>
+                </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
@@ -1571,6 +1582,15 @@
                   <v-flex xs1>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalGafas.type_lenses ||
+                      " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
