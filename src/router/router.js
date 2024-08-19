@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Layout from '@/components/layout/layout'
-import Account from '@/components/account/account'
-import updateConsultation from '@/components/updateConsultation'
-import updateRecords from '@/components/updateRecords'
-import updateSucursales from '@/components/updateSucursales'
+import Vue from "vue";
+import Router from "vue-router";
+import Layout from "@/components/layout/layout";
+import Account from "@/components/account/account";
+import updateConsultation from "@/components/updateConsultation";
+import updateRecords from "@/components/updateRecords";
+import updateSucursales from "@/components/updateSucursales";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -95,23 +95,23 @@ export default new Router({
             import("@/components/electronic_record/rx_final_contact_lenses"),
         },
         {
-          path: "rx_final_far_vision",
-          name: "rx_final_far_vision",
+          path: "rx_final_doble_orden",
+          name: "rx_final_doble_orden",
           component: () =>
-            import("@/components/electronic_record/rx_final_far_vision"),
+            import("@/components/electronic_record/rx_final_doble"),
         },
-        {
-          path: "rx_final_next_vision",
-          name: "rx_final_next_vision",
-          component: () =>
-            import("@/components/electronic_record/rx_final_next_vision"),
-        },
-        {
-          path: "rx_final_intermediate",
-          name: "rx_final_intermediate",
-          component: () =>
-            import("@/components/electronic_record/rx_final_intermediate"),
-        },
+        // {
+        //   path: "rx_final_next_vision",
+        //   name: "rx_final_next_vision",
+        //   component: () =>
+        //     import("@/components/electronic_record/rx_final_next_vision"),
+        // },
+        // {
+        //   path: "rx_final_intermediate",
+        //   name: "rx_final_intermediate",
+        //   component: () =>
+        //     import("@/components/electronic_record/rx_final_intermediate"),
+        // },
         {
           path: "diagnosis",
           name: "diagnosis",
