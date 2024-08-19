@@ -227,7 +227,7 @@ export default {
     setLensometry() {
       this.typeLenses = this.storeConsultation.generalData
         ? this.storeConsultation.generalData.typeLense
-        : null;
+        : this.storeConsultation.objPreliminary.data.generalData.typeLense;
       if (
         this.storeConsultation.objPreliminary &&
         this.tabsActive == "preliminary"
