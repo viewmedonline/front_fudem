@@ -100,12 +100,12 @@ export default new Router({
           component: () =>
             import("@/components/electronic_record/rx_final_doble"),
         },
-        // {
-        //   path: "rx_final_next_vision",
-        //   name: "rx_final_next_vision",
-        //   component: () =>
-        //     import("@/components/electronic_record/rx_final_next_vision"),
-        // },
+        {
+          path: "prescription",
+          name: "prescription",
+          component: () =>
+            import("@/components/electronic_record/prescription"),
+        },
         // {
         //   path: "rx_final_intermediate",
         //   name: "rx_final_intermediate",
