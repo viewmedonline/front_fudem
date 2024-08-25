@@ -199,8 +199,19 @@
         <v-card-text>
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout align-center row fill-height>
-              <v-flex xs10>
+              <v-flex xs6>
                 <v-radio-group v-model="receta" row :readonly="validateRead()">
+                  <v-radio label="Si" color="success" value="SI"></v-radio>
+                  <v-radio label="No" color="red" value="NO"></v-radio>
+                </v-radio-group>
+              </v-flex>
+              <v-flex xs6>
+                <v-radio-group
+                  v-model="refer_to_ofta"
+                  label="¿Se refiere a oftalmologo?"
+                  row
+                  :readonly="validateRead()"
+                >
                   <v-radio label="Si" color="success" value="SI"></v-radio>
                   <v-radio label="No" color="red" value="NO"></v-radio>
                 </v-radio-group>
@@ -225,6 +236,7 @@ export default {
   name: "diagnosis",
   data() {
     return {
+      refer_to_ofta: null,
       formDiagnosis: false,
       rules: {
         required: (v) => false, // !!v || this.$t('title.field_required')
@@ -318,6 +330,7 @@ export default {
           let objAux = {
             diagnosticoObservaciones: this.diagnosticoObservaciones,
             observationsOphthalmology: this.observationsOphthalmology,
+            refer_to_ofta: this.refer_to_ofta,
             receta: this.receta,
             prescription: dataPrescription ? dataPrescription[0]._id : null,
           };
@@ -328,6 +341,9 @@ export default {
       });
     },
     setDiagnostics() {
+      if (this.storeConsultation.refer_to_ofta) {
+        this.refer_to_ofta = this.storeConsultation.refer_to_ofta;
+      }
       if (this.storeConsultation.diagnosticoObservaciones) {
         if (
           this.storeConsultation.diagnosticoObservaciones.diagnostico.length > 0
