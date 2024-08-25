@@ -371,7 +371,10 @@ export default {
                   .saveObservations()
                   .then((result) => {
                     // console.log("resultado observaciones y medicamentos: ", result)
-                    this.consultation.observaciones = result;
+                    this.consultation.observaciones = {
+                      observacion: result.observacion,
+                    };
+                    this.consultation.prescription_of = result.prescription;
                     this.consultation.next_appointment =
                       result.next_appointment;
                     if (this.paso > this.lastValidate) this.lastValidate = 1;

@@ -502,6 +502,8 @@ export default {
             this.$refs.diagnosisRef
               .saveDiagnosis()
               .then(async (result) => {
+                this.consultation.prescription = result.prescription;
+
                 this.consultation.observationsOphthalmology =
                   result.observationsOphthalmology;
                 this.consultation.diagnosticoObservaciones =
