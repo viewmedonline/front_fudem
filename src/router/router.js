@@ -164,6 +164,11 @@ export default new Router({
           name: "nursing_sheet",
           component: () => import("@/components/nursing_sheet/nursing_sheet"),
         },
+        {
+          path: "prescription",
+          name: "prescription",
+          component: () => import("@/components/prescription/prescription"),
+        },
       ],
     },
     {
