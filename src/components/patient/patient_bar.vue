@@ -224,6 +224,20 @@
               <v-icon>mdi-file-document-edit-outline</v-icon>
             </v-list-tile-action>
           </v-list-tile>
+          <v-list-tile
+            @click="fixedCompst('prescription')"
+            v-if="
+              storePhysician.role == 'optometrist' ||
+              storePhysician.role == 'ophthalmologist'
+            "
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>Receta Médica</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>create</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
 
           <v-textarea
             box
@@ -306,6 +320,7 @@ export default {
       this.dataStore.psychologist_sheet = false;
       this.dataStore.clinical_interview_1 = false;
       this.dataStore.clinical_interview_2 = false;
+      this.dataStore.prescription = false;
 
       if (val != "consultation")
         this.$store.commit({
@@ -380,6 +395,10 @@ export default {
         case "clinical_interview_2":
           this.dataStore.patient = true;
           this.dataStore.clinical_interview_2 = true;
+          break;
+        case "prescription":
+          this.dataStore.patient = true;
+          this.dataStore.prescription = true;
           break;
         default:
           this.dataStore.consultation = true;
