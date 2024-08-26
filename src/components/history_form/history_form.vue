@@ -395,7 +395,8 @@ export default {
               });
             }
           }
-          this.historyConsulting.sort(function (a, b) {
+
+          vm.historyConsulting.sort(function (a, b) {
             let keyA = new Date(a.dateOrder),
               keyB = new Date(b.dateOrder);
             // Compare the 2 dates
