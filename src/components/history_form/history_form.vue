@@ -388,6 +388,7 @@ export default {
                 date: moment(vm.dateConsultig(result[i]), "YYYY-MM-DD")
                   .locale(vm.$i18n.locale)
                   .format("L"),
+                dateOrder: vm.dateConsultig(result[i]),
                 file: null,
                 id: result[i]._id,
                 consultation: result[i],
