@@ -144,6 +144,16 @@
                 >
                 </v-text-field>
               </v-flex>
+              <v-flex xs4 offset-xs1>
+                <v-select
+                  v-model="type_lenses"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                  :items="lenses_list"
+                  label="Tipo de lentes"
+                >
+                </v-select>
+              </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -154,12 +164,16 @@
 
 <script>
 import { EventBus } from "@/store/eventBus";
+import { getLenses } from "../../componentServs/master";
 export default {
   name: "rx_final_far_vision",
   data() {
     return {
       formRxFinalFarVision: false,
+      lenses_list: [],
+
       rxFinalValue: {
+        type_lenses: "",
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -176,6 +190,7 @@ export default {
         },
       },
       rxFinalVisionLejano: {
+        type_lenses: "",
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -192,6 +207,7 @@ export default {
         },
       },
       rxFinalVisionProxima: {
+        type_lenses: "",
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -208,6 +224,7 @@ export default {
         },
       },
       rxFinalVisionIntermedia: {
+        type_lenses: "",
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -235,6 +252,11 @@ export default {
     };
   },
   methods: {
+    async getListLenses() {
+      getLenses().then((response) => {
+        this.lenses_list = response.map((x) => x.description);
+      });
+    },
     validateRead() {
       switch (this.tabsActive) {
         case "optometrist":
@@ -279,9 +301,12 @@ export default {
       if (this.storeConsultation.rxFinalVisionIntermedia)
         this.rxFinalVisionIntermedia =
           this.storeConsultation.rxFinalVisionIntermedia;
+      if (this.storeConsultation.rx_doble_lenses)
+        this.type_lenses = this.storeConsultation.rx_doble_lenses;
     },
   },
   mounted() {
+    this.getListLenses();
     EventBus.$on("changeTabReload", (value) => {
       this.$forceUpdate();
       this.setRxFinalDoble();

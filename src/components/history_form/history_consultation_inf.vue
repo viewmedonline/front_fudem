@@ -1871,6 +1871,15 @@
                         .av || " - "
                     }}</span>
                   </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionLejano
+                        .type_lenses || " - "
+                    }}</span>
+                  </v-flex>
                 </v-layout>
                 <v-divider light v-if="myProp.objOptometrist.data"></v-divider>
                 <v-layout row wrap v-if="myProp.objOptometrist.data">
@@ -1968,6 +1977,15 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionProxima.ojoIzq
                         .av || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionProxima
+                        .type_lenses || " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
@@ -2073,6 +2091,15 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
                         .av || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionIntermedia
+                        .type_lenses || " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
