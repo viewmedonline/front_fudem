@@ -1314,6 +1314,14 @@
                       " - "
                     }}</span>
                   </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.lensometria.typeLenses || " - "
+                    }}</span>
+                  </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
 
@@ -2625,7 +2633,7 @@
                                 </v-layout> -->
                 <v-divider light></v-divider>
                 <v-layout row wrap v-if="myProp.objOphthalmology.data">
-                  <v-flex
+                  <!-- <v-flex
                     xs12
                     v-if="
                       myProp.objOphthalmology.data.observaciones.observacion
@@ -2651,8 +2659,8 @@
                           .observacion || " - "
                       }}
                     </span>
-                  </v-flex>
-                  <v-flex xs6>
+                  </v-flex> -->
+                  <!-- <v-flex xs6>
                     <span class="body-1 font-weight-medium">{{
                       $t("title.medications")
                     }}</span>
@@ -2684,7 +2692,7 @@
                         </span>
                       </v-flex>
                     </v-layout>
-                  </v-flex>
+                  </v-flex> -->
                 </v-layout>
                 <v-divider light></v-divider>
               </div>

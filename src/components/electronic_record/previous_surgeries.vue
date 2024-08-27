@@ -215,6 +215,9 @@ export default {
       othersEyeLeft: null,
     };
   },
+  mounted() {
+    this.setDataAntecedent();
+  },
   methods: {
     getPosition(name) {
       let index = this.cirugias.findIndex((item) => {
@@ -254,8 +257,9 @@ export default {
         }
         return newArray;
       }
-
       if (this.storeConsultation.record.cirugias) {
+        //antecedentaAux = _this.storeConsultation.record.antecedent.antecedentes;
+
         if (this.storeConsultation.record.cirugias.cirugias.length > 0) {
           aux = aux.concat(this.cirugias);
           aux = aux.concat(this.storeConsultation.record.cirugias.cirugias);

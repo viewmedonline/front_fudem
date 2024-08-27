@@ -279,7 +279,7 @@ export default {
           ? _this.storeConsultation.objPreliminary.data.record.antecedent
               .hemoglutest
           : _this.$store.getters.getLastConsultation.objPreliminary.data.record
-              .antecedent.hemoglutest;
+              .antecedent.hemoglutest || "";
       }
 
       function antecedentSpecialty(objName) {

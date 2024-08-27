@@ -375,10 +375,10 @@ export default {
                           .saveLensometry()
                           .then((result) => {
                             this.consultation.lensometria = result.lensometria;
-                            if (this.consultation.generalData) {
-                              this.consultation.generalData.typeLense =
-                                result.typeLense;
-                            }
+                            // if (this.consultation.generalData) {
+                            //   this.consultation.generalData.typeLense =
+                            //     result.typeLense;
+                            // }
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 1;
 

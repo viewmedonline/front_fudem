@@ -115,7 +115,7 @@
             <v-layout row wrap>
               <v-flex xs4 offset-xs2>
                 <v-select
-                  v-model="typeLenses"
+                  v-model="lensometria.typeLenses"
                   :items="lenses"
                   :label="$t('title.type_of_lenses')"
                   :readonly="validateRead()"
@@ -152,12 +152,13 @@ export default {
           adicion: null,
           prisma: null,
         },
+        typeLenses: null,
       },
       itemsAdicion: ["1", "2"],
       rules: {
         // required: v => false // !!v || this.$t('title.field_required')
       },
-      typeLenses: null,
+
       lenses: [
         {
           value: "Simple Vision",
@@ -217,7 +218,6 @@ export default {
         if (this.$refs.formLensometryRef.validate()) {
           resolve({
             lensometria: this.lensometria,
-            typeLenses: this.typeLenses,
           });
         } else {
           reject(false);
@@ -225,9 +225,6 @@ export default {
       });
     },
     setLensometry() {
-      this.typeLenses = this.storeConsultation.generalData
-        ? this.storeConsultation.generalData.typeLense
-        : this.storeConsultation.objPreliminary.data.generalData.typeLense;
       if (
         this.storeConsultation.objPreliminary &&
         this.tabsActive == "preliminary"

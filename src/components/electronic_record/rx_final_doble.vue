@@ -146,7 +146,7 @@
               </v-flex>
               <v-flex xs4 offset-xs1>
                 <v-select
-                  v-model="type_lenses"
+                  v-model="rxFinalValue.type_lenses"
                   :rules="[]"
                   :readonly="validateRead()"
                   :items="lenses_list"
@@ -301,8 +301,6 @@ export default {
       if (this.storeConsultation.rxFinalVisionIntermedia)
         this.rxFinalVisionIntermedia =
           this.storeConsultation.rxFinalVisionIntermedia;
-      if (this.storeConsultation.rx_doble_lenses)
-        this.type_lenses = this.storeConsultation.rx_doble_lenses;
     },
   },
   mounted() {
