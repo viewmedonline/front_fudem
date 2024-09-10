@@ -27,13 +27,20 @@
                 >Oftalmologia
               </v-btn>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="pdf_document">
               <iframe
                 :src="pdf_document"
                 type="application/pdf"
                 frameborder="0"
                 style="width: 100%; height: 100vh"
               ></iframe>
+            </v-flex>
+            <v-flex xs12 v-if="prescription_empty">
+              <span
+                class="bold"
+                style="font-size: 20px; font-weight: 500; color: red"
+                >No existe registro de prescripción</span
+              >
             </v-flex>
           </v-layout>
         </v-container>
@@ -64,6 +71,7 @@ export default {
     return {
       pdf_document: "",
       loadingModal: false,
+      prescription_empty: false,
     };
   },
   methods: {
@@ -74,32 +82,43 @@ export default {
           type == 2
             ? this.$store.getters.getLastConsultation.prescription_of
             : this.$store.getters.getLastConsultation.prescription;
-        const prescription = (await findPrescriptions(idPrescription))[0];
 
-        const sucursal = await getSucursal({
-          body: {
-            _id: prescription.place,
-          },
-        });
+        if (idPrescription) {
+          this.prescription_empty = false;
+          const prescription = (await findPrescriptions(idPrescription))[0];
 
-        const file = await getPreview({
-          name: "prescription.html",
-          data: {
-            patient: `${this.$store.getters.getPatient.forename} ${this.$store.getters.getPatient.surname}`,
-            name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
-            prescriptions: prescription.prescription,
-            date: moment(prescription.control.created_at).format("DD/MM/YYYY"),
-            idQflow: this.$store.getters.getPatient.idQflow,
-            place: sucursal[0].Description,
-            type: type == 2 ? "Oftalmólogo" : "Optometrista",
-            digital_signature:
-              this.$store.getters.getPhysician.digital_signature,
-          },
-        });
-        const blob = new Blob([file.data], { type: "application/pdf;base64" });
-        const link = window.URL.createObjectURL(blob);
-        this.dialog = true;
-        this.pdf_document = link;
+          const sucursal = await getSucursal({
+            body: {
+              _id: prescription.place,
+            },
+          });
+
+          const file = await getPreview({
+            name: "prescription.html",
+            data: {
+              patient: `${this.$store.getters.getPatient.forename} ${this.$store.getters.getPatient.surname}`,
+              name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+              prescriptions: prescription.prescription,
+              date: moment(prescription.control.created_at).format(
+                "DD/MM/YYYY"
+              ),
+              idQflow: this.$store.getters.getPatient.idQflow,
+              place: sucursal[0].Description,
+              type: type == 2 ? "Oftalmólogo" : "Optometrista",
+              digital_signature:
+                this.$store.getters.getPhysician.digital_signature,
+            },
+          });
+          const blob = new Blob([file.data], {
+            type: "application/pdf;base64",
+          });
+          const link = window.URL.createObjectURL(blob);
+          this.dialog = true;
+          this.pdf_document = link;
+        } else {
+          this.prescription_empty = true;
+          this.pdf_document = "";
+        }
       }
       this.loadingModal = false;
     },
