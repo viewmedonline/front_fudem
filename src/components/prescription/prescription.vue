@@ -103,7 +103,7 @@ export default {
                 "DD/MM/YYYY"
               ),
               idQflow: this.$store.getters.getPatient.idQflow,
-              place: sucursal[0].Description,
+              place: sucursal[0].Name,
               type: type == 2 ? "Oftalmólogo" : "Optometrista",
               digital_signature:
                 this.$store.getters.getPhysician.digital_signature,
