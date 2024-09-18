@@ -1999,7 +1999,6 @@ export default {
           ] = {
             $elemMatch: {
               name: { $in: diagnosticoOpt },
-              $or: [{ eyeRight: true }, { eyeLeft: true }],
             },
           };
           // console.log(this.dateTo2)
