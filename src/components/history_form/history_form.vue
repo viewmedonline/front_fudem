@@ -395,7 +395,10 @@ export default {
               });
             }
           }
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
           vm.historyConsulting.sort(function (a, b) {
             let keyA = new Date(a.dateOrder),
               keyB = new Date(b.dateOrder);

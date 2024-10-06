@@ -31,6 +31,10 @@
       <v-window v-model="paso">
         <v-window-item :value="0">
           <antecedent class="px-2 py-2" ref="antecedentRef"></antecedent>
+          <previous_surgeries
+            class="px-2 py-2"
+            ref="previousSurgeriesRef"
+          ></previous_surgeries>
           <general_data_oft
             class="px-2 py-2"
             ref="generalDataOftRef"
@@ -181,6 +185,8 @@ const observations = () =>
   import("@/components/electronic_record/observations");
 const endConsultation = () =>
   import("@/components/electronic_record/end_consultation");
+const previous_surgeries = () =>
+  import("@/components/electronic_record/previous_surgeries");
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -266,64 +272,73 @@ export default {
 
             this.$refs.antecedentRef
               .saveAntecedent()
-              .then((result) => {
-                this.consultation.record.antecedent = result;
-                this.$refs.generalDataOftRef
-                  .saveGeneralDataOft()
-                  .then((result) => {
-                    // console.log("resultado datos generales: ", result)
-                    this.consultation.optometriaOft = result;
-                    // Ver que se va a almacenar aqui
+              .then(async (result) => {
+                try {
+                  const previousSurgeries =
+                    await this.$refs.previousSurgeriesRef.savePreviousSurgeries();
+                  this.consultation.record.cirugias = previousSurgeries;
 
-                    this.$refs.clinicHistoryRef
-                      .saveClinicHistory()
-                      .then((result) => {
-                        // console.log("resultado historia clinica: ", result)
-                        this.consultation.historyClinic = result;
-                        this.$refs.preliminaryDataRef
-                          .savePreliminaryData()
-                          .then((result) => {
-                            if (!this.consultation.objPreliminary) {
-                              this.consultation.objPreliminary = {
-                                data: {},
-                              };
-                            }
+                  this.consultation.record.antecedent = result;
+                  this.$refs.generalDataOftRef
+                    .saveGeneralDataOft()
+                    .then((result) => {
+                      // console.log("resultado datos generales: ", result)
+                      this.consultation.optometriaOft = result;
+                      // Ver que se va a almacenar aqui
 
-                            this.consultation.objPreliminary.data.retinal_photo =
-                              result.retinal_photo;
-                            this.consultation.objPreliminary.data.retinal_findings =
-                              result.retinal_findings;
-                            this.consultation.objPreliminary.data.retinal_observations =
-                              result.retinal_observations;
-                            this.consultation.objPreliminary.data.retinal_notes =
-                              result.retinal_notes;
-                            this.consultation.datapreliminar = result;
-                            if (this.paso > this.lastValidate)
-                              this.lastValidate = 0;
-                            resolve();
-                          })
-                          .catch((err) => {
-                            console.log("error: ", err);
-                            reject();
-                          });
-                        // if (this.paso > this.lastValidate)
-                        //   this.lastValidate = 0;
-                        // resolve();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
-                  })
-                  .catch((err) => {
-                    this.$refs.clinicHistoryRef
-                      .saveClinicHistory()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
-                  });
+                      this.$refs.clinicHistoryRef
+                        .saveClinicHistory()
+                        .then((result) => {
+                          // console.log("resultado historia clinica: ", result)
+                          this.consultation.historyClinic = result;
+                          this.$refs.preliminaryDataRef
+                            .savePreliminaryData()
+                            .then((result) => {
+                              if (!this.consultation.objPreliminary) {
+                                this.consultation.objPreliminary = {
+                                  data: {},
+                                };
+                              }
+
+                              this.consultation.objPreliminary.data.retinal_photo =
+                                result.retinal_photo;
+                              this.consultation.objPreliminary.data.retinal_findings =
+                                result.retinal_findings;
+                              this.consultation.objPreliminary.data.retinal_observations =
+                                result.retinal_observations;
+                              this.consultation.objPreliminary.data.retinal_notes =
+                                result.retinal_notes;
+                              this.consultation.datapreliminar = result;
+                              if (this.paso > this.lastValidate)
+                                this.lastValidate = 0;
+                              resolve();
+                            })
+                            .catch((err) => {
+                              console.log("error: ", err);
+                              reject();
+                            });
+                          // if (this.paso > this.lastValidate)
+                          //   this.lastValidate = 0;
+                          // resolve();
+                        })
+                        .catch((err) => {
+                          reject();
+                        });
+                    })
+                    .catch((err) => {
+                      this.$refs.clinicHistoryRef
+                        .saveClinicHistory()
+                        .then((result) => {
+                          reject();
+                        })
+                        .catch((err) => {
+                          reject();
+                        });
+                    });
+                } catch (error) {
+                  console.log("Error en previousSurgeries: ", error);
+                  reject();
+                }
               })
               .catch((err) => {
                 this.$refs.generalDataOftRef
@@ -356,7 +371,10 @@ export default {
                   .saveObservations()
                   .then((result) => {
                     // console.log("resultado observaciones y medicamentos: ", result)
-                    this.consultation.observaciones = result;
+                    this.consultation.observaciones = {
+                      observacion: result.observacion,
+                    };
+                    this.consultation.prescription_of = result.prescription;
                     this.consultation.next_appointment =
                       result.next_appointment;
                     if (this.paso > this.lastValidate) this.lastValidate = 1;
@@ -433,6 +451,7 @@ export default {
       this.$refs.preliminaryDataRef.setDataConsultation();
       this.$refs.diagnosisOftRef.setDataConsultation();
       this.$refs.observationsRef.setDataConsultation();
+      this.$refs.previousSurgeriesRef.setDataAntecedent();
       this.consultation.objPreliminary = this.storeConsultation.objPreliminary;
       this.consultation.objOptometrist = this.storeConsultation.objOptometrist;
       this.consultation.objOphthalmology =
@@ -697,6 +716,7 @@ export default {
     diagnosis_oft,
     observations,
     endConsultation,
+    previous_surgeries,
   },
   computed: {
     currentTitle() {

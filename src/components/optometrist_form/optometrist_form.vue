@@ -60,25 +60,23 @@
             class="px-2 py-2"
             ref="rxFinalContactLensesRef"
           ></rx_final_contact_lenses>
-          <rx_final_far_vision
-            class="px-2 py-2"
-            ref="rxFinalFarVisionRef"
-          ></rx_final_far_vision>
-          <rx_final_next_vision
+          <rx_final_doble class="px-2 py-2" ref="rxFinalDoble"></rx_final_doble>
+          <!-- <rx_final_next_vision
             class="px-2 py-2"
             ref="rxFinalNextVisionRef"
           ></rx_final_next_vision>
           <rx_final_intermediate
             class="px-2 py-2"
             ref="rxFinalIntermediateVisionRef"
-          ></rx_final_intermediate>
+          ></rx_final_intermediate> -->
         </v-window-item>
         <v-window-item :value="4">
           <diagnosis class="px-2 py-2" ref="diagnosisRef"></diagnosis>
           <retinalCamera
             class="px-2 py-2"
             ref="retinalCameraRef"
-            :disabled_options="false"
+            :premilinary="false"
+            :optometrist="true"
           ></retinalCamera>
         </v-window-item>
       </v-window>
@@ -198,12 +196,8 @@ const rx_final_glasses = () =>
 const refraction = () => import("@/components/electronic_record/refraction");
 const rx_final_contact_lenses = () =>
   import("@/components/electronic_record/rx_final_contact_lenses");
-const rx_final_far_vision = () =>
-  import("@/components/electronic_record/rx_final_far_vision");
-const rx_final_next_vision = () =>
-  import("@/components/electronic_record/rx_final_next_vision");
-const rx_final_intermediate = () =>
-  import("@/components/electronic_record/rx_final_intermediate");
+const rx_final_doble = () =>
+  import("@/components/electronic_record/rx_final_doble");
 const diagnosis = () => import("@/components/electronic_record/diagnosis");
 const endConsultation = () =>
   import("@/components/electronic_record/end_consultation");
@@ -343,10 +337,6 @@ export default {
                       this.consultation.reasonConsultation =
                         result.reasonConsultation;
                     }
-                    if (this.consultation.generalData) {
-                      this.consultation.generalData.typeLense =
-                        result.typeLense;
-                    }
 
                     if (this.paso > this.lastValidate) this.lastValidate = 0;
                     resolve();
@@ -384,7 +374,11 @@ export default {
                         this.$refs.lensometryRef
                           .saveLensometry()
                           .then((result) => {
-                            this.consultation.lensometria = result;
+                            this.consultation.lensometria = result.lensometria;
+                            // if (this.consultation.generalData) {
+                            //   this.consultation.generalData.typeLense =
+                            //     result.typeLense;
+                            // }
                             if (this.paso > this.lastValidate)
                               this.lastValidate = 1;
 
@@ -470,88 +464,32 @@ export default {
             break;
           case 3:
             //resolve()
-            
+
             this.$refs.rxFinalContactLensesRef
               .saveRxFinalContactLenses()
               .then((result) => {
                 this.consultation.rxFinalLentesContacto = result;
 
-                this.$refs.rxFinalFarVisionRef
-                  .saveRxFinalFarVision()
+                this.$refs.rxFinalDoble
+                  .saveRxFinalDoble()
                   .then((result) => {
-                    this.consultation.rxFinalVisionLejano = result;
-
-                    this.$refs.rxFinalNextVisionRef
-                      .saveRxFinalNearVision()
-                      .then((result) => {
-                        this.consultation.rxFinalVisionProxima = result;
-
-                        this.$refs.rxFinalIntermediateVisionRef
-                          .saveRxFinalIntermediateVision()
-                          .then((result) => {
-                            this.consultation.rxFinalVisionIntermedia = result;
-
-                            if (this.paso > this.lastValidate)
-                              this.lastValidate = 3;
-                            resolve();
-                          })
-                          .catch((err) => {
-                            // console.log("error: ", err)
-                            reject();
-                          });
-                      })
-                      .catch((err) => {
-                        this.$refs.rxFinalIntermediateVisionRef
-                          .saveRxFinalIntermediateVision()
-                          .then((result) => {
-                            reject();
-                          })
-                          .catch((err) => {
-                            reject();
-                          });
-                      });
+                    this.consultation.rxFinalVisionLejano =
+                      result.rxFinalVisionLejano;
+                    this.consultation.rxFinalVisionProxima =
+                      result.rxFinalVisionProxima;
+                    this.consultation.rxFinalVisionIntermedia =
+                      result.rxFinalVisionIntermedia;
+                    if (this.paso > this.lastValidate) this.lastValidate = 3;
+                    resolve();
                   })
                   .catch((err) => {
-                    this.$refs.rxFinalNextVisionRef
-                      .saveRxFinalNearVision()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
-
-                    this.$refs.rxFinalIntermediateVisionRef
-                      .saveRxFinalIntermediateVision()
-                      .then((result) => {
-                        reject();
-                      })
-                      .catch((err) => {
-                        reject();
-                      });
+                    console.log(err);
+                    reject();
                   });
               })
               .catch((err) => {
-                this.$refs.rxFinalFarVisionRef
-                  .saveRxFinalFarVision()
-                  .then((result) => {
-                    reject();
-                  })
-                  .catch((err) => {
-                    reject();
-                  });
-
-                this.$refs.rxFinalNextVisionRef
-                  .saveRxFinalNearVision()
-                  .then((result) => {
-                    reject();
-                  })
-                  .catch((err) => {
-                    reject();
-                  });
-
-                this.$refs.rxFinalIntermediateVisionRef
-                  .saveRxFinalIntermediateVision()
+                this.$refs.rxFinalDoble
+                  .saveRxFinalDoble()
                   .then((result) => {
                     reject();
                   })
@@ -564,16 +502,26 @@ export default {
             this.$refs.diagnosisRef
               .saveDiagnosis()
               .then(async (result) => {
+                console.log(result);
+
+                this.consultation.refer_to_ofta = result.refer_to_ofta;
+                this.consultation.prescription = result.prescription;
+
                 this.consultation.observationsOphthalmology =
                   result.observationsOphthalmology;
                 this.consultation.diagnosticoObservaciones =
                   result.diagnosticoObservaciones;
                 this.consultation.receta = result.receta;
-                const retinalCamera = await this.$refs.retinalCameraRef.saveRetinalCamera()
-                this.consultation.objPreliminary.data.retinal_photo = retinalCamera.photo_retinal
-                this.consultation.objPreliminary.data.retinal_findings = retinalCamera.findings_photo
-                this.consultation.objPreliminary.data.retinal_observations = retinalCamera.observations_photo
-                this.consultation.objPreliminary.data.retinal_notes = retinalCamera.retinal_notes
+                const retinalCamera =
+                  await this.$refs.retinalCameraRef.saveRetinalCamera();
+                this.consultation.objPreliminary.data.retinal_photo =
+                  retinalCamera.photo_retinal;
+                this.consultation.objPreliminary.data.retinal_findings =
+                  retinalCamera.findings_photo;
+                this.consultation.objPreliminary.data.retinal_observations =
+                  retinalCamera.observations_photo;
+                this.consultation.objPreliminary.data.retinal_notes =
+                  retinalCamera.retinal_notes;
 
                 if (this.paso > this.lastValidate) this.lastValidate = 4;
                 resolve("ok");
@@ -841,9 +789,7 @@ export default {
       this.$refs.rxFinalGlassesRef.setRxFinalGlasses();
       this.$refs.lensometryRef.setLensometry();
       this.$refs.rxFinalContactLensesRef.setRxFinalLentesContacto();
-      this.$refs.rxFinalFarVisionRef.setRxFinalFarVisionRef();
-      this.$refs.rxFinalNextVisionRef.setrxFinalVisionProxima();
-      this.$refs.rxFinalIntermediateVisionRef.setrxFinalVisionIntermedia();
+      this.$refs.rxFinalDoble.setRxFinalDoble();
       this.$refs.diagnosisRef.setDiagnostics();
       this.$refs.retinalCameraRef.setDataRetinalCamera();
 
@@ -910,9 +856,7 @@ export default {
     refraction,
     rx_final_glasses,
     rx_final_contact_lenses,
-    rx_final_far_vision,
-    rx_final_next_vision,
-    rx_final_intermediate,
+    rx_final_doble,
     diagnosis,
     endConsultation,
     retinalCamera,

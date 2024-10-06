@@ -2,46 +2,28 @@
   <v-container>
     <v-form
       autocomplete="off"
-      ref="formRefractionRef"
-      v-model="formRefraction"
+      ref="formRxFinalFarVisionRef"
+      v-model="formRxFinalFarVision"
       lazy-validation
     >
       <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
-          <span class="subheading white--text text-capitalize">{{
-            $t("title.refraction")
-          }}</span>
+          <span class="subheading white--text text-capitalize"
+            >RX Final Doble Orden</span
+          >
         </v-card-title>
         <v-divider light class="vm-border-color-2"></v-divider>
         <v-card-text>
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
-              <v-flex xs2 offset-xs2>
-                <span class="body-2"
-                  ><v-checkbox
-                    :label="$t('title.cycle')"
-                    v-model="refraccion.ciclo"
-                    :readonly="validateRead()"
-                  ></v-checkbox
-                ></span>
-              </v-flex>
-              <v-flex xs2>
-                <span class="body-2"
-                  ><v-checkbox
-                    :label="$t('title.est')"
-                    v-model="refraccion.est"
-                    :readonly="validateRead()"
-                  ></v-checkbox
-                ></span>
-              </v-flex>
-              <v-flex xs2>
-                <span class="body-2"
-                  ><v-checkbox
-                    :label="$t('title.dinm')"
-                    v-model="refraccion.dinm"
-                    :readonly="validateRead()"
-                  ></v-checkbox
-                ></span>
+              <v-flex xs4 offset-xs1>
+                <v-select
+                  label="RX Final"
+                  :items="listRx"
+                  v-model="rxFinal"
+                  item-text="description"
+                  item-value="value"
+                ></v-select>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -57,7 +39,7 @@
                 >
               </v-flex>
               <v-flex xs2>
-                <span class="body-2">Adición</span>
+                <span class="body-2">{{ $t("title.prism") }}</span>
               </v-flex>
               <v-flex xs2>
                 <span class="body-2">{{ $t("title.av") }}</span>
@@ -69,41 +51,46 @@
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoDer.esfera"
+                  v-model="rxFinalValue.ojoDer.esfera"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoDer.cilindro"
+                  v-model="rxFinalValue.ojoDer.cilindro"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoDer.eje"
+                  v-model="rxFinalValue.ojoDer.eje"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoDer.add"
+                  v-model="rxFinalValue.ojoDer.prisma"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoDer.av"
+                  v-model="rxFinalValue.ojoDer.av"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
@@ -114,72 +101,58 @@
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoIzq.esfera"
+                  v-model="rxFinalValue.ojoIzq.esfera"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoIzq.cilindro"
+                  v-model="rxFinalValue.ojoIzq.cilindro"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoIzq.eje"
+                  v-model="rxFinalValue.ojoIzq.eje"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoIzq.add"
+                  v-model="rxFinalValue.ojoIzq.prisma"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
               <v-flex xs2>
                 <v-text-field
-                  v-model="refraccion.ojoIzq.av"
+                  v-model="rxFinalValue.ojoIzq.av"
                   :rules="[]"
                   :readonly="validateRead()"
+                  :disabled="!rxFinal"
                 >
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
-              <v-flex xs3 offset-xs1>
-                <v-text-field
-                  v-model="refraccion.ppc"
+              <v-flex xs4 offset-xs1>
+                <v-select
+                  v-model="rxFinalValue.type_lenses"
                   :rules="[]"
                   :readonly="validateRead()"
-                  label="PPC"
+                  :items="lenses_list"
+                  label="Tipo de lentes"
                 >
-                </v-text-field>
-              </v-flex>
-              <v-flex xs3>
-                <v-text-field
-                  v-model="refraccion.ct"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                  label="CT"
-                >
-                </v-text-field>
-              </v-flex>
-              <v-flex xs3>
-                <v-text-field
-                  v-model="refraccion.rp"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                  label="Reflejos Pupilares"
-                >
-                </v-text-field>
+                </v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -191,39 +164,99 @@
 
 <script>
 import { EventBus } from "@/store/eventBus";
+import { getLenses } from "../../componentServs/master";
 export default {
-  name: "refraction",
+  name: "rx_final_far_vision",
   data() {
     return {
-      formRefraction: false,
-      refraccion: {
-        ciclo: false,
-        est: false,
-        dinm: false,
-        ppc: null,
-        ct: null,
-        rp: null,
+      formRxFinalFarVision: false,
+      lenses_list: [],
+
+      rxFinalValue: {
+        type_lenses: "",
         ojoDer: {
           esfera: null,
           cilindro: null,
           eje: null,
+          prisma: null,
           av: null,
-          add: null,
         },
         ojoIzq: {
           esfera: null,
           cilindro: null,
           eje: null,
+          prisma: null,
           av: null,
-          add: null,
         },
       },
+      rxFinalVisionLejano: {
+        type_lenses: "",
+        ojoDer: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+        ojoIzq: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+      },
+      rxFinalVisionProxima: {
+        type_lenses: "",
+        ojoDer: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+        ojoIzq: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+      },
+      rxFinalVisionIntermedia: {
+        type_lenses: "",
+        ojoDer: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+        ojoIzq: {
+          esfera: null,
+          cilindro: null,
+          eje: null,
+          prisma: null,
+          av: null,
+        },
+      },
+      rxFinal: null,
+      listRx: [
+        { value: "1", description: "Visión Lejana" },
+        { value: "2", description: "Visión Proxima" },
+        { value: "3", description: "Visión Intermedia" },
+      ],
       rules: {
         // required: v => false // !!v || this.$t('title.field_required')
       },
     };
   },
   methods: {
+    async getListLenses() {
+      getLenses().then((response) => {
+        this.lenses_list = response.map((x) => x.description);
+      });
+    },
     validateRead() {
       switch (this.tabsActive) {
         case "optometrist":
@@ -247,54 +280,50 @@ export default {
           break;
       }
     },
-    saveRefraction() {
+    saveRxFinalDoble() {
       return new Promise((resolve, reject) => {
-        if (this.$refs.formRefractionRef.validate()) {
-          resolve(this.refraccion);
+        if (this.$refs.formRxFinalFarVisionRef.validate()) {
+          resolve({
+            rxFinalVisionLejano: this.rxFinalVisionLejano,
+            rxFinalVisionProxima: this.rxFinalVisionProxima,
+            rxFinalVisionIntermedia: this.rxFinalVisionIntermedia,
+          });
         } else {
           reject(false);
         }
       });
     },
-    setRefraction() {
-      if (this.storeConsultation.refraccion) {
-        this.refraccion.ciclo = this.storeConsultation.refraccion.ciclo;
-        this.refraccion.est = this.storeConsultation.refraccion.est;
-        this.refraccion.dinm = this.storeConsultation.refraccion.dinm;
-        if (this.storeConsultation.refraccion.ojoDer) {
-          this.refraccion.ojoDer = this.storeConsultation.refraccion.ojoDer;
-        } else {
-          this.refraccion.ojoDer = {
-            esfera: null,
-            cilindro: null,
-            eje: null,
-            av: null,
-            add: null,
-          };
-        }
-
-        if (this.storeConsultation.refraccion.ojoIzq) {
-          this.refraccion.ojoIzq = this.storeConsultation.refraccion.ojoIzq;
-        } else {
-          this.refraccion.ojoIzq = {
-            esfera: null,
-            cilindro: null,
-            eje: null,
-            av: null,
-            add: null,
-          };
-        }
-        this.refraccion.ppc = this.storeConsultation.refraccion.ppc;
-        this.refraccion.ct = this.storeConsultation.refraccion.ct;
-        this.refraccion.rp = this.storeConsultation.refraccion.rp;
-      }
+    setRxFinalDoble() {
+      if (this.storeConsultation.rxFinalVisionLejano)
+        this.rxFinalVisionLejano = this.storeConsultation.rxFinalVisionLejano;
+      if (this.storeConsultation.rxFinalVisionProxima)
+        this.rxFinalVisionProxima = this.storeConsultation.rxFinalVisionProxima;
+      if (this.storeConsultation.rxFinalVisionIntermedia)
+        this.rxFinalVisionIntermedia =
+          this.storeConsultation.rxFinalVisionIntermedia;
     },
   },
   mounted() {
+    this.getListLenses();
     EventBus.$on("changeTabReload", (value) => {
       this.$forceUpdate();
-      this.setRefraction();
+      this.setRxFinalDoble();
     });
+  },
+  watch: {
+    rxFinal: function (val) {
+      switch (val) {
+        case "1":
+          this.rxFinalValue = this.rxFinalVisionLejano;
+          break;
+        case "2":
+          this.rxFinalValue = this.rxFinalVisionProxima;
+          break;
+        case "3":
+          this.rxFinalValue = this.rxFinalVisionIntermedia;
+          break;
+      }
+    },
   },
   computed: {
     storeConsultation() {

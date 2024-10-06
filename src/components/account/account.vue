@@ -117,7 +117,7 @@
               </v-flex>
               <v-flex xs4 pa-2 v-if="catalogue != 1 && catalogue">
                 <v-autocomplete
-                v-model="diagnosisMasterSelected"
+                  v-model="diagnosisMasterSelected"
                   :items="masterList"
                   label="Diagnosticos Existentes"
                   persistent-hint
@@ -141,7 +141,13 @@
                   </template>
                 </v-autocomplete>
               </v-flex>
-              <v-flex xs4 pa-2 v-if="catalogue && !diagnosisSelected && !diagnosisMasterSelected">
+              <v-flex
+                xs4
+                pa-2
+                v-if="
+                  catalogue && !diagnosisSelected && !diagnosisMasterSelected
+                "
+              >
                 <v-btn color="primary" @click="new_diagnosis" medium>
                   Añadir registro
                 </v-btn>
@@ -150,6 +156,57 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
+
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            <v-layout row wrap grid-list-lg>
+              <v-flex xs4 pa-2>
+                <v-select
+                  :items="catalogueListMedicine"
+                  label="Seleccione Catalago"
+                  item-text="name"
+                  item-value="id"
+                  v-model="catalogueMedicine"
+                  @change="findCatalogeMedicines"
+                ></v-select>
+              </v-flex>
+              <v-flex xs4 pa-2 v-if="catalogueMedicine">
+                <v-autocomplete
+                  v-model="medicineSelected"
+                  :items="medicines"
+                  label="Medicamentos Existentes"
+                  persistent-hint
+                  prepend-icon=""
+                  return-object
+                  item-text="description"
+                  @change="changeMedicine()"
+                >
+                  <template v-slot:selection="data">
+                    <span>{{ data.item.description }}</span>
+                  </template>
+                  <template v-slot:item="data">
+                    <v-list-tile-content
+                      :style="
+                        !data.item.active
+                          ? 'color: red; font-weight:bold'
+                          : null
+                      "
+                      v-text="data.item.description"
+                    ></v-list-tile-content>
+                  </template>
+                </v-autocomplete>
+              </v-flex>
+              <v-flex xs4 pa-2 v-if="catalogueMedicine">
+                <v-btn color="primary" @click="newMedicine" medium>
+                  Añadir registro
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
       <v-tab-item>
         <v-card flat>
           <v-card-text>
@@ -277,7 +334,8 @@
                   color="primary"
                   @click="generateReport(7)"
                   large
-                  ><v-icon>mdi-download</v-icon>Seguimiento Psicoterapéutico</v-btn
+                  ><v-icon>mdi-download</v-icon>Seguimiento
+                  Psicoterapéutico</v-btn
                 >
               </v-flex>
               <v-flex xs4>
@@ -286,7 +344,8 @@
                   color="primary"
                   @click="generateReport(8)"
                   large
-                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica Niños</v-btn
+                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica
+                  Niños</v-btn
                 >
               </v-flex>
               <v-flex xs4>
@@ -295,7 +354,8 @@
                   color="primary"
                   @click="generateReport(9)"
                   large
-                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica Adultos</v-btn
+                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica
+                  Adultos</v-btn
                 >
               </v-flex>
             </v-layout>
@@ -376,17 +436,19 @@
                 Guardar
               </v-btn>
             </v-flex>
-            <v-flex xs4 v-if="diagnosisSelected || diagnosisMasterSelected ">
+            <v-flex xs4 v-if="diagnosisSelected || diagnosisMasterSelected">
               <v-btn
                 :color="
-                  (diagnosisSelected && diagnosisSelected.disable) || (diagnosisMasterSelected && diagnosisMasterSelected.disable)
+                  (diagnosisSelected && diagnosisSelected.disable) ||
+                  (diagnosisMasterSelected && diagnosisMasterSelected.disable)
                     ? 'success'
                     : 'warning'
                 "
                 @click="disabledDiagnoses"
                 medium
                 >{{
-                  (diagnosisSelected && diagnosisSelected.disable) || (diagnosisMasterSelected && diagnosisMasterSelected.disable)
+                  (diagnosisSelected && diagnosisSelected.disable) ||
+                  (diagnosisMasterSelected && diagnosisMasterSelected.disable)
                     ? "Habilitar"
                     : "Deshabilitar"
                 }}</v-btn
@@ -397,6 +459,52 @@
             </v-flex>
           </v-layout>
         </v-card-text>
+      </v-card>
+    </v-dialog>
+    <!-- Dialogo para edicion de medicamentos -->
+    <v-dialog v-model="showDialogMedicines" persistent width="500">
+      <v-card>
+        <v-card-text>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-text-field
+                label="Meidcamento"
+                :autofocus="true"
+                v-model="medicine.description"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                label="Compuesto activo"
+                :autofocus="true"
+                v-model="medicine.generic"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                label="Recomendacion"
+                :autofocus="true"
+                v-model="medicine.recomendation"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-radio-group v-model="medicine.active" row label="Estado:">
+                <v-radio label="Activo" :value="true"></v-radio>
+                <v-radio label="Inactivo" :value="false"></v-radio>
+              </v-radio-group>
+            </v-flex>
+          </v-layout>
+        </v-card-text>
+        <v-card-actions>
+          <v-flex xs4 offset-xs2>
+            <v-btn color="blue darken-1" flat @click="SaveMedicine()" medium>
+              Guardar
+            </v-btn>
+          </v-flex>
+          <v-flex xs4>
+            <v-btn @click="closeModalmedicine()" medium> Cancelar </v-btn>
+          </v-flex>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-content>
@@ -415,6 +523,11 @@ import {
 import * as fileServ from "@/componentServs/file";
 import { getReport } from "@/componentServs/report";
 import moment from "moment";
+import {
+  getMedicines,
+  updateMedicines,
+  saveMedicines,
+} from "../../componentServs/medicines";
 export default {
   name: "account",
   components: {
@@ -445,6 +558,7 @@ export default {
       search: "",
       spinerSignature: false,
       showSaveOrUpdateDiagnoses: false,
+      showDialogMedicines: false,
       headers: [
         {
           text: this.$t("title.fullname"),
@@ -458,14 +572,19 @@ export default {
         },
         { text: this.$t("title.action"), align: "center", value: "accion" },
       ],
+      catalogueListMedicine: [
+        { id: 1, name: "Catalogo Medicamentos Optometría" },
+        { id: 2, name: "Catalogo Medicamentos Oftalmología" },
+      ],
       catalogueList: [
         { id: 1, name: "Diagnostico CIE-10" },
         { id: 2, name: "Diagnostico DSM-V" },
         { id: 3, name: "Diagnostico preoperatorio (MI,PED)" },
-        { id: 4, name: "Impresion diagnostica(Psicologia)"}
+        { id: 4, name: "Impresion diagnostica(Psicologia)" },
       ],
-      masterList:[],
+      masterList: [],
       catalogue: null,
+      catalogueMedicine: null,
       users: [],
       userId: null,
       tab: 0,
@@ -484,6 +603,16 @@ export default {
       modalTo: false,
       modalFrom: false,
       loadingModal: false,
+      medicineSelected: null,
+      medicines: [],
+      medicine: {
+        _id: null,
+        generic: null,
+        recomendation: null,
+        description: null,
+        active: null,
+        type: null,
+      },
     };
   },
   watch: {
@@ -495,23 +624,64 @@ export default {
     },
   },
   methods: {
+    async newMedicine(val) {
+      this.showDialogMedicines = true;
+      this.medicine.description = null;
+      this.medicine.generic = null;
+      this.medicine.recomendation = null;
+      this.medicine._id = null;
+      this.medicine.active = null;
+    },
+    async SaveMedicine() {
+      if (this.medicine._id) {
+        await updateMedicines(this.medicine, this.medicine._id);
+      } else {
+        this.medicine.type = this.catalogueMedicine;
+        delete this.medicine._id;
+        await saveMedicines(this.medicine);
+      }
+      this.closeModalmedicine();
+      this.findCatalogeMedicines();
+    },
+    closeModalmedicine() {
+      this.showDialogMedicines = false;
+      this.medicine.description = null;
+      this.medicine.generic = null;
+      this.medicine.recomendation = null;
+      this.medicine._id = null;
+      this.medicine.active = null;
+      this.medicineSelected = null;
+    },
+    async changeMedicine() {
+      this.showDialogMedicines = true;
+      this.medicine.description = this.medicineSelected.description;
+      this.medicine.generic = this.medicineSelected.generic;
+      this.medicine.recomendation = this.medicineSelected.recomendation;
+      this.medicine._id = this.medicineSelected._id;
+      this.medicine.active = this.medicineSelected.active;
+    },
+    async findCatalogeMedicines() {
+      try {
+        this.medicines = await getMedicines(this.catalogueMedicine, true);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async selectCatalogue() {
       let caseEval = {
-          2: "dsm-v",
-          3: "preoperative",
-          4: "impression-diagnostic"
-        }
+        2: "dsm-v",
+        3: "preoperative",
+        4: "impression-diagnostic",
+      };
 
-        let type = caseEval[this.catalogue]
-      if(this.catalogue !=1)
-      this.masterList = await getDiagnosesMaster(type)
+      let type = caseEval[this.catalogue];
+      if (this.catalogue != 1) this.masterList = await getDiagnosesMaster(type);
     },
     async cancelEditDiagnoses() {
       this.showSaveOrUpdateDiagnoses = false;
       this.diagnosis_txt = "";
       this.diagnosisSelected = null;
       this.diagnosisMasterSelected = null;
-      
     },
     async generateReport(report) {
       this.loadingModal = true;
@@ -592,15 +762,14 @@ export default {
       this.loadingModal = false;
     },
     async disabledDiagnoses() {
-      let objAux = null
-      if(this.catalogue == 1){
-         objAux = this.diagnosisSelected;
+      let objAux = null;
+      if (this.catalogue == 1) {
+        objAux = this.diagnosisSelected;
         objAux.disable = this.diagnosisSelected.disable
           ? !this.diagnosisSelected.disable
           : true;
         await insertDiagnoses(objAux);
-      }
-      else{
+      } else {
         objAux = this.diagnosisMasterSelected;
         objAux.disable = this.diagnosisMasterSelected.disable
           ? !this.diagnosisMasterSelected.disable
@@ -632,14 +801,14 @@ export default {
           };
         }
         await insertDiagnoses(objAux);
-      }else{
+      } else {
         let caseEval = {
           2: "dsm-v",
           3: "preoperative",
-          4: "impression-diagnostic"
-        }
+          4: "impression-diagnostic",
+        };
 
-        let type = caseEval[this.catalogue]
+        let type = caseEval[this.catalogue];
         if (this.diagnosisMasterSelected) {
           this.diagnosisMasterSelected.diagnostic = this.diagnosis_txt;
           objAux = this.diagnosisMasterSelected;
@@ -650,7 +819,7 @@ export default {
           };
         }
         await insertDiagnosesMaster(objAux);
-        this.selectCatalogue()
+        this.selectCatalogue();
       }
       this.clearDiagnoses();
       this.getListDiagnoses();
@@ -666,7 +835,10 @@ export default {
       this.showSaveOrUpdateDiagnoses = true;
       this.add_diagnosis = true;
       if (this.diagnosisSelected || this.diagnosisMasterSelected) {
-        this.diagnosis_txt = this.catalogue == 1 ? this.diagnosisSelected.diagnostic.es : this.diagnosisMasterSelected.diagnostic;
+        this.diagnosis_txt =
+          this.catalogue == 1
+            ? this.diagnosisSelected.diagnostic.es
+            : this.diagnosisMasterSelected.diagnostic;
       } else {
         this.diagnosis_txt = "";
       }
@@ -807,6 +979,7 @@ export default {
         : false;
     if (this.user_admin) {
       this.items.push("Administrador de diagnosticos");
+      this.items.push("Administrador de medicamentos");
       this.items.push("Reportes de Consultas");
     }
 

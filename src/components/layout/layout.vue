@@ -124,6 +124,9 @@
         <v-flex xs12 sm9 v-if="dataStore.clinical_interview_2">
           <vmClinicalInterview2></vmClinicalInterview2>
         </v-flex>
+        <v-flex xs12 sm9 v-if="dataStore.prescription">
+          <vmPrescription></vmPrescription>
+        </v-flex>
       </v-layout>
     </v-content>
 
@@ -266,6 +269,7 @@ const vmClinicalInterview1 = () =>
   import("@/components/psychologist_sheet/clinical_interview_1");
 const vmClinicalInterview2 = () =>
   import("@/components/psychologist_sheet/clinical_interview_2");
+const vmPrescription = () => import("@/components/prescription/prescription");
 
 import moment from "moment";
 import { EventBus } from "@/store/eventBus";
@@ -273,6 +277,7 @@ import * as personServ from "@/componentServs/person";
 import * as userServ from "@/componentServs/user";
 import * as consultationServ from "@/componentServs/consultation";
 import * as sucursalServ from "@/componentServs/sucursal";
+import { getLastConsultation } from "../../componentServs/consultation";
 
 export default {
   name: "layout",
@@ -317,6 +322,15 @@ export default {
         return;
       }
     }
+    setTimeout(async () => {
+      const result = await getLastConsultation({
+        body: { person: this.$store.getters.getPatient._id },
+      });
+      this.$store.commit({
+        type: "setLastConsultation",
+        state: result,
+      });
+    }, 500);
   },
   methods: {
     async getSucursal() {
@@ -408,6 +422,7 @@ export default {
       this.dataStore.psychologist_sheet = false;
       this.dataStore.clinical_interview_1 = false;
       this.dataStore.clinical_interview_2 = false;
+      this.dataStore.prescription = false;
       switch (val) {
         case "consultation":
           this.dataStore.patient = true;
@@ -428,6 +443,7 @@ export default {
           this.dataStore.reports = true;
           this.dataStore.consultation = false;
           break;
+
         default:
           this.dataStore.consultation = true;
       }
@@ -695,6 +711,7 @@ export default {
     vmPsychologistSheet,
     vmClinicalInterview1,
     vmClinicalInterview2,
+    vmPrescription,
   },
   props: {
     source: String,
