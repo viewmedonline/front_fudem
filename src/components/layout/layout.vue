@@ -1,34 +1,19 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      :mini-variant="drawer"
-      class="primary"
-      dark
-      clipped
-      fixed
-      app
-    >
+    <v-navigation-drawer :mini-variant="drawer" class="primary" dark clipped fixed app>
       <v-list dense>
-        <v-list-tile
-          @click="fixedCompst('consultation')"
-          v-if="$route.query.p && $route.query.c != 'R'"
-        >
+        <v-list-tile @click="fixedCompst('consultation')" v-if="$route.query.p && $route.query.c != 'R'">
           <v-list-tile-action>
             <v-icon>folder_shared</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-if="$route.query.c == 'H'"
-              >Historial</v-list-tile-title
-            >
+            <v-list-tile-title v-if="$route.query.c == 'H'">Historial</v-list-tile-title>
             <v-list-tile-title v-else>{{
               $t("title.consultation")
-            }}</v-list-tile-title>
+              }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile
-          @click="fixedCompst('reports')"
-          v-if="$route.query.c == 'R'"
-        >
+        <v-list-tile @click="fixedCompst('reports')" v-if="$route.query.c == 'R'">
           <v-list-tile-action>
             <v-icon>format_list_bulleted</v-icon>
           </v-list-tile-action>
@@ -59,15 +44,11 @@
     </v-toolbar>
     <v-content class="vm-bg-qflow">
       <v-layout fill-height row>
-        <v-flex
-          xs12
-          sm3
-          v-if="
-            dataStore.patient &&
-            Object.keys(storePatient).length > 0 &&
-            !dataStore.reports
-          "
-        >
+        <v-flex xs12 sm3 v-if="
+          dataStore.patient &&
+          Object.keys(storePatient).length > 0 &&
+          !dataStore.reports
+        ">
           <vmPatient v-if="showVmData"></vmPatient>
         </v-flex>
         <v-flex xs12 sm9 v-if="dataStore.consultation">
@@ -226,11 +207,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            flat
-            @click="dialogError('dialogSucursalExist')"
-          >
+          <v-btn color="primary" flat @click="dialogError('dialogSucursalExist')">
             {{ $t("title.agree") }}
           </v-btn>
         </v-card-actions>
@@ -330,7 +307,7 @@ export default {
         type: "setLastConsultation",
         state: result,
       });
-    }, 500);
+    }, 1000);
   },
   methods: {
     async getSucursal() {
@@ -587,7 +564,7 @@ export default {
               }
               this.user_admin =
                 this.$store.getters.getPhysician.user.idUserFudem ==
-                "PRUEBAOFTA"
+                  "PRUEBAOFTA"
                   ? true
                   : false;
               if (this.$route.query.p && this.$route.query.c != "R") {
