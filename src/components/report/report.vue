@@ -6,145 +6,62 @@
       </v-tab>
 
       <v-tab-item>
-        <v-form
-          autocomplete="off"
-          ref="ophthalmology"
-          v-model="formReportOf"
-          lazy-validation
-        >
+        <v-form autocomplete="off" ref="ophthalmology" v-model="formReportOf" lazy-validation>
           <v-card class="blue-grey lighten-5">
             <v-card-text>
               <v-layout row wrap align-end>
                 <v-flex xs4>
-                  <v-text-field
-                    v-model="dateFrom"
-                    label="Desde"
-                    prepend-icon="event"
-                    readonly
-                    @click="modalFrom = true"
-                  ></v-text-field>
-                  <v-dialog
-                    ref="dialogFrom"
-                    v-model="modalFrom"
-                    :return-value.sync="dateFrom"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
+                  <v-text-field v-model="dateFrom" label="Desde" prepend-icon="event" readonly
+                    @click="modalFrom = true"></v-text-field>
+                  <v-dialog ref="dialogFrom" v-model="modalFrom" :return-value.sync="dateFrom" persistent lazy
+                    full-width width="290px">
                     <v-date-picker locale="es-es" v-model="dateFrom" scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="modalFrom = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.dialogFrom.save(dateFrom)"
-                        >OK</v-btn
-                      >
+                      <v-btn flat color="primary" @click="modalFrom = false">Cancel</v-btn>
+                      <v-btn flat color="primary" @click="$refs.dialogFrom.save(dateFrom)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field
-                    v-model="dateTo"
-                    label="Hasta"
-                    prepend-icon="event"
-                    readonly
-                    @click="modalTo = true"
-                  ></v-text-field>
-                  <v-dialog
-                    ref="dialogTo"
-                    v-model="modalTo"
-                    :return-value.sync="dateTo"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
+                  <v-text-field v-model="dateTo" label="Hasta" prepend-icon="event" readonly
+                    @click="modalTo = true"></v-text-field>
+                  <v-dialog ref="dialogTo" v-model="modalTo" :return-value.sync="dateTo" persistent lazy full-width
+                    width="290px">
                     <v-date-picker locale="es-es" v-model="dateTo" scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="modalTo = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.dialogTo.save(dateTo)"
-                        >OK</v-btn
-                      >
+                      <v-btn flat color="primary" @click="modalTo = false">Cancel</v-btn>
+                      <v-btn flat color="primary" @click="$refs.dialogTo.save(dateTo)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
-                    :items="sucursalList"
-                    label="Sucursal"
-                    v-model="sucursal"
-                    prepend-icon="mdi-hospital-building"
-                    item-text="Name"
-                    item-value="_id"
-                    :rules="validateRequired"
-                  ></v-select>
+                  <v-select :items="sucursalList" label="Sucursal" v-model="sucursal"
+                    prepend-icon="mdi-hospital-building" item-text="Name" item-value="_id"
+                    :rules="validateRequired"></v-select>
                 </v-flex>
                 <v-flex xs5>
-                  <v-autocomplete
-                    v-model="model"
-                    :items="items"
-                    :loading="isLoading"
-                    :search-input.sync="search"
-                    :item-text="getDoc"
-                    item-value="_id"
-                    label="Doctor"
-                    prepend-icon="mdi-account-circle"
-                    return-object
-                    :rules="validateRequired"
-                  ></v-autocomplete>
+                  <v-autocomplete v-model="model" :items="items" :loading="isLoading" :search-input.sync="search"
+                    :item-text="getDoc" item-value="_id" label="Doctor" prepend-icon="mdi-account-circle" return-object
+                    :rules="validateRequired"></v-autocomplete>
                 </v-flex>
                 <v-flex xs4 pl-2>
-                  <v-autocomplete
-                    v-model="diagnosticoOft"
-                    :items="listDiagnoses"
-                    :label="$t('title.diagnostic')"
-                    persistent-hint
-                    prepend-icon=""
-                    return-object
-                    :item-text="descriptionDx"
-                    :disabled="diagnosesManuelly"
-                    :rules="diagnosesManuelly ? [] : validateRequired"
-                  >
+                  <v-autocomplete v-model="diagnosticoOft" :items="listDiagnoses" :label="$t('title.diagnostic')"
+                    persistent-hint prepend-icon="" return-object :item-text="descriptionDx"
+                    :disabled="diagnosesManuelly" :rules="diagnosesManuelly ? [] : validateRequired">
                   </v-autocomplete>
                 </v-flex>
                 <v-flex xs3 pl-2>
-                  <v-checkbox
-                    v-model="diagnosesManuelly"
-                    label="Diagnosticos Manuales"
-                  ></v-checkbox>
+                  <v-checkbox v-model="diagnosesManuelly" label="Diagnosticos Manuales"></v-checkbox>
                 </v-flex>
                 <v-flex xs12 class="text-lg-right">
-                  <v-btn
-                    :loading="loader"
-                    :disabled="loader"
-                    color="success"
-                    @click="generarReport('ophthalmology')"
-                  >
+                  <v-btn :loading="loader" :disabled="loader" color="success" @click="generarReport('ophthalmology')">
                     Generar
                   </v-btn>
                 </v-flex>
 
-                <v-flex
-                  xs12
-                  class="text-lg-right pt-4"
-                  v-if="reportOphthalmology && !reportOphthalmologyDisplay"
-                >
-                  <v-data-table
-                    :headers="headersOphthalmology"
-                    :items="resultOphthalmology"
-                    class="elevation-1"
-                    :pagination.sync="paginationOft"
-                    multi-sort
-                  >
+                <v-flex xs12 class="text-lg-right pt-4" v-if="reportOphthalmology && !reportOphthalmologyDisplay">
+                  <v-data-table :headers="headersOphthalmology" :items="resultOphthalmology" class="elevation-1"
+                    :pagination.sync="paginationOft" multi-sort>
                     <template slot="items" slot-scope="props">
                       <td class="text-xs-center">
                         {{ (paginationOft.page - 1) * 10 + props.index + 1 }}
@@ -190,7 +107,7 @@
                         {{
                           props.item.objPreliminary
                             ? props.item.objPreliminary.data.retinal_photo ||
-                              "-"
+                            "-"
                             : "-"
                         }}
                       </td>
@@ -198,7 +115,7 @@
                         {{
                           props.item.objPreliminary
                             ? props.item.objPreliminary.data.retinal_findings ||
-                              "-"
+                            "-"
                             : "-"
                         }}
                       </td>
@@ -207,10 +124,7 @@
                   </v-data-table>
 
                   <div class="text-xs-center pt-2">
-                    <v-btn
-                      @click="reportOphthalmologyDisplay = true"
-                      v-if="resultOphthalmology.length > 0"
-                    >
+                    <v-btn @click="reportOphthalmologyDisplay = true" v-if="resultOphthalmology.length > 0">
                       Vista Previa para Exportar
                     </v-btn>
                   </div>
@@ -223,142 +137,57 @@
       <v-tab ripple @click="tabsActive('optometrist')"> Optometría </v-tab>
 
       <v-tab-item>
-        <v-form
-          autocomplete="off"
-          ref="optometry"
-          v-model="formReportOp"
-          lazy-validation
-        >
+        <v-form autocomplete="off" ref="optometry" v-model="formReportOp" lazy-validation>
           <v-card class="blue-grey lighten-5">
             <v-card-text>
               <v-layout row wrap align-end>
                 <v-flex xs4>
-                  <v-text-field
-                    v-model="dateFrom2"
-                    label="Desde"
-                    prepend-icon="event"
-                    readonly
-                    @click="modalFrom2 = true"
-                  ></v-text-field>
-                  <v-dialog
-                    ref="dialogFrom2"
-                    v-model="modalFrom2"
-                    :return-value.sync="dateFrom2"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
-                    <v-date-picker
-                      locale="es-es"
-                      v-model="dateFrom2"
-                      scrollable
-                    >
+                  <v-text-field v-model="dateFrom2" label="Desde" prepend-icon="event" readonly
+                    @click="modalFrom2 = true"></v-text-field>
+                  <v-dialog ref="dialogFrom2" v-model="modalFrom2" :return-value.sync="dateFrom2" persistent lazy
+                    full-width width="290px">
+                    <v-date-picker locale="es-es" v-model="dateFrom2" scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="modalFrom2 = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.dialogFrom2.save(dateFrom2)"
-                        >OK</v-btn
-                      >
+                      <v-btn flat color="primary" @click="modalFrom2 = false">Cancel</v-btn>
+                      <v-btn flat color="primary" @click="$refs.dialogFrom2.save(dateFrom2)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field
-                    v-model="dateTo2"
-                    label="Hasta"
-                    prepend-icon="event"
-                    readonly
-                    @click="modalTo2 = true"
-                  ></v-text-field>
-                  <v-dialog
-                    ref="dialogTo2"
-                    v-model="modalTo2"
-                    :return-value.sync="dateTo2"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
+                  <v-text-field v-model="dateTo2" label="Hasta" prepend-icon="event" readonly
+                    @click="modalTo2 = true"></v-text-field>
+                  <v-dialog ref="dialogTo2" v-model="modalTo2" :return-value.sync="dateTo2" persistent lazy full-width
+                    width="290px">
                     <v-date-picker locale="es-es" v-model="dateTo2" scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="modalTo2 = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.dialogTo2.save(dateTo2)"
-                        >OK</v-btn
-                      >
+                      <v-btn flat color="primary" @click="modalTo2 = false">Cancel</v-btn>
+                      <v-btn flat color="primary" @click="$refs.dialogTo2.save(dateTo2)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
                 <v-flex xs4>
-                  <v-select
-                    :items="sucursalList"
-                    label="Sucursal"
-                    v-model="sucursal"
-                    prepend-icon="mdi-hospital-building"
-                    item-text="Name"
-                    item-value="_id"
-                    :rules="validateRequired"
-                  ></v-select>
+                  <v-select :items="sucursalList" label="Sucursal" v-model="sucursal"
+                    prepend-icon="mdi-hospital-building" item-text="Name" item-value="_id"
+                    :rules="validateRequired"></v-select>
                 </v-flex>
                 <v-flex xs6>
-                  <v-autocomplete
-                    v-model="model"
-                    :items="items"
-                    :loading="isLoading"
-                    :search-input.sync="search"
-                    :item-text="getDoc"
-                    item-value="_id"
-                    label="Doctor"
-                    prepend-icon="mdi-account-circle"
-                    return-object
-                    :rules="validateRequired"
-                  ></v-autocomplete>
+                  <v-autocomplete v-model="model" :items="items" :loading="isLoading" :search-input.sync="search"
+                    :item-text="getDoc" item-value="_id" label="Doctor" prepend-icon="mdi-account-circle" return-object
+                    :rules="validateRequired"></v-autocomplete>
                 </v-flex>
                 <v-flex xs6 pl-2>
-                  <v-select
-                    v-model="diagnosis"
-                    :items="diagnostico"
-                    item-text="text"
-                    item-value="value"
-                    label="Diagnosticos"
-                    multiple
-                    chips
-                    persistent-hint
-                    class="diagnosisOpt"
-                    :rules="validateRequired"
-                  ></v-select>
+                  <v-select v-model="diagnosis" :items="diagnostico" item-text="text" item-value="value"
+                    label="Diagnosticos" multiple chips persistent-hint class="diagnosisOpt"
+                    :rules="validateRequired"></v-select>
                 </v-flex>
                 <v-flex xs12 class="text-lg-right">
-                  <v-btn
-                    :loading="loader"
-                    :disabled="loader"
-                    color="success"
-                    @click="generarReport('optometry')"
-                  >
+                  <v-btn :loading="loader" :disabled="loader" color="success" @click="generarReport('optometry')">
                     Generar
                   </v-btn>
                 </v-flex>
-                <v-flex
-                  xs12
-                  class="text-lg-right pt-4"
-                  v-if="reportOptometrist && !reportOptometristDisplay"
-                >
-                  <v-data-table
-                    :headers="headersOptometrist"
-                    :items="resultOptometrist"
-                    class="elevation-1"
-                    :pagination.sync="paginationOpt"
-                    multi-sort
-                  >
+                <v-flex xs12 class="text-lg-right pt-4" v-if="reportOptometrist && !reportOptometristDisplay">
+                  <v-data-table :headers="headersOptometrist" :items="resultOptometrist" class="elevation-1"
+                    :pagination.sync="paginationOpt" multi-sort>
                     <template slot="items" slot-scope="props">
                       <td class="text-xs-center">
                         {{ (paginationOpt.page - 1) * 10 + props.index + 1 }}
@@ -405,7 +234,7 @@
                         {{
                           props.item.objPreliminary
                             ? props.item.objPreliminary.data.retinal_photo ||
-                              "-"
+                            "-"
                             : "-"
                         }}
                       </td>
@@ -413,17 +242,14 @@
                         {{
                           props.item.objPreliminary
                             ? props.item.objPreliminary.data.retinal_findings ||
-                              "-"
+                            "-"
                             : "-"
                         }}
                       </td>
                     </template>
                   </v-data-table>
                   <div class="text-xs-center pt-2">
-                    <v-btn
-                      @click="reportOptometristDisplay = true"
-                      v-if="resultOptometrist.length > 0"
-                    >
+                    <v-btn @click="reportOptometristDisplay = true" v-if="resultOptometrist.length > 0">
                       Vista Previa para Exportar
                     </v-btn>
                   </div>
@@ -434,31 +260,19 @@
         </v-form>
       </v-tab-item>
     </v-tabs>
-    <div
-      id="Divtableophthalmologist"
-      v-if="
-        reportOphthalmology &&
-        reportOphthalmologyDisplay &&
-        rolePhi == 'ophthalmologist'
-      "
-    >
-      <table
-        id="tableophthalmologist"
-        border="1"
-        width="100%"
-        cellspacing="0"
-        cellpadding="0"
-        charset="UTF-8"
-      >
+    <div id="Divtableophthalmologist" v-if="
+      reportOphthalmology &&
+      reportOphthalmologyDisplay &&
+      rolePhi == 'ophthalmologist'
+    ">
+      <table id="tableophthalmologist" border="1" width="100%" cellspacing="0" cellpadding="0" charset="UTF-8">
         <tr>
           <td colspan="15">
             <table border="0" width="50%" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="15" align="left">
-                  <strong
-                    >FUDEM - CENSO DE PACIENTES EN CLINICA DE
-                    OFTALMOLOGÍA</strong
-                  >
+                  <strong>FUDEM - CENSO DE PACIENTES EN CLINICA DE
+                    OFTALMOLOGÍA</strong>
                 </td>
               </tr>
               <tr>
@@ -586,10 +400,7 @@
           </td>
         </tr>
       </table>
-      <div
-        class="text-xs-center pt-2"
-        v-if="resultOphthalmology.length > 0 && rolePhi == 'ophthalmologist'"
-      >
+      <div class="text-xs-center pt-2" v-if="resultOphthalmology.length > 0 && rolePhi == 'ophthalmologist'">
         <v-btn @click="csvExport('tableophthalmologist')">
           Exportar a Excel
         </v-btn>
@@ -599,30 +410,19 @@
         <v-btn @click="reportOphthalmologyDisplay = false"> Volver </v-btn>
       </div>
     </div>
-    <div
-      id="Divtableoptometrist"
-      v-if="
-        reportOptometrist &&
-        reportOptometristDisplay &&
-        rolePhi == 'optometrist'
-      "
-    >
-      <table
-        id="tableoptometrist"
-        border="1"
-        width="100%"
-        cellspacing="0"
-        cellpadding="0"
-      >
+    <div id="Divtableoptometrist" v-if="
+      reportOptometrist &&
+      reportOptometristDisplay &&
+      rolePhi == 'optometrist'
+    ">
+      <table id="tableoptometrist" border="1" width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="23">
             <table border="0" width="50%" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="23" align="left">
-                  <strong
-                    >FUDEM - CENSO DE PACIENTES EN CLINICA DE
-                    OFTALMOLOGÍA</strong
-                  >
+                  <strong>FUDEM - CENSO DE PACIENTES EN CLINICA DE
+                    OFTALMOLOGÍA</strong>
                 </td>
               </tr>
               <tr>
@@ -724,10 +524,7 @@
             <strong>DIO RECETA</strong>
           </td>
         </tr>
-        <tr
-          v-for="(consultas, j) in resultOptometrist"
-          v-if="resultOptometrist.length > 0 && rolePhi == 'optometrist'"
-        >
+        <tr v-for="(consultas, j) in resultOptometrist" v-if="resultOptometrist.length > 0 && rolePhi == 'optometrist'">
           <td class="text-xs-center" align="center">
             {{ j + 1 }}
           </td>
@@ -908,10 +705,7 @@
           </td>
         </tr>
       </table>
-      <div
-        class="text-xs-center pt-2"
-        v-if="resultOptometrist.length > 0 && rolePhi == 'optometrist'"
-      >
+      <div class="text-xs-center pt-2" v-if="resultOptometrist.length > 0 && rolePhi == 'optometrist'">
         <v-btn @click="csvExport('tableoptometrist')"> Exportar a Excel </v-btn>
         <v-btn @click="printOpt('tableoptometrist')"> Exportar a Pdf </v-btn>
         <v-btn @click="reportOptometristDisplay = false"> Volver </v-btn>
@@ -1177,6 +971,22 @@ export default {
           value: "E",
           text: this.$t("title.type_consulting.E"),
         },
+        {
+          value: 'one day post surgery',
+          text: "1er Post-Quirurgico"
+        },
+        {
+          value: 'one week post surgery',
+          text: "1ra Semana Post-Quirurgico"
+        },
+        {
+          value: 'three week post surgery',
+          text: "3ra Semana Post-Quirurgico"
+        },
+        {
+          value: 'four week post surgery',
+          text: "4ta Semana Post-Quirurgico"
+        },
       ],
     };
   },
@@ -1322,17 +1132,17 @@ export default {
             15,
             200,
             "Página " +
-              doc.internal.getCurrentPageInfo().pageNumber +
-              " de " +
-              pageCount
+            doc.internal.getCurrentPageInfo().pageNumber +
+            " de " +
+            pageCount
           );
         }
         doc.save(
           "OFT-" +
-            this.dateFormat(this.dateFrom) +
-            "-" +
-            this.dateFormat(this.dateTo) +
-            ".pdf"
+          this.dateFormat(this.dateFrom) +
+          "-" +
+          this.dateFormat(this.dateTo) +
+          ".pdf"
         );
       });
     },
@@ -1563,17 +1373,17 @@ export default {
             15,
             200,
             "Página " +
-              doc.internal.getCurrentPageInfo().pageNumber +
-              " de " +
-              pageCount
+            doc.internal.getCurrentPageInfo().pageNumber +
+            " de " +
+            pageCount
           );
         }
         doc.save(
           "OPT-" +
-            this.dateFormat(this.dateFrom2) +
-            "-" +
-            this.dateFormat(this.dateTo2) +
-            ".pdf"
+          this.dateFormat(this.dateFrom2) +
+          "-" +
+          this.dateFormat(this.dateTo2) +
+          ".pdf"
         );
       });
     },
@@ -1695,7 +1505,7 @@ export default {
             {
               content: this.resultOphthalmology[i].objPreliminary
                 ? this.resultOphthalmology[i].objPreliminary.data
-                    .retinal_photo || "-"
+                  .retinal_photo || "-"
                 : "-",
               styles: {
                 halign: "center",
@@ -1706,7 +1516,7 @@ export default {
             {
               content: this.resultOphthalmology[i].objPreliminary
                 ? this.resultOphthalmology[i].objPreliminary.data
-                    .retinal_findings || "-"
+                  .retinal_findings || "-"
                 : "-",
               styles: {
                 halign: "center",
@@ -1838,7 +1648,7 @@ export default {
           itemReport.push({
             content: this.resultOptometrist[i].objPreliminary
               ? this.resultOptometrist[i].objPreliminary.data.retinal_photo ||
-                "-"
+              "-"
               : "-",
             styles: {
               halign: "center",
@@ -1850,7 +1660,7 @@ export default {
           itemReport.push({
             content: this.resultOptometrist[i].objPreliminary
               ? this.resultOptometrist[i].objPreliminary.data
-                  .retinal_findings || "-"
+                .retinal_findings || "-"
               : "-",
             styles: {
               halign: "center",

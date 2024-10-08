@@ -29,7 +29,7 @@
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{
                               $t("title.cancel")
-                              }}</v-btn>
+                            }}</v-btn>
                             <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>
                           </v-date-picker>
                         </v-menu>
@@ -47,7 +47,7 @@
                         }}</v-btn>
                       <v-btn flat @click="dischargeImaging">{{
                         $t("title.cancel")
-                        }}</v-btn>
+                      }}</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-card-actions>
@@ -124,7 +124,7 @@
       <v-card>
         <v-card-title class="headline">{{
           $t("content.deletePdf")
-          }}</v-card-title>
+        }}</v-card-title>
 
         <v-card-text>
           {{ $t("content.confirmDeletePdf") }}
@@ -209,6 +209,22 @@ export default {
       {
         value: "E",
         text: vm.$t("title.type_consulting.E"),
+      },
+      {
+        value: 'one day post surgery',
+        text: "1er Post-Quirurgico"
+      },
+      {
+        value: 'one week post surgery',
+        text: "1ra Semana Post-Quirurgico"
+      },
+      {
+        value: 'three week post surgery',
+        text: "3ra Semana Post-Quirurgico"
+      },
+      {
+        value: 'four week post surgery',
+        text: "4ta Semana Post-Quirurgico"
       },
     ],
     rules: {
