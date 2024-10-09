@@ -2375,7 +2375,7 @@
                       </v-flex>
                     </v-layout>
                   </v-flex>
-                  <v-flex xs12 v-if="myProp.objOphthalmology.data.observaciones">
+                  <v-flex xs12>
                     <span class="primary--text">Plan de Manejo</span>
                   </v-flex>
                   <v-flex xs12 v-if="myProp.objOphthalmology.data.observaciones">
