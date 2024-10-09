@@ -299,15 +299,7 @@ export default {
         return;
       }
     }
-    setTimeout(async () => {
-      const result = await getLastConsultation({
-        body: { person: this.$store.getters.getPatient._id },
-      });
-      this.$store.commit({
-        type: "setLastConsultation",
-        state: result,
-      });
-    }, 1000);
+
   },
   methods: {
     async getSucursal() {
@@ -650,6 +642,18 @@ export default {
             reject(err);
           });
       });
+    },
+  },
+  watch: {
+    async storePatient() {
+      const result = await getLastConsultation({
+        body: { person: this.storePatient._id },
+      });
+      this.$store.commit({
+        type: "setLastConsultation",
+        state: result,
+      });
+
     },
   },
   computed: {
