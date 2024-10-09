@@ -29,7 +29,7 @@
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{
                               $t("title.cancel")
-                            }}</v-btn>
+                              }}</v-btn>
                             <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>
                           </v-date-picker>
                         </v-menu>
@@ -47,7 +47,7 @@
                         }}</v-btn>
                       <v-btn flat @click="dischargeImaging">{{
                         $t("title.cancel")
-                      }}</v-btn>
+                        }}</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-card-actions>
@@ -124,7 +124,7 @@
       <v-card>
         <v-card-title class="headline">{{
           $t("content.deletePdf")
-        }}</v-card-title>
+          }}</v-card-title>
 
         <v-card-text>
           {{ $t("content.confirmDeletePdf") }}
@@ -156,6 +156,7 @@ import * as consultationServ from "@/componentServs/consultation";
 import moment from "moment";
 import html2canvas from "html2canvas";
 import { EventBus } from "@/store/eventBus";
+import { findPrescriptions } from "../../componentServs/medicines";
 export default {
   name: "history_form",
   components: {
@@ -285,6 +286,7 @@ export default {
         async function loadFiles(vm) {
           for (let i in result) {
             if (result[i].file && result[i].file != "") {
+
               // let newDate = result[i].dateUpload.split("-")
               await fileServ
                 .getImage(result[i].file, sessionStorage.getItem("pussy"))
@@ -306,6 +308,16 @@ export default {
                 });
             }
             if (!result[i].file) {
+              let prescription_oft = null
+              let prescription_opt = null
+              if (result[i].prescription_of)
+                prescription_oft = (await findPrescriptions(result[i].prescription_of))[0]
+              if (result[i].prescription)
+                prescription_opt = (await findPrescriptions(result[i].prescription))[0]
+
+              result[i].prescription_oft_data = prescription_oft
+              result[i].prescription_opt_data = prescription_opt
+
               vm.historyConsulting.push({
                 name: result[i].typeConsultation
                   ? vm.langTypeConsulting(result[i].typeConsultation)
