@@ -1,31 +1,18 @@
 <template>
   <v-container>
-    <v-form
-      autocomplete="off"
-      ref="formObservationsRef"
-      v-model="formObservations"
-      lazy-validation
-    >
+    <v-form autocomplete="off" ref="formObservationsRef" v-model="formObservations" lazy-validation>
       <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
-          <span class="subheading white--text text-capitalize"
-            >Plan De Manejo</span
-          >
+          <span class="subheading white--text text-capitalize">Plan De Manejo</span>
         </v-card-title>
         <v-divider light class="vm-border-color-2"></v-divider>
         <v-card-text>
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-textarea
-                  name="input-7-1"
-                  label="Plan De Manejo"
-                  v-model="observations"
-                  outline
-                  :counter="maxHeigthText"
-                  :rules="[rules.length(maxHeigthText)]"
-                  :readonly="validateRead()"
-                ></v-textarea>
+                <v-textarea name="input-7-1" label="Plan De Manejo" v-model="observations" outline
+                  :counter="maxHeigthText" :rules="[rules.length(maxHeigthText)]"
+                  :readonly="validateRead()"></v-textarea>
               </v-flex>
               <prescription type="2" ref="prescriptionRef" />
             </v-layout>
@@ -80,11 +67,8 @@
           <v-container id="input-usage" grid-list-xl fluid>
             <v-layout wrap>
               <v-flex xs4>
-                <v-text-field
-                  v-model="dateFormatted"
-                  prepend-icon="event"
-                  :label="$t('title.next_appointment')"
-                ></v-text-field>
+                <v-text-field v-model="dateFormatted" prepend-icon="event"
+                  :label="$t('title.next_appointment')"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -172,6 +156,8 @@ export default {
           let valor = {
             observacion: this.observations,
             prescription: dataPrescription ? dataPrescription[0]._id : null,
+            next_appointment: this.dateFormatted,
+
           };
           resolve(valor);
         } else {
