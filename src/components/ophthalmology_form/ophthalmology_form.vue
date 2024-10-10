@@ -3,12 +3,10 @@
     <!-- <v-form autocomplete="off"> -->
     <v-card class="mx-auto elevation-0 blue-grey lighten-5">
       <v-card-title class="title font-weight-regular justify-space-between">
-        <div
-          v-if="
-            storeConsultation.objOphthalmology &&
-            storeConsultation.objOphthalmology.data
-          "
-        >
+        <div v-if="
+          storeConsultation.objOphthalmology &&
+          storeConsultation.objOphthalmology.data
+        ">
           {{ physicianEval }}
         </div>
         <div v-else>
@@ -17,12 +15,7 @@
         </div>
         <div>
           <span>{{ $t("title.step") }}&nbsp;</span>
-          <v-avatar
-            color="primary lighten-2"
-            class="subheading white--text"
-            size="24"
-            v-text="pasoTitle"
-          ></v-avatar>
+          <v-avatar color="primary lighten-2" class="subheading white--text" size="24" v-text="pasoTitle"></v-avatar>
         </div>
       </v-card-title>
 
@@ -31,28 +24,13 @@
       <v-window v-model="paso">
         <v-window-item :value="0">
           <antecedent class="px-2 py-2" ref="antecedentRef"></antecedent>
-          <previous_surgeries
-            class="px-2 py-2"
-            ref="previousSurgeriesRef"
-          ></previous_surgeries>
-          <general_data_oft
-            class="px-2 py-2"
-            ref="generalDataOftRef"
-          ></general_data_oft>
-          <clinic_history
-            class="px-2 py-2"
-            ref="clinicHistoryRef"
-          ></clinic_history>
-          <preliminary_data
-            class="px-2 py-2"
-            ref="preliminaryDataRef"
-          ></preliminary_data>
+          <previous_surgeries class="px-2 py-2" ref="previousSurgeriesRef"></previous_surgeries>
+          <general_data_oft class="px-2 py-2" ref="generalDataOftRef"></general_data_oft>
+          <clinic_history class="px-2 py-2" ref="clinicHistoryRef"></clinic_history>
+          <preliminary_data class="px-2 py-2" ref="preliminaryDataRef"></preliminary_data>
         </v-window-item>
         <v-window-item :value="1">
-          <diagnosis_oft
-            class="px-2 py-2"
-            ref="diagnosisOftRef"
-          ></diagnosis_oft>
+          <diagnosis_oft class="px-2 py-2" ref="diagnosisOftRef"></diagnosis_oft>
           <observations class="px-2 py-2" ref="observationsRef"></observations>
         </v-window-item>
       </v-window>
@@ -62,38 +40,21 @@
       <v-card-actions>
         <v-btn :disabled="paso === 0" flat @click="back()">{{
           $t("title.back")
-        }}</v-btn>
+          }}</v-btn>
         <v-spacer>
           <v-item-group v-model="paso" class="text-xs-center" mandatory>
             <v-item v-for="n in total" :key="`btn-${n}`">
-              <v-btn
-                slot-scope="{ active, toggle }"
-                :color="active ? 'primary' : 'blue-grey lighten-4'"
-                :input-value="active"
-                icon
-                @click="toggle, paginationChange(n)"
-              >
+              <v-btn slot-scope="{ active, toggle }" :color="active ? 'primary' : 'blue-grey lighten-4'"
+                :input-value="active" icon @click="toggle, paginationChange(n)">
                 <!-- Si se quieren saltas los pasos en ves de "paginationChange" colocar "paso - 1" -->
-                <v-avatar
-                  class="subheading white--text"
-                  size="32"
-                  v-text="n"
-                ></v-avatar>
+                <v-avatar class="subheading white--text" size="32" v-text="n"></v-avatar>
               </v-btn>
             </v-item>
           </v-item-group>
         </v-spacer>
 
-        <v-btn
-          color="primary"
-          :loading="loading"
-          depressed
-          @click="buttonNext"
-          :disabled="
-            storePhysician.role != 'ophthalmologist' && paso == total - 1
-          "
-          >{{ paso < total - 1 ? $t("title.next") : $t("title.save") }}</v-btn
-        >
+        <v-btn color="primary" :loading="loading" depressed @click="buttonNext" :disabled="storePhysician.role != 'ophthalmologist' && paso == total - 1
+          ">{{ paso < total - 1 ? $t("title.next") : $t("title.save") }}</v-btn>
       </v-card-actions>
     </v-card>
     <!-- </v-form> -->
@@ -103,11 +64,7 @@
       <v-card :color="alertColor" dark>
         <v-card-text>
           {{ alertMsg }}
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -158,12 +115,8 @@
 
     <!-- Modal End Consultation -->
     <endConsultation ref="viewDialog"></endConsultation>
-    <v-snackbar
-      color="info darken-1 black--text mb-3"
-      v-model="alert_photo_retinal"
-      style="font-weight: bold"
-      :timeout="0"
-    >
+    <v-snackbar color="info darken-1 black--text mb-3" v-model="alert_photo_retinal" style="font-weight: bold"
+      :timeout="0">
       Posee una fotografía de retina
       <v-btn color="black" flat @click="alert_photo_retinal = false">
         Cerrar
@@ -247,7 +200,7 @@ export default {
             if (result == "ok") this.saveOphthalmology();
             else this.paso++;
           })
-          .catch((err) => {});
+          .catch((err) => { });
       }
     },
     back() {
@@ -259,7 +212,7 @@ export default {
     validateNextOrSave() {
       return new Promise((resolve, reject) => {
         switch (
-          parseInt(this.paso) // Evalua el formulario segun el caso
+        parseInt(this.paso) // Evalua el formulario segun el caso
         ) {
           case 0:
             // resolve()
@@ -600,9 +553,32 @@ export default {
       this.alert = true;
       this.consultation.person = this.$store.getters.getPatient._id;
       this.consultation.sucursalId = this.storeSucursal;
+      let consultation = {}
+      let consutltationCopy = { ...this.consultation }
+      Object.entries(consutltationCopy).forEach(([key, value]) => {
+        if (key == "objOphthalmology" || key == "objOptometrist") {
+
+          if (value && "data" in value) {
+            let dataObj = {}
+
+            Object.entries(value.data).forEach(([key2, value2]) => {
+              if (key2 == "objOphthalmology" || key2 == "objOptometrist") return
+              dataObj[key2] = value2
+            })
+
+            consultation[key] = {
+              data: dataObj,
+              control: dataObj.control
+            }
+
+          }
+        } else {
+          consultation[key] = value
+        }
+      })
 
       let objAux = {
-        body: this.consultation,
+        body: consultation,
         token: null,
       };
       objAux.body.responsableConsultation =
@@ -627,9 +603,10 @@ export default {
               // console.log("Actualizo preliminares"
               this.updateOrSaveAntecedents()
                 .then((resultAntecedents) => {
+
                   this.saveStoreConsultation(result)
-                    .then((result) => {})
-                    .catch((err) => {});
+                    .then((result) => { })
+                    .catch((err) => { });
                 })
                 .catch((err) => {
                   console.log(
@@ -650,9 +627,11 @@ export default {
             .then((result) => {
               this.updateOrSaveAntecedents()
                 .then((resultAntecedents) => {
+
+
                   this.saveStoreConsultation(result[0])
-                    .then((result) => {})
-                    .catch((err) => {});
+                    .then((result) => { })
+                    .catch((err) => { });
                 })
                 .catch((err) => {
                   console.log(
