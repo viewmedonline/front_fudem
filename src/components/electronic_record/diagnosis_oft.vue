@@ -1,11 +1,6 @@
 <template>
   <v-container>
-    <v-form
-      autocomplete="off"
-      ref="formDiagnosisOftRef"
-      v-model="formDiagnosisOft"
-      lazy-validation
-    >
+    <v-form autocomplete="off" ref="formDiagnosisOftRef" v-model="formDiagnosisOft" lazy-validation>
       <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">{{
@@ -20,99 +15,46 @@
                 <v-checkbox v-model="postOperatoryActive" label="Post Operatorio"> </v-checkbox>
               </v-flex>
               <v-flex xs6 v-if="useListDiagnoses">
-                <v-autocomplete
-                  v-model="diagnostico"
-                  :items="listDiagnoses"
-                  :readonly="validateRead()"
-                  :label="$t('title.diagnostic')"
-                  persistent-hint
-                  prepend-icon=""
-                  return-object
-                  :item-text="descriptionDx"
-                  @change="selectDx"
-                  :rules="[
+                <v-autocomplete v-model="diagnostico" :items="listDiagnoses" :readonly="validateRead()"
+                  :label="$t('title.diagnostic')" persistent-hint prepend-icon="" return-object
+                  :item-text="descriptionDx" @change="selectDx" :rules="[
                     (v) =>
                       !!v || validateLenghtTable || $t('title.field_required'),
-                  ]"
-                >
+                  ]">
                 </v-autocomplete>
               </v-flex>
               <v-flex xs3>
-                <v-select
-                  v-model="eyeDiagnoses"
-                  :items="['OJO DERECHO', 'OJO IZQUIERDO', 'AMBOS OJOS']"
-                  label="Ojo"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                >
-                <v-slide-x-reverse-transition
-                    slot="append-outer"
-                    mode="out-in"
-                    v-if="!postOperatoryActive"
-                  >
-                    <v-btn
-                      dark
-                      small
-                      icon
-                      :disabled="
-                        Object.keys(diagnostico).length == 0 || !eyeDiagnoses
-                      "
-                      color="grey white--text"
-                      @click="appendListDiagnosis()"
-                    >
+                <v-select v-model="eyeDiagnoses" :items="['OJO DERECHO', 'OJO IZQUIERDO', 'AMBOS OJOS']" label="Ojo"
+                  :rules="[]" :readonly="validateRead()">
+                  <v-slide-x-reverse-transition slot="append-outer" mode="out-in" v-if="!postOperatoryActive">
+                    <v-btn dark small icon :disabled="Object.keys(diagnostico).length == 0 || !eyeDiagnoses
+                      " color="grey white--text" @click="appendListDiagnosis()">
                       <v-icon>add</v-icon>
                     </v-btn>
                   </v-slide-x-reverse-transition>
                 </v-select>
               </v-flex>
               <v-flex xs3 v-if="postOperatoryActive">
-                <v-select
-                  v-model="dayPostOperatory"
-                  :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-                  label="Dia post operatorio"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                >
-                  <v-slide-x-reverse-transition
-                    slot="append-outer"
-                    mode="out-in"
-                    v-if="postOperatoryActive"
-                  >
-                    <v-btn
-                      dark
-                      small
-                      icon
-                      :disabled="
-                        Object.keys(diagnostico).length == 0 || !eyeDiagnoses
-                      "
-                      color="grey white--text"
-                      @click="appendListDiagnosis()"
-                    >
+                <v-select v-model="dayPostOperatory" :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
+                  label="Dia post operatorio" :rules="[]" :readonly="validateRead()">
+                  <v-slide-x-reverse-transition slot="append-outer" mode="out-in" v-if="postOperatoryActive">
+                    <v-btn dark small icon :disabled="Object.keys(diagnostico).length == 0 || !eyeDiagnoses
+                      " color="grey white--text" @click="appendListDiagnosis()">
                       <v-icon>add</v-icon>
                     </v-btn>
                   </v-slide-x-reverse-transition>
                 </v-select>
               </v-flex>
-              
+
               <v-flex xs10 class="text-sm-left">
-                <v-chip
-                  v-for="chips in chipsDiagnostic"
-                  :key="chips.code"
-                  label
-                >
+                <v-chip v-for="chips in chipsDiagnostic" :key="chips.code" label>
                   {{ `${chips.code} - ${chips.diagnostic[localeLang]}` }}
-                  <v-icon class="pl-1" size="20px" @click="deleteDx(chips)"
-                    >close</v-icon
-                  >
+                  <v-icon class="pl-1" size="20px" @click="deleteDx(chips)">close</v-icon>
                 </v-chip>
               </v-flex>
               <v-flex xs12 class="text-sm-left">
-                <v-data-table
-                  :headers="headers"
-                  :items="diagnosisAssigned"
-                  class="elevation-1"
-                  rows-per-page-text="Filas por pagina"
-                >
+                <v-data-table :headers="headers" :items="diagnosisAssigned" class="elevation-1"
+                  rows-per-page-text="Filas por pagina">
                   <template slot="items" slot-scope="props">
                     <td>
                       {{
@@ -120,11 +62,7 @@
                       }}
                     </td>
                     <td class="justify-center layout px-0">
-                      <v-icon
-                        :disabled="validateRead()"
-                        class="mt-3"
-                        @click="deleteItem(props.item)"
-                      >
+                      <v-icon :disabled="validateRead()" class="mt-3" @click="deleteItem(props.item)">
                         delete
                       </v-icon>
                     </td>
@@ -212,7 +150,7 @@ export default {
     },
     useListDiagnoses: true,
     diagnosticoText: null,
-    postOperatoryActive:false
+    postOperatoryActive: false
   }),
   methods: {
     validateRead() {
@@ -253,8 +191,10 @@ export default {
       if (Object.keys(this.diagnostico).length > 0) {
         this.diagnostico.diagnostic.es =
           this.diagnostico.diagnostic.es + " - " + this.eyeDiagnoses;
-        if(this.postOperatoryActive){
-          this.diagnostico.diagnostic.es+=` - ${this.dayPostOperatory} dias Post Operatorio`
+        if (this.postOperatoryActive) {
+          this.diagnostico.code = this.diagnostico.code + "-po"
+          const label = this.dayPostOperatory > 1 ? ` - ${this.dayPostOperatory} dias Post Operatorio` : ` - Post Operatorio`;
+          this.diagnostico.diagnostic.es += label;
         }
         this.diagnosisAssigned.push(this.diagnostico);
         this.diagnostico = {};
@@ -267,7 +207,7 @@ export default {
         this.dayPostOperatory = null
         this.postOperatoryActive = false
         this.getDiagnoses();
-        this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned);
+        this.diagnosisAssigned = filterDuplicate(this.diagnosisAssigned)
       } else {
         alert("Debe Indicar el Diagnostigo");
         return;
