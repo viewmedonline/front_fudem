@@ -40,7 +40,7 @@
       <v-card-actions>
         <v-btn :disabled="paso === 0" flat @click="back()">{{
           $t("title.back")
-        }}</v-btn>
+          }}</v-btn>
         <v-spacer>
           <v-item-group v-model="paso" class="text-xs-center" mandatory>
             <v-item v-for="n in total" :key="`btn-${n}`">
@@ -323,11 +323,12 @@ export default {
                 this.$refs.observationsRef
                   .saveObservations()
                   .then((result) => {
-                    // console.log("resultado observaciones y medicamentos: ", result)
-                    this.consultation.observaciones = {
-                      observacion: result.observacion,
-                    };
-                    this.consultation.prescription_of = result.prescription;
+                    this.consultation.observaciones = result;
+                    //habilitar para que funcione la nueva interfaz de medicamentos usar el commit 721cae5 para poner el modulo de observaciones correctamente
+                    // this.consultation.observaciones = {
+                    //   observacion: result.observacion,
+                    // };
+                    // this.consultation.prescription_of = result.prescription;
                     this.consultation.next_appointment =
                       result.next_appointment;
                     if (this.paso > this.lastValidate) this.lastValidate = 1;
