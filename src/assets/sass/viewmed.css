@@ -57,3 +57,48 @@
   min-height: 300px;
 }
 /*# sourceMappingURL=viewmed.css.map */
+.input-file-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border: 2px dashed #007bff;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-file-wrapper:hover {
+  background-color: #f1f1f1;
+}
+
+.input-file-wrapper::before {
+  /* content: 'Arrastra tu archivo PDF aquí o haz clic para seleccionar'; */
+  font-size: 18px;
+  color: #007bff;
+}
+
+.input-file {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.input-file-wrapper.active {
+  background-color: #e6f7ff;
+  border-color: #0056b3;
+}
+
+.input-file-wrapper.active::before {
+  color: #0056b3;
+}

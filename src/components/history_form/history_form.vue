@@ -1,8 +1,19 @@
 <template>
   <v-container>
-    <v-form autocomplete="off" ref="formHistoryRef" v-model="formHistory" lazy-validation>
+    <v-form
+      autocomplete="off"
+      ref="formHistoryRef"
+      v-model="formHistory"
+      lazy-validation
+    >
       <v-stepper v-model="e6" vertical non-linear>
-        <v-stepper-step :step="9999" :edit-icon="'add'" complete :editable="true" @click="validateStepper(9999)">
+        <v-stepper-step
+          :step="9999"
+          :edit-icon="'add'"
+          complete
+          :editable="true"
+          @click="validateStepper(9999)"
+        >
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">{{ $t("title.upload_file") }}</h3>
@@ -17,25 +28,75 @@
                   <v-container fluid grid-list-md px-0 py-0>
                     <v-layout row wrap>
                       <v-flex xs4 offset-xs2>
-                        <v-text-field :label="$t('title.description')" v-model="nameconsult"
-                          :rules="[rules.required]"></v-text-field>
+                        <v-text-field
+                          :label="$t('title.description')"
+                          v-model="nameconsult"
+                          :rules="[rules.required]"
+                        ></v-text-field>
                       </v-flex>
                       <v-flex xs4>
-                        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" :nudge-right="40" lazy
-                          transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                          <v-text-field slot="activator" v-model="dateFormatted" label="Date" persistent-hint
-                            prepend-icon="event" @blur="date = parseDate(dateFormatted)"></v-text-field>
-                          <v-date-picker locale="es-es" v-model="date" no-title @input="menu1 = false">
+                        <v-menu
+                          ref="menu1"
+                          v-model="menu1"
+                          :close-on-content-click="false"
+                          :nudge-right="40"
+                          lazy
+                          transition="scale-transition"
+                          offset-y
+                          full-width
+                          max-width="290px"
+                          min-width="290px"
+                        >
+                          <v-text-field
+                            slot="activator"
+                            v-model="dateFormatted"
+                            label="Date"
+                            persistent-hint
+                            prepend-icon="event"
+                            @blur="date = parseDate(dateFormatted)"
+                          ></v-text-field>
+                          <v-date-picker
+                            locale="es-es"
+                            v-model="date"
+                            no-title
+                            @input="menu1 = false"
+                          >
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{
                               $t("title.cancel")
-                              }}</v-btn>
-                            <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>
+                            }}</v-btn>
+                            <v-btn
+                              flat
+                              color="primary"
+                              @click="$refs.menu.save(dateFormatted)"
+                              >Ok</v-btn
+                            >
                           </v-date-picker>
                         </v-menu>
                       </v-flex>
                       <v-flex xs8 offset-xs2>
-                        <vue-dropzone id="dropzone" ref="myVueDropzone" :options="dropzoneOptions"></vue-dropzone>
+                        <!-- <vue-dropzone
+                          id="dropzone"
+                          ref="myVueDropzone"
+                          :options="dropzoneOptions"
+                        ></vue-dropzone> -->
+                        <div class="input-file-wrapper">
+                          <input
+                            type="file"
+                            name="uploadField"
+                            accept="application/pdf"
+                            class="input-file"
+                            id="uploadField"
+                            :rules="[rules.required]"
+                            @change="
+                              handleFileChange($event);
+                              mostrarNombreArchivo($event);
+                            "
+                          />
+                          <div id="file-name" class="file-name">
+                            {{ message }}
+                          </div>
+                        </div>
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -43,11 +104,16 @@
                 <v-card-actions>
                   <v-layout row wrap justify-end>
                     <v-flex xs8 offset-xs2>
-                      <v-btn color="primary" @click="saveConsult" :disabled="alert" :loading="alert">{{ $t("title.save")
-                        }}</v-btn>
+                      <v-btn
+                        color="primary"
+                        @click="saveConsult"
+                        :disabled="alert"
+                        :loading="alert"
+                        >{{ $t("title.save") }}</v-btn
+                      >
                       <v-btn flat @click="dischargeImaging">{{
                         $t("title.cancel")
-                        }}</v-btn>
+                      }}</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-card-actions>
@@ -56,18 +122,34 @@
           </v-layout>
         </v-stepper-content>
         <div v-for="(history, z) in historyConsulting" :key="z">
-          <v-stepper-step :step="z" complete :edit-icon="'assignment'" :editable="true" @click="
-            history.file
-              ? show_document(history.file, z + 999999)
-              : show_report(history._id, z)
-            ">
+          <v-stepper-step
+            :step="z"
+            complete
+            :edit-icon="'assignment'"
+            :editable="true"
+            @click="
+              history.file
+                ? show_document(history.file, z + 999999)
+                : show_report(history._id, z)
+            "
+          >
             {{ history.name }}
             <small>{{ history.date }}</small>
           </v-stepper-step>
           <v-stepper-content :step="z" complete :editable="true">
-            <v-layout row wrap v-if="storePhysician.role == 'Institution' && history.file">
+            <v-layout
+              row
+              wrap
+              v-if="storePhysician.role == 'Institution' && history.file"
+            >
               <v-flex xs12 class="text-xs-right">
-                <v-btn @click="deleteDialog(history.id)" fab dark small color="primary">
+                <v-btn
+                  @click="deleteDialog(history.id)"
+                  fab
+                  dark
+                  small
+                  color="primary"
+                >
                   <v-icon>delete_forever</v-icon>
                 </v-btn>
               </v-flex>
@@ -80,10 +162,24 @@
               </v-flex>
             </v-layout>
 
-            <iframe color="grey lighten-1" class="mb-5" v-if="history.file" :src="pdf_document" type="application/pdf"
-              width="90%" height="100%" frameborder="0" style="height: 75vh"></iframe>
-            <history_consultation_inf v-else class="px-2 py-2" :myProp="history.consultation"
-              ref="history_consultation_inf_ref" :id="z"></history_consultation_inf>
+            <iframe
+              color="grey lighten-1"
+              class="mb-5"
+              v-if="history.file"
+              :src="pdf_document"
+              type="application/pdf"
+              width="90%"
+              height="100%"
+              frameborder="0"
+              style="height: 75vh"
+            ></iframe>
+            <history_consultation_inf
+              v-else
+              class="px-2 py-2"
+              :myProp="history.consultation"
+              ref="history_consultation_inf_ref"
+              :id="z"
+            ></history_consultation_inf>
           </v-stepper-content>
         </div>
         <!-- <div v-for="(file, z) in filesConsulting" :key="file._id">
@@ -115,7 +211,11 @@
       <v-card color="primary" dark>
         <v-card-text>
           Guardando
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -124,7 +224,7 @@
       <v-card>
         <v-card-title class="headline">{{
           $t("content.deletePdf")
-          }}</v-card-title>
+        }}</v-card-title>
 
         <v-card-text>
           {{ $t("content.confirmDeletePdf") }}
@@ -133,11 +233,19 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green darken-1" flat="flat" @click="removeDialog = false">
+          <v-btn
+            color="green darken-1"
+            flat="flat"
+            @click="removeDialog = false"
+          >
             Cancelar
           </v-btn>
 
-          <v-btn color="green darken-1" flat="flat" @click="deleteFile(idRemoveConsulting)">
+          <v-btn
+            color="green darken-1"
+            flat="flat"
+            @click="deleteFile(idRemoveConsulting)"
+          >
             Acepto
           </v-btn>
         </v-card-actions>
@@ -145,6 +253,7 @@
     </v-dialog>
   </v-container>
 </template>
+
 <script>
 const vue2Dropzone = () => import("vue2-dropzone");
 const history_consultation_inf = () =>
@@ -157,6 +266,18 @@ import moment from "moment";
 import html2canvas from "html2canvas";
 import { EventBus } from "@/store/eventBus";
 import { findPrescriptions } from "../../componentServs/medicines";
+const fileWrapper = document.querySelector(".input-file-wrapper");
+const fileInput = document.querySelector(".input-file");
+const fileNameContainer = document.getElementById("file-name");
+// fileInput.addEventListener("dragenter", () => {
+//   fileWrapper.classList.add("active");
+// });
+// fileInput.addEventListener("dragleave", () => {
+//   fileWrapper.classList.remove("active");
+// });
+// fileInput.addEventListener("drop", () => {
+//   fileWrapper.classList.remove("active");
+// });
 export default {
   name: "history_form",
   components: {
@@ -164,6 +285,8 @@ export default {
     history_consultation_inf,
   },
   data: (vm) => ({
+    uploadField: null,
+    message: "Arrastra tu archivo PDF aquí o haz clic para seleccionar",
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -172,7 +295,8 @@ export default {
     e6: 1,
     removeDialog: false,
     dropzoneOptions: {
-      url: "https://httpbin.org/post",
+      autoProcessQueue: false,
+      url: "/dummy",
       thumbnailWidth: 150,
       addRemoveLinks: true,
       acceptedFiles: ".pdf",
@@ -212,20 +336,20 @@ export default {
         text: vm.$t("title.type_consulting.E"),
       },
       {
-        value: 'one day post surgery',
-        text: "1er Post-Quirurgico"
+        value: "one day post surgery",
+        text: "1er Post-Quirurgico",
       },
       {
-        value: 'one week post surgery',
-        text: "1ra Semana Post-Quirurgico"
+        value: "one week post surgery",
+        text: "1ra Semana Post-Quirurgico",
       },
       {
-        value: 'three week post surgery',
-        text: "3ra Semana Post-Quirurgico"
+        value: "three week post surgery",
+        text: "3ra Semana Post-Quirurgico",
       },
       {
-        value: 'four week post surgery',
-        text: "4ta Semana Post-Quirurgico"
+        value: "four week post surgery",
+        text: "4ta Semana Post-Quirurgico",
       },
     ],
     rules: {
@@ -233,8 +357,26 @@ export default {
     },
     formHistory: false,
     saving: vm.$t("title.saving"),
+    file: null,
+    fileName: null,
   }),
   methods: {
+    handleFileChange(event) {
+      const files = event.target.files;
+      if (files.length > 0) {
+        this.file = files[0];
+        this.fileName = this.file.name;
+      }
+    },
+    mostrarNombreArchivo(event) {
+      const files = event.target.files;
+      if (files.length > 0) {
+        const fileName = files[0].name;
+        this.message = `Archivo seleccionado: ${fileName}`;
+      } else {
+        this.message = "";
+      }
+    },
     deleteDialog(idConsulting) {
       this.removeDialog = true;
       this.idRemoveConsulting = idConsulting;
@@ -286,7 +428,6 @@ export default {
         async function loadFiles(vm) {
           for (let i in result) {
             if (result[i].file && result[i].file != "") {
-
               // let newDate = result[i].dateUpload.split("-")
               await fileServ
                 .getImage(result[i].file, sessionStorage.getItem("pussy"))
@@ -308,15 +449,19 @@ export default {
                 });
             }
             if (!result[i].file) {
-              let prescription_oft = null
-              let prescription_opt = null
+              let prescription_oft = null;
+              let prescription_opt = null;
               if (result[i].prescription_of)
-                prescription_oft = (await findPrescriptions(result[i].prescription_of))[0]
+                prescription_oft = (
+                  await findPrescriptions(result[i].prescription_of)
+                )[0];
               if (result[i].prescription)
-                prescription_opt = (await findPrescriptions(result[i].prescription))[0]
+                prescription_opt = (
+                  await findPrescriptions(result[i].prescription)
+                )[0];
 
-              result[i].prescription_oft_data = prescription_oft
-              result[i].prescription_opt_data = prescription_opt
+              result[i].prescription_oft_data = prescription_oft;
+              result[i].prescription_opt_data = prescription_opt;
 
               vm.historyConsulting.push({
                 name: result[i].typeConsultation
@@ -395,24 +540,22 @@ export default {
       this.$refs.myVueDropzone.removeAllFiles();
     },
     saveConsult() {
-      let objAux = [];
       if (this.$refs.formHistoryRef.validate()) {
-        if (this.$refs.myVueDropzone.getAcceptedFiles()[0]) {
+        //   if (this.$refs.myVueDropzone.getAcceptedFiles()[0]) {
+        if (this.file) {
+          this.alert = true;
           let fd = new FormData();
-          let blob = new Blob(
-            [this.$refs.myVueDropzone.getAcceptedFiles()[0]],
-            { type: this.$refs.myVueDropzone.getAcceptedFiles()[0].type }
-          );
+          // let blob = new Blob([this.$refs.myVueDropzone.getAcceptedFiles()[0]], {
+          //   type: this.$refs.myVueDropzone.getAcceptedFiles()[0].type,
+          // });
+          let blob = new Blob([this.file], {
+            type: this.file.type,
+          });
           fd.append("file", blob);
 
           fileServ
-            .sendFile(
-              fd,
-              this.$refs.myVueDropzone.getAcceptedFiles()[0].name,
-              null
-            )
+            .sendFile(fd, this.fileName, null)
             .then((result) => {
-              this.alert = true;
               this.single = null;
               let objAux = {
                 body: {
@@ -440,11 +583,17 @@ export default {
                 );
                 (this.date = new Date().toISOString().substr(0, 10)),
                   (this.nameconsult = null);
-                this.$refs.myVueDropzone.removeAllFiles();
+                // this.$refs.myVueDropzone.removeAllFiles();
+                this.formHistory = false;
+                this.file = null;
+                this.fileName = null;
+                this.message =
+                  "Arrastra tu archivo PDF aquí o haz clic para seleccionar";
               });
             })
             .catch((err) => {
               console.log("error: ", err);
+              this.alert = false;
             });
         }
       }
