@@ -337,7 +337,7 @@ export default {
       },
       {
         value: "one day post surgery",
-        text: "1er Post-Quirurgico",
+        text: "1er Dia Post-Quirúrgico",
       },
       {
         value: "one week post surgery",

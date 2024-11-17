@@ -13,53 +13,72 @@
             <v-container grid-list-md text-xs-left>
               <v-layout row wrap>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.number_of_expedient") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.number_of_expedient") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ myProp.person.idQflow }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.registration_date") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.registration_date") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{
                     date(myProp.person.registrationdate)
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $tc("title.forename", 2) }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $tc("title.forename", 2) }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ myProp.person.forename }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $tc("title.surname", 2) }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $tc("title.surname", 2) }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ myProp.person.surname }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.age") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.age") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{
                     myProp.person.birthdate | age
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.birthdate") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.birthdate") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{
                     date(myProp.person.birthdate)
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.identification_document")
-                    }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.identification_document") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ myProp.person.id_document }}</span>
                 </v-flex>
                 <v-flex xs3>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.genero") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.genero") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ storePatient.gender }}</span>
                 </v-flex>
                 <v-flex xs3>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.read_write") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.read_write") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{
                     boolean(storePatient.readWrtite)
-                    }}</span>
+                  }}</span>
                 </v-flex>
 
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.use_lenses") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.use_lenses") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ boolean(storePatient.lenses) }}</span>
                 </v-flex>
                 <!-- <v-flex xs6>
@@ -69,10 +88,11 @@
                                   <span class="body-1">{{storePatient.category}}</span>
                                 </v-flex> -->
                 <v-flex xs6>
-                  <span class="body-1 font-weight-light font-italic">{{ $t("title.nationality") }}:&nbsp;</span>
+                  <span class="body-1 font-weight-light font-italic"
+                    >{{ $t("title.nationality") }}:&nbsp;</span
+                  >
                   <span class="body-1">{{ storePatient.nationality }}</span>
                 </v-flex>
-
               </v-layout>
             </v-container>
           </v-card-text>
@@ -82,9 +102,17 @@
               {{ $t("title.preliminary") }}
             </h3>
           </v-card-title>
-          <v-divider light class="vm-border-color-2" v-if="myProp.objPreliminary.data"></v-divider>
+          <v-divider
+            light
+            class="vm-border-color-2"
+            v-if="myProp.objPreliminary.data"
+          ></v-divider>
           <v-card-text v-if="myProp.objPreliminary.data">
-            <v-container grid-list-md text-xs-left v-if="myProp.objPreliminary.data">
+            <v-container
+              grid-list-md
+              text-xs-left
+              v-if="myProp.objPreliminary.data"
+            >
               <v-layout row wrap v-if="myProp.typeConsultation">
                 <v-flex xs4>
                   <span class="primary--text">Tipo de Consulta</span>
@@ -112,7 +140,10 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 v-if="myProp.objPreliminary.data.reasonConsultation">
+                <v-flex
+                  xs12
+                  v-if="myProp.objPreliminary.data.reasonConsultation"
+                >
                   <span class="primary--text">Motivo de la Consulta</span>
                 </v-flex>
                 <v-flex xs12>
@@ -127,10 +158,13 @@
                 <v-flex xs12 v-if="showAntecedent()">
                   <span class="primary--text">{{
                     $t("title.antecedents")
-                    }}</span>
+                  }}</span>
                 </v-flex>
 
-                <v-flex xs3 v-for="(antecedentes, x) in showAntecedent().antecedentes">
+                <v-flex
+                  xs3
+                  v-for="(antecedentes, x) in showAntecedent().antecedentes"
+                >
                   <span class="body-1 font-weight-light font-italic">
                     {{ antecedentes.name.toUpperCase() }}:&nbsp;
                   </span>
@@ -140,7 +174,7 @@
                   <span class="body-1"> {{ $t("title.other") }}:&nbsp; </span>
                   <span class="body-1 font-weight-light font-italic">{{
                     showAntecedent().otros
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs12 v-if="showAntecedent().medicamentosAntecedent">
                   <span class="body-1">
@@ -148,17 +182,22 @@
                   </span>
                   <span class="body-1 font-weight-light font-italic">{{
                     showAntecedent().medicamentosAntecedent
-                    }}</span>
+                  }}</span>
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
-              <v-layout row wrap v-if="
-                myProp.objPreliminary.data &&
-                myProp.objPreliminary.data.generalData
-              ">
+              <v-layout
+                row
+                wrap
+                v-if="
+                  myProp.objPreliminary.data &&
+                  myProp.objPreliminary.data.generalData
+                "
+              >
                 <v-flex xs12>
                   <span class="primary--text">
-                    {{ $t("title.type_of_lenses") }}</span>
+                    {{ $t("title.type_of_lenses") }}</span
+                  >
                 </v-flex>
                 <v-flex xs12>
                   <v-flex xs12>
@@ -177,13 +216,17 @@
               <v-layout row wrap v-if="myProp.record.otrosDatos">
                 <v-flex xs12>
                   <span class="primary--text">
-                    {{ $t("title.other_data") }}</span>
+                    {{ $t("title.other_data") }}</span
+                  >
                 </v-flex>
                 <v-flex xs12>
                   <span class="body-1 font-weight-light font-italic">
                     {{ $t("antecedent.allergic_to") }}:&nbsp;
                   </span>
-                  <span class="body-1" v-if="Array.isArray(myProp.record.otrosDatos.alergias)">
+                  <span
+                    class="body-1"
+                    v-if="Array.isArray(myProp.record.otrosDatos.alergias)"
+                  >
                     {{ myProp.record.otrosDatos.alergias[0] }}
                   </span>
                   <span class="body-1" v-else>
@@ -194,7 +237,10 @@
                   <span class="body-1 font-weight-light font-italic">
                     {{ $t("antecedent.use_of_medications") }}:&nbsp;
                   </span>
-                  <span class="body-1" v-if="Array.isArray(myProp.record.otrosDatos.medicamentos)">
+                  <span
+                    class="body-1"
+                    v-if="Array.isArray(myProp.record.otrosDatos.medicamentos)"
+                  >
                     {{ myProp.record.otrosDatos.medicamentos[0] }}
                   </span>
                   <span class="body-1" v-else>
@@ -203,11 +249,16 @@
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
-              <v-layout row wrap class="pt-1" v-if="myProp.objPreliminary.data.agudezaVisual">
+              <v-layout
+                row
+                wrap
+                class="pt-1"
+                v-if="myProp.objPreliminary.data.agudezaVisual"
+              >
                 <v-flex xs12>
                   <span class="primary--text">{{
                     $t("title.visual_acuity")
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs4>
                   <span class="body-1 font-weight-medium">
@@ -262,7 +313,7 @@
                   <span class="body-1">{{
                     myProp.objPreliminary.data.agudezaVisual.observation ||
                     " - "
-                    }}</span>
+                  }}</span>
                 </v-flex>
               </v-layout>
               <!-- <v-divider light></v-divider>
@@ -576,28 +627,36 @@
                   <span class="primary--text">Camara de retina</span>
                 </v-flex>
                 <v-flex xs3>
-                  <span style="font-weight: bold">Fotografía de retina:
+                  <span style="font-weight: bold"
+                    >Fotografía de retina:
                     <span class="body-1">{{
                       myProp.objPreliminary.data.retinal_photo || "-"
-                      }}</span></span>
+                    }}</span></span
+                  >
                 </v-flex>
                 <v-flex xs3>
-                  <span style="font-weight: bold">Hallazgo en fotografía:
+                  <span style="font-weight: bold"
+                    >Hallazgo en fotografía:
                     <span class="body-1">{{
                       myProp.objPreliminary.data.retinal_findings || "-"
-                      }}</span></span>
+                    }}</span></span
+                  >
                 </v-flex>
                 <v-flex xs3>
-                  <span style="font-weight: bold">Observaciones en fotografía:
+                  <span style="font-weight: bold"
+                    >Observaciones en fotografía:
                     <span class="body-1">{{
                       myProp.objPreliminary.data.retinal_observations || "-"
-                      }}</span></span>
+                    }}</span></span
+                  >
                 </v-flex>
                 <v-flex xs3>
-                  <span style="font-weight: bold">Notas:
+                  <span style="font-weight: bold"
+                    >Notas:
                     <span class="body-1">{{
                       myProp.objPreliminary.data.retinal_notes || "-"
-                      }}</span></span>
+                    }}</span></span
+                  >
                 </v-flex>
               </v-layout>
               <v-divider light></v-divider>
@@ -611,7 +670,7 @@
                   </span>
                   <span class="body-1">{{
                     myProp.objPreliminary.data.responsablePreliminar || " - "
-                    }}</span>
+                  }}</span>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -627,7 +686,9 @@
             <v-container grid-list-md text-xs-left>
               <v-layout row wrap v-if="myProp.next_appointment">
                 <v-flex xs12>
-                  <span class="primary--text">{{ $t("title.next_appointment") }}:&nbsp;</span>
+                  <span class="primary--text"
+                    >{{ $t("title.next_appointment") }}:&nbsp;</span
+                  >
                 </v-flex>
                 <v-flex xs12>
                   <span class="body-1 font-weight-light font-italic">
@@ -639,7 +700,9 @@
 
               <v-layout row wrap>
                 <v-flex xs12>
-                  <span class="primary--text">{{ $t("title.date_Consulting") }}:&nbsp;</span>
+                  <span class="primary--text"
+                    >{{ $t("title.date_Consulting") }}:&nbsp;</span
+                  >
                 </v-flex>
                 <v-flex xs12>
                   <span class="body-1 font-weight-light font-italic">
@@ -665,7 +728,7 @@
                 <v-flex xs12>
                   <span class="primary--text">{{
                     $t("title.reasonforconsultation")
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs12>
                   <span class="body-1 font-weight-light font-italic">
@@ -674,10 +737,14 @@
                 </v-flex>
               </v-layout>
               <v-divider light v-if="myProp.objOphthalmology.data"></v-divider>
-              <v-layout row wrap v-if="
-                myProp.objOphthalmology.data &&
-                myProp.objOphthalmology.data.historyClinic
-              ">
+              <v-layout
+                row
+                wrap
+                v-if="
+                  myProp.objOphthalmology.data &&
+                  myProp.objOphthalmology.data.historyClinic
+                "
+              >
                 <v-flex xs12>
                   <span class="primary--text">Historia Clinica</span>
                 </v-flex>
@@ -688,13 +755,18 @@
                 </v-flex>
               </v-layout>
               <v-divider light v-if="myProp.objOphthalmology.data"></v-divider>
-              <v-layout row wrap v-if="
-                myProp.objOphthalmology.data &&
-                myProp.objOphthalmology.data.generalData
-              ">
+              <v-layout
+                row
+                wrap
+                v-if="
+                  myProp.objOphthalmology.data &&
+                  myProp.objOphthalmology.data.generalData
+                "
+              >
                 <v-flex xs12>
                   <span class="primary--text">
-                    {{ $t("title.type_of_lenses") }}</span>
+                    {{ $t("title.type_of_lenses") }}</span
+                  >
                 </v-flex>
                 <v-flex xs12>
                   <v-flex xs12>
@@ -715,9 +787,13 @@
                 <v-flex xs12>
                   <span class="primary--text">{{
                     $t("title.antecedents")
-                    }}</span>
+                  }}</span>
                 </v-flex>
-                <v-flex xs3 v-for="(antecedentes, x) in showAntecedent().antecedentes" :key="x">
+                <v-flex
+                  xs3
+                  v-for="(antecedentes, x) in showAntecedent().antecedentes"
+                  :key="x"
+                >
                   <span class="body-1 font-weight-light font-italic">
                     {{ antecedentes.name.toUpperCase() }}:&nbsp;
                   </span>
@@ -727,7 +803,7 @@
                   <span class="body-1"> {{ $t("title.other") }}:&nbsp; </span>
                   <span class="body-1 font-weight-light font-italic">{{
                     showAntecedent().otros
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs12 v-if="showAntecedent().medicamentosAntecedent">
                   <span class="body-1">
@@ -735,14 +811,14 @@
                   </span>
                   <span class="body-1 font-weight-light font-italic">{{
                     showAntecedent().medicamentosAntecedent
-                    }}</span>
+                  }}</span>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else>
                 <v-flex xs12>
                   <span class="primary--text">{{
                     $t("title.antecedents")
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs12>
                   <div class="text-xs-center">
@@ -760,23 +836,26 @@
                 <v-flex xs12 v-if="myProp.record.cirugias.cirugias.length > 0">
                   <span class="primary--text">{{
                     $t("title.previous_surgeries")
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs6 v-if="myProp.record.cirugias.cirugias.length > 0">
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.right_eye")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs12>
                     <v-layout row wrap>
-                      <v-flex xs6 v-for="(cirugias, j) in myProp.record.cirugias.cirugias">
+                      <v-flex
+                        xs6
+                        v-for="(cirugias, j) in myProp.record.cirugias.cirugias"
+                      >
                         <span class="body-1 font-weight-light font-italic">
                           {{ capilatize(cirugias.name) }}:&nbsp;
                         </span>
                         <span class="body-1">{{
                           boolean(cirugias.eyeRight)
-                          }}</span>
+                        }}</span>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -785,11 +864,14 @@
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.left_eye")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs12>
                     <v-layout row wrap>
-                      <v-flex xs6 v-for="(cirugias, j) in myProp.record.cirugias.cirugias">
+                      <v-flex
+                        xs6
+                        v-for="(cirugias, j) in myProp.record.cirugias.cirugias"
+                      >
                         <span class="body-1 font-weight-light font-italic">
                           {{
                             capilatize(myProp.record.cirugias.cirugias[j].name)
@@ -797,12 +879,15 @@
                         </span>
                         <span class="body-1">{{
                           boolean(myProp.record.cirugias.cirugias[j].eyeLeft)
-                          }}</span>
+                        }}</span>
                       </v-flex>
                     </v-layout>
                   </v-flex>
                 </v-flex>
-                <v-flex xs12 v-if="myProp.objPreliminary && myProp.objPreliminary.data">
+                <v-flex
+                  xs12
+                  v-if="myProp.objPreliminary && myProp.objPreliminary.data"
+                >
                   <v-layout row wrap>
                     <v-flex xs6>
                       <span class="body-1 font-weight-light font-italic">
@@ -810,7 +895,7 @@
                       </span>
                       <span class="body-1">{{
                         myProp.record.cirugias.othersEyeRight
-                        }}</span>
+                      }}</span>
                     </v-flex>
                     <v-flex xs6>
                       <span class="body-1 font-weight-light font-italic">
@@ -818,7 +903,7 @@
                       </span>
                       <span class="body-1">{{
                         myProp.record.cirugias.othersEyeLeft
-                        }}</span>
+                      }}</span>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -827,7 +912,7 @@
                 <v-flex xs12>
                   <span class="primary--text">{{
                     $t("title.previous_surgeries")
-                    }}</span>
+                  }}</span>
                 </v-flex>
                 <v-flex xs12>
                   <div class="text-xs-center">
@@ -842,11 +927,16 @@
               </v-layout>
               <v-divider light v-if="myProp.objOphthalmology.data"></v-divider>
               <div v-if="myProp.objOptometrist.data">
-                <v-layout row wrap class="pt-1" v-if="myProp.objOptometrist.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.visual_acuity")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs3> </v-flex>
                   <v-flex xs2>
@@ -890,7 +980,7 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.agudezaVisualOPT.ojoDer.ph ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
@@ -919,7 +1009,7 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq.ph ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
@@ -945,7 +1035,7 @@
                   <v-flex xs12>
                     <span class="primary--text mt-2">{{
                       $t("title.autorefraction")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs3>
                     <span class="body-1 font-weight-medium">
@@ -957,8 +1047,10 @@
                       {{ $t("title.sphere") }}:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoDer
-                        .esfera : " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoDer
+                            .esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -966,8 +1058,10 @@
                       {{ $t("title.cylinder") }}:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoDer
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoDer
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -975,9 +1069,9 @@
                       {{ $t("title.axis") }}&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoDer.eje
-                        :
-                        " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoDer.eje
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -990,8 +1084,10 @@
                       {{ $t("title.sphere") }}:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoIzq
-                        .esfera : " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoIzq
+                            .esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -999,8 +1095,10 @@
                       {{ $t("title.cylinder") }}:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoIzq
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoIzq
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -1008,18 +1106,23 @@
                       {{ $t("title.axis") }}&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.autorefraccionA ? myProp.objOptometrist.data.autorefraccionA.ojoIzq.eje
-                        :
-                        " - "
+                      myProp.objOptometrist.data.autorefraccionA
+                        ? myProp.objOptometrist.data.autorefraccionA.ojoIzq.eje
+                        : " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOptometrist.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.keratometry")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2> </v-flex>
                   <v-flex xs3>
@@ -1050,28 +1153,33 @@
                   <v-flex xs3>
                     <span class="body-1">
                       {{
-                        myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoDer
-                          .esfera : " - "
+                        myProp.objOptometrist.data.queratometria
+                          ? myProp.objOptometrist.data.queratometria.ojoDer
+                              .esfera
+                          : " - "
                       }}
                     </span>
                   </v-flex>
                   <v-flex xs3>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoDer.ejeEs :
-                        " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoDer.ejeEs
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoDer
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoDer
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoDer.ejeCil
-                        :
-                        " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoDer.ejeCil
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
@@ -1081,38 +1189,46 @@
                   </v-flex>
                   <v-flex xs3>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoIzq.esfera
-                        :
-                        " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoIzq.esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoIzq.ejeEs :
-                        " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoIzq.ejeEs
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoIzq
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoIzq
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.queratometria ? myProp.objOptometrist.data.queratometria.ojoIzq.ejeCil
-                        :
-                        " - "
+                      myProp.objOptometrist.data.queratometria
+                        ? myProp.objOptometrist.data.queratometria.ojoIzq.ejeCil
+                        : " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
 
-                <v-layout row wrap class="pt-1" v-if="myProp.objOptometrist.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.lensometry")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2> </v-flex>
                   <v-flex xs2>
@@ -1147,31 +1263,37 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoDer.esfera :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoDer.esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoDer.cilindro :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoDer.cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoDer.eje : " - "
-                      }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoDer.prisma :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoDer.eje
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoDer.adicion :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoDer.prisma
+                        : " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoDer.adicion
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
@@ -1181,50 +1303,67 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoIzq.esfera :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoIzq.esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoIzq.cilindro :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoIzq.cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoIzq.eje : " - "
-                      }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoIzq.prisma :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoIzq.eje
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.ojoIzq.adicion :
-                        " - "
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoIzq.prisma
+                        : " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.ojoIzq.adicion
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
-                    <span class="body-1 font-weight-light font-italic">Tipo de lentes:&nbsp;
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.lensometria ? myProp.objOptometrist.data.lensometria.typeLenses : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.lensometria
+                        ? myProp.objOptometrist.data.lensometria.typeLenses
+                        : " - "
+                    }}</span>
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
 
-                <v-divider light v-if="myProp.objOptometrist.data.tonometria"></v-divider>
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.tonometria"
+                ></v-divider>
 
-                <v-layout row wrap class="pt-1" v-if="myProp.objOptometrist.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.refraction")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2> </v-flex>
                   <v-flex xs2>
@@ -1259,30 +1398,38 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoDer.esfera :
-                        " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoDer.esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoDer.cilindro :
-                        " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoDer.cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoDer.eje : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoDer.eje
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoDer.av : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoDer.av
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoDer.add : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoDer.add
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1 font-weight-medium">
@@ -1291,30 +1438,38 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoIzq.esfera :
-                        " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoIzq.esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoIzq.cilindro :
-                        " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoIzq.cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoIzq.eje : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoIzq.eje
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoIzq.av : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoIzq.av
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ojoIzq.add : " - "
-                      }}</span>
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ojoIzq.add
+                        : " - "
+                    }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium">
@@ -1322,7 +1477,7 @@
                     </span>
                     <span class="body-1">{{
                       boolean(myProp.objOptometrist.data.refraccion.ciclo)
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium">
@@ -1330,7 +1485,7 @@
                     </span>
                     <span class="body-1">{{
                       boolean(myProp.objOptometrist.data.refraccion.est)
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium">
@@ -1338,19 +1493,23 @@
                     </span>
                     <span class="body-1">{{
                       boolean(myProp.objOptometrist.data.refraccion.dinm)
-                      }}</span>
+                    }}</span>
                   </v-flex>
 
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium"> PPC: </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ppc : " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ppc
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
                     <span class="body-1 font-weight-medium"> CT: </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.ct : " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.ct
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
@@ -1358,11 +1517,16 @@
                       Reflejos pupilares:
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? myProp.objOptometrist.data.refraccion.rp : " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? myProp.objOptometrist.data.refraccion.rp
+                        : " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
-                <v-divider light v-if="myProp.objOptometrist.data.refraccion"></v-divider>
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.refraccion"
+                ></v-divider>
                 <v-layout row wrap v-if="myProp.objOptometrist.data">
                   <v-flex xs12>
                     <span class="primary--text">RX Final Gafas</span>
@@ -1405,36 +1569,36 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.esfera ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.cilindro ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.eje ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.Prisma ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.ADD ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoDer.av || " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1 font-weight-medium"> OI </span>
@@ -1443,44 +1607,45 @@
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.esfera ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.cilindro ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.eje ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.Prisma ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.ADD ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs4>
-                    <span class="body-1 font-weight-light font-italic">Tipo de lentes:&nbsp;
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalGafas.type_lenses ||
                       " - "
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs4>
                     <span class="body-1 font-weight-light font-italic">
@@ -1488,16 +1653,21 @@
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data &&
-                        myProp.objOptometrist.data.rxFinalGafas
+                      myProp.objOptometrist.data.rxFinalGafas
                         ? myProp.objOptometrist.data.rxFinalGafas.ocupation
                         : " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
-                <v-divider light v-if="myProp.objOptometrist.data.rxFinalGafas"></v-divider>
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.rxFinalGafas"
+                ></v-divider>
                 <v-layout row wrap v-if="myProp.objOptometrist.data">
                   <v-flex xs12>
-                    <span class="primary--text">RX Final Lentes de Contacto</span>
+                    <span class="primary--text"
+                      >RX Final Lentes de Contacto</span
+                    >
                   </v-flex>
                   <v-flex xs12>
                     <span class="body-1 font-weight-medium font-italic">
@@ -1665,7 +1835,10 @@
                     }}</span>
                   </v-flex>
                 </v-layout>
-                <v-divider light v-if="myProp.objOptometrist.data.rxFinalLentesContacto"></v-divider>
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.rxFinalLentesContacto"
+                ></v-divider>
                 <v-layout row wrap v-if="myProp.objOptometrist.data">
                   <v-flex xs12>
                     <span class="primary--text">RX Final Visión Lejana</span>
@@ -1764,7 +1937,8 @@
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
-                    <span class="body-1 font-weight-light font-italic">Tipo de lentes:&nbsp;
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionLejano
@@ -1871,7 +2045,8 @@
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
-                    <span class="body-1 font-weight-light font-italic">Tipo de lentes:&nbsp;
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionProxima
@@ -1880,10 +2055,15 @@
                   </v-flex>
                 </v-layout>
 
-                <v-divider light v-if="myProp.objOptometrist.data.rxFinalVisionProxima"></v-divider>
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.rxFinalVisionProxima"
+                ></v-divider>
                 <v-layout row wrap v-if="myProp.objOptometrist.data">
                   <v-flex xs12>
-                    <span class="primary--text">RX Final Visión Intermedia</span>
+                    <span class="primary--text"
+                      >RX Final Visión Intermedia</span
+                    >
                   </v-flex>
                   <v-flex xs2> </v-flex>
                   <v-flex xs2>
@@ -1979,7 +2159,8 @@
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
-                    <span class="body-1 font-weight-light font-italic">Tipo de lentes:&nbsp;
+                    <span class="body-1 font-weight-light font-italic"
+                      >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia
@@ -1988,10 +2169,20 @@
                   </v-flex>
                 </v-layout>
 
-                <v-divider light v-if="myProp.objOptometrist.data.rxFinalVisionIntermedia"></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOptometrist.data">
+                <v-divider
+                  light
+                  v-if="myProp.objOptometrist.data.rxFinalVisionIntermedia"
+                ></v-divider>
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-flex xs12>
-                    <span class="primary--text">Diagnostico y Observaciones</span>
+                    <span class="primary--text"
+                      >Diagnostico y Observaciones</span
+                    >
                   </v-flex>
                   <v-flex xs6>
                     <span class="body-1 font-weight-medium primary--text">
@@ -2007,19 +2198,23 @@
                     <v-layout row wrap>
                       <v-flex xs6>
                         <v-layout row wrap>
-                          <v-flex xs4 v-for="(diagnostic, v) in myProp.objOptometrist.data
-                            .diagnosticoObservaciones.diagnostico" v-if="
+                          <v-flex
+                            xs4
+                            v-for="(diagnostic, v) in myProp.objOptometrist.data
+                              .diagnosticoObservaciones.diagnostico"
+                            v-if="
                               myProp.diagnosticoObservaciones.diagnostico[v]
                                 .eyeRight == true
-                            ">
+                            "
+                          >
                             <span class="body-1 font-weight-light font-italic">
                               {{
                                 capilatize(
                                   $t(
                                     "antecedent." +
-                                    myProp.objOptometrist.data
-                                      .diagnosticoObservaciones.diagnostico[v]
-                                      .name
+                                      myProp.objOptometrist.data
+                                        .diagnosticoObservaciones.diagnostico[v]
+                                        .name
                                   )
                                 )
                               }}&nbsp;
@@ -2029,19 +2224,23 @@
                       </v-flex>
                       <v-flex xs6>
                         <v-layout row wrap>
-                          <v-flex xs4 v-for="(diagnostic, h) in myProp.objOptometrist.data
-                            .diagnosticoObservaciones.diagnostico" v-if="
+                          <v-flex
+                            xs4
+                            v-for="(diagnostic, h) in myProp.objOptometrist.data
+                              .diagnosticoObservaciones.diagnostico"
+                            v-if="
                               myProp.diagnosticoObservaciones.diagnostico[h]
                                 .eyeLeft == true
-                            ">
+                            "
+                          >
                             <span class="body-1 font-weight-light font-italic">
                               {{
                                 capilatize(
                                   $t(
                                     "antecedent." +
-                                    myProp.objOptometrist.data
-                                      .diagnosticoObservaciones.diagnostico[h]
-                                      .name
+                                      myProp.objOptometrist.data
+                                        .diagnosticoObservaciones.diagnostico[h]
+                                        .name
                                   )
                                 )
                               }}&nbsp;
@@ -2052,10 +2251,13 @@
                     </v-layout>
                   </v-flex>
 
-                  <v-flex xs12 v-if="
-                    myProp.objOptometrist.data.diagnosticoObservaciones
-                      .Observaciones
-                  ">
+                  <v-flex
+                    xs12
+                    v-if="
+                      myProp.objOptometrist.data.diagnosticoObservaciones
+                        .Observaciones
+                    "
+                  >
                     <span class="body-1 font-weight-medium">
                       Observaciones:
                     </span>
@@ -2075,8 +2277,13 @@
                     </v-flex>
                     <v-flex xs12>
                       <ul>
-                        <li v-for="(item, index) in myProp.prescription_opt_data.prescription" :key="index">
-                          {{ item.medicine }} ({{ item.active_ingredient }}) {{ item.doses }}
+                        <li
+                          v-for="(item, index) in myProp.prescription_opt_data
+                            .prescription"
+                          :key="index"
+                        >
+                          {{ item.medicine }} ({{ item.active_ingredient }})
+                          {{ item.doses }}
                         </li>
                       </ul>
                       <!-- <span class="">{{ myProp.prescription_oft_data.prescription }}</span> -->
@@ -2084,24 +2291,39 @@
                   </v-layout>
                 </v-layout>
                 <v-divider light></v-divider>
-
               </div>
               <div v-if="myProp.objOphthalmology.data">
-                <v-divider light v-if="myProp.objOphthalmology.data"></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.observationsOphthalmology">
+                <v-divider
+                  light
+                  v-if="myProp.objOphthalmology.data"
+                ></v-divider>
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.observationsOphthalmology"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{
                       $t("title.observationsOphthalmologyOpt")
-                      }}</span>
+                    }}</span>
                   </v-flex>
                   <v-flex xs6>
                     <span class="body-1">{{
                       myProp.observationsOphthalmology
-                      }}</span>
+                    }}</span>
                   </v-flex>
                 </v-layout>
-                <v-divider light v-if="myProp.observationsOphthalmology"></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-divider
+                  light
+                  v-if="myProp.observationsOphthalmology"
+                ></v-divider>
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">{{ $t("title.ppm") }}</span>
                   </v-flex>
@@ -2123,17 +2345,24 @@
                         .dato || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs12 v-if="
-                    myProp.objOphthalmology.data.datapreliminar.ppm.ojoDer
-                      .dato == 'OTRO' ||
-                    myProp.objOphthalmology.data.datapreliminar.ppm.ojoIzq
-                      .dato == 'OTRO'
-                  ">
+                  <v-flex
+                    xs12
+                    v-if="
+                      myProp.objOphthalmology.data.datapreliminar.ppm.ojoDer
+                        .dato == 'OTRO' ||
+                      myProp.objOphthalmology.data.datapreliminar.ppm.ojoIzq
+                        .dato == 'OTRO'
+                    "
+                  >
                     <v-layout row wrap class="pt-1">
                       <v-flex xs6>
-                        <span class="body-1 font-weight-medium" v-show="myProp.objOphthalmology.data.datapreliminar.ppm
-                          .ojoDer.dato == 'OTRO'
-                          ">
+                        <span
+                          class="body-1 font-weight-medium"
+                          v-show="
+                            myProp.objOphthalmology.data.datapreliminar.ppm
+                              .ojoDer.dato == 'OTRO'
+                          "
+                        >
                           {{ $t("title.description") }}:&nbsp;
                         </span>
                         <span class="body-1">{{
@@ -2142,9 +2371,13 @@
                         }}</span>
                       </v-flex>
                       <v-flex xs6>
-                        <span class="body-1 font-weight-medium" v-show="myProp.objOphthalmology.data.datapreliminar.ppm
-                          .ojoIzq.dato == 'OTRO'
-                          ">
+                        <span
+                          class="body-1 font-weight-medium"
+                          v-show="
+                            myProp.objOphthalmology.data.datapreliminar.ppm
+                              .ojoIzq.dato == 'OTRO'
+                          "
+                        >
                           {{ $t("title.description") }}:&nbsp;
                         </span>
                         <span class="body-1">{{
@@ -2156,9 +2389,16 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
-                    <span class="primary--text">{{ $t("title.visual_acuity") }} Oftalmología</span>
+                    <span class="primary--text"
+                      >{{ $t("title.visual_acuity") }} Oftalmología</span
+                    >
                   </v-flex>
                   <v-flex xs3> </v-flex>
                   <v-flex xs2>
@@ -2248,7 +2488,12 @@
                 </v-layout>
 
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Exámen Externo</span>
                   </v-flex>
@@ -2272,7 +2517,12 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Biomicroscopio</span>
                   </v-flex>
@@ -2296,7 +2546,12 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Fundoscopía</span>
                   </v-flex>
@@ -2320,7 +2575,12 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Gonioscopia</span>
                   </v-flex>
@@ -2344,7 +2604,12 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Tonometría</span>
                   </v-flex>
@@ -2376,31 +2641,47 @@
                   </v-flex>
                 </v-layout>
                 <v-divider light></v-divider> -->
-                <v-layout row wrap class="pt-1" v-if="myProp.objOphthalmology.data">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Diagnóstico Oftalmología</span>
                   </v-flex>
 
-                  <v-flex xs12 v-for="(proced, v) in filterDuplicate(
-                    myProp.objOphthalmology.data.diagnostic
-                  )" :key="v">
+                  <v-flex
+                    xs12
+                    v-for="(proced, v) in filterDuplicate(
+                      myProp.objOphthalmology.data.diagnostic
+                    )"
+                    :key="v"
+                  >
                     <v-layout>
                       <v-flex xs12>
-                        <span class="body-1">-
+                        <span class="body-1"
+                          >-
                           {{
                             langDiagnostic(
                               myProp.objOphthalmology.data.diagnostic[v]
                                 .diagnostic
                             )
-                          }}</span>
+                          }}</span
+                        >
                       </v-flex>
                     </v-layout>
                   </v-flex>
                   <v-flex xs12>
                     <span class="primary--text">Plan de Manejo</span>
                   </v-flex>
-                  <v-flex xs12 v-if="myProp.objOphthalmology.data.observaciones">
-                    <span class="">{{ myProp.objOphthalmology.data.observaciones.observacion }}</span>
+                  <v-flex
+                    xs12
+                    v-if="myProp.objOphthalmology.data.observaciones"
+                  >
+                    <span class="">{{
+                      myProp.objOphthalmology.data.observaciones.observacion
+                    }}</span>
                   </v-flex>
                 </v-layout>
 
@@ -2411,8 +2692,13 @@
                   </v-flex>
                   <v-flex xs12>
                     <ul>
-                      <li v-for="(item, index) in myProp.prescription_oft_data.prescription" :key="index">
-                        {{ item.medicine }} ({{ item.active_ingredient }}) {{ item.doses }}
+                      <li
+                        v-for="(item, index) in myProp.prescription_oft_data
+                          .prescription"
+                        :key="index"
+                      >
+                        {{ item.medicine }} ({{ item.active_ingredient }})
+                        {{ item.doses }}
                       </li>
                     </ul>
                     <!-- <span class="">{{ myProp.prescription_oft_data.prescription }}</span> -->
@@ -2453,41 +2739,74 @@
                                     </v-flex>
                                 </v-layout> -->
                 <v-divider light></v-divider>
-                <v-layout row wrap
-                  v-if="myProp.objOphthalmology.data.observaciones && myProp.objOphthalmology.data.observaciones.medicamentos">
-
-                  <v-flex xs12 v-if="myProp.objOphthalmology.data.observaciones.observacion">
-                    <span class="primary--text">{{ $t('title.observations') }} y {{ $t('title.medications') }}</span>
+                <v-layout
+                  row
+                  wrap
+                  v-if="
+                    myProp.objOphthalmology.data.observaciones &&
+                    myProp.objOphthalmology.data.observaciones.medicamentos
+                  "
+                >
+                  <v-flex
+                    xs12
+                    v-if="
+                      myProp.objOphthalmology.data.observaciones.observacion
+                    "
+                  >
+                    <span class="primary--text"
+                      >{{ $t("title.observations") }} y
+                      {{ $t("title.medications") }}</span
+                    >
                   </v-flex>
-                  <v-flex xs12 v-if="myProp.objOphthalmology.data.observaciones.observacion">
+                  <v-flex
+                    xs12
+                    v-if="
+                      myProp.objOphthalmology.data.observaciones.observacion
+                    "
+                  >
                     <span class="body-1 font-weight-medium">
-                      {{ $t('title.observations') }}:&nbsp;
+                      {{ $t("title.observations") }}:&nbsp;
                     </span>
                     <span class="body-1">
-                      {{ myProp.objOphthalmology.data.observaciones.observacion || ' - ' }}
+                      {{
+                        myProp.objOphthalmology.data.observaciones
+                          .observacion || " - "
+                      }}
                     </span>
                   </v-flex>
                   <v-flex xs6>
-                    <span class="body-1 font-weight-medium">{{ $t('title.medications') }}</span>
+                    <span class="body-1 font-weight-medium">{{
+                      $t("title.medications")
+                    }}</span>
                   </v-flex>
                   <v-flex xs6>
                     <span class="body-1 font-weight-medium">Dosis</span>
                   </v-flex>
-                  <v-flex x12 v-for="(medicamentos, x) in myProp.objOphthalmology.data.observaciones.medicamentos"
-                    class="border-bottom-inf">
+                  <v-flex
+                    x12
+                    v-for="(medicamentos, x) in myProp.objOphthalmology.data
+                      .observaciones.medicamentos"
+                    class="border-bottom-inf"
+                  >
                     <v-layout>
                       <v-flex xs6 class="border-right-inf">
-                        <span class="body-1 font-weight-light">* {{ medicamentos }}</span>
+                        <span class="body-1 font-weight-light"
+                          >* {{ medicamentos }}</span
+                        >
                       </v-flex>
                       <v-flex xs6>
-                        <span class="body-1 font-weight-light">*
-                          {{ myProp.objOphthalmology.data.observaciones.recetas ?
-                            myProp.objOphthalmology.data.observaciones.recetas[x] : ' - ' }}
+                        <span class="body-1 font-weight-light"
+                          >*
+                          {{
+                            myProp.objOphthalmology.data.observaciones.recetas
+                              ? myProp.objOphthalmology.data.observaciones
+                                  .recetas[x]
+                              : " - "
+                          }}
                         </span>
                       </v-flex>
                     </v-layout>
                   </v-flex>
-
                 </v-layout>
                 <v-divider light></v-divider>
               </div>
@@ -2496,14 +2815,24 @@
                   <span class="primary--text">Responsable de la Consulta</span>
                 </v-flex>
               </v-layout>
-              <v-layout row wrap v-if="
-                myProp.objOphthalmology.data && myProp.objOptometrist.data
-              ">
+              <v-layout
+                row
+                wrap
+                v-if="
+                  myProp.objOphthalmology.data && myProp.objOptometrist.data
+                "
+              >
                 <v-flex xs6>
                   <v-layout row wrap>
                     <v-flex xs12>
-                      <span class="body-1 font-weight-light font-italic digital-signature-content-specialty">
-                        <v-img :src="digitalSignatureObjOphthalmology" width="200px" height="200px">
+                      <span
+                        class="body-1 font-weight-light font-italic digital-signature-content-specialty"
+                      >
+                        <v-img
+                          :src="digitalSignatureObjOphthalmology"
+                          width="200px"
+                          height="200px"
+                        >
                         </v-img>
                       </span>
                     </v-flex>
@@ -2513,20 +2842,26 @@
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
                         physicianOphthalmology
-                        }}</span>
+                      }}</span>
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
                         physicianOphthalmologySpecialty
-                        }}</span>
+                      }}</span>
                     </v-flex>
                   </v-layout>
                 </v-flex>
                 <v-flex xs6>
                   <v-layout row wrap>
                     <v-flex xs12>
-                      <span class="body-1 font-weight-light font-italic digital-signature-content-specialty">
-                        <v-img :src="digitalSignatureObjOptometrist" width="200px" height="200px">
+                      <span
+                        class="body-1 font-weight-light font-italic digital-signature-content-specialty"
+                      >
+                        <v-img
+                          :src="digitalSignatureObjOptometrist"
+                          width="200px"
+                          height="200px"
+                        >
                         </v-img>
                       </span>
                     </v-flex>
@@ -2536,53 +2871,91 @@
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
                         physicianOptometrist
-                        }}</span>
+                      }}</span>
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
                         physicianOptometristSpecialty
-                        }}</span>
+                      }}</span>
                     </v-flex>
                   </v-layout>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else>
                 <v-flex xs12 v-if="myProp.objOphthalmology.data">
-                  <span class="body-1 font-weight-light font-italic digital-signature-content">
-                    <v-img :src="digitalSignatureObjOphthalmology" width="200px" height="200px">
+                  <span
+                    class="body-1 font-weight-light font-italic digital-signature-content"
+                  >
+                    <v-img
+                      :src="digitalSignatureObjOphthalmology"
+                      width="200px"
+                      height="200px"
+                    >
                     </v-img>
                   </span>
                 </v-flex>
-                <v-flex offset-xs3 xs6 class="text-xs-center" v-if="myProp.objOphthalmology.data">
+                <v-flex
+                  offset-xs3
+                  xs6
+                  class="text-xs-center"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <v-divider light></v-divider>
                 </v-flex>
-                <v-flex xs12 class="text-xs-center" v-if="myProp.objOphthalmology.data">
+                <v-flex
+                  xs12
+                  class="text-xs-center"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <span class="primary--text">{{
                     physicianOphthalmology
-                    }}</span>
+                  }}</span>
                 </v-flex>
-                <v-flex xs12 class="text-xs-center" v-if="myProp.objOphthalmology.data">
+                <v-flex
+                  xs12
+                  class="text-xs-center"
+                  v-if="myProp.objOphthalmology.data"
+                >
                   <span class="primary--text">{{
                     physicianOphthalmologySpecialty
-                    }}</span>
+                  }}</span>
                 </v-flex>
 
                 <v-flex xs12 v-if="myProp.objOptometrist.data">
-                  <span class="body-1 font-weight-light font-italic digital-signature-content">
-                    <v-img :src="digitalSignatureObjOptometrist" width="200px" height="200px">
+                  <span
+                    class="body-1 font-weight-light font-italic digital-signature-content"
+                  >
+                    <v-img
+                      :src="digitalSignatureObjOptometrist"
+                      width="200px"
+                      height="200px"
+                    >
                     </v-img>
                   </span>
                 </v-flex>
-                <v-flex offset-xs3 xs6 class="text-xs-center" v-if="myProp.objOptometrist.data">
+                <v-flex
+                  offset-xs3
+                  xs6
+                  class="text-xs-center"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <v-divider light></v-divider>
                 </v-flex>
-                <v-flex xs12 class="text-xs-center" v-if="myProp.objOptometrist.data">
+                <v-flex
+                  xs12
+                  class="text-xs-center"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <span class="primary--text">{{ physicianOptometrist }}</span>
                 </v-flex>
-                <v-flex xs12 class="text-xs-center" v-if="myProp.objOptometrist.data">
+                <v-flex
+                  xs12
+                  class="text-xs-center"
+                  v-if="myProp.objOptometrist.data"
+                >
                   <span class="primary--text">{{
                     physicianOptometristSpecialty
-                    }}</span>
+                  }}</span>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -2639,20 +3012,20 @@ export default {
         text: this.$t("title.type_consulting.E"),
       },
       {
-        value: 'one day post surgery',
-        text: "1er Post-Quirurgico"
+        value: "one day post surgery",
+        text: "1er Dia Post-Quirúrgico",
       },
       {
-        value: 'one week post surgery',
-        text: "1ra Semana Post-Quirurgico"
+        value: "one week post surgery",
+        text: "1ra Semana Post-Quirurgico",
       },
       {
-        value: 'three week post surgery',
-        text: "3ra Semana Post-Quirurgico"
+        value: "three week post surgery",
+        text: "3ra Semana Post-Quirurgico",
       },
       {
-        value: 'four week post surgery',
-        text: "4ta Semana Post-Quirurgico"
+        value: "four week post surgery",
+        text: "4ta Semana Post-Quirurgico",
       },
     ];
     this.lenses = [
@@ -2872,7 +3245,7 @@ export default {
     },
   },
   watch: {
-    myProp: function (val) { },
+    myProp: function (val) {},
   },
   filters: {
     hour(value) {
