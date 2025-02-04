@@ -14,9 +14,9 @@
         </v-card-title>
         <v-divider light class="vm-border-color-2"></v-divider>
         <v-card-text>
-          <v-container fluid grid-list-md px-0 py-0>
+          <v-container fluid grid-list-md px-10 py-0>
             <v-layout row wrap>
-              <v-flex xs4 offset-xs1>
+              <v-flex xs4 >
                 <v-select
                   label="RX Final"
                   :items="listRx"
@@ -27,7 +27,7 @@
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs2 offset-xs2>
+              <v-flex xs2>
                 <span class="body-2">{{ $t("title.sphere") }}</span>
               </v-flex>
               <v-flex xs2>
@@ -42,19 +42,23 @@
                 <span class="body-2">{{ $t("title.prism") }}</span>
               </v-flex>
               <v-flex xs2>
+                <span class="body-2">Adicion</span>
+              </v-flex>
+              <v-flex xs2>
                 <span class="body-2">{{ $t("title.av") }}</span>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs1 offset-xs1 text-sm-left class="vm-p-esp">
+              <!-- <v-flex xs1  text-sm-left class="vm-p-esp" style="position: absolute;margin-left: -30px;margin-top: 3px;">
                 {{ $t("title.re") }}:
-              </v-flex>
+              </v-flex> -->
               <v-flex xs2>
                 <v-text-field
                   v-model="rxFinalValue.ojoDer.esfera"
                   :rules="[]"
                   :readonly="validateRead()"
                   :disabled="!rxFinal"
+                  label="OD"
                 >
                 </v-text-field>
               </v-flex>
@@ -87,6 +91,15 @@
               </v-flex>
               <v-flex xs2>
                 <v-text-field
+                  v-model="rxFinalValue.ojoDer.adicion"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                  :disabled="!rxFinal"
+                >
+                </v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-text-field
                   v-model="rxFinalValue.ojoDer.av"
                   :rules="[]"
                   :readonly="validateRead()"
@@ -96,15 +109,16 @@
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs1 offset-xs1 text-sm-left class="vm-p-esp">
+              <!-- <v-flex xs1  text-sm-left class="vm-p-esp" style="position: absolute;margin-left: -30px;margin-top: 3px;">
                 {{ $t("title.le") }}:
-              </v-flex>
+              </v-flex> -->
               <v-flex xs2>
                 <v-text-field
                   v-model="rxFinalValue.ojoIzq.esfera"
                   :rules="[]"
                   :readonly="validateRead()"
                   :disabled="!rxFinal"
+                   label="OI"
                 >
                 </v-text-field>
               </v-flex>
@@ -137,6 +151,15 @@
               </v-flex>
               <v-flex xs2>
                 <v-text-field
+                  v-model="rxFinalValue.ojoIzq.adicion"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                  :disabled="!rxFinal"
+                >
+                </v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-text-field
                   v-model="rxFinalValue.ojoIzq.av"
                   :rules="[]"
                   :readonly="validateRead()"
@@ -144,15 +167,25 @@
                 >
                 </v-text-field>
               </v-flex>
-              <v-flex xs4 offset-xs1>
+              <v-flex xs4>
                 <v-select
                   v-model="rxFinalValue.type_lenses"
                   :rules="[]"
                   :readonly="validateRead()"
                   :items="lenses_list"
                   label="Tipo de lentes"
+                  multiple
                 >
                 </v-select>
+              </v-flex>
+              <v-flex xs8>
+                <v-text-field
+                  v-model="rxFinalValue.observation"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                  label="Observaciones"
+                >
+                </v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -173,7 +206,8 @@ export default {
       lenses_list: [],
 
       rxFinalValue: {
-        type_lenses: "",
+        type_lenses: [],
+        observation: null,
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -190,7 +224,8 @@ export default {
         },
       },
       rxFinalVisionLejano: {
-        type_lenses: "",
+        type_lenses: [],
+        observation: null,
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -207,7 +242,8 @@ export default {
         },
       },
       rxFinalVisionProxima: {
-        type_lenses: "",
+        type_lenses: [],
+        observation: null,
         ojoDer: {
           esfera: null,
           cilindro: null,
@@ -224,7 +260,8 @@ export default {
         },
       },
       rxFinalVisionIntermedia: {
-        type_lenses: "",
+        type_lenses: [],
+        observation: null,
         ojoDer: {
           esfera: null,
           cilindro: null,

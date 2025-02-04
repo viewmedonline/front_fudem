@@ -154,8 +154,18 @@
                   :readonly="validateRead()"
                   :items="lenses_list"
                   label="Tipo de lentes"
+                  multiple
                 >
                 </v-select>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field
+                  v-model="rxFinalGafas.observation"
+                  :rules="[]"
+                  :readonly="validateRead()"
+                  label="Observaciones"
+                >
+                </v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -193,6 +203,7 @@ export default {
         },
         ocupation: null,
         type_lenses: null,
+        observation: null,
       },
       rules: {
         // required: v => false // !!v || this.$t('title.field_required')

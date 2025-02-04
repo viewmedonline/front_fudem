@@ -1638,12 +1638,12 @@
                       myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
                     }}</span>
                   </v-flex>
-                  <v-flex xs4>
+                  <v-flex xs6>
                     <span class="body-1 font-weight-light font-italic"
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.type_lenses ||
+                      myProp.objOptometrist.data.rxFinalGafas.type_lenses.join() ||
                       " - "
                     }}</span>
                   </v-flex>
@@ -1658,6 +1658,18 @@
                         : " - "
                     }}</span>
                   </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic">
+                      Observaciones:
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data &&
+                      myProp.objOptometrist.data.rxFinalGafas
+                        ? myProp.objOptometrist.data.rxFinalGafas.observation
+                        : " - "
+                    }}</span>
+                  </v-flex>
+                  
                 </v-layout>
                 <v-divider
                   light
@@ -1843,7 +1855,6 @@
                   <v-flex xs12>
                     <span class="primary--text">RX Final Visión Lejana</span>
                   </v-flex>
-                  <v-flex xs2> </v-flex>
                   <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
                       {{ $t("title.sphere") }}:&nbsp;
@@ -1866,10 +1877,15 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1 font-weight-light font-italic">
-                      {{ $t("title.av") }}:&nbsp;
+                      Adicion:&nbsp;
                     </span>
                   </v-flex>
                   <v-flex xs2>
+                    <span class="body-1 font-weight-light font-italic">
+                      {{ $t("title.av") }}:&nbsp;
+                    </span>
+                  </v-flex>
+                  <v-flex xs2 style="position: absolute;margin-top: 5%;margin-left: -30px;">
                     <span class="body-1 font-weight-medium"> OD </span>
                   </v-flex>
                   <v-flex xs2>
@@ -1899,11 +1915,17 @@
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        .adicion || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
                         .av || " - "
                     }}</span>
                   </v-flex>
 
-                  <v-flex xs2>
+                  <v-flex xs2 style="position: absolute;margin-top: 7%;margin-left: -30px;">
                     <span class="body-1 font-weight-medium"> OI </span>
                   </v-flex>
                   <v-flex xs2>
@@ -1933,6 +1955,12 @@
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        .adicion || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
                         .av || " - "
                     }}</span>
                   </v-flex>
@@ -1942,7 +1970,16 @@
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionLejano
-                        .type_lenses || " - "
+                        .type_lenses.join() || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Observaciones:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionLejano
+                        .observation || " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
@@ -2050,7 +2087,16 @@
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionProxima
-                        .type_lenses || " - "
+                        .type_lenses.join() || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Observaciones:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionProxima
+                        .observation || " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
@@ -2164,7 +2210,16 @@
                     </span>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia
-                        .type_lenses || " - "
+                        .type_lenses.join() || " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs4>
+                    <span class="body-1 font-weight-light font-italic"
+                      >Observaciones:&nbsp;
+                    </span>
+                    <span class="body-1">{{
+                      myProp.objOptometrist.data.rxFinalVisionIntermedia
+                        .observation || " - "
                     }}</span>
                   </v-flex>
                 </v-layout>
