@@ -228,7 +228,8 @@
             @click="fixedCompst('prescription')"
             v-if="
               storePhysician.role == 'optometrist' ||
-              storePhysician.role == 'ophthalmologist'
+              storePhysician.role == 'ophthalmologist' ||
+              storePhysician.role == 'Admision'
             "
           >
             <v-list-tile-content>

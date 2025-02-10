@@ -1,11 +1,6 @@
 <template>
   <v-container>
-    <v-form
-      autocomplete="off"
-      ref="formGeneralDataRef"
-      v-model="formGeneralData"
-      lazy-validation
-    >
+    <v-form autocomplete="off" ref="formGeneralDataRef" v-model="formGeneralData" lazy-validation>
       <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">{{
@@ -17,98 +12,51 @@
           <v-container fluid grid-list-md px-0 py-0>
             <v-layout row wrap>
               <v-flex xs12 sm4>
-                <v-text-field
-                  v-model="expedient"
-                  :label="$t('title.number_of_expedient')"
-                  :rules="validateRequired"
-                  readonly
-                >
+                <v-text-field v-model="expedient" :label="$t('title.number_of_expedient')" :rules="validateRequired"
+                  readonly>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 sm8>
-                <v-text-field
-                  v-model="name"
-                  :label="$t('title.name')"
-                  :rules="validateRequired"
-                  readonly
-                >
+                <v-text-field v-model="name" :label="$t('title.name')" :rules="validateRequired" readonly>
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs6 sm3>
-                <v-text-field
-                  v-model="gender"
-                  :label="$t('title.gender')"
-                  :rules="validateRequired"
-                  readonly
-                >
+                <v-text-field v-model="gender" :label="$t('title.gender')" :rules="validateRequired" readonly>
                 </v-text-field>
               </v-flex>
               <v-flex xs6 sm3>
-                <v-text-field
-                  v-model="age"
-                  :label="$t('title.current_age')"
-                  :rules="[]"
-                  readonly
-                >
+                <v-text-field v-model="age" :label="$t('title.current_age')" :rules="[]" readonly>
                 </v-text-field>
               </v-flex>
               <v-flex xs6 sm3>
-                <v-switch
-                  :label="`${$t('title.read_and_write')}`"
-                  v-model="readAndWrite"
-                  readonly
-                ></v-switch>
+                <v-switch :label="`${$t('title.read_and_write')}`" v-model="readAndWrite" readonly></v-switch>
               </v-flex>
               <v-flex xs6 sm3>
-                <v-switch
-                  :label="`${$t('title.use_lenses')}`"
-                  v-model="useLenses"
-                  readonly
-                ></v-switch>
+                <v-switch :label="`${$t('title.use_lenses')}`" v-model="useLenses" readonly></v-switch>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-textarea
-                  name="input-7-1"
-                  :label="$t('title.reasonforconsultation')"
-                  :rules="validateRequired"
-                  outline
-                  v-model="reasonConsultation"
-                  :readonly="validateRead()"
-                ></v-textarea>
+                <v-textarea name="input-7-1" :label="$t('title.reasonforconsultation')" :rules="validateRequired"
+                  outline v-model="reasonConsultation" :readonly="validateRead()"></v-textarea>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12 sm4>
-                <v-select
-                  v-model="typeLenses"
-                  :items="lenses"
-                  :label="$t('title.type_of_lenses')"
-                  :rules="[]"
-                  :readonly="validateRead()"
-                >
+                <v-select v-model="typeLenses" :items="lenses" :label="$t('title.type_of_lenses')" :rules="[]"
+                  :readonly="validateRead()">
                 </v-select>
               </v-flex>
               <v-flex xs12 sm4 v-if="$route.query.c == 'E'">
-                <v-text-field
-                  v-model="typeConsultation"
-                  :label="$t('title.type_of_consultation')"
-                  :rules="validateRequired"
-                  readonly
-                >
+                <v-text-field v-model="typeConsultation" :label="$t('title.type_of_consultation')"
+                  :rules="validateRequired" readonly>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 sm4 v-else>
-                <v-select
-                  v-model="typeConsultation"
-                  :items="Consultations"
-                  :label="$t('title.type_of_consultation')"
-                  :rules="validateRequired"
-                  :readonly="validateRead()"
-                >
+                <v-select v-model="typeConsultation" :items="Consultations" :label="$t('title.type_of_consultation')"
+                  :rules="validateRequired" :readonly="validateRead()">
                 </v-select>
               </v-flex>
               <!-- <v-flex xs12 sm4>
@@ -127,6 +75,7 @@
 
 <script>
 import moment from "moment";
+import { getTypeConsultations } from "../../componentServs/master";
 export default {
   name: "general_data",
   data() {
@@ -201,6 +150,19 @@ export default {
     };
   },
   methods: {
+    async getListConsultations() {
+      try {
+        const response = (await getTypeConsultations()).map((item) => {
+          return {
+            value: item.description,
+            text: item.description,
+          };
+        });
+        this.Consultations = response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     validateRead() {
       if (this.storeConsultation.objPreliminary) {
         if (this.storeConsultation.objPreliminary.data) return true;
@@ -273,6 +235,7 @@ export default {
   },
   created() {
     this.setPersonData();
+    this.getListConsultations();
   },
   computed: {
     storePatient() {

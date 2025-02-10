@@ -54,4 +54,22 @@ function getLenses() {
   });
 }
 
-export { getComsumed, getActivity, getLenses };
+function getTypeConsultations() {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(process.env.VUE_APP_ROOT_API + "/master/consultations", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: "",
+        },
+      })
+      .then((result) => {
+        resolve(result.data.documents);
+      })
+      .catch((error) => {
+        reject(error.response.data.message);
+      });
+  });
+}
+
+export { getComsumed, getActivity, getLenses, getTypeConsultations };
