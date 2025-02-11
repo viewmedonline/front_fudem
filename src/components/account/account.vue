@@ -1,15 +1,14 @@
 <template>
-  <v-content>
+  <v-content  class="px-2 py-2">
     <v-tabs v-model="tab" color="#004969" grow>
       <v-tabs-slider color="red"></v-tabs-slider>
 
-      <v-tab style="color: aliceblue" v-for="item in items" :key="item">
-        {{ item }}
+      <v-tab style="color: aliceblue" v-for="item in items" :key="item.tag" :href="`#${item.tag}`">
+        {{ item.text }}
       </v-tab>
-    </v-tabs>
+   
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item>
+      <v-tab-item value="digital_signature">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap>
@@ -75,7 +74,7 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab-item>
+      <v-tab-item value="diagnoses">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap grid-list-lg>
@@ -157,7 +156,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item value="medicines">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap grid-list-lg>
@@ -207,8 +206,8 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
-        <v-card flat>
+      <v-tab-item value="reports">
+        <v-card flat width="100%">
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs6>
@@ -362,8 +361,7 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-    </v-tabs-items>
-
+    </v-tabs>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -588,7 +586,7 @@ export default {
       users: [],
       userId: null,
       tab: 0,
-      items: ["Firma Digital"],
+      items: [{ text: "Firma Digital", tag: "digital_signature" }],
       diagnosis: [],
       diagnosisSelected: null,
       diagnosisMasterSelected: null,
@@ -613,6 +611,8 @@ export default {
         active: null,
         type: null,
       },
+      reportAccess: false,
+      reportTab: 3
     };
   },
   watch: {
@@ -977,10 +977,16 @@ export default {
       this.$store.getters.getPhysician.user.idUserFudem == "PRUEBAOFTA"
         ? true
         : false;
+    this.reportAccess = this.$store.getters.getPhysician.reportAccess;
     if (this.user_admin) {
-      this.items.push("Administrador de diagnosticos");
-      this.items.push("Administrador de medicamentos");
-      this.items.push("Reportes de Consultas");
+      this.items.push({ text: "Administrador de diagnosticos", tag: "diagnoses" });
+      this.items.push({ text: "Administrador de medicamentos", tag: "medicines" });
+      this.items.push({ text: "Reportes de Consultas", tag: "reports" });
+    }
+
+    if(this.$store.getters.getPhysician.reportAccess) {
+      this.tab = 3
+      this.items = [{ text: "Reportes de Consultas", tag: "reports" }];
     }
 
     this.getUserList();
