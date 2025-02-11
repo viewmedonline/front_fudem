@@ -1,10 +1,5 @@
 <template>
-  <v-form
-    autocomplete="off"
-    ref="formPrescription"
-    v-model="formPrescription"
-    lazy-validation
-  >
+  <v-form autocomplete="off" ref="formPrescription" v-model="formPrescription" lazy-validation>
     <v-card class="elevation-3">
       <v-card-title primary-title class="blue-grey darken-1">
         <span class="subheading white--text text-capitalize">Medicamentos</span>
@@ -14,36 +9,21 @@
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 v-if="useListMedicines">
-              <v-autocomplete
-                v-model="medications"
-                :items="items"
-                :readonly="validateRead()"
-                :label="$t('title.medications')"
-                persistent-hint
-                prepend-icon=""
-                return-object
-                item-text="description"
-                @change="selectMedicine"
-              >
-                <!-- <v-lide-x-reverse-transition slot="append-outer" mode="out-in">
-                  <v-btn
-                    dark
-                    small
-                    icon
-                    color="grey white--text"
-                    @click="appendListMedicines"
-                  >
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </v-slide-x-reverse-transition> -->
+              <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()"
+                :label="$t('title.medications')" persistent-hint prepend-icon="" return-object item-text="description"
+                @change="selectMedicine">
+                <template v-slot:item="{ item }">
+                  <div class="medicine-item">
+                    <span class="medicine-name">{{ item.description }}</span>
+                    <span class="medicine-details">
+                      ({{ item.generic }})
+                    </span>
+                  </div>
+                </template>
               </v-autocomplete>
             </v-flex>
             <v-flex xs8 v-else>
-              <v-text-field
-                :readonly="validateRead()"
-                v-model="medications"
-                :label="$t('title.medications')"
-              >
+              <v-text-field :readonly="validateRead()" v-model="medications" :label="$t('title.medications')">
                 <!-- <v-slide-x-reverse-transition slot="append-outer" mode="out-in">
                   <v-btn
                     dark
@@ -59,46 +39,13 @@
             </v-flex>
 
             <v-flex xs4>
-              <v-checkbox
-                :readonly="validateRead()"
-                label="Lista Precargada"
-                v-model="useListMedicines"
-              ></v-checkbox>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                :readonly="validateRead()"
-                v-model="generic"
-                label="Nombre generico del principio activo"
-              >
-                <!-- <v-slide-x-reverse-transition slot="append-outer" mode="out-in">
-                  <v-btn
-                    dark
-                    small
-                    icon
-                    color="grey white--text"
-                    @click="appendListMedicines"
-                  >
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </v-slide-x-reverse-transition> -->
-              </v-text-field>
+              <v-checkbox :readonly="validateRead()" label="Lista Precargada" v-model="useListMedicines"></v-checkbox>
             </v-flex>
             <v-flex xs2>
-              <v-text-field
-                type="number"
-                label="Administrar"
-                max="10"
-                min="1"
-                v-model="dispense"
-              ></v-text-field>
+              <v-text-field type="number" label="Administrar" max="10" min="1" v-model="dispense"></v-text-field>
             </v-flex>
             <v-flex xs6>
-              <v-radio-group
-                v-model="presentation"
-                row
-                :rules="[rules.required]"
-              >
+              <v-radio-group v-model="presentation" row :rules="[rules.required]">
                 <v-radio label="Gota(s)" value="Gota(s)"></v-radio>
                 <v-radio label="Gel" value="Gel"></v-radio>
                 <v-radio label="Tableta(s)" value="Tableta(s)"></v-radio>
@@ -106,49 +53,28 @@
               </v-radio-group>
             </v-flex>
             <v-flex xs2>
-              <v-select
-                label="Cada"
-                :items="hoursList"
-                v-model="hours"
-              ></v-select>
+              <v-select label="Cada" :items="hoursList" v-model="hours"></v-select>
             </v-flex>
             <v-flex xs6>
-              <v-radio-group
-                v-model="administration"
-                row
-                :rules="[rules.required]"
-                label="Via de Administración:"
-              >
+              <v-radio-group v-model="administration" row :rules="[rules.required]" label="Via de Administración:">
                 <v-radio label="Oftálmica" value="Oftálmica"></v-radio>
                 <v-radio label="Oral" value="Oral"></v-radio>
                 <v-radio label="Intramuscular" value="Intramuscular"></v-radio>
               </v-radio-group>
             </v-flex>
             <v-flex xs6>
-              <v-radio-group
-                v-model="eyeApplication"
-                row
-                label="Aplicación en:"
-              >
+              <v-radio-group v-model="eyeApplication" row label="Aplicación en:">
                 <v-radio label="Ojo Izq" value="Ojo Izq"></v-radio>
                 <v-radio label="Ojo Der" value="Ojo Der"></v-radio>
                 <v-radio label="Ambos Ojos" value="Ambos Ojos"></v-radio>
               </v-radio-group>
             </v-flex>
             <v-flex xs4 row>
-              <v-text-field
-                type="number"
-                label="Numero de dias que se aplicara el tratamiento"
-                min="1"
-                :rules="[rules.required]"
-                v-model="treatmentDays"
-              ></v-text-field>
+              <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
+                :rules="[rules.required]" v-model="treatmentDays"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-textarea
-                label="Recomendaciones"
-                v-model="recomendations"
-              ></v-textarea>
+              <v-textarea label="Recomendaciones" v-model="recomendations"></v-textarea>
             </v-flex>
             <v-flex xs12>
               <v-btn dark small color="primary" @click="appendListMedicines">
@@ -161,12 +87,8 @@
               </v-btn> -->
             </v-flex>
             <v-flex xs12 class="text-sm-left">
-              <v-data-table
-                :headers="headers"
-                :items="prescription"
-                class="elevation-1"
-                rows-per-page-text="Filas por pagina"
-              >
+              <v-data-table :headers="headers" :items="prescription" class="elevation-1"
+                rows-per-page-text="Filas por pagina">
                 <template slot="items" slot-scope="props">
                   <td>
                     {{ props.item.medicine }} -
@@ -179,11 +101,7 @@
                     {{ props.item.recomendation }}
                   </td>
                   <td class="justify-center layout px-0">
-                    <v-icon
-                      :disabled="validateRead()"
-                      class="mt-3"
-                      @click="deleteItem(props.item)"
-                    >
+                    <v-icon :disabled="validateRead()" class="mt-3" @click="deleteItem(props.item)">
                       delete
                     </v-icon>
                   </td>
@@ -223,7 +141,6 @@ export default {
       administration: null,
       treatmentDays: null,
       eyeApplication: null,
-      generic: null,
       prescription: [],
       hoursList: [
         "1 Hora",
@@ -277,7 +194,6 @@ export default {
   },
   methods: {
     selectMedicine() {
-      this.generic = this.medications.generic;
       this.recomendations = this.medications.recomendation;
     },
     async getListMedicines() {
@@ -332,7 +248,6 @@ export default {
       this.treatmentDays = null;
       this.eyeApplication = null;
       this.recomendations = null;
-      this.generic = null;
       this.$refs.formPrescription.resetValidation();
     },
     deleteItem(item) {
@@ -361,7 +276,6 @@ export default {
           this.prescription.push({
             medicine: this.medications.description || this.medications,
             doses: doses,
-            active_ingredient: this.generic,
             recomendation: this.recomendations,
           });
         }

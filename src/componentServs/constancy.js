@@ -4,9 +4,8 @@ function saveConstancy(obj) {
     return new Promise((resolve, reject) => {
         try {
             axios
-                .post(process.env.VUE_APP_ROOT_API + "/constancy/insert", obj.body, {
+                .post(process.env.VUE_APP_ROOT_API + "/constancy/insert", obj, {
                     headers: {
-                        'Authorization': obj.token
                     }
                 })
                 .then(result => {
