@@ -1907,7 +1907,7 @@ export default {
       let response = this.Consultations.filter((item) => {
         return item.value == typeConsulting;
       });
-      return response[0] ? response[0].text : " - ";
+      return response[0] ? response[0].text : typeConsulting;
     },
     csvExport(reportSec) {
       var dt = new Date();

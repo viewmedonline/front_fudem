@@ -9,58 +9,33 @@
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 v-if="useListMedicines">
-              <v-autocomplete
-                v-model="medications"
-                :items="items"
-                :readonly="validateRead()"
-                :label="$t('title.medications')"
-                dense
-                outlined
-                :hide-details="true"
-                return-object
-                item-text="description"
-                @change="selectMedicine"
-              >
+              <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()" :rules="useListMedicines ? [rules.required] : []"
+                :label="$t('title.medications')" dense outlined :hide-details="true" return-object
+                item-text="description" @change="selectMedicine">
                 <template v-slot:item="{ item }">
                   <div class="pa-2">
-                    <div class="text-subtitle-1">{{ item.description }}</div>
-                    <div class="text-caption grey--text">{{ item.generic }}</div>
+                    <div class="text-subtitle-1">{{ item.description }} - ({{ item.generic }})</div>
+                  </div>
+                </template>
+                <template v-slot:selection="{ item }">
+                  <div class="pa-2">
+                    <div class="text-subtitle-1">{{ item.description }} - ({{ item.generic }})</div>
                   </div>
                 </template>
               </v-autocomplete>
             </v-flex>
             <v-flex xs8 v-else>
-              <v-text-field
-                :readonly="validateRead()"
-                v-model="medications"
-                :label="$t('title.medications')"
-                dense
-                outlined
-                :hide-details="true"
-              ></v-text-field>
+              <v-text-field :readonly="validateRead()" v-model="medications" :label="$t('title.medications')" dense
+                outlined :hide-details="true" :rules="!useListMedicines ? [rules.required] : []"></v-text-field>
             </v-flex>
 
             <v-flex xs4>
-              <v-switch
-                :readonly="validateRead()"
-                label="Lista Precargada"
-                v-model="useListMedicines"
-                inset
-                dense
-              ></v-switch>
+              <v-switch :readonly="validateRead()" label="Lista Precargada" v-model="useListMedicines" inset
+                dense></v-switch>
             </v-flex>
-
             <v-flex xs2>
-              <v-text-field
-                type="number"
-                label="Administrar"
-                max="10"
-                min="1"
-                v-model="dispense"
-                dense
-                outlined
-                :hide-details="true"
-              ></v-text-field>
+              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="[]" v-model="dispense" dense
+                outlined :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs6>
@@ -73,14 +48,7 @@
             </v-flex>
 
             <v-flex xs2>
-              <v-select
-                label="Cada"
-                :items="hoursList"
-                v-model="hours"
-                dense
-                outlined
-                :hide-details="true"
-              ></v-select>
+              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true"></v-select>
             </v-flex>
 
             <v-flex xs6>
@@ -102,43 +70,22 @@
             </v-flex>
 
             <v-flex xs2 row>
-              <v-text-field
-                type="number"
-                label="Numero de dias que se aplicara el tratamiento"
-                min="1"
-                :rules="!isPermanent ? [rules.required] : []"
-                v-model="treatmentDays"
-                dense
-                outlined
-                :hide-details="true"
-              ></v-text-field>
+              <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
+                :rules="!isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined
+                :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs2>
-              <v-switch
-                :readonly="validateRead()"
-                label="Permanente"
-                v-model="isPermanent"
-                inset
-                dense
-              ></v-switch>
+              <v-switch :readonly="validateRead()" label="Permanente" v-model="isPermanent" inset dense></v-switch>
             </v-flex>
 
             <v-flex xs2 row>
-              <v-text-field
-                type="number"
-                label="Cantidad"
-                min="1"
-                :rules="[rules.required]"
-                v-model="quantity"
-                dense
-                outlined
-                :hide-details="true"  
-              ></v-text-field>
+              <v-text-field type="number" label="Cantidad" min="1" v-model="quantity" dense outlined
+                :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs4 row>
-              <v-radio-group v-model="eyeApplication" row>
+              <v-radio-group v-model="typePrescription" row>
                 <v-radio label="Fco" value="Fco" class="mr-2"></v-radio>
                 <v-radio label="Tbo" value="Tbo" class="mr-2"></v-radio>
                 <v-radio label="Tab" value="Tab" class="mr-2"></v-radio>
@@ -147,58 +94,32 @@
             </v-flex>
 
             <v-flex xs12>
-              <v-textarea
-                label="Recomendaciones"
-                v-model="recomendations"
-                rows="3"
-                outlined
-                dense
-                :hide-details="true"
-              ></v-textarea>
+              <v-textarea label="Recomendaciones" v-model="recomendations" rows="3" outlined dense
+                :hide-details="true"></v-textarea>
             </v-flex>
 
             <v-flex xs12>
-              <v-btn
-                color="primary"
-                @click="appendListMedicines"
-                class="text-none"
-                small
-              >
+              <v-btn color="primary" @click="appendListMedicines" class="text-none" small>
                 <v-icon left small>mdi-plus</v-icon>
                 Añadir
               </v-btn>
             </v-flex>
-
             <v-flex xs12 class="text-sm-left">
-              <v-data-table
-                :headers="headers"
-                :items="prescription"
-                class="elevation-1 rounded-lg"
-                :items-per-page="5"
-                :footer-props="{
-                  'items-per-page-text': 'Filas por pagina'
-                }"
-              >
-                <template v-slot:item="{ item }">
-                  <tr>
-                    <td class="py-3">
-                      <div class="font-weight-medium">{{ item.medicine }}</div>
-                      <div class="text-caption grey--text">{{ item.active_ingredient }}</div>
-                    </td>
-                    <td>{{ item.doses }}</td>
-                    <td>{{ item.recomendation }}</td>
-                    <td class="text-center">
-                      <v-btn
-                        icon
-                        small
-                        color="error"
-                        :disabled="validateRead()"
-                        @click="deleteItem(item)"
-                      >
-                        <v-icon small>mdi-delete</v-icon>
-                      </v-btn>
-                    </td>
-                  </tr>
+              <v-data-table :headers="headers" :items="prescription" hide-actions class="elevation-1">
+                <template slot="items" slot-scope="props">
+                  <td class="text-xs-left">{{ props.item.medicine }}</td>
+                  <td class="text-xs-left">{{ props.item.doses }}</td>
+                  <td class="text-xs-left">{{ props.item.recomendation }}</td>
+                  <td class="text-xs-center">
+                    <v-icon small class="mr-2" @click="deleteItem(props.item)" :disabled="validateRead()">
+                      delete
+                    </v-icon>
+                  </td>
+                </template>
+                <template slot="no-data">
+                  <v-alert :value="true" color="error" icon="warning">
+                    No hay datos disponibles
+                  </v-alert>
                 </template>
               </v-data-table>
             </v-flex>
@@ -232,9 +153,10 @@ export default {
       recomendations: null,
       dispense: null,
       hours: null,
-      administration: null,
+      administration: 1,
       treatmentDays: null,
       eyeApplication: null,
+      typePrescription: null,
       prescription: [],
       hoursList: [
         "1 Hora",
@@ -248,35 +170,38 @@ export default {
       headers: [
         {
           text: "Medicinas",
-          align: "left",
-          sortable: false,
           value: "medicine",
+          sortable: false,
+          align: 'left'
         },
         {
           text: "Dosis",
-          align: "left",
+          value: "doses",
           sortable: false,
-          value: "active_ingredient",
+          align: 'left'
         },
         {
           text: "Recomendaciones",
-          align: "left",
-          sortable: false,
           value: "recomendation",
+          sortable: false,
+          align: 'left'
         },
         {
           text: "Acciones",
-          align: "center",
+          value: "action",
           sortable: false,
-          value: "name",
-        },
+          align: 'center'
+        }
       ],
       items: [],
       rules: {
         required: (v) => !!v || this.$t("title.field_required"),
       },
       isPermanent: false,
-      quantity: 1
+      quantity: null,
+      pagination: {
+        rowsPerPage: 5
+      }
     };
   },
   computed: {
@@ -289,11 +214,16 @@ export default {
     this.setPresciption();
   },
   watch: {
+    useListMedicines(val) {
+      this.medications = null;
+      this.$refs.formPrescription.resetValidation();
+    },
     treatmentDays() {
       this.isPermanent = false;
     },
     isPermanent() {
       this.treatmentDays = null;
+      this.$refs.formPrescription.resetValidation();
     },
   },
   methods: {
@@ -344,32 +274,47 @@ export default {
       });
     },
     clearForm() {
-      this.medications = null;
-      this.presentation = null;
       this.dispense = null;
+      this.presentation = null;
       this.hours = null;
-      this.administration = null;
+      this.administration = 1;
       this.treatmentDays = null;
       this.eyeApplication = null;
+      this.typePrescription = null;
       this.recomendations = null;
+      this.quantity = null;
+      this.isPermanent = false;
+      this.$refs.formPrescription.reset();
       this.$refs.formPrescription.resetValidation();
     },
     deleteItem(item) {
-      const index = this.assignedMedicines.indexOf(item);
+      const index = this.prescription.findIndex(prescripcion =>
+        prescripcion.medicine === item.medicine &&
+        prescripcion.doses === item.doses
+      );
 
-      confirm("¿Esta seguro que desea eliminar este medicamento?") &&
-        this.prescription.splice(index, 1);
+      if (index !== -1) {
+        if (confirm("¿Está seguro que desea eliminar este medicamento?")) {
+          this.prescription.splice(index, 1);
+        }
+      }
+    },
+    dailyMedicationDoses(value) {
+      const [number, units] = value.split(' ')
+      const quantity = 24 /parseInt(number)
+      return `${quantity} veces al dia`
     },
     appendListMedicines() {
       if (this.$refs.formPrescription.validate()) {
         const application = this.eyeApplication
           ? ` - ${this.eyeApplication}`
           : "";
-        const doses = `${this.dispense} ${this.presentation} cada ${this.hours} - Vía ${this.administration} ${application} - durante ${this.treatmentDays} día(s)`;
-        // this.assignedMedicines.unshift(
-        //   this.medications.description || this.medications
-        // );
-        // this.assignedRecetas.unshift(doses);
+        const duration = this.isPermanent ? "Medicamento Permanente" : `Durante ${this.treatmentDays} día(s)`;
+        const dispense = this.dispense ? this.dispense : "" 
+        const quantityDoses = this.dailyMedicationDoses(this.hours)
+        const quantity = this.quantity ? `- ${this.quantity} ${this.typePrescription}` : ''
+        const doses = `${dispense} ${this.presentation} cada ${this.hours} (${quantityDoses}) - Vía ${this.administration} ${application} - ${duration} ${quantity}`;
+
         const existeMedicamento = this.prescription.find(
           (prescripcion) =>
             prescripcion.medicine ===
@@ -377,10 +322,11 @@ export default {
         );
 
         if (!existeMedicamento) {
+          const medicine = `${this.medications.description || this.medications} - ${this.medications.generic || ''}`
           this.prescription.push({
-            medicine: this.medications.description || this.medications,
+            medicine: medicine,
             doses: doses,
-            recomendation: this.recomendations,
+            recomendation: this.recomendations || ''
           });
         }
 
