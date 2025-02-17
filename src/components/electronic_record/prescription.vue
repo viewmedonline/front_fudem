@@ -217,7 +217,7 @@ export default {
   },
   watch: {
     medications(val) {
-      if (val && typeof val === "object") {
+      if (val && typeof val === "object" && val.administration.length > 0 && val.presentation.length > 0) {
         this.medicineAdministrations = this.medicineAdministrations.filter(item => val.administration.includes(item.description))
         this.medicinePresentations = this.medicinePresentations.filter(item => val.presentation.includes(item.description))
       }

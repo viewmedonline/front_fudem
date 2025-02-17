@@ -502,8 +502,6 @@ export default {
             this.$refs.diagnosisRef
               .saveDiagnosis()
               .then(async (result) => {
-                console.log(result);
-
                 this.consultation.refer_to_ofta = result.refer_to_ofta;
                 this.consultation.prescription = result.prescription;
 
