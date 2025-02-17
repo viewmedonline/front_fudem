@@ -40,10 +40,8 @@
 
             <v-flex xs6>
               <v-radio-group v-model="presentation" row :rules="[rules.required]">
-                <v-radio label="Gota(s)" value="Gota(s)" class="mr-2"></v-radio>
-                <v-radio label="Gel" value="Gel" class="mr-2"></v-radio>
-                <v-radio label="Tableta(s)" value="Tableta(s)" class="mr-2"></v-radio>
-                <v-radio label="Ampolla(s)" value="Ampolla(s)"></v-radio>
+                <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description" :value="item.description"
+                  class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
@@ -54,9 +52,8 @@
             <v-flex xs6>
               <v-radio-group v-model="administration" row :rules="[rules.required]">
                 <div class="text-subtitle-2 mb-2">Via de Administración:</div>
-                <v-radio label="Oftálmica" value="Oftálmica" class="mr-2"></v-radio>
-                <v-radio label="Oral" value="Oral" class="mr-2"></v-radio>
-                <v-radio label="Intramuscular" value="Intramuscular"></v-radio>
+                <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description" :value="item.description"
+                  class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
@@ -131,6 +128,7 @@
 </template>
 
 <script>
+import { getMedicineAdministration, getMedicinePresentations } from "../../componentServs/master";
 import {
   getMedicines,
   findPrescriptions,
@@ -201,7 +199,9 @@ export default {
       quantity: null,
       pagination: {
         rowsPerPage: 5
-      }
+      },
+      medicinePresentations: [],
+      medicineAdministrations: [],
     };
   },
   computed: {
@@ -212,11 +212,24 @@ export default {
   mounted() {
     this.getListMedicines();
     this.setPresciption();
+    this.getMedicinePresentations();
+    this.getMedicineAdministration();
   },
   watch: {
+    medications(val) {
+      if (val && typeof val === "object") {
+        this.medicineAdministrations = this.medicineAdministrations.filter(item => val.administration.includes(item.description))
+        this.medicinePresentations = this.medicinePresentations.filter(item => val.presentation.includes(item.description))
+      }
+    },
     useListMedicines(val) {
       this.medications = null;
       this.$refs.formPrescription.resetValidation();
+      if(!val){
+        this.getMedicinePresentations();
+        this.getMedicineAdministration();
+      }
+
     },
     treatmentDays() {
       this.isPermanent = false;
@@ -227,6 +240,16 @@ export default {
     },
   },
   methods: {
+    getMedicinePresentations() {
+      getMedicinePresentations({}).then((result) => {
+        this.medicinePresentations = result;
+      });
+    },
+    getMedicineAdministration() {
+      getMedicineAdministration({}).then((result) => {       
+        this.medicineAdministrations = result;
+      });
+    },
     selectMedicine() {
       this.recomendations = this.medications.recomendation;
     },
@@ -286,6 +309,8 @@ export default {
       this.isPermanent = false;
       this.$refs.formPrescription.reset();
       this.$refs.formPrescription.resetValidation();
+      this.getMedicinePresentations();
+      this.getMedicineAdministration();
     },
     deleteItem(item) {
       const index = this.prescription.findIndex(prescripcion =>
