@@ -472,7 +472,7 @@ export default {
 
                 this.$refs.rxFinalDoble
                   .saveRxFinalDoble()
-                  .then((result) => {
+                  .then((result) => {                    
                     this.consultation.rxFinalVisionLejano =
                       result.rxFinalVisionLejano;
                     this.consultation.rxFinalVisionProxima =
