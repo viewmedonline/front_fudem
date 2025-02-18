@@ -179,6 +179,7 @@ export default {
             day_month: moment().format("DD"),
             month: moment().format("MMMM"),
             year: moment().format("YYYY"),
+            constancyType:"incapacity",
             name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
             type:
               this.$store.getters.getPhysician.role == "internist"

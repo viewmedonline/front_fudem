@@ -422,6 +422,7 @@ export default {
           type: "Psicologo",
           digital_signature: this.$store.getters.getPhysician.digital_signature,
           responsableConsultation: this.$store.getters.getPhysician._id,
+          patient: this.$store.getters.getPatient._id,
         },
       });
 

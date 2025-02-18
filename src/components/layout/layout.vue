@@ -556,9 +556,7 @@ export default {
               }
               this.user_admin =
                 this.$store.getters.getPhysician.user.idUserFudem ==
-                  "PRUEBAOFTA"
-                  ? true
-                  : false;
+                  "PRUEBAOFTA" || this.$store.getters.getPhysician.reportAccess
               if (this.$route.query.p && this.$route.query.c != "R") {
                 // Validacion de Consulta en Progreso
                 this.getConsultationProgress()

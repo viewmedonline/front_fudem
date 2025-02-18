@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-form autocomplete="off" ref="formObservationsRef" v-model="formObservations" lazy-validation>
-      <v-card class="elevation-3">
+      <prescription type="2" ref="prescriptionRef" />
+      <!-- <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">Plan De Manejo</span>
         </v-card-title>
@@ -61,7 +62,7 @@
             </v-layout>
           </v-container>
         </v-card-text>
-      </v-card>
+      </v-card> -->
       <v-card class="elevation-3 mt-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">{{ $t('title.next_appointment') }}</span>
@@ -121,8 +122,11 @@
 
 <script>
 import { EventBus } from "@/store/eventBus";
+  import Prescription from "@/components/electronic_record/prescription";
+
 export default {
   name: 'observations',
+  components: { Prescription },
   data: vm => ({
     date: new Date().toISOString().substr(0, 10),
     // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)), --> Para utilizar en caso de que se necesite el datepicker
@@ -304,14 +308,22 @@ export default {
         alert("Debe especificar el medicamento y la dosis")
       }
     },
-    saveObservations() {
-      return new Promise((resolve, reject) => {
+    async saveObservations() {
+      return new Promise(async (resolve, reject) => {
         if (this.$refs.formObservationsRef.validate()) {
+          let dataPrescription;
+          try {
+            dataPrescription =
+              await this.$refs.prescriptionRef.savePrescription();
+          } catch (error) {
+            dataPrescription = null;
+          }
           let valor = {
             observacion: this.observations,
             medicamentos: this.assignedMedicines,
             recetas: this.assignedRecetas,
-            next_appointment: this.dateFormatted
+            next_appointment: this.dateFormatted,
+            prescription: dataPrescription ? dataPrescription[0]._id : null
           }
           resolve(valor)
         } else {
