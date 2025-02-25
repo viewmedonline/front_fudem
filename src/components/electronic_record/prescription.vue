@@ -149,9 +149,9 @@ export default {
       medications: null,
       presentation: null,
       recomendations: null,
-      dispense: null,
+      dispense: 1,
       hours: null,
-      administration: 1,
+      administration: null,
       treatmentDays: null,
       eyeApplication: null,
       typePrescription: null,
@@ -218,8 +218,10 @@ export default {
   watch: {
     medications(val) {
       if (val && typeof val === "object" && val.administration.length > 0 && val.presentation.length > 0) {
-        this.medicineAdministrations = this.medicineAdministrations.filter(item => val.administration.includes(item.description))
-        this.medicinePresentations = this.medicinePresentations.filter(item => val.presentation.includes(item.description))
+        this.medicineAdministrations = this.medicineAdministrations
+        this.medicinePresentations = this.medicinePresentations        
+        this.presentation = val.presentation
+        this.administration = val.administration
       }
     },
     useListMedicines(val) {

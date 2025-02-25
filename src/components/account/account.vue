@@ -345,6 +345,8 @@
                     <v-icon left color="primary">mdi-routes</v-icon>
                     Vía de administración
                   </div>
+                  {{ administrations }}
+
                   <v-layout row wrap>
                     <v-flex xs12 sm6 md3 v-for="administration in medicineAdministration" :key="administration._id">
                       <v-switch
@@ -495,16 +497,16 @@ export default {
         recomendation: null,
         description: null,
         active: null,
-        presentations: [],
-        administration: [],
+        presentations: null,
+        administration: null,
         type: null,
       },
       reportAccess: false,
       reportTab: 3,
       medicinePresentations: [],
       medicineAdministration: [],
-      administrations: [],
-      presentations: [],
+      administrations: null,
+      presentations: null,
     };
   },
   watch: {
@@ -523,13 +525,13 @@ export default {
       this.medicine.description = null;
       this.medicine._id = null;
       this.medicine.active = null;
-      this.medicine.presentations = [];
-      this.medicine.administrations = [];
+      this.medicine.presentations = null;
+      this.medicine.administrations = null;
       this.medicine.type = this.catalogueMedicine;
       this.medicine.presentation = this.presentations;
       this.medicine.administration = this.administrations;
-      this.presentations = [];
-      this.administrations = [];
+      this.presentations = null;
+      this.administrations = null;
     },
     async SaveMedicine() {
       this.medicine.presentation = this.presentations;
@@ -551,8 +553,8 @@ export default {
       this.medicine.description = null;
       this.medicine._id = null;
       this.medicine.active = null;
-      this.medicine.presentations = [];
-      this.medicine.administration = [];
+      this.medicine.presentations = null;
+      this.medicine.administration = null;
       this.medicine.type = null;
       this.medicineSelected = null;
     },
