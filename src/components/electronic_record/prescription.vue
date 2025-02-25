@@ -9,9 +9,9 @@
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 v-if="useListMedicines">
-              <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()" :rules="useListMedicines ? [rules.required] : []"
-                :label="$t('title.medications')" dense outlined :hide-details="true" return-object
-                item-text="description" @change="selectMedicine">
+              <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()"
+                :rules="useListMedicines ? [rules.required] : []" :label="$t('title.medications')" dense outlined
+                :hide-details="true" return-object item-text="description" @change="selectMedicine">
                 <template v-slot:item="{ item }">
                   <div class="pa-2">
                     <div class="text-subtitle-1">{{ item.description }} - ({{ item.generic }})</div>
@@ -40,8 +40,8 @@
 
             <v-flex xs6>
               <v-radio-group v-model="presentation" row :rules="[rules.required]">
-                <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description" :value="item.description"
-                  class="mr-2"></v-radio>
+                <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description"
+                  :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
@@ -52,8 +52,8 @@
             <v-flex xs6>
               <v-radio-group v-model="administration" row :rules="[rules.required]">
                 <div class="text-subtitle-2 mb-2">Via de Administración:</div>
-                <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description" :value="item.description"
-                  class="mr-2"></v-radio>
+                <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description"
+                  :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
@@ -65,10 +65,9 @@
                 <v-radio label="Ambos Ojos" value="Ambos Ojos"></v-radio>
               </v-radio-group>
             </v-flex>
-
             <v-flex xs2 row>
               <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
-                :rules="!isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined
+                :rules="!isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined :disabled="isPermanent"
                 :hide-details="true"></v-text-field>
             </v-flex>
 
@@ -219,7 +218,7 @@ export default {
     medications(val) {
       if (val && typeof val === "object" && val.administration.length > 0 && val.presentation.length > 0) {
         this.medicineAdministrations = this.medicineAdministrations
-        this.medicinePresentations = this.medicinePresentations        
+        this.medicinePresentations = this.medicinePresentations
         this.presentation = val.presentation
         this.administration = val.administration
       }
@@ -227,15 +226,18 @@ export default {
     useListMedicines(val) {
       this.medications = null;
       this.$refs.formPrescription.resetValidation();
-      if(!val){
+      if (!val) {
         this.getMedicinePresentations();
         this.getMedicineAdministration();
       }
 
     },
-    treatmentDays() {
-      this.isPermanent = false;
-    },
+    // treatmentDays() {
+    //   if (this.isPermanent) {
+    //     this.isPermanent = false; 
+    //     this.$refs.formPrescription.resetValidation();
+    //   }
+    // },
     isPermanent() {
       this.treatmentDays = null;
       this.$refs.formPrescription.resetValidation();
@@ -248,7 +250,7 @@ export default {
       });
     },
     getMedicineAdministration() {
-      getMedicineAdministration({}).then((result) => {       
+      getMedicineAdministration({}).then((result) => {
         this.medicineAdministrations = result;
       });
     },
@@ -328,7 +330,7 @@ export default {
     },
     dailyMedicationDoses(value) {
       const [number, units] = value.split(' ')
-      const quantity = 24 /parseInt(number)
+      const quantity = 24 / parseInt(number)
       return `${quantity} veces al dia`
     },
     appendListMedicines() {
@@ -337,7 +339,7 @@ export default {
           ? ` - ${this.eyeApplication}`
           : "";
         const duration = this.isPermanent ? "Medicamento Permanente" : `Durante ${this.treatmentDays} día(s)`;
-        const dispense = this.dispense ? this.dispense : "" 
+        const dispense = this.dispense ? this.dispense : ""
         const quantityDoses = this.dailyMedicationDoses(this.hours)
         const quantity = this.quantity ? `- ${this.quantity} ${this.typePrescription}` : ''
         const doses = `${dispense} ${this.presentation} cada ${this.hours} (${quantityDoses}) - Vía ${this.administration} ${application} - ${duration} ${quantity}`;
