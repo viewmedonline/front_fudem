@@ -26,7 +26,7 @@
             </v-flex>
             <v-flex xs8 v-else>
               <v-text-field :readonly="validateRead()" v-model="medications" :label="$t('title.medications')" dense
-                outlined :hide-details="true" :rules="!useListMedicines ? [rules.required] : []"></v-text-field>
+                outlined :hide-details="true" :rules="!useListMedicines ? [] : [rules.required]"></v-text-field>
             </v-flex>
 
             <v-flex xs4>
@@ -34,23 +34,23 @@
                 dense></v-switch>
             </v-flex>
             <v-flex xs2>
-              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="[]" v-model="dispense" dense
+              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="dynamicRules.dispense" v-model="dispense" dense
                 outlined :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="presentation" row :rules="[rules.required]">
+              <v-radio-group v-model="presentation" row :rules="dynamicRules.presentation">
                 <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description"
                   :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
             <v-flex xs2>
-              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true"></v-select>
+              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true" :rules="dynamicRules.hours"></v-select>
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="administration" row :rules="[rules.required]">
+              <v-radio-group v-model="administration" row :rules="dynamicRules.administration">
                 <div class="text-subtitle-2 mb-2">Via de Administración:</div>
                 <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description"
                   :value="item.description" class="mr-2"></v-radio>
@@ -58,7 +58,7 @@
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="eyeApplication" row>
+              <v-radio-group v-model="eyeApplication" row :rules="dynamicRules.eyeApplication">
                 <div class="text-subtitle-2 mb-2">Aplicación en:</div>
                 <v-radio label="Ojo Izq" value="Ojo Izq" class="mr-2"></v-radio>
                 <v-radio label="Ojo Der" value="Ojo Der" class="mr-2"></v-radio>
@@ -67,7 +67,7 @@
             </v-flex>
             <v-flex xs2 row>
               <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
-                :rules="!isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined :disabled="isPermanent"
+                :rules="dynamicRules.treatmentDays" v-model="treatmentDays" dense outlined :disabled="isPermanent"
                 :hide-details="true"></v-text-field>
             </v-flex>
 
@@ -77,11 +77,11 @@
 
             <v-flex xs2 row>
               <v-text-field type="number" label="Cantidad" min="1" v-model="quantity" dense outlined
-                :hide-details="true"></v-text-field>
+                :hide-details="true" :rules="dynamicRules.quantity"></v-text-field>
             </v-flex>
 
             <v-flex xs4 row>
-              <v-radio-group v-model="typePrescription" row>
+              <v-radio-group v-model="typePrescription" row :rules="dynamicRules.typePrescription">
                 <v-radio label="Fco" value="Fco" class="mr-2"></v-radio>
                 <v-radio label="Tbo" value="Tbo" class="mr-2"></v-radio>
                 <v-radio label="Tab" value="Tab" class="mr-2"></v-radio>
@@ -91,7 +91,7 @@
 
             <v-flex xs12>
               <v-textarea label="Recomendaciones" v-model="recomendations" rows="3" outlined dense
-                :hide-details="true"></v-textarea>
+                :hide-details="true" :rules="dynamicRules.recomendations"></v-textarea>
             </v-flex>
 
             <v-flex xs12>
@@ -207,6 +207,19 @@ export default {
     storeConsultation() {
       return this.$store.getters.getConsultation;
     },
+    dynamicRules() {
+      return {
+        dispense: this.useListMedicines ? [this.rules.required] : [],
+        presentation: this.useListMedicines ? [this.rules.required] : [],
+        hours: this.useListMedicines ? [this.rules.required] : [],
+        administration: this.useListMedicines ? [this.rules.required] : [],
+        eyeApplication: this.useListMedicines ? [this.rules.required] : [],
+        treatmentDays: this.useListMedicines && !this.isPermanent ? [this.rules.required] : [],
+        quantity: this.useListMedicines ? [this.rules.required] : [],
+        typePrescription: this.useListMedicines ? [this.rules.required] : [],
+        recomendations: this.useListMedicines ? [this.rules.required] : [],
+      };
+    },
   },
   mounted() {
     this.getListMedicines();
@@ -230,14 +243,7 @@ export default {
         this.getMedicinePresentations();
         this.getMedicineAdministration();
       }
-
     },
-    // treatmentDays() {
-    //   if (this.isPermanent) {
-    //     this.isPermanent = false; 
-    //     this.$refs.formPrescription.resetValidation();
-    //   }
-    // },
     isPermanent() {
       this.treatmentDays = null;
       this.$refs.formPrescription.resetValidation();
