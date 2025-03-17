@@ -26,7 +26,7 @@
             </v-flex>
             <v-flex xs8 v-else>
               <v-text-field :readonly="validateRead()" v-model="medications" :label="$t('title.medications')" dense
-                outlined :hide-details="true" :rules="!useListMedicines ? [] : [rules.required]"></v-text-field>
+                outlined :hide-details="true" :rules="!useListMedicines ? [rules.required] : []"></v-text-field>
             </v-flex>
 
             <v-flex xs4>
@@ -34,23 +34,23 @@
                 dense></v-switch>
             </v-flex>
             <v-flex xs2>
-              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="dynamicRules.dispense" v-model="dispense" dense
+              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="[]" v-model="dispense" dense
                 outlined :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="presentation" row :rules="dynamicRules.presentation">
+              <v-radio-group v-model="presentation" row :rules="useListMedicines ? [rules.required] : []">
                 <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description"
                   :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
 
             <v-flex xs2>
-              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true" :rules="dynamicRules.hours"></v-select>
+              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true"></v-select>
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="administration" row :rules="dynamicRules.administration">
+              <v-radio-group v-model="administration" row :rules="useListMedicines ? [rules.required] : []">
                 <div class="text-subtitle-2 mb-2">Via de Administración:</div>
                 <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description"
                   :value="item.description" class="mr-2"></v-radio>
@@ -58,7 +58,7 @@
             </v-flex>
 
             <v-flex xs6>
-              <v-radio-group v-model="eyeApplication" row :rules="dynamicRules.eyeApplication">
+              <v-radio-group v-model="eyeApplication" row>
                 <div class="text-subtitle-2 mb-2">Aplicación en:</div>
                 <v-radio label="Ojo Izq" value="Ojo Izq" class="mr-2"></v-radio>
                 <v-radio label="Ojo Der" value="Ojo Der" class="mr-2"></v-radio>
@@ -67,7 +67,7 @@
             </v-flex>
             <v-flex xs2 row>
               <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
-                :rules="dynamicRules.treatmentDays" v-model="treatmentDays" dense outlined :disabled="isPermanent"
+                :rules="useListMedicines && !isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined :disabled="isPermanent"
                 :hide-details="true"></v-text-field>
             </v-flex>
 
@@ -77,11 +77,11 @@
 
             <v-flex xs2 row>
               <v-text-field type="number" label="Cantidad" min="1" v-model="quantity" dense outlined
-                :hide-details="true" :rules="dynamicRules.quantity"></v-text-field>
+                :hide-details="true"></v-text-field>
             </v-flex>
 
             <v-flex xs4 row>
-              <v-radio-group v-model="typePrescription" row :rules="dynamicRules.typePrescription">
+              <v-radio-group v-model="typePrescription" row>
                 <v-radio label="Fco" value="Fco" class="mr-2"></v-radio>
                 <v-radio label="Tbo" value="Tbo" class="mr-2"></v-radio>
                 <v-radio label="Tab" value="Tab" class="mr-2"></v-radio>
@@ -91,7 +91,7 @@
 
             <v-flex xs12>
               <v-textarea label="Recomendaciones" v-model="recomendations" rows="3" outlined dense
-                :hide-details="true" :rules="dynamicRules.recomendations"></v-textarea>
+                :hide-details="true"></v-textarea>
             </v-flex>
 
             <v-flex xs12>
@@ -207,19 +207,6 @@ export default {
     storeConsultation() {
       return this.$store.getters.getConsultation;
     },
-    dynamicRules() {
-      return {
-        dispense: this.useListMedicines ? [this.rules.required] : [],
-        presentation: this.useListMedicines ? [this.rules.required] : [],
-        hours: this.useListMedicines ? [this.rules.required] : [],
-        administration: this.useListMedicines ? [this.rules.required] : [],
-        eyeApplication: this.useListMedicines ? [this.rules.required] : [],
-        treatmentDays: this.useListMedicines && !this.isPermanent ? [this.rules.required] : [],
-        quantity: this.useListMedicines ? [this.rules.required] : [],
-        typePrescription: this.useListMedicines ? [this.rules.required] : [],
-        recomendations: this.useListMedicines ? [this.rules.required] : [],
-      };
-    },
   },
   mounted() {
     this.getListMedicines();
@@ -237,20 +224,23 @@ export default {
       }
     },
     useListMedicines(val) {
-    this.medications = null;
-    this.$nextTick(() => {
+      this.medications = null;
       this.$refs.formPrescription.resetValidation();
-    });
-    if (!val) {
-      this.getMedicinePresentations();
-      this.getMedicineAdministration();
-    }
-  },
+      if (!val) {
+        this.getMedicinePresentations();
+        this.getMedicineAdministration();
+      }
+
+    },
+    // treatmentDays() {
+    //   if (this.isPermanent) {
+    //     this.isPermanent = false; 
+    //     this.$refs.formPrescription.resetValidation();
+    //   }
+    // },
     isPermanent() {
       this.treatmentDays = null;
-      this.$nextTick(() => {
       this.$refs.formPrescription.resetValidation();
-    });
     },
   },
   methods: {
@@ -321,11 +311,8 @@ export default {
       this.recomendations = null;
       this.quantity = null;
       this.isPermanent = false;
-      this.$nextTick(() => {
-      this.$refs.formPrescription.resetValidation();
       this.$refs.formPrescription.reset();
-    });
-      
+      this.$refs.formPrescription.resetValidation();
       this.getMedicinePresentations();
       this.getMedicineAdministration();
     },
@@ -348,32 +335,97 @@ export default {
     },
     appendListMedicines() {
       if (this.$refs.formPrescription.validate()) {
-        const application = this.eyeApplication
-          ? ` - ${this.eyeApplication}`
-          : "";
-        const duration = this.isPermanent ? "Medicamento Permanente" : `Durante ${this.treatmentDays} día(s)`;
-        const dispense = this.dispense ? this.dispense : ""
-        const quantityDoses = this.dailyMedicationDoses(this.hours)
-        const quantity = this.quantity ? `- ${this.quantity} ${this.typePrescription}` : ''
-        const doses = `${dispense} ${this.presentation} cada ${this.hours} (${quantityDoses}) - Vía ${this.administration} ${application} - ${duration} ${quantity}`;
+        // Validate that required fields for constructing doses string are filled in
+        if (!this.useListMedicines || 
+            (this.presentation && 
+             this.hours && 
+             this.administration && 
+             (this.isPermanent || this.treatmentDays))) {
+          
+          // Optional fields validation
+          const application = this.eyeApplication
+            ? ` - ${this.eyeApplication}`
+            : "";
+          
+          const duration = this.isPermanent 
+            ? "Medicamento Permanente" 
+            : this.treatmentDays 
+              ? `Durante ${this.treatmentDays} día(s)` 
+              : "";
+          
+          const dispense = this.dispense ? this.dispense : "";
+          
+          const quantityDoses = this.hours 
+            ? this.dailyMedicationDoses(this.hours) 
+            : "";
+          
+          const quantity = this.quantity && this.typePrescription 
+            ? `- ${this.quantity} ${this.typePrescription}` 
+            : '';
+          
+          // Construct doses string based on available values
+          let doses = "";
+          
+          if (dispense && this.presentation) {
+            doses += `${dispense} ${this.presentation}`;
+          }
+          
+          if (this.hours) {
+            doses += ` cada ${this.hours}`;
+            if (quantityDoses) {
+              doses += ` (${quantityDoses})`;
+            }
+          }
+          
+          if (this.administration) {
+            doses += ` - Vía ${this.administration}${application}`;
+          }
+          
+          if (duration) {
+            doses += ` - ${duration}`;
+          }
+          
+          if (quantity) {
+            doses += ` ${quantity}`;
+          }
+          
+          // Check if medication already exists
+          const existeMedicamento = this.prescription.find(
+            (prescripcion) =>
+              prescripcion.medicine ===
+              (this.medications && typeof this.medications === 'object' 
+                ? this.medications.description 
+                : this.medications)
+          );
 
-        const existeMedicamento = this.prescription.find(
-          (prescripcion) =>
-            prescripcion.medicine ===
-            (this.medications.description || this.medications)
-        );
+          if (!existeMedicamento && this.medications) {
+            // Format medicine string based on the type of medications (object or string)
+            let medicine = "";
+            if (this.medications && typeof this.medications === 'object') {
+              medicine = `${this.medications.description || ''} ${this.medications.generic ? '- ' + this.medications.generic : ''}`;
+            } else {
+              medicine = this.medications || '';
+            }
+            
+            if (medicine.trim() !== '') {
+              this.prescription.push({
+                medicine: medicine,
+                doses: doses.trim(),
+                recomendation: this.recomendations || ''
+              });
+            }
+          }
 
-        if (!existeMedicamento) {
-          const medicine = `${this.medications.description || this.medications} - ${this.medications.generic || ''}`
-          this.prescription.push({
-            medicine: medicine,
-            doses: doses,
-            recomendation: this.recomendations || ''
+          this.medications = null;
+          this.clearForm();
+        } else {
+          // Show validation message if fields are missing
+          this.$store.dispatch("setSnackbar", {
+            show: true,
+            text: "Por favor complete los campos necesarios para la dosis",
+            color: "error"
           });
         }
-
-        this.medications = null;
-        this.clearForm();
       }
     },
     validateRead() {
