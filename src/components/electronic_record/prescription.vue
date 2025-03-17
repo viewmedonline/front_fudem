@@ -237,16 +237,20 @@ export default {
       }
     },
     useListMedicines(val) {
-      this.medications = null;
+    this.medications = null;
+    this.$nextTick(() => {
       this.$refs.formPrescription.resetValidation();
-      if (!val) {
-        this.getMedicinePresentations();
-        this.getMedicineAdministration();
-      }
-    },
+    });
+    if (!val) {
+      this.getMedicinePresentations();
+      this.getMedicineAdministration();
+    }
+  },
     isPermanent() {
       this.treatmentDays = null;
+      this.$nextTick(() => {
       this.$refs.formPrescription.resetValidation();
+    });
     },
   },
   methods: {
@@ -317,8 +321,11 @@ export default {
       this.recomendations = null;
       this.quantity = null;
       this.isPermanent = false;
-      this.$refs.formPrescription.reset();
+      this.$nextTick(() => {
       this.$refs.formPrescription.resetValidation();
+      this.$refs.formPrescription.reset();
+    });
+      
       this.getMedicinePresentations();
       this.getMedicineAdministration();
     },
