@@ -27,6 +27,7 @@
               <v-flex xs2>
                 <v-text-field
                   v-model="tonometria.ojoDer"
+                  :rules="[rules.required]"
                   :readonly="validateRead()"
                 >
                 </v-text-field>
@@ -52,6 +53,7 @@
                 <v-text-field
                   v-model="tonometria.ojoIzq"
                   :readonly="validateRead()"
+                  :rules="[rules.required]"
                 >
                 </v-text-field>
               </v-flex>

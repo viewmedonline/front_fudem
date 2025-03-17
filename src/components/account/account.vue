@@ -1,73 +1,46 @@
 <template>
-  <v-content>
+  <v-content class="px-2 py-2">
     <v-tabs v-model="tab" color="#004969" grow>
       <v-tabs-slider color="red"></v-tabs-slider>
 
-      <v-tab style="color: aliceblue" v-for="item in items" :key="item">
-        {{ item }}
+      <v-tab style="color: aliceblue" v-for="item in items" :key="item.tag" :href="`#${item.tag}`">
+        {{ item.text }}
       </v-tab>
-    </v-tabs>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item>
+
+      <v-tab-item value="digital_signature">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs4 offset-xs4>
-                <v-avatar
-                  :tile="false"
-                  class="vm-border-color"
-                  size="90px"
-                  color="white"
-                >
+                <v-avatar :tile="false" class="vm-border-color" size="90px" color="white">
                   <v-icon>gesture</v-icon>
                 </v-avatar>
               </v-flex>
               <v-flex class="py-2" xs4 offset-xs4>
                 <span class="headline primary--text">{{
                   $t("title.digital_signature")
-                }}</span>
+                  }}</span>
               </v-flex>
               <v-flex xs12>
                 <v-card>
                   <v-card-title>
                     {{ $t("title.doctors") }}
                     <v-spacer></v-spacer>
-                    <v-text-field
-                      v-model="search"
-                      append-icon="search"
-                      :label="$t('title.search')"
-                      single-line
-                      hide-details
-                      :maxlength="30"
-                    ></v-text-field>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('title.search')" single-line
+                      hide-details :maxlength="30"></v-text-field>
                   </v-card-title>
-                  <v-data-table
-                    style="width: 100%"
-                    :headers="headers"
-                    :items="users"
-                    :search="search"
-                  >
+                  <v-data-table style="width: 100%" :headers="headers" :items="users" :search="search">
                     <template slot="items" slot-scope="props">
                       <td class="text-xs-center">{{ props.item.name }}</td>
                       <td class="text-xs-center">{{ props.item.specialty }}</td>
                       <td class="justify-center text-xs-center">
-                        <v-icon
-                          small
-                          class="mr-2"
-                          @click="editItem(props.item.id)"
-                          >edit</v-icon
-                        >
+                        <v-icon small class="mr-2" @click="editItem(props.item.id)">edit</v-icon>
                       </td>
                     </template>
-                    <v-alert
-                      slot="no-results"
-                      :value="true"
-                      color="error"
-                      icon="warning"
-                      >{{ $t("title.your_search") }} "{{ search }}"
-                      {{ $t("title.no_results") }}.</v-alert
-                    >
+                    <v-alert slot="no-results" :value="true" color="error" icon="warning">{{ $t("title.your_search") }}
+                      "{{ search }}"
+                      {{ $t("title.no_results") }}.</v-alert>
                   </v-data-table>
                 </v-card>
               </v-flex>
@@ -75,79 +48,45 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab-item>
+      <v-tab-item value="diagnoses">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap grid-list-lg>
               <v-flex xs4 pa-2>
-                <v-select
-                  :items="catalogueList"
-                  label="Seleccione Catalago"
-                  item-text="name"
-                  item-value="id"
-                  v-model="catalogue"
-                  @change="selectCatalogue"
-                ></v-select>
+                <v-select :items="catalogueList" label="Seleccione Catalago" item-text="name" item-value="id"
+                  v-model="catalogue" @change="selectCatalogue"></v-select>
               </v-flex>
               <v-flex xs4 pa-2 v-if="catalogue == 1">
-                <v-autocomplete
-                  v-model="diagnosisSelected"
-                  :items="diagnosis"
-                  label="Diagnosticos Existentes"
-                  persistent-hint
-                  prepend-icon=""
-                  return-object
-                  @change="changeDiagnosis()"
-                  item-text="diagnostic.es"
-                >
+                <v-autocomplete v-model="diagnosisSelected" :items="diagnosis" label="Diagnosticos Existentes"
+                  persistent-hint prepend-icon="" return-object @change="changeDiagnosis()" item-text="diagnostic.es">
                   <template v-slot:selection="data">
                     <span>{{ data.item.diagnostic.es }}</span>
                   </template>
                   <template v-slot:item="data">
-                    <v-list-tile-content
-                      :style="
-                        data.item.disable
-                          ? 'color: red; font-weight:bold'
-                          : null
-                      "
-                      v-text="data.item.diagnostic.es"
-                    ></v-list-tile-content>
+                    <v-list-tile-content :style="data.item.disable
+                        ? 'color: red; font-weight:bold'
+                        : null
+                      " v-text="data.item.diagnostic.es"></v-list-tile-content>
                   </template>
                 </v-autocomplete>
               </v-flex>
               <v-flex xs4 pa-2 v-if="catalogue != 1 && catalogue">
-                <v-autocomplete
-                  v-model="diagnosisMasterSelected"
-                  :items="masterList"
-                  label="Diagnosticos Existentes"
-                  persistent-hint
-                  prepend-icon=""
-                  return-object
-                  @change="changeDiagnosis()"
-                  item-text="diagnostic"
-                >
+                <v-autocomplete v-model="diagnosisMasterSelected" :items="masterList" label="Diagnosticos Existentes"
+                  persistent-hint prepend-icon="" return-object @change="changeDiagnosis()" item-text="diagnostic">
                   <template v-slot:selection="data">
                     <span>{{ data.item.diagnostic }}</span>
                   </template>
                   <template v-slot:item="data">
-                    <v-list-tile-content
-                      :style="
-                        data.item.disable
-                          ? 'color: red; font-weight:bold'
-                          : null
-                      "
-                      v-text="data.item.diagnostic"
-                    ></v-list-tile-content>
+                    <v-list-tile-content :style="data.item.disable
+                        ? 'color: red; font-weight:bold'
+                        : null
+                      " v-text="data.item.diagnostic"></v-list-tile-content>
                   </template>
                 </v-autocomplete>
               </v-flex>
-              <v-flex
-                xs4
-                pa-2
-                v-if="
-                  catalogue && !diagnosisSelected && !diagnosisMasterSelected
-                "
-              >
+              <v-flex xs4 pa-2 v-if="
+                catalogue && !diagnosisSelected && !diagnosisMasterSelected
+              ">
                 <v-btn color="primary" @click="new_diagnosis" medium>
                   Añadir registro
                 </v-btn>
@@ -156,44 +95,26 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-
-      <v-tab-item>
+      <!-- Medicamentos -->
+      <v-tab-item value="medicines">
         <v-card flat>
           <v-card-text>
             <v-layout row wrap grid-list-lg>
               <v-flex xs4 pa-2>
-                <v-select
-                  :items="catalogueListMedicine"
-                  label="Seleccione Catalago"
-                  item-text="name"
-                  item-value="id"
-                  v-model="catalogueMedicine"
-                  @change="findCatalogeMedicines"
-                ></v-select>
+                <v-select :items="catalogueListMedicine" label="Seleccione Catalago" item-text="name" item-value="id"
+                  v-model="catalogueMedicine" @change="findCatalogeMedicines"></v-select>
               </v-flex>
               <v-flex xs4 pa-2 v-if="catalogueMedicine">
-                <v-autocomplete
-                  v-model="medicineSelected"
-                  :items="medicines"
-                  label="Medicamentos Existentes"
-                  persistent-hint
-                  prepend-icon=""
-                  return-object
-                  item-text="description"
-                  @change="changeMedicine()"
-                >
+                <v-autocomplete v-model="medicineSelected" :items="medicines" label="Medicamentos Existentes"
+                  persistent-hint prepend-icon="" return-object item-text="description" @change="changeMedicine()">
                   <template v-slot:selection="data">
                     <span>{{ data.item.description }}</span>
                   </template>
                   <template v-slot:item="data">
-                    <v-list-tile-content
-                      :style="
-                        !data.item.active
-                          ? 'color: red; font-weight:bold'
-                          : null
-                      "
-                      v-text="data.item.description"
-                    ></v-list-tile-content>
+                    <v-list-tile-content :style="!data.item.active
+                        ? 'color: red; font-weight:bold'
+                        : null
+                      " v-text="data.item.description"></v-list-tile-content>
                   </template>
                 </v-autocomplete>
               </v-flex>
@@ -207,180 +128,92 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
-        <v-card flat>
+      <v-tab-item value="reports">
+        <v-card flat width="100%">
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs6>
-                <v-text-field
-                  v-model="dateFromFormat"
-                  label="Desde"
-                  prepend-icon="event"
-                  readonly
-                  @click="modalFrom = true"
-                ></v-text-field>
-                <v-dialog
-                  ref="dialogFrom"
-                  v-model="modalFrom"
-                  :return-value.sync="dateFrom"
-                  persistent
-                  lazy
-                  full-width
-                  width="290px"
-                >
+                <v-text-field v-model="dateFromFormat" label="Desde" prepend-icon="event" readonly
+                  @click="modalFrom = true"></v-text-field>
+                <v-dialog ref="dialogFrom" v-model="modalFrom" :return-value.sync="dateFrom" persistent lazy full-width
+                  width="290px">
                   <v-date-picker locale="es-es" v-model="dateFrom" scrollable>
                     <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="modalFrom = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn
-                      flat
-                      color="primary"
-                      @click="$refs.dialogFrom.save(dateFrom)"
-                      >OK</v-btn
-                    >
+                    <v-btn flat color="primary" @click="modalFrom = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialogFrom.save(dateFrom)">OK</v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
               <v-flex xs6>
-                <v-text-field
-                  v-model="dateToFormat"
-                  label="Hasta"
-                  prepend-icon="event"
-                  readonly
-                  @click="modalTo = true"
-                ></v-text-field>
-                <v-dialog
-                  ref="dialogTo"
-                  v-model="modalTo"
-                  :return-value.sync="dateTo"
-                  persistent
-                  lazy
-                  full-width
-                  width="290px"
-                >
+                <v-text-field v-model="dateToFormat" label="Hasta" prepend-icon="event" readonly
+                  @click="modalTo = true"></v-text-field>
+                <v-dialog ref="dialogTo" v-model="modalTo" :return-value.sync="dateTo" persistent lazy full-width
+                  width="290px">
                   <v-date-picker locale="es-es" v-model="dateTo" scrollable>
                     <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="modalTo = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn
-                      flat
-                      color="primary"
-                      @click="$refs.dialogTo.save(dateTo)"
-                      >OK</v-btn
-                    >
+                    <v-btn flat color="primary" @click="modalTo = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialogTo.save(dateTo)">OK</v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  large
-                  color="primary"
-                  @click="generateReport(1)"
-                  ><v-icon>mdi-download</v-icon>Consultas Preliminares</v-btn
-                >
+                <v-btn style="width: 90%" large color="primary"
+                  @click="generateReport(1)"><v-icon>mdi-download</v-icon>Consultas Preliminares</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  large
-                  color="primary"
-                  @click="generateReport(2)"
-                  ><v-icon>mdi-download</v-icon>Consultas Optometría</v-btn
-                >
+                <v-btn style="width: 90%" large color="primary"
+                  @click="generateReport(2)"><v-icon>mdi-download</v-icon>Consultas Optometría</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  large
-                  color="primary"
-                  @click="generateReport(3)"
-                  ><v-icon>mdi-download</v-icon>Consultas Oftalmologicas</v-btn
-                >
+                <v-btn style="width: 90%" large color="primary"
+                  @click="generateReport(3)"><v-icon>mdi-download</v-icon>Consultas Oftalmologicas</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  large
-                  color="primary"
-                  @click="generateReport(4)"
-                  ><v-icon>mdi-download</v-icon>Consultas Medico
-                  Internista</v-btn
-                >
+                <v-btn style="width: 90%" large color="primary"
+                  @click="generateReport(4)"><v-icon>mdi-download</v-icon>Consultas Medico
+                  Internista</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  large
-                  color="primary"
-                  @click="generateReport(5)"
-                  ><v-icon>mdi-download</v-icon>Consultas Pediatricas</v-btn
-                >
+                <v-btn style="width: 90%" color="primary" @click="generateReport(5)"
+                  large><v-icon>mdi-download</v-icon>Consultas Pediatricas</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  color="primary"
-                  @click="generateReport(6)"
-                  large
-                  ><v-icon>mdi-download</v-icon>Consultas Nutricionista</v-btn
-                >
+                <v-btn style="width: 90%" color="primary" @click="generateReport(6)"
+                  large><v-icon>mdi-download</v-icon>Consultas Nutricionista</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  color="primary"
-                  @click="generateReport(7)"
-                  large
-                  ><v-icon>mdi-download</v-icon>Seguimiento
-                  Psicoterapéutico</v-btn
-                >
+                <v-btn style="width: 90%" color="primary" @click="generateReport(7)"
+                  large><v-icon>mdi-download</v-icon>Seguimiento
+                  Psicoterapéutico</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  color="primary"
-                  @click="generateReport(8)"
-                  large
-                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica
-                  Niños</v-btn
-                >
+                <v-btn style="width: 90%" color="primary" @click="generateReport(8)"
+                  large><v-icon>mdi-download</v-icon>Entrevista Psicologica
+                  Niños</v-btn>
               </v-flex>
               <v-flex xs4>
-                <v-btn
-                  style="width: 90%"
-                  color="primary"
-                  @click="generateReport(9)"
-                  large
-                  ><v-icon>mdi-download</v-icon>Entrevista Psicologica
-                  Adultos</v-btn
-                >
+                <v-btn style="width: 90%" color="primary" @click="generateReport(9)"
+                  large><v-icon>mdi-download</v-icon>Entrevista Psicologica
+                  Adultos</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>
         </v-card>
       </v-tab-item>
-    </v-tabs-items>
-
+    </v-tabs>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
           <span class="headline">{{
             $t("title.upload_digital_signature")
-          }}</span>
+            }}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12>
-                <vue-dropzone
-                  ref="myVueDropzone"
-                  id="dropzone"
-                  :options="dropzoneOptions"
-                  @vdropzone-removed-file="removeFile"
-                ></vue-dropzone>
+                <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"
+                  @vdropzone-removed-file="removeFile"></vue-dropzone>
               </v-flex>
             </v-layout>
           </v-container>
@@ -389,10 +222,10 @@
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">{{
             $t("title.close")
-          }}</v-btn>
+            }}</v-btn>
           <v-btn color="blue darken-1" flat @click="saveDigital">{{
             $t("title.save")
-          }}</v-btn>
+            }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -400,11 +233,7 @@
       <v-card color="primary" dark>
         <v-card-text>
           {{ $t("title.saving") }}
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -412,11 +241,7 @@
       <v-card color="primary" dark>
         <v-card-text>
           Generando Reporte...
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -425,11 +250,7 @@
         <v-card-text>
           <v-layout row wrap>
             <v-flex xs12>
-              <v-text-field
-                label="Diagnostico"
-                :autofocus="true"
-                v-model="diagnosis_txt"
-              ></v-text-field>
+              <v-text-field label="Diagnostico" :autofocus="true" v-model="diagnosis_txt"></v-text-field>
             </v-flex>
             <v-flex xs4>
               <v-btn color="primary" @click="saveDiagnosis" medium>
@@ -437,22 +258,16 @@
               </v-btn>
             </v-flex>
             <v-flex xs4 v-if="diagnosisSelected || diagnosisMasterSelected">
-              <v-btn
-                :color="
-                  (diagnosisSelected && diagnosisSelected.disable) ||
+              <v-btn :color="(diagnosisSelected && diagnosisSelected.disable) ||
                   (diagnosisMasterSelected && diagnosisMasterSelected.disable)
-                    ? 'success'
-                    : 'warning'
-                "
-                @click="disabledDiagnoses"
-                medium
-                >{{
+                  ? 'success'
+                  : 'warning'
+                " @click="disabledDiagnoses" medium>{{
                   (diagnosisSelected && diagnosisSelected.disable) ||
-                  (diagnosisMasterSelected && diagnosisMasterSelected.disable)
+                    (diagnosisMasterSelected && diagnosisMasterSelected.disable)
                     ? "Habilitar"
                     : "Deshabilitar"
-                }}</v-btn
-              >
+                }}</v-btn>
             </v-flex>
             <v-flex xs4>
               <v-btn @click="cancelEditDiagnoses()" medium> Cancelar </v-btn>
@@ -462,48 +277,118 @@
       </v-card>
     </v-dialog>
     <!-- Dialogo para edicion de medicamentos -->
-    <v-dialog v-model="showDialogMedicines" persistent width="500">
-      <v-card>
-        <v-card-text>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-text-field
-                label="Meidcamento"
-                :autofocus="true"
-                v-model="medicine.description"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                label="Compuesto activo"
-                :autofocus="true"
-                v-model="medicine.generic"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                label="Recomendacion"
-                :autofocus="true"
-                v-model="medicine.recomendation"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-radio-group v-model="medicine.active" row label="Estado:">
-                <v-radio label="Activo" :value="true"></v-radio>
-                <v-radio label="Inactivo" :value="false"></v-radio>
-              </v-radio-group>
-            </v-flex>
-          </v-layout>
+    <v-dialog v-model="showDialogMedicines" max-width="900px">
+      <v-card class="medicine-modal">
+        <v-card-title class="headline primary white--text py-4">
+          <v-icon left color="white">mdi-pill</v-icon>
+          Medicamento
+        </v-card-title>
+        <v-card-text class="pt-4">
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 md6>
+                <v-text-field
+                  v-model="medicine.description"
+                  label="Medicamento"
+                  :autofocus="true"
+                  outlined
+                  dense
+                  prepend-icon="mdi-medical-bag"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 md6>
+                <v-text-field
+                  label="Compuesto activo"
+                  :autofocus="true"
+                  v-model="medicine.generic"
+                  outlined
+                  dense
+                  prepend-icon="mdi-flask"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  label="Recomendacion"
+                  :autofocus="true"
+                  v-model="medicine.recomendation"
+                  outlined
+                  dense
+                  prepend-icon="mdi-clipboard-text"
+                ></v-text-field>
+              </v-flex>
+              
+              <v-flex xs12>
+                <v-card class="pa-4 mb-4" outlined>
+                  <div class="subtitle-1 mb-3 primary--text">
+                    <v-icon left color="primary">mdi-package-variant</v-icon>
+                    Presentación
+                  </div>
+                  <v-layout row wrap>
+                    <v-flex xs12 sm6 md3 v-for="presentation in medicinePresentations" :key="presentation._id">
+                      <v-switch
+                        v-model="presentations"
+                        :label="presentation.description"
+                        color="primary"
+                        hide-details
+                        :value="presentation.description"
+                        class="ma-2"
+                        inset
+                      ></v-switch>
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-flex>
+
+              <v-flex xs12>
+                <v-card class="pa-4" outlined>
+                  <div class="subtitle-1 mb-3 primary--text">
+                    <v-icon left color="primary">mdi-routes</v-icon>
+                    Vía de administración
+                  </div>
+                  {{ administrations }}
+
+                  <v-layout row wrap>
+                    <v-flex xs12 sm6 md3 v-for="administration in medicineAdministration" :key="administration._id">
+                      <v-switch
+                        v-model="administrations"
+                        :label="administration.description"
+                        color="primary"
+                        hide-details
+                        :value="administration.description"
+                        class="ma-2"
+                        inset
+                      ></v-switch>
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-flex>
+
+              <v-flex xs12 class="mt-4">
+                <v-card outlined class="pa-4">
+                  <div class="subtitle-1 mb-3 primary--text">
+                    <v-icon left color="primary">mdi-toggle-switch</v-icon>
+                    Estado
+                  </div>
+                  <v-radio-group v-model="medicine.active" row>
+                    <v-radio label="Activo" :value="true" color="success"></v-radio>
+                    <v-radio label="Inactivo" :value="false" color="error"></v-radio>
+                  </v-radio-group>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
         </v-card-text>
-        <v-card-actions>
-          <v-flex xs4 offset-xs2>
-            <v-btn color="blue darken-1" flat @click="SaveMedicine()" medium>
-              Guardar
-            </v-btn>
-          </v-flex>
-          <v-flex xs4>
-            <v-btn @click="closeModalmedicine()" medium> Cancelar </v-btn>
-          </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-4">
+          <v-spacer></v-spacer>
+          <v-btn color="error" text @click="closeModalmedicine">
+            <v-icon left>mdi-close</v-icon>
+            Cancelar
+          </v-btn>
+          <v-btn color="primary" @click="SaveMedicine">
+            <v-icon left>mdi-content-save</v-icon>
+            Guardar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -528,6 +413,7 @@ import {
   updateMedicines,
   saveMedicines,
 } from "../../componentServs/medicines";
+import { getMedicineAdministration, getMedicinePresentations } from "../../componentServs/master";
 export default {
   name: "account",
   components: {
@@ -588,7 +474,7 @@ export default {
       users: [],
       userId: null,
       tab: 0,
-      items: ["Firma Digital"],
+      items: [{ text: "Firma Digital", tag: "digital_signature" }],
       diagnosis: [],
       diagnosisSelected: null,
       diagnosisMasterSelected: null,
@@ -611,8 +497,16 @@ export default {
         recomendation: null,
         description: null,
         active: null,
+        presentations: null,
+        administration: null,
         type: null,
       },
+      reportAccess: false,
+      reportTab: 3,
+      medicinePresentations: [],
+      medicineAdministration: [],
+      administrations: null,
+      presentations: null,
     };
   },
   watch: {
@@ -626,17 +520,26 @@ export default {
   methods: {
     async newMedicine(val) {
       this.showDialogMedicines = true;
-      this.medicine.description = null;
       this.medicine.generic = null;
       this.medicine.recomendation = null;
+      this.medicine.description = null;
       this.medicine._id = null;
       this.medicine.active = null;
+      this.medicine.presentations = null;
+      this.medicine.administrations = null;
+      this.medicine.type = this.catalogueMedicine;
+      this.medicine.presentation = this.presentations;
+      this.medicine.administration = this.administrations;
+      this.presentations = null;
+      this.administrations = null;
     },
     async SaveMedicine() {
+      this.medicine.presentation = this.presentations;
+      this.medicine.administration = this.administrations;
+      this.medicine.type = this.catalogueMedicine;
       if (this.medicine._id) {
         await updateMedicines(this.medicine, this.medicine._id);
       } else {
-        this.medicine.type = this.catalogueMedicine;
         delete this.medicine._id;
         await saveMedicines(this.medicine);
       }
@@ -645,20 +548,25 @@ export default {
     },
     closeModalmedicine() {
       this.showDialogMedicines = false;
-      this.medicine.description = null;
       this.medicine.generic = null;
       this.medicine.recomendation = null;
+      this.medicine.description = null;
       this.medicine._id = null;
       this.medicine.active = null;
+      this.medicine.presentations = null;
+      this.medicine.administration = null;
+      this.medicine.type = null;
       this.medicineSelected = null;
     },
     async changeMedicine() {
       this.showDialogMedicines = true;
-      this.medicine.description = this.medicineSelected.description;
       this.medicine.generic = this.medicineSelected.generic;
       this.medicine.recomendation = this.medicineSelected.recomendation;
+      this.medicine.description = this.medicineSelected.description;
       this.medicine._id = this.medicineSelected._id;
       this.medicine.active = this.medicineSelected.active;
+      this.presentations = this.medicineSelected.presentation;
+      this.administrations = this.medicineSelected.administration;
     },
     async findCatalogeMedicines() {
       try {
@@ -971,19 +879,37 @@ export default {
         this.diagnosis = result;
       });
     },
+    getMedicinePresentations() {
+      getMedicinePresentations({}).then((result) => {
+        this.medicinePresentations = result;
+      });
+    },
+    getMedicineAdministration() {
+      getMedicineAdministration({}).then((result) => {
+        this.medicineAdministration = result;
+      });
+    },
   },
   created() {
     this.user_admin =
       this.$store.getters.getPhysician.user.idUserFudem == "PRUEBAOFTA"
         ? true
         : false;
+    this.reportAccess = this.$store.getters.getPhysician.reportAccess;
     if (this.user_admin) {
-      this.items.push("Administrador de diagnosticos");
-      this.items.push("Administrador de medicamentos");
-      this.items.push("Reportes de Consultas");
+      this.items.push({ text: "Administrador de diagnosticos", tag: "diagnoses" });
+      this.items.push({ text: "Administrador de medicamentos", tag: "medicines" });
+      this.items.push({ text: "Reportes de Consultas", tag: "reports" });
+    }
+
+    if (this.$store.getters.getPhysician.reportAccess) {
+      this.tab = 3
+      this.items = [{ text: "Reportes de Consultas", tag: "reports" }];
     }
 
     this.getUserList();
+    this.getMedicinePresentations();
+    this.getMedicineAdministration();
   },
   mounted() {
     this.getListDiagnoses();

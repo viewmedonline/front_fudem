@@ -174,10 +174,10 @@
                   }}</span>
                 </v-flex>
                 <v-flex xs4>
-                  <span class="body-1">{{ visual.ojoDer.sinCorreccion }}</span>
+                  <span class="body-1">{{ visual.ojoDer ? visual.ojoDer.sinCorreccion : ' - ' }}</span>
                 </v-flex>
                 <v-flex xs4>
-                  <span class="body-1">{{ visual.ojoDer.correccion }}</span>
+                  <span class="body-1">{{ visual.ojoDer ? visual.ojoDer.correccion : ' - ' }}</span>
                 </v-flex>
                 <v-flex xs4>
                   <span class="font-weight-medium">{{
@@ -185,10 +185,10 @@
                   }}</span>
                 </v-flex>
                 <v-flex xs4>
-                  <span class="body-1">{{ visual.ojoIzq.sinCorreccion }}</span>
+                  <span class="body-1">{{ visual.ojoIzq ? visual.ojoIzq.sinCorreccion : ' - ' }}</span>
                 </v-flex>
                 <v-flex xs4>
-                  <span class="body-1">{{ visual.ojoIzq.correccion }}</span>
+                  <span class="body-1">{{ visual.ojoIzq ? visual.ojoIzq.correccion : ' - ' }}</span>
                 </v-flex>
               </v-layout>
               <v-divider></v-divider>

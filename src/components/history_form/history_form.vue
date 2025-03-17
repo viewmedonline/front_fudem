@@ -1,19 +1,8 @@
 <template>
   <v-container>
-    <v-form
-      autocomplete="off"
-      ref="formHistoryRef"
-      v-model="formHistory"
-      lazy-validation
-    >
+    <v-form autocomplete="off" ref="formHistoryRef" v-model="formHistory" lazy-validation>
       <v-stepper v-model="e6" vertical non-linear>
-        <v-stepper-step
-          :step="9999"
-          :edit-icon="'add'"
-          complete
-          :editable="true"
-          @click="validateStepper(9999)"
-        >
+        <v-stepper-step :step="9999" :edit-icon="'add'" complete :editable="true" @click="validateStepper(9999)">
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">{{ $t("title.upload_file") }}</h3>
@@ -28,49 +17,20 @@
                   <v-container fluid grid-list-md px-0 py-0>
                     <v-layout row wrap>
                       <v-flex xs4 offset-xs2>
-                        <v-text-field
-                          :label="$t('title.description')"
-                          v-model="nameconsult"
-                          :rules="[rules.required]"
-                        ></v-text-field>
+                        <v-text-field :label="$t('title.description')" v-model="nameconsult"
+                          :rules="[rules.required]"></v-text-field>
                       </v-flex>
                       <v-flex xs4>
-                        <v-menu
-                          ref="menu1"
-                          v-model="menu1"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          lazy
-                          transition="scale-transition"
-                          offset-y
-                          full-width
-                          max-width="290px"
-                          min-width="290px"
-                        >
-                          <v-text-field
-                            slot="activator"
-                            v-model="dateFormatted"
-                            label="Date"
-                            persistent-hint
-                            prepend-icon="event"
-                            @blur="date = parseDate(dateFormatted)"
-                          ></v-text-field>
-                          <v-date-picker
-                            locale="es-es"
-                            v-model="date"
-                            no-title
-                            @input="menu1 = false"
-                          >
+                        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" :nudge-right="40" lazy
+                          transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
+                          <v-text-field slot="activator" v-model="dateFormatted" label="Date" persistent-hint
+                            prepend-icon="event" @blur="date = parseDate(dateFormatted)"></v-text-field>
+                          <v-date-picker locale="es-es" v-model="date" no-title @input="menu1 = false">
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{
                               $t("title.cancel")
                             }}</v-btn>
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="$refs.menu.save(dateFormatted)"
-                              >Ok</v-btn
-                            >
+                            <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>
                           </v-date-picker>
                         </v-menu>
                       </v-flex>
@@ -81,18 +41,11 @@
                           :options="dropzoneOptions"
                         ></vue-dropzone> -->
                         <div class="input-file-wrapper">
-                          <input
-                            type="file"
-                            name="uploadField"
-                            accept="application/pdf"
-                            class="input-file"
-                            id="uploadField"
-                            :rules="[rules.required]"
-                            @change="
+                          <input type="file" name="uploadField" accept="application/pdf" class="input-file"
+                            id="uploadField" :rules="[rules.required]" @change="
                               handleFileChange($event);
-                              mostrarNombreArchivo($event);
-                            "
-                          />
+                            mostrarNombreArchivo($event);
+                            " />
                           <div id="file-name" class="file-name">
                             {{ message }}
                           </div>
@@ -104,13 +57,8 @@
                 <v-card-actions>
                   <v-layout row wrap justify-end>
                     <v-flex xs8 offset-xs2>
-                      <v-btn
-                        color="primary"
-                        @click="saveConsult"
-                        :disabled="alert"
-                        :loading="alert"
-                        >{{ $t("title.save") }}</v-btn
-                      >
+                      <v-btn color="primary" @click="saveConsult" :disabled="alert" :loading="alert">{{ $t("title.save")
+                        }}</v-btn>
                       <v-btn flat @click="dischargeImaging">{{
                         $t("title.cancel")
                       }}</v-btn>
@@ -122,34 +70,26 @@
           </v-layout>
         </v-stepper-content>
         <div v-for="(history, z) in historyConsulting" :key="z">
-          <v-stepper-step
-            :step="z"
-            complete
-            :edit-icon="'assignment'"
-            :editable="true"
-            @click="
-              history.file
-                ? show_document(history.file, z + 999999)
-                : show_report(history._id, z)
-            "
-          >
-            {{ history.name }}
+          <v-stepper-step :step="z" complete :edit-icon="'assignment'" :editable="true" @click="
+            history.file
+              ? show_document(history.file, z)
+              : show_report(history._id, z)
+            ">
+            {{ history.name}}
             <small>{{ history.date }}</small>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 10px; gap: 5px">
+              <small v-if="history.consultation && history.consultation.objOphthalmology.data && Object.keys(history.consultation.objOphthalmology.data).length > 0" class="tags oftalmologo">Oftalmólogo</small>
+              <small v-if="history.consultation && history.consultation.objOptometrist.data && Object.keys(history.consultation.objOptometrist.data).length > 0" class="tags optometrista">Optometrista</small>
+              <!-- <small class="tags nutricionista">Nutricionista</small>
+            <small class="tags internista">Internista</small>
+            <small class="tags psicologo">Psicólogo</small>
+            <small class="tags pediatra">Pediatra</small> -->
+            </div>
           </v-stepper-step>
           <v-stepper-content :step="z" complete :editable="true">
-            <v-layout
-              row
-              wrap
-              v-if="storePhysician.role == 'Institution' && history.file"
-            >
+            <v-layout row wrap v-if="storePhysician.role == 'Institution' && history.file">
               <v-flex xs12 class="text-xs-right">
-                <v-btn
-                  @click="deleteDialog(history.id)"
-                  fab
-                  dark
-                  small
-                  color="primary"
-                >
+                <v-btn @click="deleteDialog(history.id)" fab dark small color="primary">
                   <v-icon>delete_forever</v-icon>
                 </v-btn>
               </v-flex>
@@ -162,24 +102,10 @@
               </v-flex>
             </v-layout>
 
-            <iframe
-              color="grey lighten-1"
-              class="mb-5"
-              v-if="history.file"
-              :src="pdf_document"
-              type="application/pdf"
-              width="90%"
-              height="100%"
-              frameborder="0"
-              style="height: 75vh"
-            ></iframe>
-            <history_consultation_inf
-              v-else
-              class="px-2 py-2"
-              :myProp="history.consultation"
-              ref="history_consultation_inf_ref"
-              :id="z"
-            ></history_consultation_inf>
+            <iframe color="grey lighten-1" class="mb-5" v-if="history.file" :src="pdf_document" type="application/pdf"
+              width="90%" height="100%" frameborder="0" style="height: 75vh"></iframe>
+            <history_consultation_inf v-else class="px-2 py-2" :myProp="history.consultation"
+              ref="history_consultation_inf_ref" :id="z"></history_consultation_inf>
           </v-stepper-content>
         </div>
         <!-- <div v-for="(file, z) in filesConsulting" :key="file._id">
@@ -211,11 +137,7 @@
       <v-card color="primary" dark>
         <v-card-text>
           Guardando
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -233,19 +155,11 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn
-            color="green darken-1"
-            flat="flat"
-            @click="removeDialog = false"
-          >
+          <v-btn color="green darken-1" flat="flat" @click="removeDialog = false">
             Cancelar
           </v-btn>
 
-          <v-btn
-            color="green darken-1"
-            flat="flat"
-            @click="deleteFile(idRemoveConsulting)"
-          >
+          <v-btn color="green darken-1" flat="flat" @click="deleteFile(idRemoveConsulting)">
             Acepto
           </v-btn>
         </v-card-actions>
@@ -292,7 +206,7 @@ export default {
     menu1: false,
     menu2: false,
     menu: false,
-    e6: 1,
+    e6: 99,
     removeDialog: false,
     dropzoneOptions: {
       autoProcessQueue: false,
@@ -406,7 +320,8 @@ export default {
       let response = this.Consultations.filter((item) => {
         return item.value == typeConsulting;
       });
-      return response[0].text;
+      
+      return response[0] ? response[0].text : typeConsulting;
     },
     validateStepper(val) {
       if (val == this.e6) {
@@ -609,6 +524,7 @@ export default {
       this.validateStepper(pos);
     },
     show_report(document, pos) {
+      
       if (this.position == pos) this.e6 = pos;
       this.position = pos;
       this.showPdf = false;
@@ -657,3 +573,42 @@ export default {
   },
 };
 </script>
+<style>
+.tags {
+  font-size: 10px;
+  color: #ffffff !important;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold !important;
+}
+
+.tags.oftalmologo {
+  background-color: #1E3A8A;
+  /* Azul profundo */
+}
+
+.tags.optometrista {
+  background-color: #607D8B;
+  /* Verde esmeralda */
+}
+
+.tags.nutricionista {
+  background-color: #F97316;
+  /* Naranja vibrante */
+}
+
+.tags.internista {
+  background-color: #4B5563;
+  /* Gris acero */
+}
+
+.tags.psicologo {
+  background-color: #8B5CF6;
+  /* Violeta suave */
+}
+
+.tags.pediatra {
+  background-color: #FACC15;
+  /* Amarillo soleado */
+}
+</style>

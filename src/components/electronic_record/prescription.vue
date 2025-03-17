@@ -1,192 +1,121 @@
 <template>
-  <v-form
-    autocomplete="off"
-    ref="formPrescription"
-    v-model="formPrescription"
-    lazy-validation
-  >
-    <v-card class="elevation-3">
-      <v-card-title primary-title class="blue-grey darken-1">
-        <span class="subheading white--text text-capitalize">Medicamentos</span>
+  <v-form autocomplete="off" ref="formPrescription" v-model="formPrescription" lazy-validation>
+    <v-card class="rounded-lg elevation-2">
+      <v-card-title primary-title class="primary darken-1">
+        <span class="text-h6 white--text font-weight-medium">Medicamentos</span>
       </v-card-title>
-      <v-divider light class="vm-border-color-2"></v-divider>
-      <v-card-text>
+      <v-divider light></v-divider>
+      <v-card-text class="pa-4">
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 v-if="useListMedicines">
-              <v-autocomplete
-                v-model="medications"
-                :items="items"
-                :readonly="validateRead()"
-                :label="$t('title.medications')"
-                persistent-hint
-                prepend-icon=""
-                return-object
-                item-text="description"
-                @change="selectMedicine"
-              >
-                <!-- <v-lide-x-reverse-transition slot="append-outer" mode="out-in">
-                  <v-btn
-                    dark
-                    small
-                    icon
-                    color="grey white--text"
-                    @click="appendListMedicines"
-                  >
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </v-slide-x-reverse-transition> -->
+              <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()"
+                :rules="useListMedicines ? [rules.required] : []" :label="$t('title.medications')" dense outlined
+                :hide-details="true" return-object item-text="description" @change="selectMedicine">
+                <template v-slot:item="{ item }">
+                  <div class="pa-2">
+                    <div class="text-subtitle-1">{{ item.description }} - ({{ item.generic }})</div>
+                  </div>
+                </template>
+                <template v-slot:selection="{ item }">
+                  <div class="pa-2">
+                    <div class="text-subtitle-1">{{ item.description }} - ({{ item.generic }})</div>
+                  </div>
+                </template>
               </v-autocomplete>
             </v-flex>
             <v-flex xs8 v-else>
-              <v-text-field
-                :readonly="validateRead()"
-                v-model="medications"
-                :label="$t('title.medications')"
-              >
-                <!-- <v-slide-x-reverse-transition slot="append-outer" mode="out-in">
-                  <v-btn
-                    dark
-                    small
-                    icon
-                    color="grey white--text"
-                    @click="appendListMedicines"
-                  >
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </v-slide-x-reverse-transition> -->
-              </v-text-field>
+              <v-text-field :readonly="validateRead()" v-model="medications" :label="$t('title.medications')" dense
+                outlined :hide-details="true" :rules="!useListMedicines ? [rules.required] : []"></v-text-field>
             </v-flex>
 
             <v-flex xs4>
-              <v-checkbox
-                :readonly="validateRead()"
-                label="Lista Precargada"
-                v-model="useListMedicines"
-              ></v-checkbox>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                :readonly="validateRead()"
-                v-model="generic"
-                label="Nombre generico del principio activo"
-              >
-                <!-- <v-slide-x-reverse-transition slot="append-outer" mode="out-in">
-                  <v-btn
-                    dark
-                    small
-                    icon
-                    color="grey white--text"
-                    @click="appendListMedicines"
-                  >
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </v-slide-x-reverse-transition> -->
-              </v-text-field>
+              <v-switch :readonly="validateRead()" label="Lista Precargada" v-model="useListMedicines" inset
+                dense></v-switch>
             </v-flex>
             <v-flex xs2>
-              <v-text-field
-                type="number"
-                label="Administrar"
-                max="10"
-                min="1"
-                v-model="dispense"
-              ></v-text-field>
+              <v-text-field type="number" label="Administrar" max="10" min="1" :rules="[]" v-model="dispense" dense
+                outlined :hide-details="true"></v-text-field>
             </v-flex>
+
             <v-flex xs6>
-              <v-radio-group
-                v-model="presentation"
-                row
-                :rules="[rules.required]"
-              >
-                <v-radio label="Gota(s)" value="Gota(s)"></v-radio>
-                <v-radio label="Gel" value="Gel"></v-radio>
-                <v-radio label="Tableta(s)" value="Tableta(s)"></v-radio>
-                <v-radio label="Ampolla(s)" value="Ampolla(s)"></v-radio>
+              <v-radio-group v-model="presentation" row :rules="useListMedicines ? [rules.required] : []">
+                <v-radio v-for="item in medicinePresentations" :key="item.id" :label="item.description"
+                  :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
+
             <v-flex xs2>
-              <v-select
-                label="Cada"
-                :items="hoursList"
-                v-model="hours"
-              ></v-select>
+              <v-select label="Cada" :items="hoursList" v-model="hours" dense outlined :hide-details="true"></v-select>
             </v-flex>
+
             <v-flex xs6>
-              <v-radio-group
-                v-model="administration"
-                row
-                :rules="[rules.required]"
-                label="Via de Administración:"
-              >
-                <v-radio label="Oftálmica" value="Oftálmica"></v-radio>
-                <v-radio label="Oral" value="Oral"></v-radio>
-                <v-radio label="Intramuscular" value="Intramuscular"></v-radio>
+              <v-radio-group v-model="administration" row :rules="useListMedicines ? [rules.required] : []">
+                <div class="text-subtitle-2 mb-2">Via de Administración:</div>
+                <v-radio v-for="item in medicineAdministrations" :key="item.id" :label="item.description"
+                  :value="item.description" class="mr-2"></v-radio>
               </v-radio-group>
             </v-flex>
+
             <v-flex xs6>
-              <v-radio-group
-                v-model="eyeApplication"
-                row
-                label="Aplicación en:"
-              >
-                <v-radio label="Ojo Izq" value="Ojo Izq"></v-radio>
-                <v-radio label="Ojo Der" value="Ojo Der"></v-radio>
+              <v-radio-group v-model="eyeApplication" row>
+                <div class="text-subtitle-2 mb-2">Aplicación en:</div>
+                <v-radio label="Ojo Izq" value="Ojo Izq" class="mr-2"></v-radio>
+                <v-radio label="Ojo Der" value="Ojo Der" class="mr-2"></v-radio>
                 <v-radio label="Ambos Ojos" value="Ambos Ojos"></v-radio>
               </v-radio-group>
             </v-flex>
+            <v-flex xs2 row>
+              <v-text-field type="number" label="Numero de dias que se aplicara el tratamiento" min="1"
+                :rules="useListMedicines && !isPermanent ? [rules.required] : []" v-model="treatmentDays" dense outlined :disabled="isPermanent"
+                :hide-details="true"></v-text-field>
+            </v-flex>
+
+            <v-flex xs2>
+              <v-switch :readonly="validateRead()" label="Permanente" v-model="isPermanent" inset dense></v-switch>
+            </v-flex>
+
+            <v-flex xs2 row>
+              <v-text-field type="number" label="Cantidad" min="1" v-model="quantity" dense outlined
+                :hide-details="true"></v-text-field>
+            </v-flex>
+
             <v-flex xs4 row>
-              <v-text-field
-                type="number"
-                label="Numero de dias que se aplicara el tratamiento"
-                min="1"
-                :rules="[rules.required]"
-                v-model="treatmentDays"
-              ></v-text-field>
+              <v-radio-group v-model="typePrescription" row>
+                <v-radio label="Fco" value="Fco" class="mr-2"></v-radio>
+                <v-radio label="Tbo" value="Tbo" class="mr-2"></v-radio>
+                <v-radio label="Tab" value="Tab" class="mr-2"></v-radio>
+                <v-radio label="Amp" value="Amp"></v-radio>
+              </v-radio-group>
             </v-flex>
+
             <v-flex xs12>
-              <v-textarea
-                label="Recomendaciones"
-                v-model="recomendations"
-              ></v-textarea>
+              <v-textarea label="Recomendaciones" v-model="recomendations" rows="3" outlined dense
+                :hide-details="true"></v-textarea>
             </v-flex>
+
             <v-flex xs12>
-              <v-btn dark small color="primary" @click="appendListMedicines">
+              <v-btn color="primary" @click="appendListMedicines" class="text-none" small>
+                <v-icon left small>mdi-plus</v-icon>
                 Añadir
-                <v-icon>add</v-icon>
               </v-btn>
-              <!-- <v-btn dark small color="primary" @click="savePrescription">
-                save
-                <v-icon>add</v-icon>
-              </v-btn> -->
             </v-flex>
             <v-flex xs12 class="text-sm-left">
-              <v-data-table
-                :headers="headers"
-                :items="prescription"
-                class="elevation-1"
-                rows-per-page-text="Filas por pagina"
-              >
+              <v-data-table :headers="headers" :items="prescription" hide-actions class="elevation-1">
                 <template slot="items" slot-scope="props">
-                  <td>
-                    {{ props.item.medicine }} -
-                    {{ props.item.active_ingredient }}
-                  </td>
-                  <td>
-                    {{ props.item.doses }}
-                  </td>
-                  <td>
-                    {{ props.item.recomendation }}
-                  </td>
-                  <td class="justify-center layout px-0">
-                    <v-icon
-                      :disabled="validateRead()"
-                      class="mt-3"
-                      @click="deleteItem(props.item)"
-                    >
+                  <td class="text-xs-left">{{ props.item.medicine }}</td>
+                  <td class="text-xs-left">{{ props.item.doses }}</td>
+                  <td class="text-xs-left">{{ props.item.recomendation }}</td>
+                  <td class="text-xs-center">
+                    <v-icon small class="mr-2" @click="deleteItem(props.item)" :disabled="validateRead()">
                       delete
                     </v-icon>
                   </td>
+                </template>
+                <template slot="no-data">
+                  <v-alert :value="true" color="error" icon="warning">
+                    No hay datos disponibles
+                  </v-alert>
                 </template>
               </v-data-table>
             </v-flex>
@@ -198,6 +127,7 @@
 </template>
 
 <script>
+import { getMedicineAdministration, getMedicinePresentations } from "../../componentServs/master";
 import {
   getMedicines,
   findPrescriptions,
@@ -218,12 +148,12 @@ export default {
       medications: null,
       presentation: null,
       recomendations: null,
-      dispense: null,
+      dispense: 1,
       hours: null,
       administration: null,
       treatmentDays: null,
       eyeApplication: null,
-      generic: null,
+      typePrescription: null,
       prescription: [],
       hoursList: [
         "1 Hora",
@@ -237,33 +167,40 @@ export default {
       headers: [
         {
           text: "Medicinas",
-          align: "left",
-          sortable: false,
           value: "medicine",
+          sortable: false,
+          align: 'left'
         },
         {
           text: "Dosis",
-          align: "left",
+          value: "doses",
           sortable: false,
-          value: "active_ingredient",
+          align: 'left'
         },
         {
           text: "Recomendaciones",
-          align: "left",
-          sortable: false,
           value: "recomendation",
+          sortable: false,
+          align: 'left'
         },
         {
           text: "Acciones",
-          align: "center",
+          value: "action",
           sortable: false,
-          value: "name",
-        },
+          align: 'center'
+        }
       ],
       items: [],
       rules: {
         required: (v) => !!v || this.$t("title.field_required"),
       },
+      isPermanent: false,
+      quantity: null,
+      pagination: {
+        rowsPerPage: 5
+      },
+      medicinePresentations: [],
+      medicineAdministrations: [],
     };
   },
   computed: {
@@ -274,10 +211,50 @@ export default {
   mounted() {
     this.getListMedicines();
     this.setPresciption();
+    this.getMedicinePresentations();
+    this.getMedicineAdministration();
+  },
+  watch: {
+    medications(val) {
+      if (val && typeof val === "object" && val.administration.length > 0 && val.presentation.length > 0) {
+        this.medicineAdministrations = this.medicineAdministrations
+        this.medicinePresentations = this.medicinePresentations
+        this.presentation = val.presentation
+        this.administration = val.administration
+      }
+    },
+    useListMedicines(val) {
+      this.medications = null;
+      this.$refs.formPrescription.resetValidation();
+      if (!val) {
+        this.getMedicinePresentations();
+        this.getMedicineAdministration();
+      }
+
+    },
+    // treatmentDays() {
+    //   if (this.isPermanent) {
+    //     this.isPermanent = false; 
+    //     this.$refs.formPrescription.resetValidation();
+    //   }
+    // },
+    isPermanent() {
+      this.treatmentDays = null;
+      this.$refs.formPrescription.resetValidation();
+    },
   },
   methods: {
+    getMedicinePresentations() {
+      getMedicinePresentations({}).then((result) => {
+        this.medicinePresentations = result;
+      });
+    },
+    getMedicineAdministration() {
+      getMedicineAdministration({}).then((result) => {
+        this.medicineAdministrations = result;
+      });
+    },
     selectMedicine() {
-      this.generic = this.medications.generic;
       this.recomendations = this.medications.recomendation;
     },
     async getListMedicines() {
@@ -324,50 +301,131 @@ export default {
       });
     },
     clearForm() {
-      this.medications = null;
-      this.presentation = null;
       this.dispense = null;
+      this.presentation = null;
       this.hours = null;
-      this.administration = null;
+      this.administration = 1;
       this.treatmentDays = null;
       this.eyeApplication = null;
+      this.typePrescription = null;
       this.recomendations = null;
-      this.generic = null;
+      this.quantity = null;
+      this.isPermanent = false;
+      this.$refs.formPrescription.reset();
       this.$refs.formPrescription.resetValidation();
+      this.getMedicinePresentations();
+      this.getMedicineAdministration();
     },
     deleteItem(item) {
-      const index = this.assignedMedicines.indexOf(item);
+      const index = this.prescription.findIndex(prescripcion =>
+        prescripcion.medicine === item.medicine &&
+        prescripcion.doses === item.doses
+      );
 
-      confirm("¿Esta seguro que desea eliminar este medicamento?") &&
-        this.prescription.splice(index, 1);
+      if (index !== -1) {
+        if (confirm("¿Está seguro que desea eliminar este medicamento?")) {
+          this.prescription.splice(index, 1);
+        }
+      }
+    },
+    dailyMedicationDoses(value) {
+      const [number, units] = value.split(' ')
+      const quantity = 24 / parseInt(number)
+      return `${quantity} veces al dia`
     },
     appendListMedicines() {
       if (this.$refs.formPrescription.validate()) {
-        const application = this.eyeApplication
-          ? ` - ${this.eyeApplication}`
-          : "";
-        const doses = `${this.dispense} ${this.presentation} cada ${this.hours} - Vía ${this.administration} ${application} - durante ${this.treatmentDays} día(s)`;
-        // this.assignedMedicines.unshift(
-        //   this.medications.description || this.medications
-        // );
-        // this.assignedRecetas.unshift(doses);
-        const existeMedicamento = this.prescription.find(
-          (prescripcion) =>
-            prescripcion.medicine ===
-            (this.medications.description || this.medications)
-        );
+        // Validate that required fields for constructing doses string are filled in
+        if (!this.useListMedicines || 
+            (this.presentation && 
+             this.hours && 
+             this.administration && 
+             (this.isPermanent || this.treatmentDays))) {
+          
+          // Optional fields validation
+          const application = this.eyeApplication
+            ? ` - ${this.eyeApplication}`
+            : "";
+          
+          const duration = this.isPermanent 
+            ? "Medicamento Permanente" 
+            : this.treatmentDays 
+              ? `Durante ${this.treatmentDays} día(s)` 
+              : "";
+          
+          const dispense = this.dispense ? this.dispense : "";
+          
+          const quantityDoses = this.hours 
+            ? this.dailyMedicationDoses(this.hours) 
+            : "";
+          
+          const quantity = this.quantity && this.typePrescription 
+            ? `- ${this.quantity} ${this.typePrescription}` 
+            : '';
+          
+          // Construct doses string based on available values
+          let doses = "";
+          
+          if (dispense && this.presentation) {
+            doses += `${dispense} ${this.presentation}`;
+          }
+          
+          if (this.hours) {
+            doses += ` cada ${this.hours}`;
+            if (quantityDoses) {
+              doses += ` (${quantityDoses})`;
+            }
+          }
+          
+          if (this.administration) {
+            doses += ` - Vía ${this.administration}${application}`;
+          }
+          
+          if (duration) {
+            doses += ` - ${duration}`;
+          }
+          
+          if (quantity) {
+            doses += ` ${quantity}`;
+          }
+          
+          // Check if medication already exists
+          const existeMedicamento = this.prescription.find(
+            (prescripcion) =>
+              prescripcion.medicine ===
+              (this.medications && typeof this.medications === 'object' 
+                ? this.medications.description 
+                : this.medications)
+          );
 
-        if (!existeMedicamento) {
-          this.prescription.push({
-            medicine: this.medications.description || this.medications,
-            doses: doses,
-            active_ingredient: this.generic,
-            recomendation: this.recomendations,
+          if (!existeMedicamento && this.medications) {
+            // Format medicine string based on the type of medications (object or string)
+            let medicine = "";
+            if (this.medications && typeof this.medications === 'object') {
+              medicine = `${this.medications.description || ''} ${this.medications.generic ? '- ' + this.medications.generic : ''}`;
+            } else {
+              medicine = this.medications || '';
+            }
+            
+            if (medicine.trim() !== '') {
+              this.prescription.push({
+                medicine: medicine,
+                doses: doses.trim(),
+                recomendation: this.recomendations || ''
+              });
+            }
+          }
+
+          this.medications = null;
+          this.clearForm();
+        } else {
+          // Show validation message if fields are missing
+          this.$store.dispatch("setSnackbar", {
+            show: true,
+            text: "Por favor complete los campos necesarios para la dosis",
+            color: "error"
           });
         }
-
-        this.medications = null;
-        this.clearForm();
       }
     },
     validateRead() {

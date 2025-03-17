@@ -1,35 +1,20 @@
 <template>
   <v-container>
-    <v-form
-      autocomplete="off"
-      ref="formHistoryRef"
-      v-model="formHistory"
-      lazy-validation
-    >
+    <v-form autocomplete="off" ref="formHistoryRef" v-model="formHistory" lazy-validation>
       <v-card-title primary-title class="blue-grey darken-1">
-        <span class="subheading white--text text-capitalize"
-          >Constancias Médicas</span
-        >
+        <span class="subheading white--text text-capitalize">Constancias Médicas</span>
       </v-card-title>
       <v-stepper v-model="e6" vertical non-linear>
-        <v-stepper-step
-          :step="9999"
-          :edit-icon="'add'"
-          complete
-          v-if="storePhysician.user && storePhysician.user.role == 'Physician'"
-          :editable="true"
-          @click="validateStepper(9999)"
-        >
+        <v-stepper-step :step="9999" :edit-icon="'add'" complete
+          v-if="storePhysician.user && storePhysician.user.role == 'Physician'" :editable="true"
+          @click="validateStepper(9999)">
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">Crear Constancia Médica</h3>
             </div>
           </v-card-title>
         </v-stepper-step>
-        <v-stepper-content
-          :step="9999"
-          v-if="storePhysician.user && storePhysician.user.role == 'Physician'"
-        >
+        <v-stepper-content :step="9999" v-if="storePhysician.user && storePhysician.user.role == 'Physician'">
           <v-layout py-1>
             <v-flex xs12 class="px-2 py-2">
               <v-card class="elevation-3">
@@ -37,63 +22,27 @@
                   <v-container fluid grid-list-md px-0 py-0>
                     <v-layout row wrap>
                       <v-flex xs2>
-                        <v-text-field
-                          :readonly="true"
-                          :label="$t('title.number_of_expedient')"
-                          v-model="idQflow"
-                        ></v-text-field>
+                        <v-text-field :readonly="true" :label="$t('title.number_of_expedient')"
+                          v-model="idQflow"></v-text-field>
                       </v-flex>
                       <v-flex xs4>
-                        <v-text-field
-                          :readonly="true"
-                          :label="$t('title.patient')"
-                          v-model="nameconsult"
-                          :rules="[rules.required]"
-                        ></v-text-field>
+                        <v-text-field :readonly="true" :label="$t('title.patient')" v-model="nameconsult"
+                          :rules="[rules.required]"></v-text-field>
                       </v-flex>
                       <v-flex xs2>
-                        <v-text-field
-                          :readonly="true"
-                          :label="$t('title.age')"
-                          v-model="agepatient"
-                        ></v-text-field>
+                        <v-text-field :readonly="true" :label="$t('title.age')" v-model="agepatient"></v-text-field>
                       </v-flex>
                       <v-flex xs4>
-                        <v-menu
-                          ref="menu1"
-                          v-model="menu1"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          lazy
-                          transition="scale-transition"
-                          offset-y
-                          full-width
-                          max-width="290px"
-                          min-width="290px"
-                        >
-                          <v-text-field
-                            slot="activator"
-                            v-model="dateFormatted"
-                            label="Date"
-                            persistent-hint
-                            prepend-icon="event"
-                            @blur="date = parseDate(dateFormatted)"
-                          ></v-text-field>
-                          <v-date-picker locale="es-es"
-                            v-model="date"
-                            no-title
-                            @input="menu1 = false"
-                          >
+                        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" :nudge-right="40" lazy
+                          transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
+                          <v-text-field slot="activator" v-model="dateFormatted" label="Date" persistent-hint
+                            prepend-icon="event" @blur="date = parseDate(dateFormatted)"></v-text-field>
+                          <v-date-picker locale="es-es" v-model="date" no-title @input="menu1 = false">
                             <v-spacer></v-spacer>
                             <v-btn flat color="primary" @click="menu = false">{{
                               $t("title.cancel")
-                            }}</v-btn>
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="$refs.menu.save(dateFormatted)"
-                              >Ok</v-btn
-                            >
+                              }}</v-btn>
+                            <v-btn flat color="primary" @click="$refs.menu.save(dateFormatted)">Ok</v-btn>
                           </v-date-picker>
                         </v-menu>
                       </v-flex>
@@ -107,23 +56,13 @@
                 <v-card-actions>
                   <v-layout row wrap justify-end>
                     <v-flex xs6>
-                      <v-btn
-                        color="primary"
-                        @click="preview"
-                        :disabled="alert"
-                        :loading="alert"
-                        >{{ $t("title.pre_view") }}</v-btn
-                      >
-                      <v-btn
-                        color="primary"
-                        @click="saveConsult"
-                        :disabled="alert"
-                        :loading="alert"
-                        >{{ $t("title.save") }}</v-btn
-                      >
+                      <v-btn color="primary" @click="preview" :disabled="alert" :loading="alert">{{ $t("title.pre_view")
+                        }}</v-btn>
+                      <v-btn color="primary" @click="saveConsult" :disabled="alert" :loading="alert">{{ $t("title.save")
+                        }}</v-btn>
                       <v-btn flat @click="dischargeImaging">{{
                         $t("title.clear")
-                      }}</v-btn>
+                        }}</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-card-actions>
@@ -132,22 +71,14 @@
           </v-layout>
         </v-stepper-content>
         <div v-for="(history, z) in historyConstancy" :key="z">
-          <v-stepper-step
-            :step="z"
-            complete
-            :edit-icon="'assignment'"
-            :editable="true"
-            @click="show_report(history._id, z, history.pdf)"
-          >
-            {{ history.pdf ? "Constancia de Incapacidad" : history.name }}
+          <v-stepper-step :step="z" complete :edit-icon="'assignment'" :editable="true"
+            @click="show_report(history._id, z, history.pdf)">
+            {{ (history.Constancy.constancyType == 'incapacity' && history.pdf) || (history.pdf && !history.Constancy.constancyType) || history.Constancy.constancyType == 'incapacity' ? "Constancia de Incapacidad" : "Constancia Medica"/*history.name*/ }}
             <small>{{ history.date }}</small>
           </v-stepper-step>
           <v-stepper-content :step="z" complete :editable="true">
             <v-layout row wrap v-if="!history.pdf">
-              <v-flex
-                xs12
-                class="text-xs-right text-md-right text-sm-right text-lg-right"
-              >
+              <v-flex xs12 class="text-xs-right text-md-right text-sm-right text-lg-right">
                 <v-btn @click="generatePdf(z)" fab dark small color="primary">
                   <v-icon>picture_as_pdf</v-icon>
                 </v-btn>
@@ -156,24 +87,10 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-            <iframe
-              color="grey lighten-1"
-              class="mb-5"
-              :src="pdf_document_constancy"
-              type="application/pdf"
-              width="90%"
-              height="100%"
-              frameborder="0"
-              style="height: 75vh"
-              v-if="history.pdf"
-            ></iframe>
-            <history_constancy_inf
-              v-else
-              class="px-2 py-2"
-              :myProp="history.Constancy"
-              ref="history_constancy_inf_ref"
-              :id="'constan' + z"
-            ></history_constancy_inf>
+            <iframe color="grey lighten-1" class="mb-5" :src="pdf_document_constancy" type="application/pdf" width="90%"
+              height="100%" frameborder="0" style="height: 75vh" v-if="history.pdf"></iframe>
+            <history_constancy_inf v-else class="px-2 py-2" :myProp="history.Constancy" ref="history_constancy_inf_ref"
+              :id="'constan' + z"></history_constancy_inf>
           </v-stepper-content>
         </div>
       </v-stepper>
@@ -182,22 +99,16 @@
       <v-card color="primary" dark>
         <v-card-text>
           Guardando
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
     <!-- DIALOGO DE CONFIRMACION DE ELIMINAR CONSULTA PDF -->
     <v-dialog v-model="dialogPreview" width="85%" class="modalPreview">
-      <history_constancy_inf_preview
-        class="px-2 py-2"
-        :propdataPreview="dataPreview"
-        ref="history_constancy_inf_preview"
-        v-if="dialogPreview"
-      ></history_constancy_inf_preview>
+      <iframe color="grey lighten-1" class="mb-5" :src="pdf_document_constancy" type="application/pdf" width="90%"
+      height="100%" frameborder="0" style="height: 75vh"></iframe>
+      <!-- <history_constancy_inf_preview class="px-2 py-2" :propdataPreview="dataPreview"
+        ref="history_constancy_inf_preview" v-if="dialogPreview"></history_constancy_inf_preview> -->
     </v-dialog>
   </v-container>
 </template>
@@ -216,7 +127,7 @@ import moment from "moment";
 import html2canvas from "html2canvas";
 import { EventBus } from "@/store/eventBus";
 import jsPDF from "jspdf";
-import { getImage } from "../../componentServs/file";
+import { getImage, getPreview } from "../../componentServs/file";
 export default {
   name: "history_cons",
   components: {
@@ -296,7 +207,7 @@ export default {
       let response = this.Consultations.filter((item) => {
         return item.value == typeConsulting;
       });
-      return response[0].text;
+      return response[0] ? response[0].text : typeConsulting;
     },
     validateStepper(val) {
       if (val == this.e6) {
@@ -433,20 +344,51 @@ export default {
     dischargeImaging() {
       this.$refs.editor.setContent("");
     },
-    preview() {
-      if (this.$refs.editor.getContent() != "") {
+    async preview() {
+
+        const file = await getPreview({
+          name: "constancy.html",
+          data: {
+            name: `${this.$store.getters.getPatient.forename} ${this.$store.getters.getPatient.surname}`,
+            age: moment().diff(
+              this.$store.getters.getPatient.birthdate,
+              "years"
+            ),
+            expedient: this.storePatient.idQflow,
+            description: this.$refs.editor.getContent(),
+            date: this.date,
+            responsableconstancy: this.storePhysician,
+            person: this.$store.getters.getPatient._id,
+            constancyType: "constancy",
+            name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            type:
+              this.$store.getters.getPhysician.role == "internist"
+                ? "Médico Internista"
+                : "Oftalmólogo",
+            digital_signature:
+              this.$store.getters.getPhysician.digital_signature,
+          },
+        });
+        const blob = new Blob([file.data], { type: "application/pdf;base64" });
+        const link = window.URL.createObjectURL(blob);
+        this.pdf_document_constancy = link;
         this.dialogPreview = true;
-        this.dataPreview = {
-          description: this.$refs.editor.getContent(),
-          date: this.date,
-          responsableconstancy: this.storePhysician,
-          person: this.storePatient,
-        };
-      } else {
-        alert("Debe indicar todos los Campos");
-        return;
-      }
+      
     },
+    // preview() {
+    //   if (this.$refs.editor.getContent() != "") {
+    //     this.dialogPreview = true;
+    //     this.dataPreview = {
+    //       description: this.$refs.editor.getContent(),
+    //       date: this.date,
+    //       responsableconstancy: this.storePhysician,
+    //       person: this.storePatient,
+    //     };
+    //   } else {
+    //     alert("Debe indicar todos los Campos");
+    //     return;
+    //   }
+    // },
     saveConsult() {
       let cantidad = this.$refs.editor.getContent();
 
@@ -454,17 +396,28 @@ export default {
         this.alert = true;
         this.single = null;
         let objAux = {
-          body: {
-            person: this.$store.getters.getPatient._id,
+          name: "constancy.html",
+          data: {
+            name: `${this.$store.getters.getPatient.forename} ${this.$store.getters.getPatient.surname}`,
+            age: moment().diff(
+              this.$store.getters.getPatient.birthdate,
+              "years"
+            ),
+            expedient: this.storePatient.idQflow,
             description: this.$refs.editor.getContent(),
-            control: {
-              active: false,
-            },
             date: this.date,
-            responsableconstancy: this.$store.getters.getPhysician._id,
+            constancyType: "constancy",
+            responsableconstancy: this.storePhysician,
+            person: this.$store.getters.getPatient._id,
+            name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+            type:
+              this.$store.getters.getPhysician.role == "internist"
+                ? "Médico Internista"
+                : "Oftalmólogo",
+            digital_signature:
+              this.$store.getters.getPhysician.digital_signature,
           },
-          token: sessionStorage.getItem("pussy"),
-        };
+        }
         constancyServ.saveConstancy(objAux).then((result) => {
           this.alert = false;
           this.listConstancy();
