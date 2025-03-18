@@ -150,7 +150,7 @@ export default {
       recomendations: null,
       dispense: 1,
       hours: null,
-      administration: null,
+      administration: 1,
       treatmentDays: null,
       eyeApplication: null,
       typePrescription: null,
@@ -409,7 +409,8 @@ export default {
             
             if (medicine.trim() !== '') {
               this.prescription.push({
-                medicine: medicine,
+                medicine: this.medications.description || '',
+                active_ingredient: this.medications.generic || '',
                 doses: doses.trim(),
                 recomendation: this.recomendations || ''
               });
