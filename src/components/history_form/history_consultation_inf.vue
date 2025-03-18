@@ -1376,7 +1376,7 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      typeof myProp.objOptometrist.data.rxFinalGafas.type_lenses =="object" && myProp.objOptometrist.data.rxFinalGafas.type_lenses.length > 0 ? myProp.objOptometrist.data.rxFinalGafas.type_lenses.join() : myProp.objOptometrist.data.rxFinalGafas.type_lenses
+                      (myProp.objOptometrist.data.rxFinalGafas && myProp.objOptometrist.data.rxFinalGafas.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalGafas.type_lenses) ? myProp.objOptometrist.data.rxFinalGafas.type_lenses.join() : myProp.objOptometrist.data.rxFinalGafas.type_lenses) : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1701,7 +1701,7 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      typeof myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses =="object" && myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses.length > 0 ? myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses
+                      (myProp.objOptometrist.data.rxFinalVisionLejano && myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1837,7 +1837,7 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      typeof myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses =="object" && myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses.length > 0 ? myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses
+                      (myProp.objOptometrist.data.rxFinalVisionProxima && myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1981,7 +1981,7 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      typeof myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses =="object" && myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses.length > 0 ? myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses
+                      (myProp.objOptometrist.data.rxFinalVisionIntermedia && myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
