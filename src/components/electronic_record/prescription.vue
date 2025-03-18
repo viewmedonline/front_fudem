@@ -409,7 +409,7 @@ export default {
             
             if (medicine.trim() !== '') {
               this.prescription.push({
-                medicine: this.medications.description || '',
+                medicine: this.medications.description || this.medications,
                 active_ingredient: this.medications.generic || '',
                 doses: doses.trim(),
                 recomendation: this.recomendations || ''
