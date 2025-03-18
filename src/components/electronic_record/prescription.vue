@@ -417,8 +417,15 @@ export default {
             }
           }
 
-          this.medications = null;
+          // Store the current medications value
+          const currentMedications = this.medications;
+          
+          // Clear the form
           this.clearForm();
+          
+          // Explicitly set medications to null and administration to 1 after form clearing
+          this.medications = null;
+          this.administration = 1;
         } else {
           // Show validation message if fields are missing
           this.$store.dispatch("setSnackbar", {
