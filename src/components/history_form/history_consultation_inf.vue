@@ -2527,6 +2527,7 @@
                       >
                         {{ item.medicine }} ({{ item.active_ingredient }})
                         {{ item.doses }}
+                        <span v-if="item.recomendation !== null && item.recomendation !== ''"> Recomendaciones:{{ item.recomendation || "" }}</span>
                       </li>
                     </ul>
                     <!-- <span class="">{{ myProp.prescription_oft_data.prescription }}</span> -->
@@ -2566,7 +2567,7 @@
                                         <span class="body-1">{{myProp.objOphthalmology.data.treatmentplan.otros || ' - '}}</span>
                                     </v-flex>
                                 </v-layout> -->
-                <v-divider light></v-divider>
+                <!-- <v-divider light></v-divider>
                 <v-layout
                   row
                   wrap
@@ -2635,7 +2636,7 @@
                       </v-flex>
                     </v-layout>
                   </v-flex>
-                </v-layout>
+                </v-layout> -->
                 <v-divider light></v-divider>
               </div>
               <v-layout row wrap v-if="myProp.responsableConsultation">
