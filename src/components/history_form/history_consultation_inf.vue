@@ -1300,37 +1300,37 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.esfera ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.esfera ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.cilindro ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.cilindro ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.eje ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.eje ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.Prisma ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.Prisma ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.ADD ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.ADD ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoDer.av || " - "
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.av || " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
@@ -1338,37 +1338,37 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.esfera ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.esfera ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.cilindro ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.cilindro ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.eje ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.eje ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.Prisma ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.Prisma ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.ADD ||
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.ADD ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
+                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs6>
