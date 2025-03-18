@@ -97,7 +97,7 @@ export default {
             name: "prescription.html",
             data: {
               patient: `${this.$store.getters.getPatient.forename} ${this.$store.getters.getPatient.surname}`,
-              name_prof: `${this.$store.getters.getPhysician.forename} ${this.$store.getters.getPhysician.surname}`,
+              name_prof: `${prescription.responsible.forename} ${prescription.responsible.surname}`,
               prescriptions: prescription.prescription,
               date: moment(prescription.control.created_at).format(
                 "DD/MM/YYYY"
@@ -106,7 +106,7 @@ export default {
               place: sucursal[0].Name,
               type: type == 2 ? "Oftalmólogo" : "Optometrista",
               digital_signature:
-                this.$store.getters.getPhysician.digital_signature,
+              prescription.responsible.digital_signature
             },
           });
           const blob = new Blob([file.data], {
