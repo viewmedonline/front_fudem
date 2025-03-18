@@ -325,9 +325,9 @@ export default {
                   .then((result) => {
                     this.consultation.observaciones = result;
                     //habilitar para que funcione la nueva interfaz de medicamentos usar el commit 721cae5 para poner el modulo de observaciones correctamente
-                    // this.consultation.observaciones = {
-                    //   observacion: result.observacion,
-                    // };
+                    this.consultation.observaciones = {
+                      observacion: result.observacion,
+                    };
                     this.consultation.prescription_of = result.prescription;
                     this.consultation.next_appointment =
                       result.next_appointment;
