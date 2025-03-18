@@ -229,7 +229,8 @@
             v-if="
               storePhysician.role == 'optometrist' ||
               storePhysician.role == 'ophthalmologist' ||
-              storePhysician.role == 'Admision'
+              storePhysician.role == 'Admision' ||
+              storePhysician.role == 'Institution'
             "
           >
             <v-list-tile-content>
