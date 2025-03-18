@@ -2526,8 +2526,8 @@
                         :key="index"
                       >
                         {{ item.medicine }} ({{ item.active_ingredient }})
-                        {{ item.doses }}
-                        <span v-if="item.recomendation !== null && item.recomendation !== ''"> Recomendaciones:{{ item.recomendation || "" }}</span>
+                        {{ item.doses }}. 
+                        <span v-if="item.recomendation !== null && item.recomendation !== ''"style="font-weight: 500;">  Recomendaciones:{{ item.recomendation || "" }}</span>
                       </li>
                     </ul>
                     <!-- <span class="">{{ myProp.prescription_oft_data.prescription }}</span> -->
