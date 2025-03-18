@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-form autocomplete="off" ref="formObservationsRef" v-model="formObservations" lazy-validation>
-      <prescription type="2" ref="prescriptionRef" />
-      <!-- <v-card class="elevation-3">
+      
+      <v-card class="elevation-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">Plan De Manejo</span>
         </v-card-title>
@@ -15,7 +15,7 @@
                   :counter="maxHeigthText" :rules="[rules.length(maxHeigthText)]"
                   :readonly="validateRead()"></v-textarea>
               </v-flex>
-              <v-flex xs8 v-if="useListMedicines">
+              <!-- <v-flex xs8 v-if="useListMedicines">
                 <v-autocomplete v-model="medications" :items="items" :readonly="validateRead()"
                   :label="$t('title.medications')" persistent-hint prepend-icon="" return-object
                   item-text="medications">
@@ -58,11 +58,12 @@
                     </td>
                   </template>
                 </v-data-table>
-              </v-flex>
+              </v-flex> -->
             </v-layout>
           </v-container>
         </v-card-text>
-      </v-card> -->
+      </v-card>
+      <prescription type="2" ref="prescriptionRef" />
       <v-card class="elevation-3 mt-3">
         <v-card-title primary-title class="blue-grey darken-1">
           <span class="subheading white--text text-capitalize">{{ $t('title.next_appointment') }}</span>
