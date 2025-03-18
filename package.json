@@ -17,6 +17,7 @@
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.2.4",
     "moment": "^2.22.2",
+    "moment-timezone": "^0.5.47",
     "save": "^2.4.0",
     "vue": "^2.5.17",
     "vue-html2canvas": "0.0.4",

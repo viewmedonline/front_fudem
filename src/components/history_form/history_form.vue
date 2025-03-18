@@ -176,7 +176,7 @@ const history_consultation_inf = () =>
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as fileServ from "@/componentServs/file";
 import * as consultationServ from "@/componentServs/consultation";
-import moment from "moment";
+import moment from "moment-timezone";
 import html2canvas from "html2canvas";
 import { EventBus } from "@/store/eventBus";
 import { findPrescriptions } from "../../componentServs/medicines";
@@ -353,7 +353,7 @@ export default {
                   let link = window.URL.createObjectURL(blob);
                   vm.historyConsulting.push({
                     name: result[i].name,
-                    date: moment(result[i].dateUpload, "YYYY-MM-DD")
+                    date: moment.tz(result[i].dateUpload, "America/El_Salvador")
                       .locale(vm.$i18n.locale)
                       .format("L"),
                     dateOrder: result[i].dateUpload,
@@ -382,7 +382,7 @@ export default {
                 name: result[i].typeConsultation
                   ? vm.langTypeConsulting(result[i].typeConsultation)
                   : "",
-                date: moment(vm.dateConsultig(result[i]), "YYYY-MM-DD")
+                date: moment.tz(vm.dateConsultig(result[i]), "America/El_Salvador")
                   .locale(vm.$i18n.locale)
                   .format("L"),
                 dateOrder: vm.dateConsultig(result[i]),
