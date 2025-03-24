@@ -123,7 +123,7 @@ import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as fileServ from "@/componentServs/file";
 import * as consultationServ from "@/componentServs/consultation";
 import * as constancyServ from "@/componentServs/constancy";
-import moment from "moment";
+import moment from "moment-timezone";
 import html2canvas from "html2canvas";
 import { EventBus } from "@/store/eventBus";
 import jsPDF from "jspdf";
@@ -227,7 +227,7 @@ export default {
         for (let i in result) {
           this.historyConstancy.push({
             name: result[i].person.forename + " " + result[i].person.surname,
-            date: moment(result[i].date, "YYYY-MM-DD")
+            date: moment.tz(result[i].date, "America/El_Salvador")
               .locale(this.$i18n.locale)
               .format("L"),
             file: null,

@@ -162,7 +162,7 @@
   </v-container>
 </template>
 <script>
-import moment from "moment";
+import moment from "moment-timezone";
 import { getPreview, getImage } from "../../componentServs/file";
 import { saveReference, getReference } from "../../componentServs/reference";
 export default {
@@ -189,9 +189,11 @@ export default {
     },
     format_date(date, time = false) {
       if (time) {
-        return moment(date).format("DD/MM/YYYY hh:mm A");
+        return moment.tz(date, "America/El_Salvador").format(
+          "DD/MM/YYYY hh:mm A"
+        );
       } else {
-        return moment(date).format("YYYY-MM-DD");
+        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY");
       }
     },
     validateStepper(val) {

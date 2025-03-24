@@ -324,7 +324,7 @@
   </v-container>
 </template>
 <script>
-import moment from "moment";
+import moment from "moment-timezone";
 import {
   savePsiProcess,
   getPsyProcess,
@@ -466,11 +466,11 @@ export default {
     },
     format_date(date, time = false) {
       if (time) {
-        return moment(date, "YYYY-MM-DD HH:mm:ss.sss").format(
+        return moment.tz(date, "America/El_Salvador").format(
           "DD/MM/YYYY hh:mm A"
         );
       } else {
-        return moment(date).utc().format("DD/MM/YYYY");
+        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY");
       }
     },
     async findRowOpen() {

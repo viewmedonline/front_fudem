@@ -430,7 +430,7 @@
   </v-container>
 </template>
 <script>
-import moment from "moment";
+import moment from "moment-timezone";
 moment.locale("es");
 import {
   getSheetList,
@@ -566,9 +566,9 @@ export default {
     },
     format_date(date, time = false) {
       if (time) {
-        return moment(date).format("DD/MM/YYYY hh:mm A");
+        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY hh:mm A");
       } else {
-        return moment(date).format("DD/MM/YYYY");
+        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY");
       }
     },
     async showNotes(item,pos) {

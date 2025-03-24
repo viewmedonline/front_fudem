@@ -448,7 +448,7 @@ td {
 }
 </style>
 <script>
-import moment from "moment";
+import moment from "moment-timezone";
 import {
   getListAnesthesiology,
   saveSheetAnesthesiology,
@@ -615,7 +615,7 @@ export default {
       this.listAnesthesiology = (
         await getListAnesthesiology(this.$store.getters.getPatient._id)
       ).map((x) => {
-        x.date = moment(x.date).utc().format("DD/MM/YYYY");
+        x.date = moment.tz(x.date, "America/El_Salvador").format("DD/MM/YYYY");
         return x;
       });
     },
