@@ -353,7 +353,7 @@ export default {
                   let link = window.URL.createObjectURL(blob);
                   vm.historyConsulting.push({
                     name: result[i].name,
-                    date: moment.tz(result[i].dateUpload, "America/El_Salvador")
+                    date: moment(result[i].dateUpload)
                       .locale(vm.$i18n.locale)
                       .format("L"),
                     dateOrder: result[i].dateUpload,
