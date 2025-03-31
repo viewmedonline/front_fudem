@@ -18,7 +18,9 @@
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">Crear Hoja de Enfermeria</h3>
-              <h5 v-if="!signatureExist" style="color: red;">Debe tener un firma cargada para poder continuar con el proceso</h5>
+              <h5 v-if="!signatureExist" style="color: red">
+                Debe tener un firma cargada para poder continuar con el proceso
+              </h5>
             </div>
           </v-card-title>
         </v-stepper-step>
@@ -53,32 +55,33 @@
                           :rules="[rules.required]"
                         ></v-text-field>
                       </v-flex>
-                      
+
                       <v-flex xs4>
                         <v-menu
-                      v-model="menu_sheet"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      lazy
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="date_sheet_input"
-                          label="Fecha"
-                          prepend-icon="event"
-                          readonly
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker locale="es-es"
-                        v-model="date_sheet_picker"
-                        @input="menu_sheet = false"
-                      ></v-date-picker>
-                    </v-menu>                        
+                          v-model="menu_sheet"
+                          :close-on-content-click="false"
+                          :nudge-right="40"
+                          lazy
+                          transition="scale-transition"
+                          offset-y
+                          full-width
+                          min-width="290px"
+                        >
+                          <template v-slot:activator="{ on }">
+                            <v-text-field
+                              v-model="date_sheet_input"
+                              label="Fecha"
+                              prepend-icon="event"
+                              readonly
+                              v-on="on"
+                            ></v-text-field>
+                          </template>
+                          <v-date-picker
+                            locale="es-es"
+                            v-model="date_sheet_picker"
+                            @input="menu_sheet = false"
+                          ></v-date-picker>
+                        </v-menu>
                         <!-- <v-text-field
                           slot="activator"
                           v-model="dateFormatted"
@@ -108,7 +111,7 @@
                           v-model="hgt"
                           :rules="[rules.required]"
                         ></v-text-field>
-                      </v-flex>                      
+                      </v-flex>
                     </v-layout>
                   </v-container>
                 </v-card-text>
@@ -132,13 +135,17 @@
             </v-flex>
           </v-layout>
         </v-stepper-content>
-        <div v-for="(item, z) in nurseSheetList" :key="item._id" v-if="signatureExist">
+        <div
+          v-for="(item, z) in nurseSheetList"
+          :key="item._id"
+          v-if="signatureExist"
+        >
           <v-stepper-step
             :step="z"
             complete
             :edit-icon="'assignment'"
             :editable="true"
-            @click="showNotes(item,z)"
+            @click="showNotes(item, z)"
           >
             {{ item.name }}
             <v-layout row wrap>
@@ -157,17 +164,20 @@
             <v-btn
               v-if="user_admin == 'PRUEBAOFTA'"
               color="primary"
-              @click="reopenSheet(item,z)"
+              @click="reopenSheet(item, z)"
               :loading="close_sheet"
-              >Reabrir Hoja de Enfermeria</v-btn>
-            <iframe color="grey lighten-1" class="mb-5"
-            :src="pdf_document" 
-            type="application/pdf" 
-            width="90%" 
-            height="100%" 
-            frameborder="0" 
-            style="height: 75vh"
-            ></iframe>            
+              >Reabrir Hoja de Enfermeria</v-btn
+            >
+            <iframe
+              color="grey lighten-1"
+              class="mb-5"
+              :src="pdf_document"
+              type="application/pdf"
+              width="90%"
+              height="100%"
+              frameborder="0"
+              style="height: 75vh"
+            ></iframe>
           </v-stepper-content>
         </div>
       </v-stepper>
@@ -177,7 +187,11 @@
   <v-container v-else>
     <v-card>
       <v-card-title primary-title class="blue-grey darken-1">
-        <v-btn flat icon @click="show_notes = false || validateStepper(9999)" v-if="formAddNotes == false"
+        <v-btn
+          flat
+          icon
+          @click="show_notes = false || validateStepper(9999)"
+          v-if="formAddNotes == false"
           ><v-icon>mdi-arrow-left</v-icon></v-btn
         >
         <span class="subheading white--text text-capitalize"
@@ -240,7 +254,11 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-stepper v-stepper v-model="e6"  style="box-shadow: none !important">
+              <v-stepper
+                v-stepper
+                v-model="e6"
+                style="box-shadow: none !important"
+              >
                 <v-stepper-step
                   :step="9999"
                   :edit-icon="'add'"
@@ -277,7 +295,8 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker locale="es-es"
+                      <v-date-picker
+                        locale="es-es"
                         v-model="date2_picker"
                         @input="menu = false"
                       ></v-date-picker>
@@ -439,7 +458,7 @@ import {
   closeSheet,
   updateSheet,
 } from "../../componentServs/nurses_sheet";
-import { getImage,deleteFile } from "../../componentServs/file";
+import { getImage, deleteFile } from "../../componentServs/file";
 
 export default {
   name: "nurse_sheet",
@@ -476,11 +495,10 @@ export default {
     saving_note: false,
     saving_sheet: false,
     close_sheet: false,
-    pdf_document:null,
+    pdf_document: null,
     user_admin: "",
     hgt: "",
-    signatureExist:false
-    
+    signatureExist: false,
   }),
   watch: {
     time_picker(val) {
@@ -495,7 +513,7 @@ export default {
   },
   async created() {
     this.user_admin = this.$store.getters.getPhysician.user.idUserFudem;
-    
+
     this.patient = this.$store.getters.getPatient;
     const { idQflow, forename, surname, birthdate } =
       this.$store.getters.getPatient;
@@ -503,18 +521,18 @@ export default {
     this.pat_name = `${forename} ${surname}`;
     this.pat_age = moment().diff(birthdate, "years");
     this.nurseSheetList = await getSheetList(this.patient._id, null);
-    if(!this.$store.getters.getPhysician.digital_signature){
-      this.signatureExist = false
-    }else{
-      this.signatureExist = true
+    if (!this.$store.getters.getPhysician.digital_signature) {
+      this.signatureExist = false;
+    } else {
+      this.signatureExist = true;
     }
   },
   methods: {
     async reopenSheet(item, pos) {
       if (confirm("¿Esta seguro que desea reabrir la hoja de enfermeria?")) {
-        this.validateStepper(pos)
+        this.validateStepper(pos);
         await deleteFile(item.pdf);
-        await updateSheet({ body:{pdf: null},id: item._id });
+        await updateSheet({ body: { pdf: null }, id: item._id });
         this.nurseSheetList = await getSheetList(this.patient._id, null);
       }
     },
@@ -546,7 +564,9 @@ export default {
         );
         let obj_new_note = {
           note: this.$refs.editor.getContent(),
-          date: moment(`${date_format} ${time_format}`).format("YYYY-MM-DD HH:mm"),
+          date: moment(`${date_format} ${time_format}`).format(
+            "YYYY-MM-DD HH:mm"
+          ),
           responsible: this.$store.getters.getPhysician._id,
         };
         await addNotes(this.data_sheet._id, obj_new_note);
@@ -566,12 +586,16 @@ export default {
     },
     format_date(date, time = false) {
       if (time) {
-        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY hh:mm A");
+        console.log(date);
+
+        return moment
+          .tz(date, "America/El_Salvador")
+          .format("DD/MM/YYYY hh:mm A");
       } else {
-        return moment.tz(date, "America/El_Salvador").format("DD/MM/YYYY");
+        return moment(date, "DD-MM-YYYY HH:mm:ss").format("DD/MM/YYYY");
       }
     },
-    async showNotes(item,pos) {
+    async showNotes(item, pos) {
       if (!item.pdf) {
         this.data_sheet = {
           _id: item._id,

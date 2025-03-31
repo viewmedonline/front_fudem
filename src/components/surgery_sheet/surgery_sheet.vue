@@ -8,8 +8,8 @@
       </v-card-title>
       <v-card-text>
         <v-container fluid grid-list-md px-0 py-0>
-          <v-layout row wrap>
-            <v-flex xs3 style="margin-left: -8%">
+          <v-layout row wrap style="width: 100%">
+            <v-flex xs3>
               <b>Expediente:</b>
             </v-flex>
             <v-flex xs3>
@@ -21,7 +21,7 @@
             <v-flex xs3>
               <b>Sexo:</b>
             </v-flex>
-            <v-flex xs3 style="margin-left: -8%">
+            <v-flex xs3>
               {{ num_exp }}
             </v-flex>
             <v-flex xs3>
@@ -33,18 +33,20 @@
             <v-flex xs3>
               {{ pat_gender }}
             </v-flex>
-            <v-flex xs3 style="margin-left: -8%">
-              <b>Diagnostico:</b>
-            </v-flex>
             <v-flex xs3>
               <b>Médico que Indica Cirugía:</b>
             </v-flex>
-            <v-flex xs3 offset-xs8> </v-flex>
-            <v-flex xs3 style="margin-left: -8%">
-              {{ diagnosis }}
+            <v-flex xs3>
+              <b>Diagnostico:</b>
             </v-flex>
+            <v-flex xs3 offset-xs8> </v-flex>
             <v-flex xs3>
               {{ physician_history_name }}
+            </v-flex>
+            <v-flex xs3>
+              <ul>
+                <li v-for="(item, i) in diagnosis" :key="i">{{ item }}</li>
+              </ul>
             </v-flex>
           </v-layout>
           <v-form
@@ -133,7 +135,8 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker locale="es-es"
+                      <v-date-picker
+                        locale="es-es"
                         v-model="date_picker"
                         @input="menu = false"
                       ></v-date-picker>
@@ -290,7 +293,7 @@ export default {
     pat_name: "",
     pat_age: "",
     pat_gender: "",
-    diagnosis: "",
+    diagnosis: [],
     form_surgery_sheet: false,
     surgery: "",
     resumen_history: "",
@@ -336,7 +339,7 @@ export default {
             pat_name: this.pat_name,
             pat_age: this.pat_age,
             pat_gender: this.pat_gender,
-            diagnosis: this.diagnosis,
+            diagnosis: this.diagnosis.join(", "),
             surgery: this.surgery,
             resumen_history: this.resumen_history,
             biometrics_od: this.biometrics_od,
@@ -436,16 +439,18 @@ export default {
       body: { person: this.$store.getters.getPatient._id },
     });
     const person_data_phy = await getPerson({
-      body:{_id: result.responsableConsultation,}
+      body: { _id: result.responsableConsultation },
     });
     this.physician_history_id = person_data_phy._id;
     this.history_id = result._id;
     this.physician_history_name = `${person_data_phy.forename} ${person_data_phy.surname}`;
     if (result && result.diagnostic && result.diagnostic.length > 0) {
       let disct = result.diagnostic;
+      let arrayDiagnoses = [];
       for (let i in disct) {
-        this.diagnosis = disct[i]["diagnostic"]["es"];
+        arrayDiagnoses.push(disct[i]["diagnostic"]["es"]);
       }
+      this.diagnosis = arrayDiagnoses;
     }
   },
 };
