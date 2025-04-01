@@ -581,7 +581,10 @@
           <!-- <td class="text-xs-center" align="center"></td> -->
           <td class="text-xs-center" align="center">
             {{
-              consultas.objOphthalmology.data.observaciones.medicamentos.length
+              consultas.objOphthalmology.data.observaciones
+                ? consultas.objOphthalmology.data.observaciones.medicamentos
+                    .length
+                : 0
             }}
           </td>
         </tr>
