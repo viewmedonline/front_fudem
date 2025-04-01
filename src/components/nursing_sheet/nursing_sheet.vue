@@ -586,13 +586,11 @@ export default {
     },
     format_date(date, time = false) {
       if (time) {
-        console.log(date);
-
         return moment
           .tz(date, "America/El_Salvador")
-          .format("DD/MM/YYYY hh:mm A");
+          .format("YYYY-MM-DD hh:mm A");
       } else {
-        return moment(date, "DD-MM-YYYY HH:mm:ss").format("DD/MM/YYYY");
+        return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY");
       }
     },
     async showNotes(item, pos) {
