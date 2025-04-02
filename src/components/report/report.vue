@@ -585,8 +585,7 @@
                 ? consultas.prescription_of.prescription
                   ? consultas.prescription_of.prescription.length
                   : 0
-                : consultas.objOphthalmology.data.observaciones.observaciones
-                    .medicamentos
+                : consultas.objOphthalmology.data.observaciones
                 ? consultas.objOphthalmology.data.observaciones.medicamentos
                     .length
                 : 0
