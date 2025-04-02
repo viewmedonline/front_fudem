@@ -581,10 +581,10 @@
           <!-- <td class="text-xs-center" align="center"></td> -->
           <td class="text-xs-center" align="center">
             {{
-              consultas.objOphthalmology.data.observaciones.medicamentos
-                ? consultas.objOphthalmology.data.observaciones.medicamentos
+              consultas.prescription_of
+                ? consultas.prescription_of.prescription.length
+                : consultas.objOphthalmology.data.observaciones.medicamentos
                     .length
-                : 0
             }}
           </td>
         </tr>
@@ -2079,7 +2079,10 @@ export default {
                 // console.log("result: ", result);
                 if (specialty == "ophthalmology") {
                   this.reportOphthalmology = true;
-                  this.resultOphthalmology = result;
+                  this.resultOphthalmology = result.map((item) => {
+                    console.log(item);
+                    return item;
+                  });
                   this.paginationOft.totalItems = result.length;
                 } else {
                   this.reportOptometrist = true;
