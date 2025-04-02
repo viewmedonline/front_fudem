@@ -582,9 +582,14 @@
           <td class="text-xs-center" align="center">
             {{
               consultas.prescription_of
-                ? consultas.prescription_of.prescription.length
-                : consultas.objOphthalmology.data.observaciones.medicamentos
+                ? consultas.prescription_of.prescription
+                  ? consultas.prescription_of.prescription.length
+                  : 0
+                : consultas.objOphthalmology.data.observaciones.observaciones
+                    .medicamentos
+                ? consultas.objOphthalmology.data.observaciones.medicamentos
                     .length
+                : 0
             }}
           </td>
         </tr>
