@@ -580,16 +580,7 @@
           </td>
           <!-- <td class="text-xs-center" align="center"></td> -->
           <td class="text-xs-center" align="center">
-            {{
-              consultas.prescription_of
-                ? consultas.prescription_of.prescription
-                  ? consultas.prescription_of.prescription.length
-                  : 0
-                : consultas.objOphthalmology.data.observaciones
-                ? consultas.objOphthalmology.data.observaciones.medicamentos
-                    .length
-                : 0
-            }}
+            {{ getMedicamentos(consultas) }}
           </td>
         </tr>
       </table>
@@ -1205,6 +1196,21 @@ export default {
   },
 
   methods: {
+    getMedicamentos(consultas) {
+      if (consultas.prescription_of) {
+        console.log(consultas.prescription_of.prescription);
+
+        return consultas.prescription_of.prescription.length;
+      }
+      if (consultas.objOphthalmology.data.observaciones) {
+        console.log(consultas.objOphthalmology.data.observaciones);
+
+        return consultas.objOphthalmology.data.observaciones.medicamentos
+          .length;
+      }
+      return 0;
+    },
+
     sucursalName(sucursalId) {
       let sucursalFilter = this.sucursalList.filter(
         (sucursal) => sucursal._id == sucursalId
