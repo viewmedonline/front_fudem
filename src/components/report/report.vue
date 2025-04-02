@@ -2079,10 +2079,7 @@ export default {
                 // console.log("result: ", result);
                 if (specialty == "ophthalmology") {
                   this.reportOphthalmology = true;
-                  this.resultOphthalmology = result.map((item) => {
-                    console.log(item);
-                    return item;
-                  });
+                  this.resultOphthalmology = result;
                   this.paginationOft.totalItems = result.length;
                 } else {
                   this.reportOptometrist = true;
