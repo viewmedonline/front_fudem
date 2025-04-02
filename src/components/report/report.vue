@@ -1198,13 +1198,13 @@ export default {
   methods: {
     getMedicamentos(consultas) {
       if (consultas.prescription_of) {
-        console.log(consultas.prescription_of.prescription);
-
         return consultas.prescription_of.prescription.length;
       }
-      if (consultas.objOphthalmology.data.observaciones) {
+      if (
+        consultas.objOphthalmology.data.observaciones &&
+        consultas.objOphthalmology.data.observaciones.medicamentos
+      ) {
         console.log(consultas.objOphthalmology.data.observaciones);
-
         return consultas.objOphthalmology.data.observaciones.medicamentos
           .length;
       }
