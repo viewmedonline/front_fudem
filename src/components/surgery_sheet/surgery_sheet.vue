@@ -374,7 +374,7 @@ export default {
           control: {
             active: false,
           },
-          dateUpload: moment().format("YYYY-MM-DD"),
+          dateUpload: moment(this.date, "DD/MM/YYYY").format("YYYY-MM-DD"),
           file: pdf_id,
           responsableConsultation: this.$store.getters.getPhysician._id,
         };
@@ -442,7 +442,7 @@ export default {
       body: { _id: result.responsableConsultation },
     });
     this.physician_history_id = person_data_phy._id;
-    this.history_id = result._id;
+    this.history_id = result._id || null;
     this.physician_history_name = `${person_data_phy.forename} ${person_data_phy.surname}`;
     if (result && result.diagnostic && result.diagnostic.length > 0) {
       let disct = result.diagnostic;
