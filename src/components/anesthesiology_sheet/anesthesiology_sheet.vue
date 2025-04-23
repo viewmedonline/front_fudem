@@ -400,7 +400,7 @@
           Reporte de Anestesiología
           <v-layout row wrap>
             <v-flex>
-              <small>{{ item.date }}</small>
+              <small>{{ item.operationDate }}</small>
             </v-flex>
             <v-flex style="margin-left: 150px" v-if="item.pdf != null">
               <v-icon x-large style="margin-top: -30px; color: #d50f0f"
@@ -612,11 +612,18 @@ export default {
       this.pdf_document = link;
     },
     async getListReport() {
-      this.listAnesthesiology = (
-        await getListAnesthesiology(this.$store.getters.getPatient._id)
-      ).map((x) => {
-        x.date = moment.tz(x.date, "America/El_Salvador").format("DD/MM/YYYY");
-        return x;
+      this.listAnesthesiology = await getListAnesthesiology(
+        this.$store.getters.getPatient._id
+      );
+
+      //sort de string date format dd/mm/yyyy desc
+      this.listAnesthesiology.sort((a, b) => {
+        // Convierte 'dd/mm/yyyy' a 'yyyy-mm-dd' para que Date lo interprete correctamente
+        const parseDate = (str) => {
+          const [day, month, year] = str.split("/");
+          return new Date(`${year}-${month}-${day}`);
+        };
+        return parseDate(b.operationDate) - parseDate(a.operationDate); // Orden descendente (más reciente primero)
       });
     },
   },
