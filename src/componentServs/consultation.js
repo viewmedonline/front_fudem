@@ -167,6 +167,25 @@ function getListConsultationReport(obj) {
   });
 }
 
+function getLastPrescription(userId, type) {
+  return new Promise((resolve, reject) => {
+    try {
+      axios
+        .get(
+          `${process.env.VUE_APP_ROOT_API}/lastPrescription/${userId}/${type}`
+        )
+        .then((result) => {
+          resolve(result.data.documents);
+        })
+        .catch((error) => {
+          reject(error.response);
+        });
+    } catch (err) {
+      console.log("err in saveConsultation: ", err);
+    }
+  });
+}
+
 export {
   saveConsultation,
   getListConsultation,
@@ -175,4 +194,5 @@ export {
   deleteConsultation,
   getLastConsultation,
   getListConsultationReport,
+  getLastPrescription,
 };

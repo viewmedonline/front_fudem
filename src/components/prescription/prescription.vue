@@ -65,6 +65,7 @@ import moment from "moment";
 import { getSucursal } from "../../componentServs/sucursal";
 import { getPreview } from "../../componentServs/file";
 import { findPrescriptions } from "../../componentServs/medicines";
+import { getLastPrescription } from "../../componentServs/consultation";
 export default {
   name: "prescription",
   data() {
@@ -78,10 +79,12 @@ export default {
     async previewPrescription(type) {
       this.loadingModal = true;
       if (this.$store.getters.getLastConsultation) {
-        const idPrescription =
-          type == 2
-            ? this.$store.getters.getLastConsultation.prescription_of
-            : this.$store.getters.getLastConsultation.prescription;
+        const requestsLastPrescription = await getLastPrescription(
+          this.$store.getters.getPatient._id,
+          type
+        );
+
+        const idPrescription = requestsLastPrescription.prescription;
 
         if (idPrescription) {
           this.prescription_empty = false;
@@ -105,8 +108,7 @@ export default {
               idQflow: this.$store.getters.getPatient.idQflow,
               place: sucursal[0].Name,
               type: type == 2 ? "Oftalmólogo" : "Optometrista",
-              digital_signature:
-              prescription.responsible.digital_signature
+              digital_signature: prescription.responsible.digital_signature,
             },
           });
           const blob = new Blob([file.data], {
