@@ -3039,7 +3039,7 @@ export default {
           this.myProp.objOphthalmology.data.responsableConsultation
         );
       }
-    }, 300);
+    }, 800);
   },
   methods: {
     filterDuplicate,
