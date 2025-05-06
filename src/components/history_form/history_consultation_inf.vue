@@ -697,26 +697,34 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
-                        .sinCorreccion || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
-                        .correccion || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoDer.ph ||
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
+                          .sinCorreccion) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
-                        .autoTonometria || " - "
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
+                          .correccion) ||
+                      " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
+                          .ph) ||
+                      " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoDer
+                          .autoTonometria) ||
+                      " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs3>
@@ -726,26 +734,34 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
-                        .sinCorreccion || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
-                        .correccion || " - "
-                    }}</span>
-                  </v-flex>
-                  <v-flex xs2>
-                    <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq.ph ||
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
+                          .sinCorreccion) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.agudezaVisualOPT && myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
-                        .autoTonometria || " - "
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
+                          .correccion) ||
+                      " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
+                          .ph) ||
+                      " - "
+                    }}</span>
+                  </v-flex>
+                  <v-flex xs2>
+                    <span class="body-1">{{
+                      (myProp.objOptometrist.data.agudezaVisualOPT &&
+                        myProp.objOptometrist.data.agudezaVisualOPT.ojoIzq
+                          .autoTonometria) ||
+                      " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs12>
@@ -1207,7 +1223,9 @@
                       {{ $t("title.cycle") }}:
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? boolean(myProp.objOptometrist.data.refraccion.ciclo) : " - "
+                      myProp.objOptometrist.data.refraccion
+                        ? boolean(myProp.objOptometrist.data.refraccion.ciclo)
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
@@ -1215,7 +1233,9 @@
                       {{ $t("title.est") }}:
                     </span>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.refraccion ? boolean(myProp.objOptometrist.data.refraccion.est) : " - "  
+                      myProp.objOptometrist.data.refraccion
+                        ? boolean(myProp.objOptometrist.data.refraccion.est)
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4 class="text-xs-center">
@@ -1300,37 +1320,53 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.esfera ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer
+                          .esfera) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.cilindro ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer
+                          .cilindro) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.eje ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer.eje) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.Prisma ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer
+                          .Prisma) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.ADD ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer.ADD) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoDer && myProp.objOptometrist.data.rxFinalGafas.ojoDer.av || " - "
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoDer.av) ||
+                      " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
@@ -1338,37 +1374,53 @@
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.esfera ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq
+                          .esfera) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.cilindro ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq
+                          .cilindro) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.eje ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq.eje) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.Prisma ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq
+                          .Prisma) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.ADD ||
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq.ADD) ||
                       " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs1>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalGafas &&  myProp.objOptometrist.data.rxFinalGafas.ojoIzq && myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av || " - "
+                      (myProp.objOptometrist.data.rxFinalGafas &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq &&
+                        myProp.objOptometrist.data.rxFinalGafas.ojoIzq.av) ||
+                      " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs6>
@@ -1376,7 +1428,14 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      (myProp.objOptometrist.data.rxFinalGafas && myProp.objOptometrist.data.rxFinalGafas.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalGafas.type_lenses) ? myProp.objOptometrist.data.rxFinalGafas.type_lenses.join() : myProp.objOptometrist.data.rxFinalGafas.type_lenses) : " - "
+                      myProp.objOptometrist.data.rxFinalGafas &&
+                      myProp.objOptometrist.data.rxFinalGafas.type_lenses
+                        ? Array.isArray(
+                            myProp.objOptometrist.data.rxFinalGafas.type_lenses
+                          )
+                          ? myProp.objOptometrist.data.rxFinalGafas.type_lenses.join()
+                          : myProp.objOptometrist.data.rxFinalGafas.type_lenses
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1401,7 +1460,6 @@
                         : " - "
                     }}</span>
                   </v-flex>
-                  
                 </v-layout>
                 <v-divider
                   light
@@ -1617,83 +1675,121 @@
                       {{ $t("title.av") }}:&nbsp;
                     </span>
                   </v-flex>
-                  <v-flex xs2 style="position: absolute;margin-top: 5%;margin-left: -30px;">
+                  <v-flex
+                    xs2
+                    style="
+                      position: absolute;
+                      margin-top: 5%;
+                      margin-left: -30px;
+                    "
+                  >
                     <span class="body-1 font-weight-medium"> OD </span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .esfera : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .eje : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .eje
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .prisma : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .prisma
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .adicion : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .adicion
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
-                        .av : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoDer
+                            .av
+                        : " - "
                     }}</span>
                   </v-flex>
 
-                  <v-flex xs2 style="position: absolute;margin-top: 7%;margin-left: -30px;">
+                  <v-flex
+                    xs2
+                    style="
+                      position: absolute;
+                      margin-top: 7%;
+                      margin-left: -30px;
+                    "
+                  >
                     <span class="body-1 font-weight-medium"> OI </span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .esfera : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .esfera
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .cilindro : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .cilindro
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .eje : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .eje
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .prisma : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .prisma
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .adicion : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .adicion
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
-                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
-                        .av : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                        ? myProp.objOptometrist.data.rxFinalVisionLejano.ojoIzq
+                            .av
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1701,7 +1797,16 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      (myProp.objOptometrist.data.rxFinalVisionLejano && myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses) : " - "
+                      myProp.objOptometrist.data.rxFinalVisionLejano &&
+                      myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses
+                        ? Array.isArray(
+                            myProp.objOptometrist.data.rxFinalVisionLejano
+                              .type_lenses
+                          )
+                          ? myProp.objOptometrist.data.rxFinalVisionLejano.type_lenses.join()
+                          : myProp.objOptometrist.data.rxFinalVisionLejano
+                              .type_lenses
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1837,7 +1942,17 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      (myProp.objOptometrist.data.rxFinalVisionProxima && myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses) : " - "
+                      myProp.objOptometrist.data.rxFinalVisionProxima &&
+                      myProp.objOptometrist.data.rxFinalVisionProxima
+                        .type_lenses
+                        ? Array.isArray(
+                            myProp.objOptometrist.data.rxFinalVisionProxima
+                              .type_lenses
+                          )
+                          ? myProp.objOptometrist.data.rxFinalVisionProxima.type_lenses.join()
+                          : myProp.objOptometrist.data.rxFinalVisionProxima
+                              .type_lenses
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -1895,40 +2010,40 @@
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                            .esfera
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoDer.esfera
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                            .cilindro
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoDer.cilindro
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                            .eje
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoDer.eje
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                            .prisma
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoDer.prisma
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoDer
-                            .av
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoDer.av
                         : " - "
                     }}</span>
                   </v-flex>
@@ -1939,40 +2054,40 @@
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                            .esfera
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoIzq.esfera
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                            .cilindro
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoIzq.cilindro
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                            .eje
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoIzq.eje
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                            .prisma
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoIzq.prisma
                         : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <span class="body-1">{{
                       myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia.ojoIzq
-                            .av
+                        ? myProp.objOptometrist.data.rxFinalVisionIntermedia
+                            .ojoIzq.av
                         : " - "
                     }}</span>
                   </v-flex>
@@ -1981,7 +2096,17 @@
                       >Tipo de lentes:&nbsp;
                     </span>
                     <span class="body-1">{{
-                      (myProp.objOptometrist.data.rxFinalVisionIntermedia && myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) ? (Array.isArray(myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) ? myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses.join() : myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses) : " - "
+                      myProp.objOptometrist.data.rxFinalVisionIntermedia &&
+                      myProp.objOptometrist.data.rxFinalVisionIntermedia
+                        .type_lenses
+                        ? Array.isArray(
+                            myProp.objOptometrist.data.rxFinalVisionIntermedia
+                              .type_lenses
+                          )
+                          ? myProp.objOptometrist.data.rxFinalVisionIntermedia.type_lenses.join()
+                          : myProp.objOptometrist.data.rxFinalVisionIntermedia
+                              .type_lenses
+                        : " - "
                     }}</span>
                   </v-flex>
                   <v-flex xs4>
@@ -2514,7 +2639,12 @@
                 </v-layout>
 
                 <v-divider light></v-divider>
-                <v-layout row wrap class="pt-1" v-if="myProp.prescription_of">
+                <v-layout
+                  row
+                  wrap
+                  class="pt-1"
+                  v-if="myProp.prescription_of && myProp.prescription_oft_data"
+                >
                   <v-flex xs12>
                     <span class="primary--text">Medicamentos Oftalmologia</span>
                   </v-flex>
@@ -2526,8 +2656,16 @@
                         :key="index"
                       >
                         {{ item.medicine }} ({{ item.active_ingredient }})
-                        {{ item.doses }}. 
-                        <span v-if="item.recomendation !== null && item.recomendation !== ''">  <span style="font-weight: 500;"> Recomendaciones:</span>{{ item.recomendation || "" }}</span>
+                        {{ item.doses }}.
+                        <span
+                          v-if="
+                            item.recomendation !== null &&
+                            item.recomendation !== ''
+                          "
+                        >
+                          <span style="font-weight: 500"> Recomendaciones:</span
+                          >{{ item.recomendation || "" }}</span
+                        >
                       </li>
                     </ul>
                     <!-- <span class="">{{ myProp.prescription_oft_data.prescription }}</span> -->
@@ -2881,25 +3019,27 @@ export default {
     ];
   },
   mounted() {
-    if (
-      this.myProp.objOptometrist.data &&
-      this.myProp.objOptometrist.data.responsableConsultation
-    ) {
-      this.getDigital(
-        "Optometrist",
+    setTimeout(() => {
+      if (
+        this.myProp.objOptometrist.data &&
         this.myProp.objOptometrist.data.responsableConsultation
-      );
-    }
+      ) {
+        this.getDigital(
+          "Optometrist",
+          this.myProp.objOptometrist.data.responsableConsultation
+        );
+      }
 
-    if (
-      this.myProp.objOphthalmology.data &&
-      this.myProp.objOphthalmology.data.responsableConsultation
-    ) {
-      this.getDigital(
-        "Ophtalmology",
+      if (
+        this.myProp.objOphthalmology.data &&
         this.myProp.objOphthalmology.data.responsableConsultation
-      );
-    }
+      ) {
+        this.getDigital(
+          "Ophtalmology",
+          this.myProp.objOphthalmology.data.responsableConsultation
+        );
+      }
+    }, 300);
   },
   methods: {
     filterDuplicate,
