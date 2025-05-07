@@ -3018,40 +3018,7 @@ export default {
       },
     ];
   },
-  async mounted() {
-    let dataOpt = null;
-    let dataOft = null;
-    if (
-      this.myProp.objOptometrist.data &&
-      this.myProp.objOptometrist.data.responsableConsultation
-    ) {
-      dataOpt = await this.getDigital(
-        "Optometrist",
-        this.myProp.objOptometrist.data.responsableConsultation
-      );
-
-      this.physicianOptometrist = dataOpt.physicianOptometrist;
-      this.physicianOptometristSpecialty =
-        dataOpt.physicianOptometristSpecialty;
-      this.digitalSignatureObjOptometrist =
-        dataOpt.digitalSignatureObjOptometrist;
-    }
-
-    if (
-      this.myProp.objOphthalmology.data &&
-      this.myProp.objOphthalmology.data.responsableConsultation
-    ) {
-      dataOft = await this.getDigital(
-        "Ophtalmology",
-        this.myProp.objOphthalmology.data.responsableConsultation
-      );
-      this.physicianOphthalmology = dataOft.physicianOphthalmology;
-      this.physicianOphthalmologySpecialty =
-        dataOft.physicianOphthalmologySpecialty;
-      this.digitalSignatureObjOphthalmology =
-        dataOft.digitalSignatureObjOphthalmology;
-    }
-  },
+  async mounted() {},
   methods: {
     filterDuplicate,
     showSurgeries() {
@@ -3235,7 +3202,40 @@ export default {
     },
   },
   watch: {
-    myProp: function (val) {},
+    async myProp(val) {
+      let dataOpt = null;
+      let dataOft = null;
+      if (
+        this.myProp.objOptometrist.data &&
+        this.myProp.objOptometrist.data.responsableConsultation
+      ) {
+        dataOpt = await this.getDigital(
+          "Optometrist",
+          this.myProp.objOptometrist.data.responsableConsultation
+        );
+
+        this.physicianOptometrist = dataOpt.physicianOptometrist;
+        this.physicianOptometristSpecialty =
+          dataOpt.physicianOptometristSpecialty;
+        this.digitalSignatureObjOptometrist =
+          dataOpt.digitalSignatureObjOptometrist;
+      }
+
+      if (
+        this.myProp.objOphthalmology.data &&
+        this.myProp.objOphthalmology.data.responsableConsultation
+      ) {
+        dataOft = await this.getDigital(
+          "Ophtalmology",
+          this.myProp.objOphthalmology.data.responsableConsultation
+        );
+        this.physicianOphthalmology = dataOft.physicianOphthalmology;
+        this.physicianOphthalmologySpecialty =
+          dataOft.physicianOphthalmologySpecialty;
+        this.digitalSignatureObjOphthalmology =
+          dataOft.digitalSignatureObjOphthalmology;
+      }
+    },
   },
   filters: {
     hour(value) {
