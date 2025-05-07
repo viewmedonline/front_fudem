@@ -3018,28 +3018,39 @@ export default {
       },
     ];
   },
-  mounted() {
-    setTimeout(() => {
-      if (
-        this.myProp.objOptometrist.data &&
+  async mounted() {
+    let dataOpt = null;
+    let dataOft = null;
+    if (
+      this.myProp.objOptometrist.data &&
+      this.myProp.objOptometrist.data.responsableConsultation
+    ) {
+      dataOpt = await this.getDigital(
+        "Optometrist",
         this.myProp.objOptometrist.data.responsableConsultation
-      ) {
-        this.getDigital(
-          "Optometrist",
-          this.myProp.objOptometrist.data.responsableConsultation
-        );
-      }
+      );
 
-      if (
-        this.myProp.objOphthalmology.data &&
+      this.physicianOptometrist = dataOpt.physicianOptometrist;
+      this.physicianOptometristSpecialty =
+        dataOpt.physicianOptometristSpecialty;
+      this.digitalSignatureObjOptometrist =
+        dataOpt.digitalSignatureObjOptometrist;
+    }
+
+    if (
+      this.myProp.objOphthalmology.data &&
+      this.myProp.objOphthalmology.data.responsableConsultation
+    ) {
+      dataOft = await this.getDigital(
+        "Ophtalmology",
         this.myProp.objOphthalmology.data.responsableConsultation
-      ) {
-        this.getDigital(
-          "Ophtalmology",
-          this.myProp.objOphthalmology.data.responsableConsultation
-        );
-      }
-    }, 800);
+      );
+      this.physicianOphthalmology = dataOft.physicianOphthalmology;
+      this.physicianOphthalmologySpecialty =
+        dataOft.physicianOphthalmologySpecialty;
+      this.digitalSignatureObjOphthalmology =
+        dataOft.digitalSignatureObjOphthalmology;
+    }
   },
   methods: {
     filterDuplicate,
@@ -3149,7 +3160,7 @@ export default {
       }
     },
     capilatize: (str) => str[0].toUpperCase() + str.slice(1).toLowerCase(),
-    renderImage(file) {
+    async renderImage(file) {
       return new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -3158,55 +3169,65 @@ export default {
         };
       });
     },
-    getDigital(typeSignature = null, digital) {
+    async getDigital(typeSignature = null, digital) {
       let objAux = new Object();
+      let objReturn = {};
       objAux = {
         body: {
           _id: digital,
         },
       };
 
-      personServ
-        .getPerson(objAux)
-        .then((result) => {
-          if (typeSignature == "Optometrist") {
-            this.physicianOptometrist = result.forename + " " + result.surname;
-            this.physicianOptometristSpecialty = this.$t("title.optometrist");
-          }
+      try {
+        const result = await personServ.getPerson(objAux);
+        if (typeSignature == "Optometrist") {
+          // this.physicianOptometrist = result.forename + " " + result.surname;
+          // this.physicianOptometristSpecialty = this.$t("title.optometrist");
+          objReturn.physicianOptometrist =
+            result.forename + " " + result.surname;
+          objReturn.physicianOptometristSpecialty =
+            this.$t("title.optometrist");
+        }
 
-          if (typeSignature == "Ophtalmology") {
-            this.physicianOphthalmology =
-              result.forename + " " + result.surname;
-            this.physicianOphthalmologySpecialty = this.$t(
-              "title.ophthalmologist"
-            );
-          }
+        if (typeSignature == "Ophtalmology") {
+          // this.physicianOphthalmology = result.forename + " " + result.surname;
+          // this.physicianOphthalmologySpecialty = this.$t("title.ophthalmologist");
+          objReturn.physicianOphthalmology =
+            result.forename + " " + result.surname;
+          objReturn.physicianOphthalmologySpecialty = this.$t(
+            "title.ophthalmologist"
+          );
+        }
 
-          if (result.digital_signature) {
-            fileServ
-              .getImage(
-                result.digital_signature,
-                sessionStorage.getItem("pussy")
-              )
-              .then((result) => {
-                let file = new File([result.data], "Imagen", {
-                  type: "image/png;base64",
-                });
-                // let filedrop = { size: result.data.size, name: this.$t('title.digital_signature'), type: "image/png" };
-                this.renderImage(file).then((result) => {
-                  if (result) {
-                    if (typeSignature == "Optometrist")
-                      this.digitalSignatureObjOptometrist = result;
-                    if (typeSignature == "Ophtalmology")
-                      this.digitalSignatureObjOphthalmology = result;
-                  }
-                });
-              });
+        if (result.digital_signature) {
+          const resultFile = await fileServ.getImage(
+            result.digital_signature,
+            sessionStorage.getItem("pussy")
+          );
+          // fileServ
+          //   .getImage(result.digital_signature, sessionStorage.getItem("pussy"))
+          //   .then((result) => {
+          let file = new File([resultFile.data], "Imagen", {
+            type: "image/png;base64",
+          });
+          // let filedrop = { size: result.data.size, name: this.$t('title.digital_signature'), type: "image/png" };
+          const renderImage = await this.renderImage(file);
+          // .then((result) => {
+          if (renderImage) {
+            if (typeSignature == "Optometrist")
+              // this.digitalSignatureObjOptometrist = renderImage;
+              objReturn.digitalSignatureObjOptometrist = renderImage;
+            if (typeSignature == "Ophtalmology")
+              // this.digitalSignatureObjOphthalmology = renderImage;
+              objReturn.digitalSignatureObjOphthalmology = renderImage;
           }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          return objReturn;
+          // });
+          // });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     date(value) {
       //let date = value.slice(0,10)
