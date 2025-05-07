@@ -667,9 +667,9 @@ export default {
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
   },
-  // created() {
-  //   this.listConsulting();
-  // },
+  created() {
+    this.listConsulting();
+  },
   watch: {
     date(val) {
       this.dateFormatted = this.formatDate(this.date);
