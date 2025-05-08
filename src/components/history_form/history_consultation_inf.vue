@@ -2796,7 +2796,7 @@
                         class="body-1 font-weight-light font-italic digital-signature-content-specialty"
                       >
                         <v-img
-                          :src="digitalSignatureObjOphthalmology"
+                          :src="myProp.digitalSignatureObjOphthalmology"
                           width="200px"
                           height="200px"
                         >
@@ -2808,12 +2808,12 @@
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
-                        physicianOphthalmology
+                        myProp.physicianOphthalmology
                       }}</span>
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
-                        physicianOphthalmologySpecialty
+                        myProp.physicianOphthalmologySpecialty
                       }}</span>
                     </v-flex>
                   </v-layout>
@@ -2825,7 +2825,7 @@
                         class="body-1 font-weight-light font-italic digital-signature-content-specialty"
                       >
                         <v-img
-                          :src="digitalSignatureObjOptometrist"
+                          :src="myProp.digitalSignatureObjOptometrist"
                           width="200px"
                           height="200px"
                         >
@@ -2837,12 +2837,12 @@
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
-                        physicianOptometrist
+                        myProp.physicianOptometrist
                       }}</span>
                     </v-flex>
                     <v-flex xs12 class="text-xs-center">
                       <span class="primary--text">{{
-                        physicianOptometristSpecialty
+                        myProp.physicianOptometristSpecialty
                       }}</span>
                     </v-flex>
                   </v-layout>
@@ -2854,7 +2854,7 @@
                     class="body-1 font-weight-light font-italic digital-signature-content"
                   >
                     <v-img
-                      :src="digitalSignatureObjOphthalmology"
+                      :src="myProp.digitalSignatureObjOphthalmology"
                       width="200px"
                       height="200px"
                     >
@@ -2875,7 +2875,7 @@
                   v-if="myProp.objOphthalmology.data"
                 >
                   <span class="primary--text">{{
-                    physicianOphthalmology
+                    myProp.physicianOphthalmology
                   }}</span>
                 </v-flex>
                 <v-flex
@@ -2884,7 +2884,7 @@
                   v-if="myProp.objOphthalmology.data"
                 >
                   <span class="primary--text">{{
-                    physicianOphthalmologySpecialty
+                    myProp.physicianOphthalmologySpecialty
                   }}</span>
                 </v-flex>
 
@@ -2893,7 +2893,8 @@
                     class="body-1 font-weight-light font-italic digital-signature-content"
                   >
                     <v-img
-                      :src="digitalSignatureObjOptometrist"
+                      v-if="myProp.digitalSignatureObjOptometrist"
+                      :src="myProp.digitalSignatureObjOptometrist"
                       width="200px"
                       height="200px"
                     >
@@ -2913,7 +2914,9 @@
                   class="text-xs-center"
                   v-if="myProp.objOptometrist.data"
                 >
-                  <span class="primary--text">{{ physicianOptometrist }}</span>
+                  <span class="primary--text">{{
+                    myProp.physicianOptometrist
+                  }}</span>
                 </v-flex>
                 <v-flex
                   xs12
@@ -2921,7 +2924,7 @@
                   v-if="myProp.objOptometrist.data"
                 >
                   <span class="primary--text">{{
-                    physicianOptometristSpecialty
+                    myProp.physicianOptometristSpecialty
                   }}</span>
                 </v-flex>
               </v-layout>
@@ -2943,12 +2946,6 @@ export default {
   name: "history_consultation_inf",
   data: () => ({
     digitalSignature: undefined,
-    digitalSignatureObjOptometrist: undefined,
-    digitalSignatureObjOphthalmology: undefined,
-    physicianOptometrist: null,
-    physicianOphthalmology: null,
-    physicianOphthalmologySpecialty: null,
-    physicianOptometristSpecialty: null,
     physician: null,
     Consultations: [],
     lenses: [],
@@ -3136,106 +3133,104 @@ export default {
         };
       });
     },
-    async getDigital(typeSignature = null, digital) {
-      let objAux = new Object();
-      let objReturn = {};
-      objAux = {
-        body: {
-          _id: digital,
-        },
-      };
+    // async getDigital(typeSignature = null, digital) {
+    //   let objAux = new Object();
+    //   let objReturn = {};
+    //   objAux = {
+    //     body: {
+    //       _id: digital,
+    //     },
+    //   };
 
-      try {
-        const result = await personServ.getPerson(objAux);
-        if (typeSignature == "Optometrist") {
-          // this.physicianOptometrist = result.forename + " " + result.surname;
-          // this.physicianOptometristSpecialty = this.$t("title.optometrist");
-          objReturn.physicianOptometrist =
-            result.forename + " " + result.surname;
-          objReturn.physicianOptometristSpecialty =
-            this.$t("title.optometrist");
-        }
+    //   try {
+    //     const result = await personServ.getPerson(objAux);
+    //     if (typeSignature == "Optometrist") {
+    //       // this.myProp.myProp.digitalSignatureObjOptometrist = result.forename + " " + result.surname;
+    //       // this.myProp.physicianOptometristSpecialty = this.$t("title.optometrist");
+    //       objReturn.myProp.myProp.digitalSignatureObjOptometrist =
+    //         result.forename + " " + result.surname;
+    //       objReturn.myProp.physicianOptometristSpecialty =
+    //         this.$t("title.optometrist");
+    //     }
 
-        if (typeSignature == "Ophtalmology") {
-          // this.physicianOphthalmology = result.forename + " " + result.surname;
-          // this.physicianOphthalmologySpecialty = this.$t("title.ophthalmologist");
-          objReturn.physicianOphthalmology =
-            result.forename + " " + result.surname;
-          objReturn.physicianOphthalmologySpecialty = this.$t(
-            "title.ophthalmologist"
-          );
-        }
+    //     if (typeSignature == "Ophtalmology") {
+    //       // this.myProp.physicianOphthalmology = result.forename + " " + result.surname;
+    //       // this.myProp.physicianOphthalmologySpecialty = this.$t("title.ophthalmologist");
+    //       objReturn.myProp.physicianOphthalmology =
+    //         result.forename + " " + result.surname;
+    //       objReturn.myProp.physicianOphthalmologySpecialty = this.$t(
+    //         "title.ophthalmologist"
+    //       );
+    //     }
 
-        if (result.digital_signature) {
-          const resultFile = await fileServ.getImage(
-            result.digital_signature,
-            sessionStorage.getItem("pussy")
-          );
-          // fileServ
-          //   .getImage(result.digital_signature, sessionStorage.getItem("pussy"))
-          //   .then((result) => {
-          let file = new File([resultFile.data], "Imagen", {
-            type: "image/png;base64",
-          });
-          // let filedrop = { size: result.data.size, name: this.$t('title.digital_signature'), type: "image/png" };
-          const renderImage = await this.renderImage(file);
-          // .then((result) => {
-          if (renderImage) {
-            if (typeSignature == "Optometrist")
-              // this.digitalSignatureObjOptometrist = renderImage;
-              objReturn.digitalSignatureObjOptometrist = renderImage;
-            if (typeSignature == "Ophtalmology")
-              // this.digitalSignatureObjOphthalmology = renderImage;
-              objReturn.digitalSignatureObjOphthalmology = renderImage;
-          }
-          return objReturn;
-          // });
-          // });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    //     if (result.digital_signature) {
+    //       const resultFile = await fileServ.getImage(
+    //         result.digital_signature,
+    //         sessionStorage.getItem("pussy")
+    //       );
+    //       // fileServ
+    //       //   .getImage(result.digital_signature, sessionStorage.getItem("pussy"))
+    //       //   .then((result) => {
+    //       let file = new File([resultFile.data], "Imagen", {
+    //         type: "image/png;base64",
+    //       });
+    //       // let filedrop = { size: result.data.size, name: this.$t('title.digital_signature'), type: "image/png" };
+    //       const renderImage = await this.renderImage(file);
+    //       // .then((result) => {
+    //       if (renderImage) {
+    //         if (typeSignature == "Optometrist")
+    //           // this.myProp.digitalSignatureObjOptometrist = renderImage;
+    //           objReturn.myProp.digitalSignatureObjOptometrist = renderImage;
+    //         if (typeSignature == "Ophtalmology")
+    //           // this.myProp.digitalSignatureObjOphthalmology = renderImage;
+    //           objReturn.myProp.digitalSignatureObjOphthalmology = renderImage;
+    //       }
+    //       return objReturn;
+    //       // });
+    //       // });
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     date(value) {
       //let date = value.slice(0,10)
       return moment(value, "YYYY-MM-DD").locale(this.$i18n.locale).format("L");
     },
   },
   watch: {
-    async myProp(val) {
-      let dataOpt = null;
-      let dataOft = null;
-      if (
-        this.myProp.objOptometrist.data &&
-        this.myProp.objOptometrist.data.responsableConsultation
-      ) {
-        dataOpt = await this.getDigital(
-          "Optometrist",
-          this.myProp.objOptometrist.data.responsableConsultation
-        );
-
-        this.physicianOptometrist = dataOpt.physicianOptometrist;
-        this.physicianOptometristSpecialty =
-          dataOpt.physicianOptometristSpecialty;
-        this.digitalSignatureObjOptometrist =
-          dataOpt.digitalSignatureObjOptometrist;
-      }
-
-      if (
-        this.myProp.objOphthalmology.data &&
-        this.myProp.objOphthalmology.data.responsableConsultation
-      ) {
-        dataOft = await this.getDigital(
-          "Ophtalmology",
-          this.myProp.objOphthalmology.data.responsableConsultation
-        );
-        this.physicianOphthalmology = dataOft.physicianOphthalmology;
-        this.physicianOphthalmologySpecialty =
-          dataOft.physicianOphthalmologySpecialty;
-        this.digitalSignatureObjOphthalmology =
-          dataOft.digitalSignatureObjOphthalmology;
-      }
-    },
+    // async myProp(val) {
+    //   let dataOpt = null;
+    //   let dataOft = null;
+    //   if (
+    //     this.myProp.objOptometrist.data &&
+    //     this.myProp.objOptometrist.data.responsableConsultation
+    //   ) {
+    //     dataOpt = await this.getDigital(
+    //       "Optometrist",
+    //       this.myProp.objOptometrist.data.responsableConsultation
+    //     );
+    //     this.myProp.myProp.digitalSignatureObjOptometrist = dataOpt.myProp.myProp.digitalSignatureObjOptometrist;
+    //     this.myProp.physicianOptometristSpecialty =
+    //       dataOpt.myProp.physicianOptometristSpecialty;
+    //     this.myProp.digitalSignatureObjOptometrist =
+    //       dataOpt.myProp.digitalSignatureObjOptometrist;
+    //   }
+    //   if (
+    //     this.myProp.objOphthalmology.data &&
+    //     this.myProp.objOphthalmology.data.responsableConsultation
+    //   ) {
+    //     dataOft = await this.getDigital(
+    //       "Ophtalmology",
+    //       this.myProp.objOphthalmology.data.responsableConsultation
+    //     );
+    //     this.myProp.physicianOphthalmology = dataOft.myProp.physicianOphthalmology;
+    //     this.myProp.physicianOphthalmologySpecialty =
+    //       dataOft.myProp.physicianOphthalmologySpecialty;
+    //     this.myProp.digitalSignatureObjOphthalmology =
+    //       dataOft.myProp.digitalSignatureObjOphthalmology;
+    //   }
+    // },
   },
   filters: {
     hour(value) {

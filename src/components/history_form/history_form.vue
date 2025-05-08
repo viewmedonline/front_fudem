@@ -292,6 +292,7 @@
 const vue2Dropzone = () => import("vue2-dropzone");
 const history_consultation_inf = () =>
   import("@/components/history_form/history_consultation_inf");
+import * as personServ from "@/componentServs/person";
 
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as fileServ from "@/componentServs/file";
@@ -448,6 +449,52 @@ export default {
         this.e6 = 99999999999999999;
       }
     },
+    async renderImage(file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = function () {
+          resolve(reader.result);
+        };
+      });
+    },
+    async getSignature(digital_signature) {
+      try {
+        const resultFile = await fileServ.getImage(
+          digital_signature,
+          sessionStorage.getItem("pussy")
+        );
+        // fileServ
+        //   .getImage(result.digital_signature, sessionStorage.getItem("pussy"))
+        //   .then((result) => {
+        let file = new File([resultFile.data], "Imagen", {
+          type: "image/png;base64",
+        });
+        // let filedrop = { size: result.data.size, name: this.$t('title.digital_signature'), type: "image/png" };
+        const renderImage = await this.renderImage(file);
+
+        return renderImage;
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
+    },
+    async getDataResponsible(responsible) {
+      try {
+        let objAux = new Object();
+        let objReturn = {};
+        objAux = {
+          body: {
+            _id: responsible,
+          },
+        };
+        const result = await personServ.getPerson(objAux);
+        return result;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    },
     listConsulting() {
       let objAux = {
         body: {
@@ -497,6 +544,42 @@ export default {
 
               result[i].prescription_oft_data = prescription_oft;
               result[i].prescription_opt_data = prescription_opt;
+
+              if (
+                result[i].objOptometrist.data &&
+                result[i].objOptometrist.data.responsableConsultation
+              ) {
+                const dataOpt = await vm.getDataResponsible(
+                  result[i].objOptometrist.data.responsableConsultation
+                );
+                result[
+                  i
+                ].physicianOptometrist = `${dataOpt.forename} ${dataOpt.surname}`;
+                result[i].physicianOptometristSpecialty = "Optometrista";
+                result[i].digitalSignatureObjOptometrist = null;
+                if (dataOpt.digital_signature) {
+                  result[i].digitalSignatureObjOptometrist =
+                    await vm.getSignature(dataOpt.digital_signature);
+                }
+              }
+
+              if (
+                result[i].objOphthalmology.data &&
+                result[i].objOphthalmology.data.responsableConsultation
+              ) {
+                const dataOft = await vm.getDataResponsible(
+                  result[i].objOphthalmology.data.responsableConsultation
+                );
+                result[
+                  i
+                ].physicianOphthalmology = `${dataOft.forename} ${dataOft.surname}`;
+                result[i].physicianOphthalmologySpecialty = "Oftalmólogo";
+                result[i].digitalSignatureObjOphthalmology = "";
+                if (dataOft.digital_signature) {
+                  result[i].digitalSignatureObjOphthalmology =
+                    await vm.getSignature(dataOft.digital_signature);
+                }
+              }
 
               vm.historyConsulting.push({
                 name: result[i].typeConsultation
